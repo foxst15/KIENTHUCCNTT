@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+    color: #333;
+}
+
+header {
+    background-color: #007bff; /* Màu xanh dương chủ đạo */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Thanh Tìm kiếm */
+#search-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+#searchInput {
+    padding: 10px;
+    width: 60%;
+    border: 2px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    font-size: 16px;
+}
+
+#search-section button {
+    padding: 10px 15px;
+    background-color: #28a745; /* Màu xanh lá cây cho nút */
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#search-section button:hover {
+    background-color: #218838;
+}
+
+/* Danh sách Kiến thức */
+#knowledge-list {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.knowledge-item {
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+.knowledge-item:last-child {
+    border-bottom: none;
+}
+
+.knowledge-item h3 {
+    margin-top: 0;
+    color: #007bff;
+}
+
+.knowledge-item p {
+    color: #666;
+}
+
+.knowledge-item a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.knowledge-item a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #333;
+    color: white;
+    margin-top: 20px;
+}

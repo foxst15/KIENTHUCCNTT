@@ -1,0 +1,4 @@
+ 1  cd D:\KIENTHUCCNTT
+ 2  D:
+ 3  PYTHON -m htttp.sever
+ 4  http://localhost:8080
