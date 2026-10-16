@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<monhoc>
+<mon id="cslt" ten="Cơ sở lập trình" nhom="Lập trình" drive="1OzPh71PiyO6alkpGxXR_yWalzzEurB0N" sochuong="6"><mota>Khái niệm thuật toán, biến, cấu trúc điều khiển.</mota></mon>
+<mon id="pascal" ten="Lập trình Pascal" nhom="Lập trình" drive="16PRqvQCgbuPmK5zWU0fwxwkxtf4ic1gP" sochuong="9"><mota>Ngôn ngữ Pascal: cấu trúc chương trình, kiểu dữ liệu, thủ tục và hàm.</mota></mon>
+<mon id="ktmt" ten="Cấu trúc máy tính và hợp ngữ" nhom="Nền tảng &amp; toán" drive="10Fpr4uNrjKkypfr5R8tnougpb6y5kSxJ" sochuong="6"><mota>Kiến trúc máy tính, bộ nhớ, thanh ghi, lập trình Assembly.</mota></mon>
+<mon id="sql2000" ten="SQL Server 2000" nhom="Cơ sở dữ liệu" drive="1QgK-Lxl44hFZxz3-K17Gf2dLXmpYgkhq" sochuong="10"><mota>Cài đặt, tạo CSDL và truy vấn T-SQL trên SQL Server 2000.</mota></mon>
+<mon id="qtcsdl2" ten="Hệ quản trị CSDL 2 (SQL Server)" nhom="Cơ sở dữ liệu" drive="1jP3maCsY6yZG52a8WRS8keoe8eLx7IwI" sochuong="8"><mota>Stored procedure, function, trigger, transaction.</mota></mon>
+<mon id="csdl" ten="Cơ sở dữ liệu" nhom="Cơ sở dữ liệu" drive="1WjqzH9My9wjnlJE5Pxf90Ktqg35MpD5Q" sochuong="5"><mota>Mô hình quan hệ, khóa, chuẩn hóa.</mota></mon>
+<mon id="sqlserver" ten="SQL Server" nhom="Cơ sở dữ liệu" drive="1orV5zk2Suip_1mxyMMr6QkfthUcOsLRu" sochuong="9"><mota>Truy vấn nâng cao: JOIN, GROUP BY, truy vấn con.</mota></mon>
+<mon id="access" ten="Hệ quản trị CSDL Access" nhom="Cơ sở dữ liệu" drive="1JQNRH0g_jeDeiMu8aucZh7CldOL-XTAd" sochuong="6"><mota>Microsoft Access: table, query, form, report.</mota></mon>
+<mon id="oop" ten="Lập trình hướng đối tượng" nhom="Lập trình" drive="1mzPBe6JCKtJm2-BTE8n8hopv7cm7-O53" sochuong="6"><mota>4 tính chất OOP: đóng gói, kế thừa, đa hình, trừu tượng.</mota></mon>
+<mon id="csharp" ten="C#" nhom="Lập trình" drive="1rQILHgzzT5_h0J1iI5a9s1QAboJVz6Ec" sochuong="6"><mota>Ngôn ngữ C# trên .NET.</mota></mon>
+<mon id="cnpm" ten="Công nghệ phần mềm" nhom="Phần mềm &amp; hệ thống" drive="1sll7N_cFKRTOhb4VhUwEEy0-kYp-_9T3" sochuong="4"><mota>Quy trình phát triển phần mềm.</mota></mon>
+<mon id="ptttkht" ten="Phân tích và thiết kế hệ thống thông tin" nhom="Phần mềm &amp; hệ thống" drive="1d_5cuiBoSpgPjJNGq6E8uULHWKshzzqy" sochuong="5"><mota>Khảo sát, DFD, ERD, thiết kế CSDL.</mota></mon>
+<mon id="kttm" ten="Kiểm thử phần mềm" nhom="Phần mềm &amp; hệ thống" drive="1wF11WRz5xVQYjZdS2kandpV4fJJbkren" sochuong="5"><mota>Kỹ thuật kiểm thử hộp đen, hộp trắng.</mota></mon>
+<mon id="cslt2" ten="Cơ sở lập trình (phần 2)" nhom="Lập trình" drive="1nUCyMhEjIVt-6dHwqo3DQOyAeIHjYjOb" sochuong="9"><mota>Mảng, chuỗi, hàm, đệ quy.</mota></mon>
+<mon id="cloud" ten="Điện toán đám mây" nhom="Phần mềm &amp; hệ thống" drive="1Apw2-kjv5N6gjABNnDjJcKQ0wpeOPUto" sochuong="4"><mota>Mô hình dịch vụ và triển khai đám mây.</mota></mon>
+<mon id="qtcsdl" ten="Hệ quản trị CSDL" nhom="Cơ sở dữ liệu" drive="1bl19SCFkpbbI5p2as6E0JhUhQzuYKSPX" sochuong="5"><mota>Chức năng của DBMS, chỉ mục, đồng thời.</mota></mon>
+<mon id="javanc" ten="Lập trình Java nâng cao" nhom="Lập trình" drive="1JPhkG9q9iIuSzIoVYkClGc5UsIJTquNI" sochuong="7"><mota>Collections, đa luồng, JDBC.</mota></mon>
+<mon id="hdh" ten="Nguyên lý hệ điều hành" nhom="Nền tảng &amp; toán" drive="1Zyo3ReBYTdaTUMvolIbtFvV-dpf2lVWl" sochuong="4"><mota>Tiến trình, lập lịch CPU, bộ nhớ, deadlock.</mota></mon>
+<mon id="trr" ten="Toán rời rạc" nhom="Nền tảng &amp; toán" drive="1U-U-qd-Xs7MhVKJW39M-TvfULI42Rx6T" sochuong="3"><mota>Logic, tập hợp, tổ hợp, đồ thị.</mota></mon>
+</monhoc>

@@ -1,0 +1,3811 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mon id="csharp" ten="C#" nhom="Lập trình" drive="1rQILHgzzT5_h0J1iI5a9s1QAboJVz6Ec" nguon="Lap_trinh_C.pdf">
+<mota>Ngôn ngữ C# trên .NET.</mota>
+<baihoc stt="1" tieude="Chương 1. Giới thiệu Microsoft .NET, cơ sở của ngôn ngữ C#">Chương 1:
+       Giới thiệu Microsoft .NET, cơ sở của ngôn ngữ C#
+
+                               Thời lượng: 8 tiết
+      Mục tiêu:
+      - Biết được tổng quan về Microsoft .NET, kiến trúc .NET Framework,
+      - Hiểu được các thành phần cơ bản của C#,
+      - Viết được các chương trình đơn giản bằng C#.
+
+      1.1. Tổng quan Microsoft .NET
+      Nền tảng Microsoft .NET (.NET) cung cấp tất cả các công cụ và kỹ thuật
+cần thiết để người dùng có thể xây dựng một ứng dụng trên môi trường internet.
+Trong chương trình học, nền tảng .NET được mô tả đơn giản như Hình 1-1.
+       Trung tâm của .NET là .NET framework và môi trường phát triển (IDE -
+Integrated Development Environment). Framework cung cấp những gì cần thiết,
+căn bản (hạ tầng cơ sở) theo một quy ước nhất định để giúp cho việc phát triển
+ứng dụng. IDE là môi trường giúp việc phát triển ứng dụng trở nên dễ dàng và
+nhanh chóng. Nếu không có IDE, chúng ta cũng có thể phát triển được ứng dụng
+trên .NET. Tuy nhiên, việc này rất mất thời gian. Chúng ta nên sử dụng một IDE
+nào đó để phát triển ứng dụng.
+
+       Visual      C++        C#         J#         …
+                                                                         Visual Studio .NET
+
+       Basic
+                                                                 (IDE)
+
+                Common Language Specification
+
+                      .NET Framework
+
+                         Hình 1-1 Mô tả đơn giản nền tảng .NET
+
+      1.1.1. Kiến trúc .NET framework
+      .NET framework gồm 2 thành phần chính: khối thực thi ngôn ngữ nền
+
+tảng (CLR - Common Language Runtime) và thư viện lớp (FCL - Framework
+Class Library). CLR là nền tảng của .NET framework. CLR quản lý sự thực thi
+mã lệnh và các quản lý liên quan: biên dịch, quản lý bộ nhớ, quản lý thực hiện
+tiểu trình, bảo mật,… Mã lệnh được thực thi trong CLR là mã lệnh được quản lý
+(managed code), khác với mã lệnh không được quản lý như COM, các thành
+phần dựa trên Windows API. FCL là thư viện kiểu dữ liệu (gồm các class, struct,
+enum,…) dành cho ứng dụng thực thi trong .NET. Tất cả các ngôn ngữ hỗ trợ
+.NET framework đều sử dụng thư viện lớp dùng chung này.
+      Các thành phần trong CLR:
+
+       Thành phần                                       Mô tả
+
+Class Loader                    Quản lý siêu dữ liệu, khởi tạo và trình bày các lớp
+
+MSIL to Native Compilers        Chuyển từ MSIL sang mã nhị phân
+
+Code Manager                    Quản lý việc thực thi
+
+Garbage Collector               Dọn rác tự động
+
+Security Engine                 Bảo mật
+
+Debug Engine                    Phát hiện lỗi
+
+Type Checker                    Kiểm tra kiểu
+
+Exception Manager               Quản lý ngoại lệ
+
+Thread Support                  Hỗ trợ các lớp, giao diện cho lập trình đa luồng
+
+COM Marshaler                   Chuyển đổi thành phần COM
+
+Base Class Library Support Hỗ trợ thư viện các lớp cơ sở
+
+      Thư viện các lớp cơ sở trong CFL:
+
+                Không gian tên                          Mô tả
+
+                      Collections      Danh sách (mảng) động
+            System.
+
+                      Configuration    Cấu hình
+
+                      IO               Vào/ra dữ liệu
+
+                      Net              Kết nối mạng
+
+                  Reflection        Phản chiếu (dịch ngược)
+
+                  Resources         Tài nguyên (file, chuỗi, hình ảnh)
+
+                  Security          Bảo mật
+
+                  Text              Chuỗi
+
+                  Threading         Đa luồng
+
+                  Runtime           Thực thi thời gian thực
+
+      1.1.2. Biên dịch và ngôn ngữ trung gian
+      a) Các bước thực hiện của chương trình truyền thống:
+      Các ngôn ngữ trước đây (Pascal, C, C++, Visual Basic) có chương trình
+dịch và và môi trường thực thi của riêng nó và một chương trình chỉ cần dịch
+một lần để thực thi.
+      Các bước thực hiện của một chương trình truyền thống như Hình 1-2:
+      - Bước 1: biên dịch mã nguồn thành mã có thể thực thi.
+      - Bước 2: Thực thi thời gian thực mã có thể thực thi.
+
+    Mã            Biên dịch        Mã có thể        Thực thi          Mã nhị
+   nguồn                            thực thi                           phân
+
+                Hình 1-2 Các bước thực thi một chương trình truyền thống
+
+      b) Các bước thực hiện của chương trình .NET:
+       .NET có chương trình dịch và môi trường thực thi cho mọi máy tính đã
+cài đặt .NET Framework. Một chương trình trong .NET phải được dịch hai lần
+trước khi được thực thi.
+      Quá trình biên dịch trong .NET được thực hiện qua 2 giai giai đoạn như
+Hình 1-3:
+      Giai đoạn 1: biên dịch mã nguồn
+     Bước 1: biên dịch mã nguồn thành mã MSIL (Microsoft Intermediate
+Language) và siêu dữ liệu.
+      Giai đoạn 2: biên dịch mã MSIL
+
+      Bước 2: từ siêu dữ liệu, CLR biên dịch mã MSIL thành mã có thể thực thi
+được và thực thi thời gian thực.
+
+                                MSIL
+    Mã        Biên dịch                         Sử dụng CLR            Mã nhị
+   nguồn                          +                                     phân
+                                                   Thực thi
+                             Siêu dữ liệu
+                                                Biên dịch lần 2
+
+      Biên dịch lần 1
+
+                  Hình 1-3 Quá trình biên dịch một chương trình .NET
+
+      Các chương trình .NET được biên dịch 2 lần. Kết quả biên dịch của lần
+thứ nhất chỉ ở dạng mã MSIL. Kết quả biên dịch lần thứ hai sẽ là mã máy.
+       Khi thực thi một chương trình .NET thì thường lần đầu chậm và lần thứ 2
+sẽ tương đối nhanh. Khi thực thi lần đầu, chương trình phải được dịch sang mã
+nhị phân và khi thực hiện phải lưu vào bộ nhớ cache. Điều này làm cho quá trình
+thực hiện bị chậm. Khi thực hiện lần thứ hai, chương trình không cần phải dịch
+lại và dữ liệu đã có trong bộ nhớ cache nên việc thực hiện tương đối nhanh.
+      1.2. Giới thiệu ngôn ngữ C#
+      Có nhiều ngôn ngữ có thể sử dụng để xây dựng ứng dụng trên môi trường
+.NET. Tuy nhiên, C# là một ngôn ngữ lập trình đặc biệt, được thiết kế để xây
+dựng ứng dụng trên môi trường này.
+       C# là một ngôn ngữ lập trình đơn giản, hiện đại, an toàn và hướng đối
+tượng. Nó là ngôn ngữ mạnh nhất trong .NET, thay thế cho C++ và việc sử dụng
+con trỏ dễ dàng hơn C++.
+      Trong C#, một bài toán là một vấn đề cần được giải quyết (Problem) và
+tập hợp những gì ta làm bằng C# để giải quyết vấn đề nào đó là một giải pháp
+(Solution). Để có được một giải pháp thì cần nhiều dự án (Project) cho nên giải
+pháp trong C# thường có một hoặc nhiều dự án. Dự án trong C# có thể là một
+chương trình đơn giản hoặc một thư viện hoặc một bộ cài đặt…
+      1.2.1. Chương trình đầu tiên
+      a) Không sử dụng IDE:
+      - Sử dụng Notepad tạo và lưu lại với tên file là ChaoMung.CS trong ổ đĩa
+D:\ với nội dung sau:
+
+       class ChaoMung
+       {
+           static void Main()
+           {
+               System.Console.Write(“Hello, World”);
+               System.Console.ReadKey();
+           }
+       }
+     - Khởi động Visual Studio Command Prompt: Start &gt; Programs &gt;
+Microsfoft Visual Studio &gt; Visual Studio Tools &gt; Visual Studio Command
+Prompt.
+
+       - Gõ lệnh sau để biên dịch file ChaoMung.CS.
+       D:\&gt; csc /t:exe /out:chaomung.exe ChaoMung.CS
+       - Sau khi biên dịch thành công, thực thi file chaomung.exe ta được kết
+quả:
+       D:\&gt; chaomung.exe
+       Hello, World
+
+                Hình 1-4 Giao diện khởi động Microsoft Visual Studio 2008
+
+      b) Sử dụng IDE:
+      - Khởi động Microsoft Visual Studio:
+       Lưu ý: nếu là trường hợp khởi động IDE lần tiên sau khi cài thì chương
+trình yêu cầu lựa chọn môi trường lập trình mặc định. Trong trường hợp này ta
+nên chọn C#. Khi khởi động, chương trình có giao diện như Hình 1-4:
+      - Tạo mới dự án:
+     Chọn File &gt; New &gt; Project… để tạo một project mới. Giao diện tạo mới
+một dự án như Hình 1-5:
+
+            Hình 1-5 Giao diện tạo dự án mới trên Microsoft Visual Studio 2008
+
+      - Thêm nội dung sau vào hàm Main:
+      Console.WriteLine("Hello, World");
+      Console.ReadKey();
+      - Nhấn phím F6 để biên dịch.
+      - Nhấn phím F5 để thực thi.
+      - Kết quả thực thi: Dòng chữ “Hello, World” được in ra màn hình.
+      1.2.2. Kiểu dữ liệu, biểu thức, câu lệnh
+      a) Kiểu dữ liệu:
+      C# có 2 loại kiểu dữ liệu: kiểu giá trị và kiểu tham chiếu. Các kiểu dữ liệu
+của C# được mô tả ở bảng sau:
+
+                    Kiểu dữ liệu                               Mô tả
+                                         Số nguyên có dấu: sbyte, short, int, long
+                                         Số nguyên không dấu: byte, ushort, uint,
+                                         ulong
+                                         Ký tự Unicode: char
+  Kiểu giá trị
+                    Kiểu đơn giản
+                                         Số thực: float, double
+                                         Kiểu decimal: decimal
+                                         Kiểu logic: bool
+                    Kiểu enum            enum E {...}
+                    Kiểu struct          struct S {...}
+                                         Kiểu cơ sở của các kiểu khác: object
+  Kiểu tham chiếu
+
+                    Kiểu class           Unicode: string
+                                         class C {...}
+                    Kiểu interface       interface I {...}
+                    Kiểu mảng            int[] and int[,]
+                    Kiểu delegate        delegate T D(...)
+
+Kiểu dữ liệu số của C# được mô tả ở bảng sau:
+ Danh mục kiểu Số bit                    Kiểu                     Phạm vi
+Có dấu                           8     sbyte      –128...127
+                                 16    short      –32,768...32,767
+
+                                 32    int        –2,147,483,648 ... 2,147,483,647
+
+                                 64    long       –9,223,372,036,854,775,808 ...
+                                                  9,223,372,036,854,775,807
+Không dấu                        8     byte       0...255
+                                 16    ushort     0...65,535
+                                 32    uint       0...4,294,967,295
+                                 64    ulong      0...18,446,744,073,709,551,615
+Số thực                          32    float      1.5 × 10−45 to 3.4 × 1038, 7-chữ số lẻ
+                                 64    double     5.0 × 10−324 to 1.7 × 10308, 15-chữ số lẻ
+Decimal                          128   decimal 1.0 × 10−28 to 7.9 × 1028, 28-chữ số lẻ
+
+b) Biểu thức:
+  Danh mục           Biểu thức                       Mô tả
+Dành riêng      x.m               Truy xuất thành viên
+                x(...)            Phương thức hoặc delegate
+                x[...]            Truy cập mảng hoặc chỉ mục
+                new T(...)        Tạo mới 1 đối tượng hoặc delegate
+                new T[...]        Tạo mới mảng
+                typeof(T)         Lấy kiểu dữ liệu
+Phép một ngôi   +x                Phép cộng
+                -x                Phép trừ
+                !x                Phép phủ định
+                ~x                Phép đảo bit
+                ++x, x++          Phép tăng 1
+                --x, x--          Phép giảm 1
+                (T)x              Ép (chuyển) kiểu
+Phép nhân       x * y             Phép nhân
+                x / y             Phép chia
+                x % y             Phép chia lấy dư
+Phép thêm       x + y             Phép cộng, nối chuỗi, thêm delegate
+                x – y             Phép trừ, loại bỏ delegate
+Dịch bit        x &lt;&lt; y            Dịch trái
+                x &gt;&gt; y            Dịch phải
+Phép so sánh    x &lt; y             Bé hơn
+                x &gt; y             Lớn hơn
+                x &lt;= y            Bé hơn bằng
+                x &gt;= y            Bé hơn bằng
+                x is T            trả về true nếu x là kiểu T, false
+                                  trong trường hợp ngược lại
+                x as T            Trả về x là kiểu T, hoặc null nếu x
+                                  không có kiểu là T
+So sánh bằng    x == y            Bằng
+
+                  x != y         Không bằng
+Phép AND bit      x &amp; y          AND 2 số nguyên hoặc 2 giá trị logic
+Phép XOR bit      x ^ y          XOR 2 số nguyên hoặc 2 giá trị logic
+Phép OR bit       x | y          OR 2 số nguyên hoặc 2 giá trị logic
+Phép AND          x &amp;&amp; y         Điều kiện AND
+Phép OR           x || y         Điều kiện OR
+Phép điều kiện    x ? y : z      Phép toán 3 ngôi
+Phép gán          x = y          Phép gán
+                  x op= y        Nối phép toán với phép gán. op có thể là:
+                                 *= /= %= += -= &lt;&lt;= &gt;&gt;= &amp;=
+                                 ^= |=
+c) Câu lệnh:
+Các câu lệnh trong C#:
+  Câu lệnh                              Ví dụ
+Khai báo biến    static void Main() {
+                      int a;
+địa phương            int b = 2, c = 3;
+                      a = 1;
+                      Console.WriteLine(a + b + c);
+                      // In ra man hinh
+                 }
+Khai báo         static void Main() {
+                      const float pi = 3.1415927f;
+hằng địa              const int r = 25;
+phương                Console.WriteLine(pi * r * r);
+                 }
+Các câu lệnh,    static void Main() {
+                      int i;
+biểu thức             i = 123;
+                      Console.WriteLine(i);
+                      i++;
+                      Console.WriteLine(i);
+                 }
+Lệnh if          static void Main(string[] args) {
+                      if (args.Length == 0) {
+                            Console.WriteLine("Không đối số");
+                      }
+                      else {
+                            Console.WriteLine("1 hoặc n đối số");
+                      }
+                 }
+Lệnh switch      static void Main(string[] args) {
+                      int n = args.Length;
+                      switch (n) {
+                            case 0:
+
+                              Console.WriteLine("Không đs");
+                              break;
+                         case 1:
+                              Console.WriteLine("1 đs");
+                              break;
+                         default:
+                              Console.WriteLine("{0} đs", n);
+                              break;
+                         }
+                    }
+               }
+Lệnh while     static void Main(string[] args) {
+                    int i = 0;
+                    while (i &lt; args.Length) {
+                          Console.WriteLine(args[i]);
+                          i++;
+                    }
+               }
+Lệnh do…       static void Main() {
+                    string s;
+while               do {
+                          s = Console.ReadLine();
+                          if (s != null) Console.WriteLine(s);
+                    } while (s != null);
+               }
+Lệnh for       static void Main(string[] args) {
+                    for (int i = 0; i &lt; args.Length; i++) {
+                          Console.WriteLine(args[i]);
+                    }
+               }
+Lệnh foreach   static void Main(string[] args) {
+                    foreach (string s in args) {
+                          Console.WriteLine(s);
+                    }
+               }
+Lệnh break     static void Main() {
+                    while (true) {
+                          string s = Console.ReadLine();
+                          if (s == null) break;
+                          Console.WriteLine(s);
+                    }
+               }
+Lệnh continue static void Main(string[] args) {
+                    for (int i = 0; i &lt; args.Length; i++) {
+                         if (args[i].StartsWith("/")) continue;
+                         Console.WriteLine(args[i]);
+                    }
+               }
+Lệnh goto      static void Main(string[] args) {
+                    int i = 0;
+                    goto check;
+                    loop:
+                    Console.WriteLine(args[i++]);
+                    check:
+                    if (i &lt; args.Length) goto loop;
+               }
+
+Lệnh return    static int Add(int a, int b) {
+                    return a + b;
+               }
+               static void Main() {
+                    Console.WriteLine(Add(1, 2));
+                    return;
+               }
+Lệnh throw     static double Divide(double x, double y) {
+                    if (y == 0) throw new
+and try        DivideByZeroException();
+                    return x / y;
+               }
+               static void Main(string[] args) {
+                    try {
+                          if (args.Length != 2) {
+                               throw new Exception("Two numbers
+               required");
+                          }
+                          double x = double.Parse(args[0]);
+                          double y = double.Parse(args[1]);
+                          Console.WriteLine(Divide(x, y));
+                    }
+                    catch (Exception e) {
+                          Console.WriteLine(e.Message);
+                    }
+               }
+Lệnh checked   static void Main() {
+                    int i = int.MaxValue;
+và unchecked        checked {
+                          Console.WriteLine(i + 1);// Exception
+                    }
+                    unchecked {
+                          Console.WriteLine(i + 1);// Overflow
+                    }
+               }
+Lệnh lock      class Account
+               {
+                    decimal balance;
+                    public void Withdraw(decimal amount) {
+                          lock (this) {
+                               if (amount &gt; balance) {
+                                     throw new
+               Exception("Insufficient funds");
+                               }
+                               balance -= amount;
+                          }
+                    }
+               }
+Lệnh using     static void Main() {
+                    using (TextWriter w =
+               File.CreateText("test.txt")) {
+                          w.WriteLine("Line one");
+                          w.WriteLine("Line two");
+                          w.WriteLine("Line three");
+                    }
+               }
+
+      1.2.3. Chú thích
+       Chú thích là hình thức cho phép chèn thêm dòng chỉ dẫn, tài liệu vào
+trong đoạn mã lệnh. Khi biên dịch, trình biên dịch sẽ bỏ qua các dòng được chú
+thích. C# cho phép 3 kiểu chú thích sau:
+      Chú thích một dòng:
+      Sử dụng cặp “//” để chú thích một dòng. Chú thích có hiệu lực từ khi gặp
+cắp dấu này cho đến hết dòng (gặp dấu kết thúc dòng).
+      Chú thích nhiều dòng:
+       Sử dụng hai cặp dấu “/*” và “*/” để chú thích nhiều dòng liên tiếp. Chú
+thích có hiệu lực từ khi gặp cặp dấu “/*” cho đến khi gặp dấu “*/”.
+      Ví dụ dưới đây minh họa về chú thích một dòng và chú thích nhiều dòng:
+      // Day la chu thich mot dong
+      /* Day la chu thich nhieu dong lien tiep.
+         So dong co the rat nhieu.
+         So dong la 1 cung duoc.*/ Cau nay khong duoc chu thich.
+      Chú ý:
+     Ta có thể dùng nhiều chú thích một dòng để chú thích cho nhiều dòng và
+dùng chú thích nhiều dòng để chú thích cho một dòng. Tuy nhiên, người ta
+thường dùng:
+      - Chú thích một dòng cho mã lệnh tạm thời chưa dùng hoặc có thể sai.
+Điều này làm cho giúp cho việc soạn thảo mã lệnh được nhanh chóng.
+      - Chú thích nhiều dòng cho tài liệu.
+      Chú thích tài liệu XML:
+       Sử dụng bộ dấu “///” để chèn tài liệu XML vào mã lệnh. Chú thích chỉ có
+hiệu lực như chú thích một dòng. Tuy nhiên, C# có thể hiểu được các chú thích
+này trên nhiều dòng được chú thích liên tiếp. Khi biên dịch, khi trình biên dịch
+gặp chú thích này, trình biên dịch sẽ biên dịch vào Assembly.
+      Ví dụ dưới đây minh họa về chú thích tài liệu XML:
+      /// &lt;summary&gt; documentation here &lt;/summary&gt;
+      Với dòng chú thích trên, chúng ta có thể hiểu đó là một thẻ XML. Cụ thể
+ở đây là thẻ có tên là “summary” và có nội dung là “documentation here”.
+      Chú thích loại này thường được dùng để chú thích cho các lớp, phương
+thức,… Tuy nhiên, chú thích này phải được đặt ngay trước mã lệnh tương ứng
+với đối tượng cần chú thích.
+
+      1.2.4. Các cấu trúc dữ liệu
+      a) Mảng:
+       Mảng là kiểu được dùng để thể hiện một dãy các đối tượng có cùng kiểu
+dữ liệu được đặt liên tiếp nhau trong bộ nhớ. Chúng ta dùng cặp dấu “[]” để khai
+báo và truy xuất các phần tử của mảng.
+     Khi khai báo, chúng ta có thể dùng biến hay hằng để định nghĩa chiều dài
+của mảng. Tuy nhiên, kích thước của mảng sẽ không thể thay đổi sau lệnh khai
+báo.
+      Ví dụ dưới đây minh họa về khai báo mảng một chiều:
+      int[] integers = new int[15];
+      // Khai bao mang integers co kich thuoc la 15
+      int length = 20;
+      int[] list = new int[length];
+      list[0] = 2;
+      Chúng ta cũng có thể khai báo một mảng theo cách liệt kê.
+      Ví dụ minh họa về khai báo theo kiểu liệt kê:
+      int[] Mang = {3, 5, 7, 8};
+     Để đọc chiều dài của mảng hiện tại ta có thể sử dụng cú pháp: &lt;tên
+mảng&gt;.Length.
+      C# còn hỗ trợ các mảng nhiều chiều: kiểu ma trận, kiểu răng cưa.
+      Ví dụ dưới đây minh họa cách khai báo và khởi tạo một mảng nhiều chiều
+kiểu ma trận hai chiều bằng cách sử dụng thêm dấu “,”:
+      String [ , ] A = { {"Lennon","John"},
+                         {"McCartney","Paul"},
+                         {"Harrison","George"},
+                         {"Starkey","Richard"} };
+      Các phần tử của A có thể được hình dung như sau:
+                         A            0               1
+                         0          Lennon        John
+                         1       McCartney        Paul
+                         2        Harrison       George
+                         3          Starkey     Richard
+
+       Như vậy A như là một ma trận 2 cột x 4 dòng. Phần tử đầu tiên là A[0,0]
+có giá trị là “Lennon”, phần tử cuối cùng là A[3,1] có giá trị là “Richard”.
+      Tương tự, để khai báo mảng ba chiều ta có thể khai báo như sau:
+      String [ , , ] my3D_Array;
+      Kiểu mảng nhiều chiều thứ hai là mảng kiểu răng cưa, trong đó kích
+thước của mỗi chiều là có thể khác nhau. Chính xác, đây là kiểu dữ liệu mảng
+của các mảng. Đoạn mã lệnh dưới đây minh họa cách định nghĩa một mảng kiểu
+răng cưa:
+      int[][] a = new int[3][];
+      a[0] = new int[4];
+      a[1] = new int[3];
+      a[2] = new int[1];
+      b) struct:
+       Kiểu dữ liệu struct là kiểu dữ liệu dung lượng hạn nhẹ (light-weight). Nó
+thường được dùng trong trường hợp trình điều khiển dữ liệu chỉ cần một tập các
+biến giá trị. Các struct tương tự như các class ở chỗ chúng đều có thể chứa các
+hàm tạo, các phương thức, thậm chí là có thể xây dựng các giao diện. Tuy nhiên,
+struct khác class ở các điểm chính:
+     - struct là kiểu giá trị còn class là kiểu tham chiếu. Điều này dẫn đến
+chúng có cách dùng khác nhau khi là tham số được truyền cho các phương thức.
+      - struct không hỗ trợ kế thừa. Tuy nhiên, struct có thể tiết kiệm bộ nhớ
+hơn so với class.
+      - struct luôn luôn có hàm tạo mặc định trong khi class có thể ẩn hạm tạo
+bằng cách cài đặt phạm vị truy cập của của hàm tạo là private.
+      Sau đây là một ví dụ về cách dùng của struct:
+      using System;
+      struct Person
+      {
+          string name;
+          DateTime birthDate;
+          int heightInCm;
+          int weightInKg;
+       public Person(string name, DateTime birthDate, int
+heightInCm, int
+              weightInKg)
+
+          {
+               this.name = name;
+               this.birthDate = birthDate;
+               this.heightInCm = heightInCm;
+               this.weightInKg = weightInKg;
+          }
+      }
+      public class StructWikiBookSample
+      {
+          public static void Main()
+          {
+           Person dana = new Person("Dana Developer", new
+DateTime(1974, 7, 18),178, 50);
+          }
+      }
+       Kiểu struct vận hành hiệu quả nhất trong trường hợp dữ liệu có dung
+lượng nhỏ hơn hoặc bằng 16 byte. Nếu dữ liệu có dung lượng lớn hơn nhiều thì
+ta nên dùng kiểu class.
+      c) enum:
+      Kiểu enum là kiểu dữ liệu nguyên với mỗi giá trị được gán với một cái tên
+định danh. Sử dụng enum sẽ giúp cho một tập các giá trị trở nên dễ gợi nhớ.
+      Nếu có 7 số nguyên tượng trưng cho các ngày trong tuần thì ta có thể sử
+dụng enum gợi nhớ có khai báo như sau:
+     enum Weekday {Monday, Tuesday, Wednesday, Thursday,
+Friday, Saturday, Sunday};
+       Hay trường hợp có ba số 0, 1 và 2 tương ứng với ba buổi trong ngày thì ta
+có thể gợi nhớ tập này bằng enum sau:
+      public enum TimeOfDay
+      {
+          Morning = 0,
+          Afternoon = 1,
+          Evening = 2
+      }
+      Việc sử dụng enum sẽ giúp cho đoạn mã lệnh của dễ quản lý, dễ hiểu hơn.
+
+      Kiểu enum cũng hỗ trợ chúng ta chuyển đổi giữa giá trị và chuỗi định
+danh tương ứng. Sau đây là đoạn mã ví dụ.
+      //enum -&gt; string
+      TimeOfDay time = TimeOfDay.Afternoon;
+     Console.WriteLine(time.ToString()); // chuoi in ra la
+“Afternoon”
+      //string -&gt; enum
+     TimeOfDay time2 = (TimeOfDay)
+Enum.Parse(typeof(TimeOfDay), "Afternoon", true);
+      Console.WriteLine((int)time2);
+      1.3. Câu hỏi và bài tập
+      1) Cài đặt bộ Microsoft Visual Studio 2005 (2008, 2010) lên máy tính cá
+         nhân.
+      Lưu ý: chỉ cài đặt ngôn ngữ C#, không cần cài đặt các ngôn ngữ J#, C++,
+Visual Basic,…
+      2) Hãy so sánh hai cách xây dựng ứng dụng: có sử dụng IDE và không sử
+         dụng IDE.
+      3) Theo quan điểm cá nhân của anh (chị), lợi ích của việc sử dụng .NET
+         Framework là gì?
+      4) Hãy nêu những đặc điểm mà anh (chị) thấy là khác nhau giữa C và C#.
+      5) Viết chương trình nhập vào chiều dài và chiều rộng của một hình chữ
+         nhật. In ra màn hình chu vi và diện tích của hình chữ nhật đó.
+      6) Viết chương trình nhập vào 4 số nguyên. In ra màn hình giá trị lớn
+         nhất.
+      7) Viết chương trình giải phương trình bậc nhất: bx +c =0 với các hệ số b,
+         c bất kỳ.
+      8) Viết chương trình giải phương trình bậc hai: ax2 + bx +c =0 với các hệ
+         số a, b, c bất kỳ.
+      9) Viết chương trình nhập vào một số nguyên dương. Chương trình kết
+         thúc khi nhận được một số nguyên dương.
+      10) Viết chương trình nhập vào một số nguyên dương n. Cho biết n có
+         phải là số nguyên tố không ?
+      11) Viết chương trình nhập vào một số nguyên dương n. In ra màn hình
+         các số nguyên tố bé hơn n.
+
+      12) Viết chương trình có 4 mục chọn. Mục chọn đầu tiên cho phép
+         dừng chương trình và 3 mục chọn tiếp theo sẽ thực hiện 3 trong các bài
+         tập 5-11.
+      1.4. Bài mẫu
+       Viết chương trình nhập vào danh sách sinh viên và in ra danh sách thông
+tin sinh viên vừa nhập. Thông tin về sinh viên bao gồm: mã sinh viên, họ tên
+sinh viên, ngày sinh, giới tính và mã lớp.
+      Bài làm mẫu:
+using System;
+
+namespace Sample
+{
+    // struct thể hiện sinh viên
+    struct SinhVien
+    {
+        string masv, hotensv, malop;
+        DateTime ngaysinh;
+        bool gioitinh;
+
+        // Gán dữ liệu cho 1 sinh viên
+        public static SinhVien NhapSV(string masv, string
+hotensv, string ngaysinh, string gioitinh, string malop)
+        {
+            SinhVien sv = new SinhVien();
+            sv.masv = masv;
+            sv.hotensv = hotensv;
+            sv.ngaysinh = DateTime.Parse(ngaysinh);
+            sv.gioitinh = gioitinh == "nam" ? true : false;
+            sv.malop = malop;
+            return sv;
+        }
+
+        // In 1 sinh viên thành 1 dòng dữ liệu
+        public static string InSV(SinhVien sv)
+        {
+            string chuoi = sv.malop + ", " + sv.hotensv + ", "
++ sv.ngaysinh.ToShortDateString() + ", ";
+            if (sv.gioitinh == true)
+                 chuoi += "nam";
+            else
+                 chuoi += "nu";
+            chuoi += ", " + sv.malop;
+            return chuoi;
+        }
+    }
+    class Program
+
+   {
+         // Khai báo biến của lớp
+         static SinhVien[] dssv = new SinhVien[100];
+         static int n;
+
+         // Nhập danh sách sinh viên từ bàn phím
+         static void NhapDSSV()
+         {
+             string soluong, masv, hotensv, ngaysinh, gioitinh,
+malop;
+             int i;
+             Console.Clear();
+             Console.WriteLine("Chao mung ban den voi chuong
+trinh");
+            Console.Write("Dau tien, ban hay nhap so luong
+sinh vien, n = ");
+            soluong = Console.ReadLine();
+            n = int.Parse(soluong);
+            Console.WriteLine("Tiep theo, ban hay nhap thong
+tin cho so sinh vien");
+            for (i = 0; i &lt; n; i++)
+            {
+                Console.WriteLine("Nhap thong tin sinh vien
+thu " + (i + 1));
+                Console.Write("- Ma sinh vien = ");
+                masv = Console.ReadLine();
+                Console.Write("- Ho ten sinh vien = ");
+                hotensv = Console.ReadLine();
+                Console.Write("- Ngay sinh cua sinh vien
+(dd/mm/yyyy) = ");
+                ngaysinh = Console.ReadLine();
+                Console.Write("- Gioi tinh sinh vien (nam hoac
+nu) = ");
+                gioitinh = Console.ReadLine();
+                Console.Write("- Ma lop sinh vien = ");
+                malop = Console.ReadLine();
+                dssv[i] = SinhVien.NhapSV(masv, hotensv,
+ngaysinh, gioitinh, malop);
+            }
+        }
+        // In danh sách sinh viên ra màn hình Console
+        static void InDSSV()
+        {
+            Console.WriteLine("Danh sach sinh vien vua nhap
+la:");
+            for(int i=0;i&lt;n;i++){
+                Console.WriteLine((i+1)+".
+"+SinhVien.InSV(dssv[i]));
+            }
+
+        }
+        // Chương trình chính
+        static void Main(string[] args)
+        {
+            NhapDSSV();
+            InDSSV();
+            Console.ReadKey();
+        }
+    }
+}</baihoc>
+<baitap bai="1" loai="tuluyen" de="Trình bày nội dung chính của mục: 1.1. Tổng quan Microsoft .NET" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="1" loai="tuluyen" de="Trình bày nội dung chính của mục: 1.1.1. Kiến trúc .NET framework" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="1" loai="tuluyen" de="Trình bày nội dung chính của mục: 1.1.2. Biên dịch và ngôn ngữ trung gian" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="1" loai="tuluyen" de="Trình bày nội dung chính của mục: 1.2. Giới thiệu ngôn ngữ C#" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="1" loai="tuluyen" de="Trình bày nội dung chính của mục: 1.2.1. Chương trình đầu tiên" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="1" loai="tuluyen" de="Trình bày nội dung chính của mục: 1.2.2. Kiểu dữ liệu, biểu thức, câu lệnh" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="1" loai="tuluyen" de="Trình bày nội dung chính của mục: 1.2.3. Chú thích" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="1" loai="tuluyen" de="Trình bày nội dung chính của mục: 1.2.4. Các cấu trúc dữ liệu" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baihoc stt="2" tieude="Chương 2. Hướng đối tượng trong C#">Chương 2:
+                      Hướng đối tượng trong C#
+
+                              Thời lượng: 12 tiết
+      Mục tiêu:
+      - Hiểu được hướng đối tượng trong C#,
+      - Hiểu được không gian tên, ngoại lệ,
+      - Sử dụng được một số lớp thông dụng,
+      - Viết được một chương trình hướng đối tượng bằng C#.
+
+      2.1. Lớp, đối tượng
+       Các lớp (class) là các kiểu nền tảng của C#. Một lớp là một một cấu trúc
+dữ liệu được hình thành bằng cách kết nối những trạng thái (trường) với hành
+động (phương thức, hàm) thành một đơn vị đơn lẻ. Một lớp cung cấp một định
+nghĩa cho việc tự động tạo thể hiện cho của lớp cũng như thông tin về đối tượng.
+Các lớp có hỗ trợ việc kế thừa và đa hình, lớp dẫn xuất có thể mở rộng và đặc
+biệt hóa từ lớp cơ sở.
+       Chúng ta có thể tạo ra một lớp mới bằng cách sử dụng khai báo lớp. Một
+khai báo lớp được bắt đầu với phần đầu gồm thuộc tính truy cập của lớp, tên lớp,
+tên lớp cơ sở và các giao diện mà lớp đó kế thừa. Sau phần đầu là phần thân lớp.
+Thân lớp bao gồm một danh sách các khai báo thành phần được đặt giữa hai ký
+hiệu mở, đóng đoạn: {, }.
+      Sau đây là một khai báo lớp của một lớp đơn giản có tên là Point.
+      public class Point
+      {
+          public int x, y;
+          public Point(int x, int y) {
+               this.x = x;
+               this.y = y;
+          }
+      }
+      Các đối tượng (thể hiện) của lớp được tạo ra bằng cách sử dụng toán tử
+new. Toán tử new làm hệ điều hành cấp phát một vùng nhớ cho đối tượng, triệu
+gọi hàm dựng (constructor) để khởi tạo một đối tượng và kết quả trả về là một
+
+tham chiếu đến đối tượng.
+      Các câu lệnh sau sẽ tạo ra hai đối tượng Point và tham chiếu đến các đối
+tượng này bằng hai biến.
+      Point p1 = new Point(0, 0);
+      Point p2 = new Point(10, 20);
+      Khi một đối tượng có thời gian dài không sử dụng thì .NET sẽ tự động
+hủy đối tượng đó thông qua công cụ dọn rác.
+      2.1.1. Các thành phần của lớp
+       Các thành phần của lớp bao gồm thành phần tĩnh (static) và thành phần
+thể hiện. Thành phần tĩnh thuộc lớp và thành phần thể hiện thuộc đối tượng cụ
+thể của lớp.
+      Bảng sau mô tả tổng quan về các loại thành phần của lớp.
+         Thành phần                             Mô tả
+        Constants       các giá trị hằng của lớp
+        Fields          các biến của lớp
+        Methods         các tính toán và hành động được thực hiện bởi lớp
+        Properties      các hành động liên quan đến đọc, ghi dữ liệu của
+                        lớp
+        Indexers        các hành động liên quan đến việc đánh chỉ mục các
+                        thành phần thuộc mảng của lớp
+        Events          các sự kiện được sinh ra bởi lớp
+
+      2.1.2. Phạm vi truy cập của lớp
+      Phạm vi truy cập làm giới hạn khả năng truy cập của các thành phần giữa
+các lớp. Lớp trong C# có 5 phạm vi truy cập chính sau:
+         Phạm vi truy cập                          Ý nghĩa
+        public                 không hạn chế
+        protected              chỉ nó và những lớp dẫn xuất từ nó
+        internal               chỉ những lớp trong cùng chương trình
+        protected internal     chỉ nó và những lớp dẫn xuất trong cũng
+                               chương trình
+        private                chỉ nó
+
+       2.1.3. Ví dụ về lớp
+
+public class List
+{
+
+       const int defaultCapacity = 4;                                  Constant
+
+       object[] items;                                                 Fields
+       int count;
+
+       public List(): List(defaultCapacity) {}                         Constructors
+       public List(int capacity) {
+       items = new object[capacity];
+       }
+
+       public int Count {                                              Properties
+                      get { return count; }
+       }
+       public string Capacity {
+                      get { return items.Length;
+                      }
+                      set {
+                               if (value &lt; count) value = count;
+                               if (value != items.Length) {
+                              object[] newItems = new object[value];
+                          Array.Copy(items, 0, newItems, 0, count);
+                               items = newItems;
+                               }
+                      }
+       }
+
+       public object this[int index] {                                 Indexer
+              get {
+                      return items[index];
+              }
+              set {
+
+                  items[index] = value;
+                  OnListChange();
+           }
+    }
+
+    public void Add(object item) {                                Methods
+           if (count == Capacity)
+                  Capacity = count * 2;
+           items[count] = item;
+           count++;
+           OnChanged();
+    }
+    protected virtual void OnChanged() {
+           if (Changed != null) Changed(this, EventArgs.Empty);
+    }
+    public override bool Equals(object other) {
+           return Equals(this, other as List);
+    }
+    static bool Equals(List a, List b) {
+           if (a == null) return b == null;
+           if (b == null || a.count != b.count) return false;
+           for (int i = 0; i &lt; a.count; i++) {
+                  if (!object.Equals(a.items[i], b.items[i])) {
+                          return false;
+                  }
+           }
+           return true;
+    }
+
+    public event EventHandler Changed;                            Event
+
+}
+
+      2.2. Không gian tên, lệnh using
+      2.2.1. Không gian tên
+       Chúng ta có thể hình dung: việc quản lý lớp trong C# cũng giống như việc
+quản lý file trong bộ nhớ máy tính. Điều này có nghĩa là số lượng lớp trong C#
+rất nhiều. Trong máy tính, người ta sắp xếp các file vào các thư mục (folder).
+Các thư mục chứa các thư mục con và các file. Các file trong các thư mục khác
+nhau được phép trùng tên. Trong C#, người ta sắp xếp các lớp vào các không
+gian tên (namespace). Các không gian tên cũng được phân cấp như các thư mục
+trong máy tính. Các lớp trong các không gian tên khác nhau được phép trùng
+tên.
+      Ta có thể khai báo nhiều không gian tên như sau:
+      namespace Wrox
+      {
+          namespace ProCSharp
+          {
+              namespace Basics
+              {
+                   class NamespaceExample
+                   {
+                        // Code for the class here...
+                   }
+              }
+          }
+      }
+     Mỗi một không gian tên được soạn như một tên. Như vậy, tên đầy đủ của
+không gian tên ProCSharp là Wrox.ProCSharp, và tên đầy đủ của lớp
+NamespaceExample là Wrox.ProCSharp.Basics.NamespaceExample.
+      Chúng ta cũng dùng cấu trúc này để tổ chức không gian tên trong định
+nghĩa không gian tên. Nên đoạn mã có thể viết như sau :
+      namespace Wrox.ProCSharp.Basics
+      {
+          class NamespaceExample
+          {
+              // Code for the class here...
+
+          }
+      }
+      2.2.2. Lệnh using
+     Từ khoá using giúp ta giảm thiểu việc phải gõ những không gian tên trước
+các hàm hành sự hoặc thuộc tính, thí dụ sau sử dụng không gian tên
+Wrox.ProCSharp thay vì phải gõ đầy đủ đường dẫn.
+      Cú pháp: using &lt;không gian tên&gt;;
+      using Wrox.ProCSharp;
+      class Test
+      {
+          public static int Main()
+          {
+           Basics.NamespaceExample NSEx = new
+Basics.NamespaceExample();
+              return 0;
+          }
+      }
+      2.2.3. Bí danh của không gian tên
+      Một cách sử dụng khác của từ khoá using là gán những bí danh cho các
+không gian tên. Nếu chúng ta có một không gian tên dài lê thê mà bạn muốn sử
+dụng trong nhiều chỗ trong đoạn mã thì chúng ta có thể gán một bí danh cho
+không gian tên đó.
+      Cú pháp gán bí danh:
+      using &lt;tên bí danh&gt; = NamespaceName;
+      Giả sử trong chương trình của chúng ta có lớp NamespaceExample ở
+trong không gian tên Wrox.ProCSharp.Basics và lớp NamespaceExample ở
+trong không gian tên System.Data.IO. Ta thấy hai lớp này có tên giống nhau và
+nằm trong các không gian tên khác nhau. Mỗi khi sử dụng đến tên lớp, chúng ta
+buộc phải gõ lại không gian tên vì tên lớp là giống nhau.
+       Sử dụng bí danh trong tình huống này luôn được khuyến cáo. Ta xét ví dụ
+cụ thể sau.
+      using System;
+      using NoN1 = Wrox.ProCSharp.Basics;
+      using NoN2 = System.Data.IO;
+
+      class Test
+      {
+          public static int Main()
+          {
+           NoN1.NamespaceExample NSEx = new
+NoN1.NamespaceExample();
+              Console.WriteLine(NSEx.GetNamespace());
+           NoN2.NamespaceExample NSEx2 = new
+NoN2.NamespaceExample();
+              Console.WriteLine(NSEx2.GetNamespace());
+              return 0;
+          }
+      }
+      2.3. Quản lý ngoại lệ
+      Quản lý ngoại lệ là việc quan trọng trong xây dựng phần mềm. Quản lý
+ngoại lệ tốt sẽ làm chương trình chạy trơn tru và có giải thích ngay cả khi
+chương trình chưa xử lý trọn vẹn yêu cầu của người dùng. Một chương trình
+được viết tốt sẽ không bao giờ bị dừng bởi ngoại lệ.
+      2.3.1. Cấu trúc của một ngoại lệ
+      Một ngoại lệ là một lớp kế thừa từ lớp Exception. Ngoại lệ phát sinh khi
+chương trình gặp lỗi (không thể xử lý một vấn đề một cách bình thường). Ngoại
+lệ cung cấp đầy đủ các thông tin về lỗi.
+      Kiến trúc phân tầng theo sự kế thừa của ngoại lệ:
+Exception
+      |--------- IOException
+      |--------- System Exception
+                        |------- OutOfMemoryException
+                        |------- OverflowException
+                        |------- …
+                        |------- CoreException
+                                         |------- …
+                                         |------- NullReferencException
+      Một ngoại lệ cần được nêu rõ tên lớp và mô tả. C# sẽ tự động sinh ra
+ngoại lệ nếu gặp trường hợp ngoại lệ.
+      2.3.2. Ném ngoại lệ
+     Ngoại lệ được ném khi ta nhận được một ngoại lệ nhưng ta lại không
+muốn xử lý nó hoặc ta có thể tự ném nếu ta cảm thấy có thể sinh ra lỗi gì đó.
+      Cú pháp ném ngoại lệ:
+
+             TT             Cú pháp              Trường hợp sử dụng
+
+              1   throw;                         Vừa bắt được lỗi
+
+              2   throw &lt;đối tượng lỗi&gt;;         Vừa bắt được lỗi/
+                                                 Vừa sinh ra lỗi
+
+      Nhận xét: cú pháp (1) là rút gọn của cú pháp (2) trong trường hợp vừa bắt
+được lỗi.
+      2.3.3. Bắt ngoại lệ
+      Cú pháp bắt ngoại lệ:
+      try {
+           // đoạn mã 1
+      }
+      catch{
+           // đoạn mã 2
+      }
+      [finally
+      {
+           // đoạn mã 3
+      }]
+      Trong đó:
+      - Đoạn mã 1: là đoạn mã nhằm thực hiện một công việc nào đó.
+      - Đoạn mã 2: là đoạn mã xử lý trong trường hợp đoạn mã 1 xảy ra ngoại
+lệ
+      - Đoạn mã 3: là đoạn mã xử lý các công việc mà đoạn mã 1 chưa thực
+hiện đã sinh lỗi hoặc công việc mà dù đoạn mã 1 có xảy ra ngoại lệ hay không
+cũng phải thực hiện.
+      Trong trường hợp bắt nhiều ngoại lệ khác nhau thì có thể có nhiều khối
+
+catch.
+         Ví dụ sau là đoạn mã có chứa nhiều khối catch.
+         using System;
+         using System.IO;
+         namespace Wrox.ProCSharp.AdvancedCSharp
+         {
+             class MainEntryPoint
+             {
+                 static void Main()
+                 {
+                     string fileName;
+                     Console.Write("Please type in the name of
+the file " +
+                 "containing the names of the people to be
+cold-called &gt; ");
+                     fileName = Console.ReadLine();
+              ColdCallFileReader peopleToRing = new
+ColdCallFileReader();
+
+                     try
+                     {
+                           peopleToRing.Open(fileName);
+                 for (int i=0 ;
+i&lt;peopleToRing.NPeopleToRing; i++)
+                           {
+                               peopleToRing.ProcessNextPerson();
+                           }
+                           Console.WriteLine("All callees processed
+correctly");
+                     }
+
+                     catch(FileNotFoundException e)
+                     {
+                           Console.WriteLine("The file {0} does not
+
+exist", fileName);
+                    }
+                    catch(ColdCallFileFormatException e)
+                    {
+                        Console.WriteLine(
+               "The file {0} appears to have been
+corrupted", fileName);
+                 Console.WriteLine("Details of problem
+are: {0}", e.Message);
+                        if (e.InnerException != null)
+                           Console.WriteLine(
+                       "Inner exception was: {0}",
+e.InnerException.Message);
+                    }
+
+                    catch(Exception e)
+                    {
+                        Console.WriteLine("Exception occurred:\n"
++ e.Message);
+                    }
+
+                    finally
+                    {
+                        peopleToRing.Dispose();
+                    }
+                    Console.ReadLine();
+              }
+      }
+      2.4. Một số lớp thông dụng
+      2.4.1. List
+      List là một mảng động các phần tử cùng kiểu thuộc không gian tên
+System.Collections.Generic. Các thao tác cơ bản trên mảng đã được List xử lý
+tương đối tốt.
+
+      - Khai báo mảng động List:
+      List&lt;int&gt;A;
+      A=new List&lt;int&gt; ();
+      List&lt;byte&gt; B = new&lt;byte&gt;();
+      - Một số thuộc tính và phương thức của mảng kiểu List:
+
+                Tên                         Ý nghĩa
+
+           Capacity        Kích thướt tối đa (nếu muốn hạn chế)
+
+           Count           Số lượng phần tử thực tế
+
+           Add()           Bổ sung cuối 1 phần tử
+
+           AddRange()      Bổ sung cuối một mảng động
+
+           Clear()         Làm sạch mảng
+
+           Contains()      Kiểm tra sự tồn tại của một phần tử
+
+           Insert()        Chèn một phần tử vào một vị trí cụ thể
+
+           Remove()        Loại bỏ một phần tử có giá trị cho trước
+
+           RemoveAt()      Loại bỏ phần tử tại 1 vị trí cho trước
+
+      2.4.2. String
+      String là lớp được thiết kế để thể hiện cho một chuỗi ký tự.
+      - Khai báo một chuỗi:
+      String s1, s2= “abc”;
+      - Đường dẫn thư mục:
+      Một file có tên là Vidu01.CS nằm trong đường dẫn D:\Csharp\Vidu có thể
+được biểu diễn trong C# bằng s1 và s2 như sau:
+      String s1= “D:\\Csharp\\Vidu\\Vidu01.CS”;
+      String s2= @“D:\Csharp\Vidu\Vidu01.CS”;
+      - Một số thuộc tính và phương thức thường dùng trên chuỗi:
+
+               Tên                            Ý nghĩa
+
+          Length           Độ dài của chuỗi
+
+          CompareTo()       So sánh 2 chuỗi
+
+          Contains()        Kiểm tra sự tồn tại của của con
+
+          CopyTo()          Sao chép chuỗi con
+
+          Insert()          Chèn chuỗi
+
+          Remove()          Loại bỏ chuổi
+
+          Replace()         Thay thế chuỗi con bằng chuỗi con khác
+
+          Split()           Tách chuối thành nhiều chuỗi
+
+          SubString()       Lấy chuỗi con
+
+          Trim()            Cắt bỏ ký tự trắng thừa
+
+      2.4.3. StreamReader, StreamWriter
+      Các lớp hỗ trợ thao tác trên file thuộc không gian tên System.IO gồm một
+số lớp như: Stream, StreamReader, StreamWriter, FileStream. StreamReader và
+StreamWriter thường được sử dụng để thao tác với file văn bản.
+      a) StreamReader:
+      Các phương thức thường dùng trên StreamReader:
+
+                      Tên                      Ý nghĩa
+
+            Close()               Đóng file
+
+            Peek()                Trả về ký tự tiếp theo (-1: EOF)
+
+            Read()                Đọc ký tự tiếp theo
+
+            ReadBlock()           Đọc một dãy ký tự tiếp theo
+
+            ReadLine()            Đọc 1 dòng
+
+            ReadToEnd()           Đọc đến cuối file
+
+      Ví dụ: Giả sử trong ổ đĩa D:\ có file data.txt, chương trình sau sẽ đọc nội
+dung văn bản trong file này và in ra màn hình.
+      using System;
+      using System.Text;
+
+      using System.IO;
+      class Program
+      {
+          static void Main(string[] args)
+          {
+           StreamReader sr=new
+StreamReader(@"D:\data.txt");
+               String line;
+               while (sr.Peek() &gt;= 0)
+               {
+                    line = sr.ReadLine();
+                    Console.WriteLine(line);
+               }
+               sr.Close();
+          }
+      }
+      b) StreamWriter:
+      Các phương thức thường dùng trên StreamWriter:
+
+                       Tên                    Ý nghĩa
+
+                   Close()        Đóng file
+
+                   Flush()        Xóa bộ đệm
+
+                   Write()        Viết chuỗi
+
+                   WriteLine()    Viết chuỗi và xuống dòng
+
+      Ví dụ: Giả sử trong ổ đĩa D:\ chưa có file data.txt, chương trình sau sẽ tạo
+mới file data.txt và bổ sung hai dòng văn bản.
+      using System;
+      using System.Text;
+      using System.IO;
+      class Program
+      {
+
+          static void Main(string[] args)
+          {
+           StreamWriter sw = new
+StreamWriter(@"D:\data.txt", true, Encoding.Unicode);
+              sw.WriteLine("Chăm chỉ" + " +" + " đúng phương
+pháp");
+              sw.WriteLine("Có thể giỏi lập trình");
+              sw.Close();
+          }
+    }
+    2.5. Câu hỏi và bài tập
+    1) Theo anh (chị), trong trường hợp nào ta phải ném ngoại lệ và trong
+       trường hợp nào ta phải xử lý ngoại lệ?
+    2) Thiết kế một lớp để thể hiện họ và tên của một người Việt Nam. Lớp
+       này phải cung cấp được:
+        - Chuẩn hóa (không có ký tự trắng thừa, chữ cái đầu từ in hoa và in
+          thường các chữ cái còn lại);
+        - Họ;
+        - Tên;
+        - Chữ lót (nếu có);
+        - Họ đệm;
+        - Số từ (tiếng);
+        - Độ dài (số ký tự trong chuỗi họ và tên);
+        - So sánh được hai họ và tên theo thứ tự ABC, tên trước, họ đệm sau.
+    3) Đóng gói lớp ở bài 2 trên thành thư viện (*.DLL) và sử dụng lớp vừa
+       đóng gói trong chương trình.
+    4) Thiết kế một lớp (dùng mảng tĩnh) để thể hiện một mảng động chứa
+       các số nguyên. Lớp này phải cung cấp được:
+        - Cho phép thêm một số nguyên;
+        - Xóa đi một số ở vị trí bất kỳ;
+        - Xóa đi các số có giá trị bằng một giá trị cho trước;
+        - Xuất các số trong đối tượng thành một chuỗi có một ký tự phân
+          cách ở giữa hai số;
+
+         - Tạo một đối tượng tự một chuỗi chứa các số được phân cách bởi
+           một ký tự cho trước.
+      Đóng gói lớp này thành thư viện.
+      5) Thiết kế lớp để thể hiện một ngày (gồm: ngày, tháng, năm). Lớp này
+         phải cung cấp được:
+         - Kiểm tra một ngày có hợp lệ hay không ?;
+         - Ngày hôm trước của một ngày;
+         - Ngày hôm sau của một ngày;
+         - Ngày thứ k (có thể âm hoặc dương) kể từ một ngày;
+         - Khoảng cách giữa hai ngày.
+      Đóng gói lớp này thành thư viện.
+      2.6. Bài mẫu
+      Xây dựng thư viện:
+      - Xây dựng class HoVaTen để thể hiện cho họ và tên của một người Việt
+Nam. Ngoài ra, class này còn hỗ trợ định dạng lại tên theo quy cách: in hoa ký
+từ đầu của mỗi từ trong tên và in thường các ký tự còn lại.
+       - Sử dụng class HoVaTen, xây dựng class SinhVien để thể hiện cho
+(thông tin) của một sinh viên. Thông tin về sinh viên bao gồm: mã sinh viên, họ
+tên, ngày sinh, giới tính và mã lớp. Ngoài ra, class này còn hỗ trợ chuyển thông
+tin của sinh viên thành một chuỗi bằng cách nối các thông tin lại với nhau với ký
+tự phân cách là dấu thăng (#).
+      - Sử dụng class SinhVien, xây dựng class DanhSachSinhVien để lưu giữ
+danh sách (thông tin) sinh viên. Ngoài ra, class còn hỗ trợ lưu danh sách sinh
+viên xuống file và đọc thông tin danh sách sinh viên từ file.
+      - Biên dịch thư viện thành file thư viện (*.DLL).
+      Bài làm mẫu:
+using System;
+
+namespace Sample
+{
+    public class HoVaTen
+    {
+        // Khai báo các biến của class
+        string _ho, _chulot = null, _ten;
+        // Tạo các thuộc tính
+        public string Ten
+        {
+
+           get { return _ten; }
+           set { _ten = value; }
+        }
+        public string ChuLot
+        {
+            get { return _chulot; }
+            set { _chulot = value; }
+        }
+        public string Ho
+        {
+            get { return _ho; }
+            set { _ho = value; }
+        }
+        public string HoDem
+        {
+            get
+            {
+                if (_chulot == null)
+                     return _ho;
+                else return _ho + " " + _chulot;
+            }
+        }
+        // Hàm tạo mặc định
+        public HoVaTen() { }
+        // Hàm tạo có tham số
+        public HoVaTen(string ho, string chulot, string ten)
+        {
+            _ho = ho; _chulot = chulot; _ten = ten;
+        }
+        // Chuyển nội dung thành chuỗi (viết đầy đủ họ tên)
+        public override string ToString()
+        {
+            return HoDem + " " + _ten;
+        }
+        // Định dạng: In hoa chữ cái đầu, in thường các chữ
+cái còn lại, xóa khoảng trắng thừa
+        static string DinhDangTen(string hovaten)
+        {
+            string ketqua = hovaten.Substring(0, 1).
+            ToUpper();
+            for (int i = 1; i &lt; hovaten.Length; i++)
+                if (hovaten[i - 1] != ' ')
+                     ketqua += hovaten.Substring(i, 1).
+                     ToLower();
+                else
+                     if (hovaten[i] != ' ')
+                         ketqua += hovaten.Substring(i, 1).
+                         ToUpper();
+            return ketqua;
+
+        }
+        // Tạo 1 HoVaTen từ một chuỗi họ tên
+        public static HoVaTen GetHoVaTen(string hovaten)
+        {
+            string ho, chulot = null, ten, tam = hovaten.
+            Trim();
+            if (tam.Length &lt; 4 &amp;&amp; tam.IndexOf(' ') == -1)
+                return null;
+            string[] mang = DinhDangTen(tam).Split(
+            new char[] { ' ' },
+            StringSplitOptions.RemoveEmptyEntries
+            );
+            if (mang.Length &gt; 2)
+            {
+                chulot = mang[1];
+                for (int i = 2; i &lt; mang.Length - 1; i++)
+                    chulot += " " + mang[i];
+            }
+            ho = mang[0];
+            ten = mang[mang.Length - 1];
+            return new HoVaTen(ho, chulot, ten);
+        }
+    }
+}
+
+using System;
+
+namespace Sample
+{
+    public class SinhVien
+    {
+        string _maSV, _maLop;
+        HoVaTen _hoTenSV;
+        DateTime _ngaySinh;
+        bool _gioiTinh;
+
+        public string MaSV
+        {
+            get { return _maSV; }
+            set { _maSV = value; }
+        }
+
+        public HoVaTen HoTenSV
+        {
+            get { return _hoTenSV; }
+            set { _hoTenSV = value; }
+        }
+
+       public DateTime NgaySinh
+       {
+           get { return _ngaySinh; }
+           set { _ngaySinh = value; }
+       }
+       public bool GioiTinh
+       {
+           get { return _gioiTinh; }
+           set { _gioiTinh = value; }
+       }
+       public string MaLop
+       {
+           get { return _maLop; }
+           set { _maLop = value; }
+       }
+
+        public SinhVien(){}
+        public SinhVien(string masv, string hotensv, string
+ngaysinh, string gioitinh, string malop)
+        {
+            this._maSV = masv.ToUpper();
+            this._hoTenSV = HoVaTen.GetHoVaTen(hotensv);
+            this._ngaySinh = DateTime.Parse(ngaysinh);
+            if (gioitinh.ToUpper() == "NAM")
+                 this._gioiTinh = true;
+            else
+                 this._gioiTinh = false;
+            this._maLop = malop.ToUpper();
+        }
+
+        // Xuất thông tin sinh viên ra chuỗi (có chèn mã ngăn
+cách giữa các mục thông tin)
+        public override string ToString()
+        {
+            string chuoima = this._maSV + "#" +
+this._hoTenSV.ToString() + "#" +
+this._ngaySinh.ToShortDateString() + "#";
+            chuoima += this._gioiTinh == true ? "nam" : "nu";
+            chuoima += "#" + this._maLop;
+            return chuoima;
+        }
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.IO;
+
+namespace Sample
+{
+    public class DanhSachSinhVien:List&lt;SinhVien&gt;
+    {
+        // Xuất danh sách thông tin sinh viên ra chuỗi mã (có
+chèn mã ngăn cách giữa các sinh viên) để lưu xuống file
+        public void WriteSVToFile(string fileName)
+        {
+            StreamWriter sw = new StreamWriter(fileName,
+false, Encoding.UTF8);
+            foreach (SinhVien sv in this)
+            {
+                 sw.WriteLine(sv.ToString());
+            }
+            sw.Close();
+        }
+        // Đọc danh sách sinh viên từ file đã được mã hóa theo
+cách trên
+        public void ReadSVFromFile(string tenFile)
+        {
+            this.Clear();
+            char[] chuoiNganCach = new char[] { '#' };
+            StreamReader sr = new StreamReader(tenFile);
+            string line;
+            while (sr.Peek() &gt;= 0)
+            {
+                 line = sr.ReadLine();
+                 string[] datas = line.Split(chuoiNganCach,
+StringSplitOptions.RemoveEmptyEntries);
+                 SinhVien sv = new SinhVien(datas[0], datas[1],
+datas[2], datas[3], datas[4]);
+                 this.Add(sv);
+            }
+        }
+    }
+}</baihoc>
+<baitap bai="2" loai="tuluyen" de="Trình bày nội dung chính của mục: 2.1. Lớp, đối tượng" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="2" loai="tuluyen" de="Trình bày nội dung chính của mục: 2.1.1. Các thành phần của lớp" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="2" loai="tuluyen" de="Trình bày nội dung chính của mục: 2.1.2. Phạm vi truy cập của lớp" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="2" loai="tuluyen" de="Trình bày nội dung chính của mục: 2.1.3. Ví dụ về lớp" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="2" loai="tuluyen" de="Trình bày nội dung chính của mục: 2.2. Không gian tên, lệnh using" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="2" loai="tuluyen" de="Trình bày nội dung chính của mục: 2.2.1. Không gian tên" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="2" loai="tuluyen" de="Trình bày nội dung chính của mục: 2.2.2. Lệnh using" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="2" loai="tuluyen" de="Trình bày nội dung chính của mục: 2.2.3. Bí danh của không gian tên" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baihoc stt="3" tieude="Chương 3. Ứng dụng Windows trong C#">Chương 3:
+                    Ứng dụng Windows trong C#
+
+                              Thời lượng: 12 tiết
+      Mục tiêu:
+      - Biết được các nguyên tắc và xu hướng thiết kế giao diện,
+      - Sử dụng được các điều khiển đơn giản liên quan đến giao diện trong C#,
+      - Thiết kế được giao diện cho các chương trình đơn giản, quen thuộc.
+
+      3.1. Giao diện ứng dụng và các điều khiển thông dụng
+      3.1.1. Giao diện ứng dụng
+      a) Tầm quan trọng giao diện ứng dụng:
+      Một ứng dụng đơn giản có thể được chia làm 3 tầng: giao diện, chức năng
+nghiệp vụ và cơ sở dữ liệu như Hình 3-1.
+
+                                      Giao diện
+
+                                   Tầng nghiệp vụ
+
+                                       CSDL
+
+              Hình 3-1 Cấu trúc phân tầng (lớp) đơn giản của một ứng dụng
+
+      - Giao diện (GUI - Graphical User Interface): tầng này là cầu nối giữa
+người dùng với ứng dụng, cung cấp những chức năng của ứng dụng cho người
+
+dùng và nhận lệnh từ người dùng cho ứng dụng. Tầng này cần được thiết kế sao
+cho càng thân thiện với người dùng càng tốt.
+      - Chức năng nghiệp vụ: đây là phần lõi của ứng dụng, cung cấp tất cả các
+chức năng có thể có của ứng dụng cho tầng trình bày bên trên nó.
+      - Cơ sở dữ liệu: chứa cơ sở dữ liệu của ứng dụng.
+       Như vậy, giao diện đóng vai trò quan trọng trong việc đưa ứng dụng đến
+với người dùng. Đối với họ, giao diện là cái nhìn đầu tiên về ứng dụng và họ chỉ
+biết chương trình như thế nào thông qua giao diện.
+      b) Lịch sử về giao diện:
+       Việc thiết kế giao diện như là một lịch sử đổi mới liên tục. Việc thiết kế
+giao diện là một lĩnh vực riêng biệt. Trong một lĩnh vực, người ta sẽ triển khai
+giao diện theo một cách tiếp cận hợp lý nhất. Rồi sau đó, một lập trình viên hay
+một nhóm lập trình viên đầy sáng tạo sẽ cho ra một mô hình giao diện thật sự
+mới làm thế giới ngạc nhiên. Và thời gian sau đó, hàng trăm lập trình viên đổ xô
+tạo những phiên bản tương tự có thể thích hợp hoặc không. Tiến trình bắt chước
+tiếp diễn cho đến khi một cuộc cách mạng kế tiếp xảy ra.
+       - Giao diện dòng lệnh (Command Line): là loại giao diện nguyên thủy
+thực hiện những điều cần làm. Đôi lúc, người ta cho rằng đây không phải là cách
+thiết kế giao diện vì nó không có giao diện như theo cách nhìn của ngày nay.
+Giao diện dòng lệnh bắt đầu như là cơ bản đối với những hệ điều hành như
+DOS, UNIX. Giao diện dòng lệnh không có khả năng gợi nhớ chức năng.
+      Trong Visual Studio .NET vẫn còn cung cấp một Command Window cho
+phép bạn sử dụng những dòng lệnh để dịch và chạy một chương trình đơn giản.
+Dịch và chạy một file *.cs mà không dùng IDE và sử dụng mẫu Console là các
+việc chúng ta đã làm với giao diện dòng lệnh.
+      - Giao diện đồ họa hỏi - đáp: là loại giao diện đồ họa cổ xưa vẫn còn có
+chỗ đứng trong hiện tại. Để hoàn thành một công việc thì phải trải qua nhiều
+bước. Mỗi bước là một giao diện đồ họa có chỉ dẫn công việc.
+       Trong Windows có các chương trình phổ biến theo giao diện đồ họa có
+tên là wizard. Wizard dẫn dắt bạn qua một lô câu hỏi và sau đó giúp bạn thực
+hiện một công việc phức tạp.
+      - Giao diện menu: là loại giao diện đồ họa đang thịnh hành. Chương trình
+có giao diện menu thường hiển thị các chức năng trên thanh menu của nó. Bên
+cạnh đó, giao diện chương trình còn có thêm các biểu tượng chức năng cho các
+chức năng thường dùng. Phần lớn chương trình được thiết kế giao diện theo loại
+này.
+      - Giao diện Ribbon: là loại giao diện đồ họa mới nổi thuộc loại giao diện
+
+menu. Ở loại giao diện này, các mục menu nhánh và lá được thay bằng biểu
+tượng.
+       c) Những hạn chế người dùng hữu ích:
+      Một giao diện tốt ngoài việc thiết kế đẹp, phù hợp còn phải biết hạn chế
+những thao tác không nên có từ người dùng và có những gợi ý đúng lúc. Sau đây
+là một số hạn chế hữu ích cho việc thiết kế giao diện.
+       - Hạn chế khả năng sai phạm: giao diện giúp người sử dụng tránh được
+các sai phạm về thao tác. Một số hạn chế cụ thể như: giới hạn số ký tự, dùng
+điều khiển chỉ được nhập số, dùng danh sách các lựa chọn thay vì để người dùng
+tự gõ, vô hiệu hóa những mục không hợp lệ tại thời điểm thao tác,…
+      - Hạn chế trí tưởng tượng của người sử dụng: để tránh người sử dụng
+tưởng tượng sai về kết quả mà ứng dụng đang thực hiện thì giao diện cần có
+thêm các điều khiển như: thanh trạng thái, thanh tiến trình xử lý. Hạn chế người
+sử dụng tưởng tượng về kết quả cụ thể thì giao diện có thể dùng điều khiển để
+xem trước hình, kết quả in,…
+       d) Điều khiển Form:
+       Form là điều khiển thuộc không gian tên System.Windows.Forms được
+xem như là khung giao diện. Trên Form, ta có thể đặt thêm các điều khác để
+trang trí hoặc thực hiện chức năng nào đó. Người ta dùng Form để thiết kế giao
+diện chương trình.
+       Sau đây là một số thuộc tính, sự kiện thường dùng của Form:
+
+         Tên             Ý nghĩa                  Tên             Ý nghĩa
+
+                                     Thuộc tính
+
+AutoScroll          tự động scroll        MaximizeBox        hiện nút Max
+
+BackColor           màu nền               MaximimSize        kích thước max
+
+BackgroundImage ảnh nền                   MinimizeBox        hiện nút min
+
+Cursor              hình con chuột        MinimumSize        kích thước min
+
+Enable              kích hoạt được        Opacity            độ đục
+
+Font                font chữ              ShowIcon           hiện icon
+
+ForeCore            màu chữ               ShowInTaskBar      hiện ở TaskBar
+
+FormBorderStyle     kiểu khung            Size               kích thước
+
+Icon                    hình icon             Text                    chuỗi tiêu đề
+
+IsMdiContainer          là Form cha           TopMost                 cửa sổ active
+
+Location                vị trí                WindowState             trạng thái cửa sổ
+
+                                          Sự kiện
+
+Click()                 kích chuột            Paint()             Vẽ lại Form
+
+FormClosing()           đóng Form             Resize()            thay đổi kích thước
+
+Load()                  tải Form              Show()              hiện Form
+
+       Màn hình làm việc với Form như Hình 3-2:
+
+              Hình 3-2 Giao diện làm việc với Form trên Microsoft Visual Studio 2008
+
+       Trong đó:
+       - Vùng 1: điều khiển Form.
+       - Vùng 2: các điều khiển có thể đặt lên Form.
+       - Vùng 3: cửa sổ quản lý các đối tượng trong Solution.
+       - Vùng 4: thuộc tính, sự kiện của Form.
+
+         - Vùng 5: tùy chỉnh kích thước, hàng lối các đối tượng trên Form.
+         Thông thường, C# quản lý một Form bằng 3 file:
+         - *.cs: chứa mã người dùng viết thêm.
+         - *.Designer.cs: chứa mã tự sinh khi người dùng thiết kế Form bằng
+chuột.
+         - *.resx: chứa tài nguyên dùng cho Form.
+         e) MDI Form:
+      MDIForm hay được gọi là Form cha là Form chứa Form khác. Giả sử ta
+có hai Form có tên là frmParent và frm Child. Để frmParent là MDIForm và
+frmChild là Form con của frmParent ta làm như sau:
+         - Thiết lập thuộc tính IsMdiContainer của frmParent là true.
+         - Thiết lập thuộc tính MdiParent của frmChild là frmParent.
+       Khi frmParent đang hoạt động ta cho hiện frmChild thì frmChild sẽ hiển
+thị trong frmParent.
+         3.1.2. Các điều khiển thông dụng trên Form
+       Có rất nhiều điều khiển có thể dùng cho Form và mỗi điều khiển cũng có
+rất nhiều thuộc tính, phương thức, sự kiện. Các điều khiển này cũng thuộc không
+gian tên System.Windows.Forms. Sau đây sẽ trình bày một số thành phần hay
+dùng của các điều khiển này.
+         a) Một số thuộc tính chung của các điều khiển:
+      Các điều khiển điều kế thừa từ lớp Control (điều khiển) nên có nhiều
+thuộc tính chung kế thừa từ lớp Control. Sau đây là một số thuộc tính chung
+thường thấy ở các điều khiển.
+
+   Tên                    Ý nghĩa                   Tên             Ý nghĩa
+
+Anchor         neo đậu                           Enable      cho phép kích hoạt
+
+AutoSize       tự động thay đổi kích thước       ForeColor   màu chữ
+
+BackColor màu nền                                Size        kích thước
+
+Cursor         hình dạng con trỏ                 Text        chuỗi hiển thị
+
+Dock           cập bến                           Visible     cho phép hiển thị
+
+         b) Label:
+         Là điều khiển dùng đề hiển thị các nội dung văn bản ngắn gọn, đơn giản
+
+của ứng dụng trên giao diện. Nội dung này chỉ được thay đổi bởi chương trình
+và người sử dụng không sửa được.
+      c) Textbox:
+      Là điều khiển dùng để hiển thị các nội dung văn bản đơn giản. Điều khiển
+này thường được dùng để giao tiếp với người sử dụng, cho phép họ nhập dữ
+liệu.
+      Ngoài ra, TextBox còn hỗ trợ buộc dữ liệu đơn giản.
+      Một số thuộc tính, phương thức thường dùng cho TextBox:
+
+       Tên                  Ý nghĩa                Tên                  Ý nghĩa
+
+              Thuộc tính                                  Phương thức
+
+MaxLength              độ dài tối đa        KeyPress()             nhấn phím
+
+MultiLine              chứa nhiều dòng      Focus()                có con trỏ
+
+PasswordChar           ký tự mật khẩu       LostFocus()            không có con trỏ
+
+ReadOnly               chỉ đọc              TextChange()           Text bị thay đổi
+
+WordWrap               ngắt đoạn
+
+      d) Button:
+      Là điều khiển dùng để cho phép người sử dụng kích hoạt các chức năng
+của chương trình. Điều khiển này thường dùng trong ngữ cảnh đơn giản, ít chức
+năng. Click là sự kiện khi người dùng kích chuột vào điều khiển.
+      e) CheckBox:
+     Là điều khiển đưa ra cho người dùng nhiều lựa chọn. Người dùng có thể
+không chọn lựa chọn nào, có thể chọn một hoặc nhiều lựa chọn.
+
+   Tên           Ý nghĩa                    Tên                     Ý nghĩa
+
+          Thuộc tính                                     Sự kiện
+
+Checked      đã chọn               CheckedChange()        thay đổi chọn
+
+CheckState trạng thái chọn         CheckStateChange() thay đổi trạng thái chọn
+
+      f) RadioButton và GroupBox:
+      GroupBox là một điều khiển làm vật chứa các điều khiển khác.
+
+      RadioButton là điều khiển đưa ra cho người dùng nhiều lựa chọn như
+CheckBox. Nhưng khác CheckBox, đối với RadioButton, người dùng phải chọn
+một trong các lựa chọn trong một một vật chứa. RadioButton thường được đặt
+trong GroupBox.
+      Như CheckBox, RadioButton có thuộc tính Checked và phương thức
+CheckedChang, nhưng RadioButton không thuộc tính CheckState và phương
+thức CheckStateChange.
+        g) ListBox:
+      Là loại điều khiển cho phép hiển thị một danh sách các đối tượng và chủ
+yếu thể hiện Text của các đối tượng này. ListBox được dùng trong trường hợp
+muốn hạn chế khả năng sai của người sử dụng hoặc trong trường hợp danh sách
+đối tượng là chưa biết lúc thiết kế. ListBox cho phép người dùng chọn cùng lúc
+nhiều đối tượng và có thể hiển thị nhiều đối tượng lúc không được ghé thăm.
+        Ngoài ra, ListBox còn hỗ trợ buộc dữ liệu phức tạp.
+        Sau đây là một số thuộc tính, phương thức thường dùng của ListBox:
+
+           Tên                                     Ý nghĩa
+
+DataSource                nguồn dữ liệu
+
+DisplayMenber             thuộc tính dữ liệu được hiển thị
+
+Items                     Danh sách các phần tử.
+
+ValueMember               thuộc tính khóa của dữ liệu
+
+SelectionMode             Kiểu chọn các         phần    tử:   One;   MultiSimple;
+                          MultiExtended
+
+SelectedIndex             chỉ số của phần tử được chọn
+
+SelectedItem              phần tử được chọn
+
+SelectedItems             danh sách các phần tử được chọn
+
+SelectedValue             giá trị khóa được chọn
+
+SelectedIndexChange() khi có sự thay đổi trong chọn phần tử
+
+        h) ComboBox:
+      Là loại điều khiển tương tự ListBox chỉ khác ở chỗ ComboBox không cho
+chọn nhiều đối tượng và chỉ hiện được một đối tượng lúc không được ghé thăm.
+
+        i) dateTimePicker:
+      Là điều khiển cho phép hiển thị và nhập ngày giờ chuyên nghiệp. Các
+thuộc tính thường dùng của điều khiển là:
+        - Format: định dạng ngày giờ cho điều khiển
+     - CustomFormat: chuỗi định dạng trong trường hợp Format có giá trị là
+Custom (theo custom trong hệ thống của máy).
+        - Value: giá trị ngày đang hiển thị trên điều khiển.
+        j) ToolTip:
+      Là loại điều khiển cho phép hiển thị các tip để cho người sử dụng biết về
+các điều khiển trên Form. Để cho phép các điều khiển có các tip ta làm như sau:
+      - Thêm cho Form điều khiển ToolTip đặt tên là Tip1. Điều khiển này
+thuộc loại không hiển thị trực tiếp trên Form khi Form thực thi. Thêm thành
+công, các điều khiển trên Form sẽ có thêm thuộc tính ToolTip on Tip1.
+     - Thiết lập giá trị cho thuộc tính ToolTip on Tip1 của các điều khiển
+muốn có tip.
+        3.2. Một số hộp thoại thông dụng
+        C# hỗ trợ nhiều hộp thoại. Sau đây là một số hộp thoại thường gặp:
+
+       Tên            Ý nghĩa                Tên                     Ý nghĩa
+
+MessageBox        thông báo, hỏi      FontDialog               chứa font chữ
+
+OpenDialog        hỏi file cần mở     ColorDialog              chứa màu
+
+SaveDialog        hỏi file cần lưu    FolderBrowseDialog hỗ trợ tìm đường dẫn
+
+        3.2.1. MessageBox
+      Là điều khiển tĩnh được dùng nhiều trong lập trình, thông báo hay hỏi ý
+kiến của người dùng. Show là phương thức dùng nhiều nhất của điều khiển này.
+Phương thức này có tới 21 cách truyền tham số. Sau đây là các tham số thường
+dùng trong phương thức Show.
+
+  Tên            Ý nghĩa                  Tên                      Ý nghĩa
+
+Text         chuỗi thông báo       MessageBoxButton loại các Button xuất hiện
+
+Caption      loại thông báo        MessageBoxIcon       icon loại thông báo
+
+        Phương thức Show có kết quả trả về là kiểu DialogResult. Kết quả trả về
+
+này là trả lời của người dùng trên hộp thoại.
+         3.2.2. OpenDialog
+      Là điều khiển hỗ trợ người dùng xác định file mà người dùng cung cấp
+cho chương trình qua phương thức ShowDialog(). Kết quả trả về kiểu
+DialogResult. Nếu kết quả trả về là DialogResult.OK thì chọn được file.
+         Một số thuộc tính thường dùng của điều khiển:
+
+    Tên                  Ý nghĩa                    Tên              Ý nghĩa
+
+DefaultExt      định dạng file mặc định      MultiSelect        chọn nhiều file
+
+Filter          chuỗi định dạng lọc file     InitialDirectory   thư mục khởi tạo
+
+FileName        tên file đầy đủ              SafeFileName       tên file ngắn
+
+FileNames       các tên file tương đối       SafeFileNames      các tên file ngắn
+
+         3.3. Menu, ToolStrip
+         3.3.1. Menu
+      Là điều khiển chứa một tập các chức năng của ứng dụng. Menu thường
+được sử dụng trong MDIForm. Menu gồm một số menu chính chỉ hiển thị được
+Text. Mỗi menu chính gồm một tập các menu con gọi là MenuItem. Mỗi
+MenuItem có thể hiển thị được ảnh và Text. Mỗi MenuItem có thể chứa các
+MenuItem khác.
+         Một số chú ý khi soạn MenuItem:
+         - Kẻ sọc ngang: chỉ ký tự (-) trong thuộc tính Text.
+         - Phím nóng: đặt ký tự &amp; trước ký tự đặt phím nóng trong thuộc tính Text.
+         - ShortcutKeys: chọn phím tắt.
+         - Checked: có dấu check trước tên hay không.
+         - Image: hình ảnh trước tên.
+     Ngoài ra, C# còn có thêm điều khiển MenuStrip, là một menu ngữ cảnh
+cho một điều khiển nào đó.
+         3.3.2. ToolStrip
+      Là điều khiển chứa một tập các ToolStripButton. Mỗi ToolStripButton
+tương tự MenuItem nhưng ở đây chỉ có biểu tượng còn Text thì hiển thị như là
+ToolTip.
+
+      Một số chú ý khi soạn ToolStripButton:
+      - AutoSize: tự động thay đổi kích thước.
+      - Image: ảnh.
+      - Text: chuỗi hiển thị.
+      - TextImageRelation: vị trí tương đối giữa Text và Image.
+      - DisplayStyle: chỉ hiện Text; chỉ hiện Image; hiển cả Text và Image.
+      3.4. Câu hỏi và bài tập
+      1) Hãy nêu ưu điểm và nhược điểm của các loại giao diện. Hãy cho biết
+         đặc điểm của các chương trình mà anh (chị) sẽ sử dụng tương ứng cho
+         từng loại giao diện.
+      2) Xây dựng ứng dụng có giao diện và chức năng tương tự như chương
+         trình Notepad trong Windows.
+      3) Sử dụng lớp thể hiện họ và tên của một người Việt Nam được thiết kế
+         ở chương trước, xây dựng ứng dụng với giao diện phù hợp để quản lý
+         (thêm, xóa) nhân viên. Mỗi nhân viên chỉ quản lý họ và tên. Lưu ý:
+      - Họ và tên được nhập vào là một chuỗi. Khi chuỗi này hợp lệ thì mới
+      thêm một nhân viên mới.
+      - Mỗi nhân viên được thể hiện trong danh sách bằng phần tên. Chương
+      trình cho phép sắp xếp thứ tự của các nhân viên theo tên.
+      - Thông tin của một nhân viên được hiển thị gồm: họ đệm, tên, số từ, độ
+      dài.
+      4) Thiết kế giao diện cho ứng dụng quản lý sinh viên đảm bảo các yêu
+         cầu sau:
+      - Mỗi sinh viên cần quản lý các thông tin: mã sinh viên, họ và tên sinh
+      viên, ngày sinh, giới tính, quê quán.
+      - Cho phép thêm sinh viên, xóa sinh viên, sửa thông tin sinh viên.
+      - Cho phép lưu danh sách sinh viên hiện tại trên giao diện xuống file, tải
+      danh sách sinh viên đã có dưới file lên giao diện.
+      5) Xây dựng ứng dụng Windows Form đáp ứng các yêu cầu sau:
+     - Thiết kế cấu trúc dữ liệu để lưu trữ danh sách sinh viên. Lưu ý: thông tin
+về một sinh viên được quy định như câu trên.
+     - Lập trình thực hiện các thao tác quản lý như yêu cầu ở câu trên. Lưu ý:
+không cho phép sửa mã sinh viên.
+      - Lập trình lưu danh sách sinh viên hiện tại trên giao diện chương trình
+
+đang thực thi xuống file text.
+      - Lập trình tải danh sách sinh viên từ file text lên giao diện.
+       - Sử dụng cơ chế tuần tự hóa đối tượng (Serializable), thực hiện việc lưu
+và tải danh sách sinh viên tương tự như trên.
+      6) Hãy so sánh file tuần tự hóa và file text. Theo anh (chị), khi nào thì nên
+sử dụng file text, khi nào thì nên sử dụng file tuần tự.
+      3.5. Bài mẫu
+       Sử dụng thư viện đã xây dựng ở Mục 2.6, xây dựng chương trình quản lý
+sinh viên.
+      Bài làm mẫu:
+      - Thiết kế giao diện:
+
+      - Menu:
+
+      - Đặt tên các điều khiển:
+
+STT           Đối tượng                     Kiểu               Tên
+
+ 1    Mã sinh viên                TextBox             txtMa
+
+ 2    Họ tên                      TextBox             txtTen
+
+ 3    Ngày sinh                   DateTimePicker      dtpNS
+
+ 4    Giới tính nam               RadioButton         rdNam
+
+ 5    Giới tính nữ                RadioButton         rdNu
+
+ 6    Mã lớp                      TextBox             txtMaLop
+
+ 7    Thêm                        Button              btThem
+
+ 8    Sửa                         Button              btSua
+
+ 9    Xóa                         Button              btXoa
+
+10    Đồng ý                      Button              btDY
+
+11    Hủy bỏ                      Button              btHB
+
+12    Danh sách                   ListBox             lstSV
+
+13    Mở file                     OpenFileDialog      dlOpen
+
+14    Lưu file                    SaveFileDialog      dlSave
+
+15    Tạo mới                     ToolStripMenuItem   mnNew
+
+16    Mở                          ToolStripMenuItem   mnOpen
+
+17    Lưu                         ToolStripMenuItem   mnSave
+
+18    Thoát                       ToolStripMenuItem   mnExit
+
+      - Tạo enum:
+using System;
+
+namespace Sample
+{
+
+    public enum Status
+    {
+        Xem = 0,
+        TaoMoi = 1,
+        Sua = 2
+    }
+}
+    - Khai báo biến cho Form:
+Status _trangThai;
+string _fileName = null;
+DanhSachSinhVien dssv = new DanhSachSinhVien();
+SinhVien sv;
+bool isClose = false;
+    - Tạo thuộc tính trạng thái:
+public Status TrangThai
+{
+     get { return _trangThai; }
+     set
+     {
+          _trangThai = value;
+          ThayDoiTrangThai(_trangThai);
+     }
+}
+    - Viết hàm thay đổi trạng thái, xóa thông tin hiển thị:
+void ThayDoiTrangThai(Status trangthai)
+{
+     switch (trangthai)
+     {
+          case Status.Xem:
+               btDY.Visible = false;
+               btHB.Visible = false;
+               btThem.Visible = true;
+               btSua.Visible = true;
+               btXoa.Visible = true;
+               txtMa.ReadOnly = true;
+               txtTen.ReadOnly = true;
+               txtMaLop.ReadOnly = true;
+               dtpNS.Enabled = false;
+               rdNam.Enabled = false;
+               rdNu.Enabled = false;
+               lstSV.Enabled = true;
+               lstSV.SelectedIndex = -1;
+
+                 mnNew.Enabled = true;
+                 mnOpen.Enabled = true;
+
+               mnSave.Enabled = true;
+               mnExit.Enabled = true;
+               break;
+
+         case Status.TaoMoi:
+              btDY.Visible = true;
+              btHB.Visible = true;
+              btThem.Visible = false;
+              btSua.Visible = false;
+              btXoa.Visible = false;
+              txtMa.ReadOnly = false;
+              txtTen.ReadOnly = false;
+              txtMaLop.ReadOnly = false;
+              dtpNS.Enabled = true;
+              rdNam.Enabled = true;
+              rdNu.Enabled = true;
+              lstSV.Enabled = true;
+
+              mnNew.Enabled = false;
+              mnOpen.Enabled = false;
+              mnSave.Enabled = false;
+              mnExit.Enabled = false;
+              break;
+         case Status.Sua:
+              btDY.Visible = true;
+              btHB.Visible = true;
+              btThem.Visible = false;
+              btSua.Visible = false;
+              btXoa.Visible = false;
+              txtMa.ReadOnly = true;
+              txtTen.ReadOnly = false;
+              txtMaLop.ReadOnly = false;
+              dtpNS.Enabled = true;
+              rdNam.Enabled = true;
+              rdNu.Enabled = true;
+              lstSV.Enabled = false;
+
+               mnNew.Enabled = false;
+               mnOpen.Enabled = false;
+               mnSave.Enabled = false;
+               mnExit.Enabled = false;
+               break;
+    }
+}
+void XoaThongTin()
+{
+     txtMa.Clear();
+     txtTen.Clear();
+     txtMaLop.Clear();
+
+    dtpNS.Value = DateTime.Now;
+    rdNam.Enabled = true;
+    rdNu.Enabled = true;
+}
+    - Sự kiện Load của Form:
+TrangThai = Status.Xem;
+    - Sự kiện SelectedIndexChanged của danh sách:
+int index = lstSV.SelectedIndex;
+if (TrangThai == Status.Xem &amp;&amp; index &gt;= 0)
+{
+     sv = dssv[index];
+     txtMa.Text = sv.MaSV;
+     txtTen.Text = sv.HoTenSV.ToString();
+     txtMaLop.Text = sv.MaLop;
+     dtpNS.Value = sv.NgaySinh;
+     if (sv.GioiTinh)
+          rdNam.Checked = true;
+     else
+          rdNu.Checked = true;
+}
+    - Sự kiện Click nút thêm:
+XoaThongTin();
+TrangThai = Status.TaoMoi;
+    - Sự kiện Click nút sửa:
+int index = lstSV.SelectedIndex;
+if (index == -1)
+     MessageBox.Show("Bạn hãy chọn sinh viên cần sửa thông
+tin");
+else
+{
+     sv = dssv[index];
+     TrangThai = Status.Sua;
+}
+    - Sự kiện Click nút xóa:
+if (lstSV.SelectedIndex == -1)
+     MessageBox.Show("Hãy chọn sinh viên trước khi xóa");
+else
+{
+     if (MessageBox.Show("Bạn có chắc chắn xóa sinh viên này
+không?",
+          "Question", MessageBoxButtons.YesNo,
+MessageBoxIcon.Question) ==
+DialogResult.Yes)
+
+    {
+          int index = lstSV.SelectedIndex;
+          dssv.RemoveAt(index);
+          lstSV.Items.RemoveAt(index);
+          lstSV.SelectedIndex = -1;
+          XoaThongTin();
+    }
+}
+    - Sự kiện Click nút đồng ý:
+bool ok = true;
+string masv = txtMa.Text.Trim();
+HoVaTen hovaten = null;
+string gioitinh= rdNam.Checked?"nam":"nu";
+
+if (masv.IndexOf(' ') != -1)
+     ok = false;
+try
+{
+     hovaten = HoVaTen.GetHoVaTen(txtTen.Text);
+}
+catch
+{
+     ok = false;
+}
+if (ok)
+{
+     if (TrangThai == Status.TaoMoi)
+     {
+          sv = new SinhVien(masv,
+               hovaten.ToString(),
+               dtpNS.Value.ToShortDateString(),
+               gioitinh,
+               txtMaLop.Text.Trim());
+          dssv.Add(sv);
+          XoaThongTin();
+          TrangThai = Status.Xem;
+          lstSV.Items.Add(sv);
+     }
+     else
+     {
+          sv.HoTenSV = hovaten;
+          sv.MaLop = txtMaLop.Text.Trim();
+          sv.NgaySinh = dtpNS.Value;
+          sv.GioiTinh = rdNam.Checked;
+          lstSV.Items[lstSV.SelectedIndex] = sv;
+          XoaThongTin();
+          TrangThai = Status.Xem;
+     }
+
+}
+else
+{
+     MessageBox.Show("Mã sinh viên hoặc tên sinh viên không
+hợp lệ");
+}
+       - Sự kiện Click nút hủy bỏ:
+TrangThai = Status.Xem;
+       - Sự kiện Click menu New:
+_fileName = null;
+dssv.Clear();
+sv = null;
+lstSV.Items.Clear();
+       - Sự kiện Click menu Save:
+if (_fileName == null)
+{
+     if (dlSave.ShowDialog() == DialogResult.OK)
+     {
+          _fileName = dlSave.FileName;
+          dssv.WriteSVToFile(_fileName);
+     }
+}
+else
+     dssv.WriteSVToFile(_fileName);
+       - Sự kiện Click menu Open:
+if (dlOpen.ShowDialog() == DialogResult.OK)
+{
+     _fileName = dlOpen.FileName;
+     dssv.ReadSVFromFile(_fileName);
+     foreach (SinhVien sv in dssv)
+          lstSV.Items.Add(sv);
+}
+       - Sự kiện Click menu Exit:
+isClose = true;
+this.Close();
+       - Sự kiện Click đóng Form:
+if(!isClose)
+     e.Cancel = true;</baihoc>
+<baitap bai="3" loai="tuluyen" de="Trình bày nội dung chính của mục: 3.1. Giao diện ứng dụng và các điều khiển thông dụng" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="3" loai="tuluyen" de="Trình bày nội dung chính của mục: 3.1.1. Giao diện ứng dụng" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="3" loai="tuluyen" de="Trình bày nội dung chính của mục: 3.1.2. Các điều khiển thông dụng trên Form" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="3" loai="tuluyen" de="Trình bày nội dung chính của mục: 3.2. Một số hộp thoại thông dụng" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="3" loai="tuluyen" de="Trình bày nội dung chính của mục: 3.2.1. MessageBox" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="3" loai="tuluyen" de="Trình bày nội dung chính của mục: 3.2.2. OpenDialog" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="3" loai="tuluyen" de="Trình bày nội dung chính của mục: 3.3. Menu, ToolStrip" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="3" loai="tuluyen" de="Trình bày nội dung chính của mục: 3.3.1. Menu" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baihoc stt="4" tieude="Chương 4. Quản lý dữ liệu với Microsoft SQL Server">Chương 4:
+            Quản lý dữ liệu với Microsoft SQL Server
+
+                              Thời lượng: 8 tiết
+      Mục tiêu:
+      - Hiểu được các đối tượng trong hệ quản trị CSDL Microsoft SQL Server,
+      - Viết được các câu lệnh SQL theo yêu cầu,
+      - Tạo, quản lý được một CSDL trong Microsoft SQL Server theo yêu cầu.
+
+      4.1. Các khái niệm về cơ sở dữ liệu trong MS SQL Server
+      4.1.1. Các khái niệm về cơ sở dữ liệu
+      a) Cơ sở dữ liệu:
+      Một cơ sở dữ liệu (CSDL - Database) là một &lt;tập hợp các dữ liệu&gt; &lt;có
+liên quan với nhau&gt; được lưu trữ trong máy tính theo một quy định nhất định
+nhằm phục vụ cho &lt;một mục đích quản lý&gt; nào đó.
+      Ví dụ: CSDL phục vụ cho việc quản lý các chuyến bay của một hãng
+hàng không cung cấp các thông tin vế số hiệu chuyến bay, nơi xuất phát, nơi
+đến, số chỗ ngồi, ngày bay của tất cả các chuyến bay trong năm; CSDL phục vụ
+cho công tác quản lý đào tạo trong trường chứa các dữ liệu phản ánh thông tin
+về học sinh, giáo viên, môn học, phòng học,...
+      b) Hệ quản trị cơ sở dữ liệu:
+      Một hệ quản trị cơ sở dữ liệu (HQT CSDL - Database Management
+System) là phần mềm cho phép người dùng &lt;tạo, lưu trữ&gt; và &lt;quản lý&gt; cơ sở
+dữ liệu. Đồng thời HQT CSDL cung cấp một môi trường thuận lợi cho việc
+&lt;khai thác&gt; thông tin được lưu trữ trong cơ sở dữ liệu.
+     Một số hệ quản trị cơ sở dữ liệu: Microsoft (MS) Visual Foxpro, MS
+Access, MS SQL Server, DB2, Oracle,...
+      c) Hệ cơ sở dữ liệu:
+      Một hệ cơ sở dữ liệu (Database System) là một hệ thống phần mềm nhằm
+quản lý CSDL của một hệ thống thông tin cụ thể nào đó.
+    Như vậy các thành phần bên trong một hệ CSDL gồm có: chương trình,
+CSDL, HQT CSDL. Để vận hành hệ CSDL cần có một số lượng con người.
+      d) Mô hình dữ liệu:
+      Nền tảng của cấu trúc cơ sở dữ liệu là mô hình dữ liệu. Mô hình dữ liệu
+
+được định nghĩa là một sưu tập các công cụ khái niệm dùng cho việc mô tả dữ
+liệu, các mối quan hệ dữ liệu, các ngữ nghĩa dữ liệu và các ràng buộc dữ liệu.
+Các mô hình dữ liệu phổ biến là: mạng, phân cấp, quan hệ, ER, hướng đối
+tượng.
+      e) Mô hình dữ liệu quan hệ:
+       Mô hình dữ liệu quan hệ là mô hình dữ liệu trong đó tất cả dữ liệu được tổ
+chức trong các bảng (Table) có mối quan hệ với nhau. Mỗi bảng bao gồm các
+cột (Field – trường, thuộc tính), các dòng (Record – bản ghi, bộ).
+      4.1.2. Khái niệm về cơ sở dữ liệu trong MS SQL Server
+      MS SQL Server là HQT CSDL được phát triển để tạo và quản lý CSDL
+quan hệ. Một CSDL trong MS SQL Server chứa các đối tượng: Tables, Views,
+Procedures,… Tables trong MS SQL Server gồm các Table có quan hệ với nhau.
+Sau đây sẽ trình bày các khái niệm liên quan đến Tables.
+      a) Bảng (Table):
+      Bảng bao gồm:
+      - Tên của bảng: xác định duy nhất;
+      - Cấu trúc của bảng: tập hợp các cột;
+      - Dữ liệu của bảng: tập hợp các dòng;
+      b) Khóa chính của bảng (Primary Key):
+      Mỗi bảng phải có một cột (hoặc tập các cột) mà giá trị của nó xác định
+duy nhất định duy nhất một dòng trong tập hợp các dòng của bảng. Cột đó (tập
+các cột đó) được chọn làm khóa chính.
+      c) Mối quan hệ (Relationship):
+       Mối quan hệ của bảng được thể hiện thông qua sự ràng buộc giá trị dữ
+liệu xuất hiện trong bảng này phải có xuất hiện trong bảng kia. MS SQL Server
+chỉ hỗ trợ mối quan hệ 1-1 và 1-n.
+      d) Khóa ngoài (Foreign Key):
+      Một cột (hoặc một tập các cột) trong một bảng mà giá trị của nó được xác
+định từ khóa chính của một bảng khác được gọi là khóa ngoài.
+      4.2. Ngôn ngữ SQL
+      SQL (Structured Query Language) là ngôn ngữ được sử dụng cho các
+HQT CSDL. Ngôn ngữ SQL chuẩn được đưa ra bởi ANSI (Amerrican National
+Standards Institude) và ISO (International Standards Organnization) với phiên
+bản mới nhất hiện nay là phiên bản SQL-92 (phiên bản được đưa ra vào năm
+1992). Mặc dù có nhiều ngôn ngữ khác nhau được đưa ra cho các HQT CSDL
+
+quan hệ, SQL vẫn là ngôn ngữ được sử dụng rộng rãi hiện nay trong nhiều hệ
+thống CSDL thương mại như: Oracle, SQL Server, DB2, Microsoft Access, …
+Thông qua SQL, người sử dụng có thể dễ dàng định nghĩa được dữ liệu, thao tác
+với dữ liệu, … Mặt khác, đây là ngôn ngữ có tính khai báo nên nó dễ sử dụng và
+cũng vì vậy mà trở nên phổ biến.
+      4.2.1. Các câu lệnh SQL
+
+             Câu lệnh                           Chức năng
+
+      a) Thao tác dữ liệu
+
+      SELECT                  Truy xuất dữ liệu
+
+      INSERT                  Bổ sung dữ liệu
+
+      UPDATE                  Cập nhật dữ liệu
+
+      DELETE                  Xóa dữ liệu
+
+      TRUNCATE                Xóa toàn bộ dữ liệu trong bảng
+
+      b) Định nghĩa dữ liệu
+
+      CREATE TABLE            Tạo bảng
+
+      DROP TABLE              Xóa bảng
+
+      ALTER TABLE             Sửa cấu trúc bảng
+
+      CREATE FUNCTION Tạo hàm (do người sử dụng định nghĩa)
+
+      ALTER FUNCTION          Sửa đổi hàm
+
+      DROP FUNCTION           Xóa hàm
+
+      CREATE TRIGGER          Tạo trigger
+
+      ALTER TRIGGER           Sửa trigger
+
+      DROP TRIGGER            Xóa trigger
+
+      4.2.2. Kiểu dữ liệu
+
+       Tên kiểu                           Mô tả
+
+CHAR (n)          Kiểu chuỗi với độ dài cố định
+
+NCHAR (n)         Kiếu chuỗi với độ dài cố định hỗ trợ UNICODE
+
+VARCHAR (n)       Kiểu chuỗi với độ dài chính xác
+
+NVARCHAR (n)      Kiểu chuỗi với độ dài chính xác hỗ trợ UNICODE
+
+INTEGER           Số nguyên có giá trị từ -231 đến 231 - 1
+
+INT               Như kiểu Integer
+
+TINYTINT          Số nguyên có giá trị từ 0 đến 255
+
+SMALLINT          Số nguyên có giá trị từ -215 đến 215 – 1
+
+BIGINT            Số nguyên có giá trị từ -263 đến 263 – 1
+
+NUMERIC (p,s)     Kiểu số với độ chính xác cố định
+
+DECIMAL (p,s)     Tương tự kiểu Numeric
+
+FLOAT             Số thực có giá trị từ -1.79E+308 đến 1.79E+308
+
+REAL              Số thực có giá trị từ -3.40E + 38 đến 3.40E + 38
+
+MONEY             Kiểu tiền tệ
+
+BIT               Kiểu bit (có giá trị 0 hoặc 1)
+
+DATETIME          Kiểu ngày giờ (chính xác đến phần trăm của giây)
+
+SMALLDATETIME     Kiểu ngày giờ (chính xác đến phút)
+
+BINARY            Dữ liệu nhị phân với độ dài cố định (tối đa 8000
+                  bytes)
+
+VARBINARY         Dữ liệu nhị phân với độ dài chính xác (tối đa 8000
+                  bytes)
+
+IMAGE             Dữ liệu nhị phân với độ dài chính xác (&lt;=
+
+                         2,147,483,647 bytes)
+
+TEXT                     Dữ liệu kiếu chuỗi với độ dài lớn (tối đa
+                         2,147,483,647 ký tự)
+
+NTEXT                    Dữ liệu kiếu chuỗi với độ dài lớn và hỗ trợ
+                         UNICODE (tối đa 1,073,741,823 ký tự)
+
+ 4.2.3. Toán tử
+
+       Toán tử                                  Ý nghĩa
+
+a) Logic:
+
+AND / OR               Và / Hoặc
+
+b) So sánh:
+
+=                      Bằng
+
+&gt;                      Lớn hơn
+
+&lt;                      Nhỏ hơn
+
+&gt;=                     Lớn hơn hoặc bằng
+
+&lt;                      Nhỏ hơn hoặc bằng
+
+&lt;&gt;                     Khác
+
+!&gt;                     Không lớn hơn
+
+!&lt;                     Không nhỏ hơn
+
+c) Danh sách:
+
+IN                     Nằm trong danh sách
+
+NOT IN                 Không nằm trong danh sách
+
+d) Giới hạn dữ liệu:
+
+BETWEEN                Giá trị BETWEEN a AND b nghĩa là (a ≤ Giá trị ≤ b)
+
+NOT BETWEEN          Giá trị NOT BETWEEN a AND b nghĩa là (Giá_trị &lt;
+                     a) AND (Giá trị &gt; b)
+
+LIKE                 Mô tả khuôn dạng dữ liệu cần tìm kiếm có sử dụng ký
+                     tự đại diện:
+
+                     %    : Chuỗi ký tự bất kỳ
+
+                     _    : Một ký tự bất kỳ
+
+                     []   : Ký tự bất kỳ trong giới hạn được chỉ định
+
+                     [^] : Ký tự bất kỳ không nằm trong giới hạn được chỉ
+                         định
+
+4.2.4. Một số hàm thường dùng
+
+       Tên hàm                                  Công dụng
+
+a) Ngày (Date: ngày/tháng/năm):
+
+GetDate()                 Lấy ngày hiện tại
+
+Day(Date)                 Lấy ngày trong tháng của một ngày
+
+Month(Date)               Lấy tháng trong năm của một ngày
+
+Year(Date)                Lấy năm của một ngày
+
+b) Chuỗi (string: chuỗi; m, n: độ dài):
+
+Left(string, n)           Trích từ chuỗi string n ký tự từ trái sang
+
+Right(string, n)          Trích từ chuỗi string n ký tự từ phải sang
+
+Substring(string, m, n)   Trích từ chuỗi string n ký tự từ vị trí m
+
+Ltrim(string)             Cắt bỏ khoảng trắng thừa bên trái chuỗi string
+
+Rtrim(string)             Cắt bỏ khoảng trắng thừa bên phải chuỗi string
+
+Len(string)               Độ dài chuỗi string
+
+      4.2.5. Các câu lệnh SQL thường dùng
+     Để thuận tiện cho việc minh họa các lệnh SQL, bài giảng đưa ra CSDL
+mẫu như Hình 4-1:
+
+                          LOP                     SINHVIEN
+                     # malop                     # masv
+                       tenlop                      tensv
+                       tengvcn                     ngaysinh
+                       magvcn                      quequan
+                                                   malop
+
+                             Hình 4-1 Mô hình dữ liệu mẫu
+
+      a) Câu lệnh Insert:
+      Cú pháp:
+      INSERT INTO &lt;tên bảng&gt;
+      VALUES (danh sách giá trị)
+      Ví dụ: Bổ sung thêm một sinh viên vào bảng SINHVIEN:
+      INSERT INTO [SINHVIEN]
+     VALUES („SV010‟, ‟Nguyễn Văn A‟, ‟12/02/1992‟, ‟Sơn
+Tịnh‟, ‟L1001‟)
+       Trong trường hợp chỉ bổ sung dữ liệu cho một số trường, ta phải chỉ định
+tên trường sau tên bảng:
+      INSERT INTO &lt;tên bảng&gt;(danh sách trường)
+      VALUES (danh sách giá trị)
+      Ví dụ: Bổ sung thêm một sinh viên vào bảng SINHVIEN:
+     INSERT INTO [SINHVIEN]([masv], [tensv],
+[ngaysinh],[quequan])
+      VALUES („SV011‟,‟Trần Thanh B‟,‟22/11/1992‟,‟Sơn Hà‟)
+      b) Câu lệnh Update:
+      Cú pháp:
+      UPDATE &lt;tên bảng cập nhật&gt;
+      SET     &lt;tên cột 1&gt; = &lt;biểu thức 1&gt;
+
+           [,…,&lt;tên cột n&gt; = &lt;biểu thức n&gt;]
+        [FROM &lt;danh sách bảng&gt;]
+        [WHERE &lt;điều kiện&gt;]
+        Ví dụ: Sửa lại quê quán của sinh viên có mã là “SV011” thành “Bình
+Sơn”:
+        UPDATE [SINHVIEN]
+        SET [quequan]=‟Bình Sơn‟
+        WHERE [masv]=‟SV011‟
+        c) Câu lệnh Delete:
+        Cú pháp:
+        DELETE FROM &lt;tên bảng&gt;
+        [FROM &lt;danh sách bảng&gt;]
+        [WHERE &lt;điều kiện&gt;]
+        Ví dụ: Xóa các sinh viên có mã là “SV011”:
+        DELETE FROM [SINHVIEN]
+        WHERE ([masv]=‟SV011‟)
+        d) Câu lệnh Select:
+        Cú pháp:
+        SELECT &lt;danh sách trường&gt;
+        FROM &lt;danh sách bảng&gt;
+        [WHERE &lt;điều kiện&gt;]
+        [GROUP BY &lt;danh sách trường kết quả&gt;
+        [HAVING &lt;điều kiện&gt;]]
+        [ORDER BY &lt;danh sách trường kết quả &gt;]
+        Trong đó:
+      - Mệnh đề SELECT: danh sách trường gồm: tên các trường trong các
+bảng trong mệnh đề FROM, tên các trường mới, … Giá trị của trường mới có
+thể được tạo thành bằng các biểu thức, hàm được xây dựng sẵn.
+      - Mệnh đề FROM: danh sách các bảng là tên các bảng. Có thể dùng bí
+danh (As) cho bảng.
+        - Mệnh đề WHERE: điều kiện lọc
+      - Mệnh đề GROUP BY: dùng để nhóm các bảng ghi theo một số trường
+nào đó. Kết quả có thể được lọc bởi mệnh đề HAVING BY.
+
+       - Mệnh đề ORDER BY: sắp xếp kết quả theo các trường
+       Ví dụ: Câu lệnh lấy danh sách magv, tengv của các giáo viên:
+          SELECT [magv],[tengv]
+          FROM [GIAOVIEN]
+      Ví dụ: Câu lệnh lấy danh sách magv, tengv, ngaysinh, trinhdo của các
+giáo viên:
+          SELECT *
+          FROM [GIAOVIEN]
+       Ví dụ: Câu lệnh lấy danh sách masv, tensv, ngaysinh, quequan, tenlop của
+các sinh viên:
+       SELECT [masv], [tensv], [tensv],
+[ngaysinh],[quequan], [tenlop]
+          FROM ([LOP] INNER JOIN [SINHVIEN] ON [LOP].[malop]
+                                      =[SINHVIEN].[malop])
+       Ví dụ: Câu lệnh lấy danh sách masv, tensv của các sinh viên có quê quán
+tại “Sơn Tịnh”:
+          SELECT [masv],[tensv]
+          FROM [LOP]
+          WHERE ([quequan]=‟Sơn Tịnh‟)
+      Ví dụ: Câu lệnh lấy danh sách masv, tensv của các sinh viên sinh năm
+1994 và có quê ở “Sơn Hà”:
+          SELECT [masv],[tensv]
+          FROM [SINHVIEN]
+          WHERE (Year([ngaysinh])=1994)And([quequan]=‟Sơn
+Hà‟)
+      Ví dụ: Câu lệnh lấy danh sách tenlop, “số sinh viên của lớp” của tất cả các
+lớp sắp xếp theo tên lớp:
+          SELECT [tenlop],count([masv]) As CountOfmasv
+          FROM [LOP] INNER JOIN [SINHVIEN] ON
+                              [LOP].[malop]=[SINHVIEN].[malop]
+          GROUP BY [tenlop]
+          ORDER BY [tenlop]
+      Ví dụ: Câu lệnh lấy danh sách malop, tenlop, “số sinh viên của lớp” của
+các lớp có sĩ số lớn hơn 19:
+
+       SELECT [malop],[tenlop],count([masv]) As
+CountOfmasv
+         FROM [LOP] INNER JOIN [SINHVIEN] ON
+                              [LOP].[malop]=[SINHVIEN].[malop]
+         GROUP BY [LOP].[malop],[tenlop]
+         HAVING (count([masv])&gt;19)
+      4.3. Câu hỏi và bài tập
+      1) Tạo CSDL trên Server.
+      2) Viết các câu lệnh SQL phục vụ cho việc quản lý bảng LOP.
+      3) Viết các câu lệnh SQL phục vụ cho việc quản lý bảng SINHVIEN.
+      4) Viết các thủ tục lưu trữ phục vụ cho việc quản lý bảng LOP.
+      5) Viết các thủ tục lưu trữ phục vụ cho việc quản lý bảng SINHVIEN.
+      6) Viết các lệnh SQL nhằm:
+         - Kiểm tra sự tồn tại của một CSDL đã có trên MS SQL Server.
+         - Thêm Một CSDL mới.
+         - Thêm các bảng LOP, SINHVIEN và các quan hệ lên CSDL.
+      7) Hãy cho biết các lợi ích của thủ tục lưu trữ.
+      4.4. Bài mẫu
+      Thiết kế CSDL, nhập dữ liệu và viết khung nhìn, hàm chức năng theo yêu
+cầu sau:
+      - Tạo CSDL có tên là QLSV với thiết kế như sau:
+
+      - Nhập dữ liệu:
+
+      - Tạo khung nhìn có tên là View_TKGT để thống kê số lượng sinh viên
+của các lớp theo giới tính:
+CREATE VIEW View_TKGT AS
+SELECT malop, SUM(CASE gioitinh WHEN 1 THEN 1 ELSE 0 END) AS
+„Nam‟, SUM(CASE gioitinh WHEN 0 THEN 1 ELSE 0 END) AS „Nữ‟
+FROM SINHVIEN
+GROUP BY malop
+Go
+       - Tạo hàm người dùng có tên là Fun_LayTT để lấy thông tin của một sinh
+viên phục vụ cho việc in giấy xác nhận phục vụ mục đích tạm hoãn nghĩa vụ
+quân sự với tham số vào là mã sinh viên và với các tham số ra là họ tên, ngày
+sinh, giới tính, lớp, khoa, năm học hiện tại, năm bắt đầu, năm kết thúc khóa học.
+CREATE FUNCTION Fun_LayTT (@masv nvarchar(12))
+RETURNS TABLE
+AS
+RETURN
+   Select hodem+' '+ten As hotensv,ngaysinh,case gioitinh when
+1 then 'Nam' else N'Nữ' end As phai, LOP.malop, tenkhoa,namht,
+khoa,khoa+sonam As namkt from LOP Inner Join SINHVIEN on
+Lop.malop=SINHVIEN.malop Where masv=@masv
+Go</baihoc>
+<baitap bai="4" loai="tuluyen" de="Trình bày nội dung chính của mục: 4.1. Các khái niệm về cơ sở dữ liệu trong MS SQL Server" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="4" loai="tuluyen" de="Trình bày nội dung chính của mục: 4.1.1. Các khái niệm về cơ sở dữ liệu" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="4" loai="tuluyen" de="Trình bày nội dung chính của mục: 4.1.2. Khái niệm về cơ sở dữ liệu trong MS SQL Server" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="4" loai="tuluyen" de="Trình bày nội dung chính của mục: 4.2. Ngôn ngữ SQL" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="4" loai="tuluyen" de="Trình bày nội dung chính của mục: 4.2.1. Các câu lệnh SQL" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="4" loai="tuluyen" de="Trình bày nội dung chính của mục: 4.2.2. Kiểu dữ liệu" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="4" loai="tuluyen" de="Trình bày nội dung chính của mục: 4.2.3. Toán tử" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="4" loai="tuluyen" de="Trình bày nội dung chính của mục: 4.2.4. Một số hàm thường dùng" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baihoc stt="5" tieude="Chương 5. Truy cập cơ sở dữ liệu với ADO.NET">Chương 5:
+                  Truy cập cơ sở dữ liệu với ADO.NET
+
+                             Thời lượng: 12 tiết
+      Mục tiêu:
+      - Hiểu vai trò, chức năng của các đối tượng hỗ trợ truy cập CSDL,
+      - Hiểu được cách truy cập dữ liệu với đối tượng Command,
+      - Hiểu được cách truy cập dữ liệu với mô hình CSDL ảo,
+      - Buộc được dữ liệu đơn giản, phức tạp,
+      - Viết được chương trình truy cập CSDL đơn giản.
+
+      5.1. Mô hình kết nối và truy cập dữ liệu với ADO.NET
+      5.1.1. Mô hình kết nối và truy cập dữ liệu tổng quát
+      Hình 5-1 mô tả đơn giản kiến trúc tổng quát của ADO.NET. Các đối
+tượng trong kiến trúc này đều thuộc không gian tên System.Data. Sau đây là ý
+nghĩa của các đối tượng:
+           Tên đối tượng                        Ý nghĩa
+          Connection          để kết nối đến một CSDL
+          Transaction         hỗ trợ giao tác trong truy cập dữ liệu
+          Command             thực hiện các câu lệnh SQL
+          DeleteCommand       thực hiện câu lệnh xóa
+          UpdateCommand       thực hiện câu lệnh sửa
+          InsertCommand       thực hiện câu lệnh chèn
+          SelectCommand       thực hiện câu lệnh lấy dữ liệu
+          DataReader          đọc dữ liệu từng dòng một
+          DataAdapter         hỗ trợ DataSet đồng bộ dữ liệu với
+                              CSDL qua các câu lệnh SQL
+          DataSet             CSDL ảo trên ứng dụng
+          DataTable           bảng trong DataSet
+
+             Database           Tabl
+                                e
+
+       Connection                  Transaction
+
+                             DeleteCommand
+
+                                                                      Application
+               Command
+
+                             UpdateCommand
+
+                             InsertCommand
+
+                             SelectCommand
+
+                             DataReader
+
+       DataAdapter
+                                          DataSet
+              Command                       DataTable
+
+              Hình 5-1 Mô hình truy cập dữ liệu tổng quát trong ADO.NET
+
+     5.1.2. Connection
+       Để kết nối đến một CSDL ta sử dụng đối tượng Connection. Đối với mỗi
+loại CSDL, .NET thiết kế một lớp Connection cụ thể. Chẳng hạn, với CSDL MS
+SQL Server thì có SqlConnection thuộc không gian tên System.Data.SqlClient,
+với CSDL MS Access thì có OleDbConnection thuộc không gian tên
+System.Data.OleDb,… Như Connection, các lớp Command, Transaction,
+DataReader, DataAdapter cũng được thiết kế tương tự cho các loại CSDL. Sau
+đây là một số thuộc tính, phương thức của lớp Connecttion.
+
+       Tên                                          Ý nghĩa
+
+ConnectionString         tên chuỗi kết nối. Một chuỗi kết nối có các thông tin: tên
+                         HQT CSDL, tên máy chủ, tên CSDL, tên đăng nhập, mật
+
+                        khẩu,… Có một số điều khiển dữ liệu giúp ta có được
+                        ConnectionString một cách chính xác.
+
+State                   trạng thái của kết nối
+
+Close()                 đóng kết nối
+
+Open()                  mở kết nối
+
+        5.1.3. Kết nối đến cơ sở dữ liệu
+      Việc kết nối đến CSDL dựa trên mô hình Client - Server. CSDL được trên
+Server và chương trình ứng dụng được đặt ở máy người dùng (Client). Quy trình
+để một Client kết nối đến Server được thực hiện theo các bước sau:
+      - Client gửi chuỗi kết nối chứa các thông tin về Client và CSDL muốn kết
+nối đến Server.
+        - Server kiểm tra thông tin:
+              + Nếu hợp lệ thì cho phép Client quyền truy cập CSDL tương ứng.
+                Việc truy cập cũng được thực hiện bằng các câu lệnh SQL.
+              + Nếu không hợp lệ thì không cấp quyền truy cập.
+        Để truy cập đến một CSDL ta thực hiện theo các bước:
+        Bước 1: tạo đối tượng Connection
+      - Xác định chuỗi kết nối đến CSDL cần truy cập. Giả sử biến được đặt tên
+là ChuoiKetNoi.
+      ChuoiKetNoi = @"Data Source=XP-VANTOAN\SQLEXPRESS;Initial
+Catalog=QLSV;Integrated Security=True";
+       - Tạo đối tượng Connection. Giả sử biến được đặt tên là KN. Như vậy, ta
+có thể tạo đối tượng Connection như sau.
+        SqlConnection KN = new SqlConnection(ChuoiKetNoi);
+        Bước 2: truy cập dữ liệu
+        Để truy cập dữ liệu với CSDL MS SQL Server ta thực hiện theo trình tự:
+        - Mở kết nối:
+           KN.Open();
+        - Thực hiện các câu lệnh SQL.
+        - Đóng kết nối:
+           KN.Close();
+
+      Để kiểm tra kết nối có thành công hay không, ta có thể xây dựng phương
+thức KiemTraKN như sau:
+      Public static bool KiemTraKN()
+      {
+          try
+          {
+                KN.Open();
+                KN.Close();
+                return true;
+          }
+          catch
+          {
+                return false;
+          }
+      }
+        Phương thức KiemTraKN() sẽ trả về true khi kết nối thành công, ngược
+lại thì kết nối không thành công.
+      Người ta thường xây dựng thuộc tính Connection để lấy đối tượng
+Connection cụ thể làm nhiệm vụ kết nối. Trong các thao tác cập nhật dữ liệu, đối
+tượng làm nhiệm vụ kết nối được sử dụng thường xuyên nên thuộc tính này là
+rất hữu ích.
+      5.1.4. Transaction
+       Là lớp hỗ trợ quản lý theo giao tác trong việc cập nhật dữ liệu. Nếu không
+sử dụng giao tác, một thao tác cập nhật (thêm, xóa, sửa) sẽ làm thay đổi dữ liệu
+thật sự. Còn khi sử dụng giao tác, ta có thể sử dụng một số thao tác cập nhật dữ
+liệu thì dữ liệu cũng thay đổi nhưng chưa có hiệu lực thực sự cho đến chấp nhận
+hoặc hủy bỏ giao tác. Nếu chập nhận giao tác thì các thao tác cập nhật dữ liệu
+trong giao tác đó sẽ có hiệu lực, còn nếu hủy bỏ giao tác thì các thao tác cập
+nhật dữ liệu trong giao tác đó không có hiệu lực.
+      Việc sử dụng giao tác trong việc cập nhật dữ liệu là cần thiết trong các
+trường hợp liên quan đến những dữ liệu quan trọng.
+      Trình tự thực hiện cập nhật dữ liệu theo giao tác trải qua các bước:
+      Bước 1: bắt đầu một giao tác
+      - Sử dụng đối tượng Connection hiện tại:
+
+         Connection.Open();
+         SqlTransaction gt = Connection.BeginTransaction();
+      Bước 2: thực hiện cập nhật dữ liệu
+      Thực hiện các thao tác cập nhật dữ liệu
+      Bước 3: chấp nhận hoặc hủy bỏ giao tác
+      - Nếu chấp nhận giao tác, ta thực hiện:
+         gt.Commit();
+         Connection.Close();
+      - Nếu hủy bỏ giao tác, ta thực hiện:
+         gt.Rollback();
+         Connection.Close();
+      5.2. Mô hình truy cập dữ liệu với Command
+      Đối với mô hình này, việc cập nhật dữ liệu được thực hiện thông qua đối
+tượng Command, việc đọc dữ liệu thông qua đối tượng DataReader kết hợp với
+đối tượng Command.
+      5.2.1. Command
+      Là lớp hỗ trợ việc gửi các câu lệnh SQL đến HQT CSDL có CSDL cần
+truy cập và hỗ trợ việc đọc dữ liệu gửi về từ HQT CSDL. Một số thuộc tính và
+phương thức của lớp Command:
+
+       Tên                                      Ý nghĩa
+
+CommandType           kiểu Command, là một trong ba giá trị: Text (mặc định),
+                      StoredProcedure, TableDirect.
+
+CommandText           tương ứng với CommandType là một trong ba kiểu: câu
+                      lệnh SQL, tên thủ tục lưu trữ, tên bảng.
+
+Connection            đối tượng kết nối.
+
+ExecuteNonQuery() thực thi truy vấn cập nhật (Insert, Delete, Update) và trả
+                  về số lượng dòng dữ liệu bị ảnh hưởng bởi truy vấn.
+                      Giả sử: biến cmd có CommandText là “Delete SINHVIEN
+                      Where masv = A123”;
+                      Khi đó:
+                      int soluong = cmd.ExecuteNonQuery();
+
+ExecuteReader()       thực thi một truy vấn và trả về đối tượng DataReader để
+                      truy cập kết quả truy vấn.
+                      Giả sử: biến cmd có CommandText là “Select * From
+                      SINHVIEN”;
+                      Khi đó:
+                      SqlDataReader rd = cmd.ExecuteReader();
+
+ExecuteScalar()       thực thi một truy vấn và trả về giá trị ở cột đầu tiên của
+                      dòng đầu tên trong bảng kết quả truy vấn.
+                      Giả sử: biến cmd có CommandText là “Select Count(*)
+                      From SINHVIEN”;
+                      Khi đó:
+                      int soluongsv = (int)cmd.ExecuteScalar();
+
+      5.2.2. DataReader
+     Là lớp hỗ trợ việc đọc từng dòng dữ liệu từ bảng dữ liệu trả về của
+phương thức ExecuteReader() của một đối tượng Command. Cách đọc dữ liệu
+của DataReader cũng tương tự như cách đọc của StreamReader.
+      Sau đây là một số thuộc tính, phương thức thường dùng của DataReader:
+
+              Tên                              Ý nghĩa
+
+         FieldCount       số cột của bản ghi
+
+         HasRows          còn 1 hoặc nhiều dòng dữ liệu chưa đọc tới
+
+         IsClosed         không còn trong trạng thái đọc
+
+         Close()          kết thúc việc đọc
+
+         NextResult()     còn 1 hoặc nhiều dòng dữ liệu chưa đọc tới
+
+         Read()           đọc một dòng dữ liệu.
+
+     Sau đây là đoạn mã lệnh sử dụng DataReader đọc dữ liệu và đưa dữ liệu
+vào một ListBox:
+         cmd.CommandText="Select * From SINHVIEN";
+         SqlDataReader rd = cmd.ExecuteReader();
+         ListBox ds = new ListBox();
+
+         while (rd.Read())
+         {
+                       string st = rd[1].ToString();
+                       ds.Items.Add(st);
+         }
+         rd.Close();
+      Hình 5-2 mô tả mô hình truy cập dữ liệu với Command.
+
+                        Database      Tabl
+                                      e
+
+             Connection                 Transaction
+
+                                                                           Application
+                                   DeleteCommand
+             Command
+
+                                   UpdateCommand
+
+                                   InsertCommand
+
+                                   SelectCommand
+
+                                   DataReader
+
+                           Hình 5-2 Mô hình truy cập dữ liệu với Command
+
+      Trong mô hình này, mỗi lần có một thao tác truy cập CSDL, ta mở kết nối
+với CSDL để thực hiện các thao tác. Thực hiện xong, ta đóng kết nối.
+      5.3. Mô hình truy cập dữ liệu nâng cao với cơ sở dữ liệu ảo
+      5.3.1. DataSet
+      Là lớp đóng vai trò như là một CSDL ảo. Cơ sở dữ liệu này cũng chứa các
+bảng (DataTable), các mối quan hệ giữa các bảng (DataRelation),…
+      Sau đây là hai thuộc tính thường dùng của DataSet:
+
+      - Tables: chứa tập các bảng ảo (DataTable).
+      - Relations: chứa các mối quan hệ ảo (DataRelation).
+      5.3.2. DataAdapter
+      Lớp DataAdapter được xem là cầu nối giữa CSDL (trên Server) và
+DataSet (CSDL ảo trên bộ nhớ của máy Client). DataAdapter được xem như là
+một Command thông minh, hỗ trợ việc lấy dữ liệu từ CSDL về DataSet và cập
+nhật dữ liệu từ DataSet lên CSDL.
+       Việc cập nhật dữ liệu từ DataSet lên CSDL được hỗ trợ bởi
+CommandBuider. CommandBuider hỗ trợ bằng cách tự động sinh các đối tượng
+Command thích hợp cho việc cập nhật dữ liệu. CommandBuider sinh các đối
+tượng Command dựa vào TableMapping, nơi lưu giữ các thao tác cập nhật dữ
+liệu trong DataSet.
+      Hình 5-3 mô tả mô hình truy cập dữ liệu với cơ sở dữ liệu ảo.
+
+             Database       Tabl
+                            e
+
+                                                                     Application
+       Connection             Transaction
+
+       DataAdapter
+                                     DataSet
+              Command                   DataTable
+
+                     Hình 5-3 Mô hình truy cập dữ liệu với DataSet
+
+      Trong mô hình này, trong việc lấy dữ liệu từ CSDL về DataSet, việc
+mở/đóng kết nối được thực hiện tương tự như mô hình trước. Tuy nhiên, trong
+việc cập nhật dữ liệu từ DataSet lên CSDL, việc mở/đóng kết nối được thực hiện
+tự động.
+       Việc lấy dữ liệu từ CSDL về DataSet được thực hiện qua phương thức
+Fill() và việc cập nhật dữ liệu từ DataSet lên CSDL được thực hiện thông qua
+phương thức Update(). Các công việc đó có thể được thực hiện như sau:
+      Bước 1: lấy dữ liệu từ CSDL về DataSet
+      Giả sử trên CSDL có bảng SINHVIEN
+
+          Connection.Open();
+          cmd.CommandText="Select * From SINHVIEN";
+          SqlDataAdapter da = new SqlDataAdapter(cmd);
+          DataTable sv = new DataTable();
+          SqlCommandBuider cdb = new SqlCommandBuider(da);
+(*)
+          da.Fill(sv);
+          Connection.Close();
+      Chú ý: nếu không thực hiện việc cập nhật từ DataSet lên CSDL như ở
+bước 3 thì câu lệnh (*) là không cần thiết.
+      Bước 2: thực hiện các thao tác cập nhật dữ liệu ở DataSet
+       Ta thực hiện các thao tác thay đổi dữ liệu như: thêm sinh viên, sửa thông
+tin sinh viên nào đó, xóa bớt sinh viên,…
+     Nếu sau khi thực hiện một số cập nhật mà ta thấy các thao tác này là
+không cần thiết thì có thể sử dụng phương thức RejectChanges() của DataTable
+sv.
+      Bước 3: cập nhật dữ liệu từ DataSet lên CSDL
+          da.Update(sv);
+      5.4. Buộc dữ liệu
+      5.4.1. Mô hình truy cập và hiển thị dữ liệu
+      Hình 5-4 mô tả mô hình truy cập và hiển thị dữ liệu của một ứng dụng:
+
+ Dữ liệu vật lý                  Đối tượng dữ                  Đối tượng hiển
+                      1               liệu            2          thị dữ liệu
+
+*.mdf, *.txt                    class,                         TextBox,
+                      3         DataTable,             3       ListBox,
+                                Mảng                           DataGridView
+
+1 : Lấy dữ liệu từ   2 : Hiển thị dữ liệu lên   3 : Thay đổi dữ liệu đến
+
+                             Hình 5-4 Mô hình buộc dữ liệu
+
+       Như vậy, trong mô hình này có ba thành phần: dữ liệu vật lý, đối tượng
+dữ liệu và đối tượng hiển thị dữ liệu. Trong đó:
+      Dữ liệu vật lý là dữ liệu được lưu trữ trên bộ nhớ. Nó có thể là một file
+
+text bình thường, có thể là một file nhị nhân, có thể là một file tuần tự hay có thể
+là một file cơ sở dữ liệu.
+      Sau đây là các tiến trình trong quá trình truy cập dữ liệu:
+      - Đầu tiên, chương trình tiến hành đọc dữ liệu vật lý và lưu tạm trong các
+đối tượng dữ liệu như: mảng, lớp, DataTable,…
+      - Tiếp theo, chương trình sẽ hiển thị dữ liệu trong các đối tượng dữ liệu
+lên các đối tượng hiển thị dữ liệu như TextBox, ListBox, DataGridView,…
+       - Sau đó, chương trình tiến hành cập nhật dữ liệu trên giao diện. Các thay
+đổi dữ liệu trên các đối tượng hiển thị dữ liệu sẽ được cập nhật đến đối tượng dữ
+liệu và đồng thời các thay đổi dữ liệu trên các đối tượng dữ liệu do các tiến trình
+khác cũng sẽ được cập nhật đến đối tượng hiển thị dữ liệu. Các thay đổi này có
+thể xảy ra nhiều lần.
+       - Cuối cùng, chương trình sẽ lưu dữ liệu hiện thời trên các đối tượng dữ
+liệu xuống dữ liệu vật lý. Chú ý: tiến trình này sẽ làm thay đổi dữ liệu thật đang
+lưu trữ nên cần cân nhắc kỹ trước khi tiến hành.
+      5.4.2. Buộc dữ liệu
+       Buộc dữ liệu sự kết hợp ăn ý giữa đối tượng dữ liệu (như class, mảng,
+DataTable,…) và đối tượng hiển thị dữ liệu (như TextBox, ListBox,…). Nếu
+một đối tượng hiển thị dữ liệu được buộc dữ liệu với một đối tượng dữ liệu thì
+nếu có sự thay đổi dữ liệu ở đối tượng dữ liệu sẽ làm cho dữ liệu bên đối tượng
+hiển thị dữ liệu tự động thay đổi theo và ngược lại. Có hai loại buộc dữ liệu là:
+buộc dữ liệu đơn giản và buộc dữ liệu phức tạp.
+      a) Buộc dữ liệu đơn giản:
+       Là loại buộc dữ liệu mà tại một thời điểm một giá trị đơn của một đối
+tượng dữ liệu này buộc với một điều khiển. Một số điều khiển hỗ trợ buộc dữ
+liệu đơn giản như: TextBox, CheckBox, RadioButton,…
+      Giả sử DataTable sv có các thuộc tính: masv, tensv,… Ta có thể buộc
+thuộc tính tensv của sv với TextBox tb bằng cách:
+      tb.DataBidings.Add(“Text”, sv, “tensv”);
+      Tương tự, ta có hai TextBox là tb1 và tb2. Sau đây là mã lệnh buộc thuộc
+tính Text của hai TextBox này với nhau.
+      tb1.DataBidings.Add(“Text”, tb2, “Text”);
+      b) Buộc dữ liệu phức tạp:
+     Là loại buộc dữ liệu mà các dữ liệu của một đối tượng được buộc với một
+điều khiển. Một số điều khiển hỗ trợ buộc dữ liệu phức tạp: ListBox,
+ComboBox, DataGridView,…
+
+     Các thuộc tính liên quan đến buộc dữ liệu trên các điều khiển:
+     - DataSource: tên đối tượng dữ liệu.
+     - DataMember: tên đối tượng cụ thể (DataGridView).
+     - DisplayMember: thuộc tính hiển thị (ListBox, ComboBox).
+     - ValueMember: giá trị phân biệt (ListBox, ComboBox).
+      Giả sử có DataSet ds. Trong ds có DataTable sv. DataTable sv chứa các
+trường: masv, tensv,… Ta đoạn mã lệnh sau để buộc dữ liệu cho ListBox lb,
+ComboBox cb, DataGridView dv:
+     lb.DataSource = ds;
+     lb.ValueMember = “sv.masv”;
+     lb.DisplayMember = “sv.tensv”;
+     dv.DataSource = ds;
+     dv.DataMember = sv;
+     cb.DataSource = sv;
+     cb.ValueMember = “masv”;
+     cb.DisplayMember = “tensv”;
+     5.5. Câu hỏi và bài tập
+     1) Sử dụng mô hình truy cập dữ liệu với Command, xây dựng ứng dụng
+        như bài tập 4) ở chương 3 với dữ liệu là CSDL đã xây dựng ở bài tập
+        1) ở chương 4.
+     2) Thêm hỗ trợ giao tác cho bài tập trên.
+     3) Xây dựng ứng dụng như bài tập 1) với mô hình truy cập dữ liệu nâng
+        cao với CSDL ảo.
+     4) So sánh hai mô hình truy cập dữ liệu đã học theo các tiêu chí: tính dễ
+        sử dụng, tài nguyên sử dụng,… Theo quan điểm cá nhân, anh (chị)
+        thích mô hình nào hơn?
+     5) Đề xuất mô hình lai của hai mô hình truy cập dữ liệu đã học. Anh (chị)
+        có thích mô hình này không?
+     6) Sử dụng mô hình truy cập dữ liệu với Command, xây dựng ứng dụng
+        quản lý cả lớp học và sinh viên thuộc biên chế của lớp đó.
+     7) Xây dựng ứng dụng như bài tập 6) với mô hình truy cập dữ liệu nâng
+        cao với CSDL ảo.
+     8) Nêu những hiểu biết về mô hình MVC trong xây dựng một ứng dụng
+        Windows.
+
+     5.6. Bài mẫu
+     Xây dựng các class, Form phục vụ các yêu cầu sau:
+      - Xây dựng class có tên là KetNoi để giao tiếp đến CSDL được xây dựng
+trong bài tập mẫu ở chương 4. Trong đó có cho phép cập nhật kiểu CSDL ảo.
+using System.Data.SqlClient;
+using System.Data;
+
+namespace Sample
+{
+    class KetNoi
+    {
+        /// &lt;summary&gt;
+        /// Giá trị ở đây phụ thuộc vào vị trí lưu CDSL cụ thể
+        /// &lt;/summary&gt;
+        string _chuoiKN = @"Data
+Source=.\SQLEXPRESS;AttachDbFilename=E:\
+BaiGiang2018\Data\QLSV.mdf;Integrated Security=True;Connect
+Timeout=30;User Instance=True";
+        SqlConnection _kn;
+        SqlDataAdapter _da;
+
+        public SqlDataAdapter MyDataAdapter
+        {
+             get { return _da; }
+        }
+        public KetNoi()
+        {
+             _kn = new SqlConnection(_chuoiKN);
+        }
+        /// &lt;summary&gt;
+        /// Đọc dữ liệu
+        /// &lt;/summary&gt;
+        /// &lt;param name="sql"&gt;Câu lệnh SELECT&lt;/param&gt;
+        /// &lt;param name="update"&gt;Cho phép CSDL ảo cập
+nhật&lt;/param&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        public DataTable GetData(string sql,bool update)
+        {
+             _kn.Open();
+             DataTable dt = new DataTable();
+             _da = new SqlDataAdapter(sql, _kn);
+             if (update)
+             {
+                 SqlCommandBuilder cmb = new
+SqlCommandBuilder(_da);
+             }
+             _da.Fill(dt);
+
+              _kn.Close();
+              return dt;
+         }
+         /// &lt;summary&gt;
+         /// Thực hiện cập nhật dữ liệu lên CSDL
+         /// &lt;/summary&gt;
+         /// &lt;param name="sql"&gt;INSERT/UPDATE/DELETE SQL&lt;/param&gt;
+         public void UpdateData(string sql)
+         {
+             _kn.Open();
+             SqlCommand cmd = new SqlCommand(sql, _kn);
+             cmd.ExecuteNonQuery();
+             _kn.Close();
+         }
+
+        public DataTable GetDSLop()
+        {
+            string sql = "Select malop from LOP";
+            return GetData(sql, false);
+        }
+        public DataTable GetDSSV(string malop)
+        {
+            string sql = "Select * from SINHVIEN Where
+malop='" + malop + "'";
+            return GetData(sql, false);
+        }
+        public DataTable GetTTSV(string masv)
+        {
+            _kn.Open();
+            SqlCommand cmd = new SqlCommand("select * from
+Fun_LayTT(@masv);", _kn);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@masv", masv);
+            DataTable dtsv = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dtsv);
+            _kn.Close();
+            return dtsv;
+        }
+    }
+}
+      - Xây dựng class MySinhVien để hỗ trợ sinh các câu lệnh thêm, sửa, xóa
+cho sinh viên:
+namespace Sample
+{
+    class MySinhVien:SinhVien
+    {
+        public MySinhVien() { }
+
+        public MySinhVien(string masv, string hotensv, string
+ngaysinh, string gioitinh, string malop):base(masv, hotensv,
+ngaysinh, gioitinh, malop){}
+        // Sinh câu lệnh Insert cho sinh viên hiện tại
+        public string GetInsertSQL()
+        {
+            int gt = this.GioiTinh ? 1 : 0;
+            return "Insert Into SINHVIEN values ('"+
+                this.MaSV+"',N'"+
+                this.HoTenSV.HoDem+"',N'"+
+                this.HoTenSV.Ten+"',"+
+                this.NgaySinh.ToShortDateString()+","+
+                gt+",'"+
+                this.MaLop+"')";
+        }
+        // Sinh câu lệnh Update cho sinh viên hiện tại
+        public string GetUpdateSQL()
+        {
+            int gt = this.GioiTinh ? 1 : 0;
+            return "Update SINHVIEN set hodem=N'"+
+                this.HoTenSV.HoDem+"',ten=N'"+
+                this.HoTenSV.Ten+"',ngaysinh='"+
+
+this.NgaySinh.ToShortDateString()+"',gioitinh="+
+                gt+",malop='"+
+                this.MaLop+"' Where masv='"+
+                this.MaSV+"'";
+        }
+        // Sinh câu lệnh Delete cho sinh viên hiện tại
+        public string GetDeleteSQL()
+        {
+            return "Delete From SINHVIEN Where masv='"+
+                this.MaSV+"'";
+        }
+    }
+}
+       - Xây dựng Form cho phép quản lý dữ liệu của bảng LOP như việc quản
+lý dữ liệu trên MS SQL Server:
+     + Thiết kế giao diện:
+
+      + Đặt tên các điều khiển:
+
+STT                 Tên gọi                    Kiểu          Tên
+
+ 1    Bảng dữ liệu                    DataGridView    dgv
+
+ 2    Chấp nhận                       Button          btOK
+
+ 3    Hủy bỏ                          Button          btCancel
+
+ 4    In thống kê                     Button          btIn
+
+ 5    Đóng                            Button          btClose
+
+      + Mã lệnh của Form:
+using System;
+using System.Data;
+using System.Windows.Forms;
+
+namespace Sample
+{
+    public partial class frmLOP : Form
+    {
+        KetNoi kn = new KetNoi();
+        DataTable dtLop = new DataTable();
+        public frmLOP()
+        {
+            InitializeComponent();
+        }
+
+         private void frmLOP_Load(object sender, EventArgs e)
+
+            {
+                 string sql = "Select * from LOP";
+                 dtLop = kn.GetData(sql,true);
+                 dvg.DataSource = dtLop;
+            }
+
+            private void btCancel_Click(object sender, EventArgs
+e)
+            {
+                 dtLop.RejectChanges();
+            }
+
+            private void btOK_Click(object sender, EventArgs e)
+            {
+                kn.MyDataAdapter.Update(dtLop);
+            }
+
+            private void btClose_Click(object sender, EventArgs e)
+            {
+                Close();
+            }
+      }
+}
+      - Xây dựng các Form cho phép quản lý dữ liệu của bảng SINHVIEN như
+việc quản lý dữ liệu trên MS SQL Server.
+      + Giao diện Form xem sinh viên:
+
+      + Đặt tên các điều khiển trên Form xem sinh viên:
+
+STT                  Tên gọi                  Kiểu                Tên
+
+1         Danh sách lớp                 ComboBox          cmbLop
+
+2         Danh sách sinh viên           ListBox           lstSV
+
+3       Mã sinh viên                      TextBox            txtMa
+
+4       Họ tên                            TextBox            txtTen
+
+5       Ngày sinh                         DateTimePicker     dtpNS
+
+6       Nam                               RadioButton        rdNam
+
+7       Nữ                                RadioButton        rdNu
+
+8       Thêm                              Button             btThem
+
+9       Sửa                               Button             btSua
+
+10      In xác nhận                       Button             btIn
+
+11      Xóa                               Button             btXoa
+
+        + Giao diện Form thêm mới sinh viên:
+
+        + Đặt tên các điều khiển trên Form thêm sinh viên:
+
+STT                   Tên gọi                      Kiểu               Tên
+
+    1   Mã sinh viên                      TextBox            txtMa
+
+    2   Tên sinh viên                     TextBox            txtTen
+
+    3   Ngày sinh                         DateTimePicker     dtpNS
+
+    4   Danh sách lớp                     ComboBox           cmbLop
+
+ 5    Nam                               RadioButton       rdNam
+
+ 6    Nữ                                RadioButton       rdNu
+
+ 7    Thêm                              Button            btThem
+
+ 8    Hủy                               Button            btHuy
+
+      + Giao diện Form sửa thông tin sinh viên:
+
+      + Đặt tên các điều khiển trên Form sửa sinh viên:
+
+STT               Tên gọi                        Kiểu              Tên
+
+ 1    Mã sinh viên                      TextBox           txtMa
+
+ 2    Tên sinh viên                     TextBox           txtTen
+
+ 3    Ngày sinh                         DateTimePicker    dtpNS
+
+ 4    Danh sách lớp                     ComboBox          cmbLop
+
+ 5    Nam                               RadioButton       rdNam
+
+ 6    Nữ                                RadioButton       rdNu
+
+ 7    Sửa                               Button            btSua
+
+ 8    Hủy                               Button            btHuy
+
+      + Mã lệnh Form thêm sinh viên:
+
+using System;
+using System.Data;
+using System.Windows.Forms;
+
+namespace Sample
+{
+    public partial class frmThemSV : Form
+    {
+        KetNoi kn = new KetNoi();
+        public frmThemSV()
+        {
+            InitializeComponent();
+        }
+
+        private void btHuy_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void frmThemSV_Load(object sender, EventArgs
+e)
+        {
+             DataTable dtLop = kn.GetDSLop();
+             cmbLop.DataSource = dtLop;
+             cmbLop.ValueMember = "malop";
+        }
+
+        private void btThem_Click(object sender, EventArgs e)
+        {
+            string gt = rdNam.Checked ? "nam" : "nu";
+            MySinhVien sv = new MySinhVien(
+                txtMa.Text, txtTen.Text,
+dtpNS.Value.ToShortDateString(),
+                gt, cmbLop.SelectedValue.ToString());
+            kn.UpdateData(sv.GetInsertSQL());
+            txtMa.Clear();
+            txtTen.Clear();
+        }
+    }
+}
+     + Mã lệnh Form sửa sinh viên:
+using System;
+using System.Data;
+using System.Windows.Forms;
+
+namespace Sample
+{
+    public partial class frmSuaSV : Form
+
+   {
+       DataRow row = null;
+       KetNoi kn = new KetNoi();
+       public frmSuaSV()
+       {
+           InitializeComponent();
+       }
+       public frmSuaSV(DataRow inputRow)
+       {
+           InitializeComponent();
+           row = inputRow;
+       }
+
+       private void btHuy_Click(object sender, EventArgs e)
+       {
+           Close();
+       }
+
+        private void frmSuaSV_Load(object sender, EventArgs e)
+        {
+            txtMa.Text = row[0].ToString();
+            txtTen.Text = row[1].ToString() + " " +
+row[2].ToString();
+            dtpNS.Value = DateTime.Parse(row[3].ToString());
+            if (row[4].ToString() == "True")
+                 rdNam.Checked = true;
+            else
+                 rdNu.Checked = true;
+            DataTable dtLop = kn.GetDSLop();
+            cmbLop.DataSource = dtLop;
+            cmbLop.ValueMember = "malop";
+            cmbLop.SelectedValue = row[5];
+        }
+
+        private void btSua_Click(object sender, EventArgs e)
+        {
+            string gt = rdNam.Checked ? "nam" : "nu";
+            MySinhVien sv = new MySinhVien(
+                txtMa.Text, txtTen.Text,
+dtpNS.Value.ToShortDateString(),
+                gt, cmbLop.SelectedValue.ToString());
+            kn.UpdateData(sv.GetUpdateSQL());
+            Close();
+        }
+    }
+}
+    + Mã lệnh Form xem sinh viên:
+using System;
+
+using System.Data;
+using System.Windows.Forms;
+
+namespace Sample
+{
+    public partial class frmXemSV : Form
+    {
+        DataTable dtLop = null;
+        DataTable dtSV = null;
+        KetNoi kn = new KetNoi();
+
+        public frmXemSV()
+        {
+            InitializeComponent();
+        }
+        // Tải thông tin sinh viên đang được chọn
+        public void TaiTTSV()
+        {
+            int index = lstSV.SelectedIndex;
+            DataRow dr = dtSV.Rows[index];
+            txtMa.Text = dr[0].ToString();
+            txtTen.Text = dr[1].ToString() + " " +
+dr[2].ToString();
+            dtpNS.Value = DateTime.Parse(dr[3].ToString());
+            if (dr[4].ToString() == "True")
+                 rdNam.Checked = true;
+            else
+                 rdNu.Checked = true;
+        }
+        // Cập nhật lại danh sách ở các hộp chọn
+        public void LamMoiDS()
+        {
+            cmbLop.SelectedIndex = cmbLop.Items.Count - 1;
+            cmbLop.SelectedIndex = 0;
+        }
+
+       // Tải danh sách sinh viên lên hộp chọn
+       public void TaiDSSV()
+       {
+           string malop = cmbLop.SelectedValue.ToString();
+           dtSV = kn.GetDSSV(malop);
+           lstSV.DataSource = dtSV;
+           lstSV.ValueMember = "masv";
+           lstSV.DisplayMember = "ten";
+       }
+
+       private void frmXemSV_Load(object sender, EventArgs e)
+       {
+           dtLop = kn.GetDSLop();
+
+           cmbLop.DataSource = dtLop;
+           cmbLop.ValueMember = "malop";
+           LamMoiDS();
+       }
+
+        private void cmbLop_SelectedIndexChanged(object
+sender, EventArgs e)
+        {
+            if (cmbLop.SelectedIndex &gt; -1)
+            {
+                TaiDSSV();
+            }
+        }
+
+        private void lstSV_SelectedIndexChanged(object sender,
+EventArgs e)
+        {
+             if (lstSV.SelectedIndex &gt; -1)
+             {
+                  TaiTTSV();
+             }
+             else
+             {
+                  txtMa.Clear();
+                  txtTen.Clear();
+             }
+        }
+
+       private void btThem_Click(object sender, EventArgs e)
+       {
+           frmThemSV f = new frmThemSV();
+           f.ShowDialog(this);
+           LamMoiDS();
+       }
+
+       private void btSua_Click(object sender, EventArgs e)
+       {
+           int index = lstSV.SelectedIndex;
+           if (index &gt; -1)
+           {
+               frmSuaSV f = new frmSuaSV(dtSV.Rows[index]);
+               f.ShowDialog(this);
+               LamMoiDS();
+           }
+       }
+
+       private void btXoa_Click(object sender, EventArgs e)
+       {
+           int index = lstSV.SelectedIndex;
+
+           if (index &gt; -1)
+           {
+               if (MessageBox.Show("Bạn có chắc chắn xóa
+không?",
+                    "Cẩn thận", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) ==
+DialogResult.Yes)
+                {
+                    string masv =
+dtSV.Rows[index][0].ToString();
+                    MySinhVien sv = new MySinhVien();
+                    sv.MaSV = masv;
+                    kn.UpdateData(sv.GetDeleteSQL());
+                    MessageBox.Show("Xóa thành công.");
+                    LamMoiDS();
+                }
+            }
+        }
+    }
+}</baihoc>
+<baitap bai="5" loai="tuluyen" de="Trình bày nội dung chính của mục: 5.1. Mô hình kết nối và truy cập dữ liệu với ADO.NET" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="5" loai="tuluyen" de="Trình bày nội dung chính của mục: 5.1.1. Mô hình kết nối và truy cập dữ liệu tổng quát" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="5" loai="tuluyen" de="Trình bày nội dung chính của mục: 5.1.2. Connection" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="5" loai="tuluyen" de="Trình bày nội dung chính của mục: 5.1.3. Kết nối đến cơ sở dữ liệu" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="5" loai="tuluyen" de="Trình bày nội dung chính của mục: 5.1.4. Transaction" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="5" loai="tuluyen" de="Trình bày nội dung chính của mục: 5.2. Mô hình truy cập dữ liệu với Command" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="5" loai="tuluyen" de="Trình bày nội dung chính của mục: 5.2.1. Command" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="5" loai="tuluyen" de="Trình bày nội dung chính của mục: 5.2.2. DataReader" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baihoc stt="6" tieude="Chương 6. Report và đóng gói ứng dụng">Chương 6:
+                    Report và đóng gói ứng dụng
+
+                               Thời lượng: 8 tiết
+      Mục tiêu:
+      - Sử dụng được các điều khiển đơn giản trong thiết kế Report,
+      - Thiết kế được giao diện Report theo yêu cầu,
+      - Biết được lợi ích của việc đóng gói ứng dụng,
+      - Đóng gói được một ứng dụng C# đơn giản.
+
+      6.1. Report
+      6.1.1. Tổng quan về Report
+      a) Khái niệm:
+      Report là mẫu báo cáo để in. Chúng ta có thể hình dung, một hóa đơn bán
+hàng ở siêu thị, một hóa đơn bán hàng ở quán cà phê, một kê khai thuế của một
+công ty,… được xem là Report. Về phương diện nào đó, Report được xem là
+đầu ra của một hệ thống.
+      b) Xuất kết quả ra Report
+
+                                     Form
+
+  - Data                                                ReportViewer
+                            Report
+
+                                                Choosse Report
+
+  DataSet
+
+               Hình 6-1 Sự tương quan giữa Form, Report và ReportViewer
+
+     Để xuất dữ liệu ra máy in, chúng ta cần đến 3 điều khiển cơ bản: Form,
+Report và ReportViewer. Sự tương quan giữa 3 điều khiển được thể hiện như
+
+tronh Hình 6-1. Trong đó:
+      - Report là cái điều khiển việc hiển thị kết quả. Muốn kết quả hiển thị như
+thế nào thì thiết kế trên Report.
+      - ReportViewer là cái hiển thị kết quả Report và kết nối đến máy in.
+      - Form là cái chứa dữ liệu và ReportViewer. Muốn in dữ liệu gì thì cần
+gửi dữ liệu đó đến Form. Ngoài ra, dữ liệu cho Report có thể lấy từ DataSet.
+      6.1.2. Tiến trình xây dựng Report
+      a) Xác định thông tin hiển thị trên Report:
+      Đây là bước đầu tiên trong tiến trình xây dựng một Report. Ở bước này,
+chúng ta cần xác định các thông tin cần hiển thị trên Report. Thông tin trên một
+Report thường gồm: thông tin về cơ quan chủ quản, thông tin về chức năng, kết
+quả của quá trình làm việc,…
+      b) Xác định dữ liệu của Report:
+       Sau khi đã có các thông tin sẽ được hiển thị trên Report, chúng ta chia
+thông tin này thành hai loại: thông tin chung (các thông tin không thay đổi, ngày
+giờ, số trang,…) và dữ liệu (các thông tin lấy từ CSDL trong quá trình thực hiện
+chức năng của hệ thống).
+      Đối với thông tin chung, việc xác định chúng là dễ dàng, thậm chí có thể
+xác định một cách cố định. Tuy nhiên, chúng ta nên cân nhắc việc lưu vào
+CSDL một số thông tin chung có thể thay đổi theo thời gian.
+      Đối với dữ liệu, chúng ta cũng chia làm hai loại: nguyên thủy (lấy được
+một cách dễ dàng từ CSDL) và dẫn xuất (tính toán từ dữ liệu nguyên thủy).
+Thông thường, dữ liệu nguyên thủy có thể lấy bằng các câu lệnh SQL đơn giản
+và dữ liệu dẫn xuất có thể sử dụng các hàm tính toán từ dữ liệu nguyên thủy.
+      c) Thiết kế Report:
+      Sau khi có được thông tin, dữ liệu của Report, chúng ta tiến hành thiết kế
+Report. Chúng ta sử dụng các điều khiển hỗ trợ cho Report để vẽ lên Report.
+Khi thiết kế, chúng ta cần đặt tên cho các điều khiển hiển thị các dữ liệu sao cho
+dễ nhớ. Việc này sẽ tạo thuận lợi cho bước sau.
+      d) Điền dữ liệu cho Report:
+       Phần cuối của tiến trình là việc điền dữ liệu cho Report. Chúng ta thực
+hiện việc lấy dữ liệu về tương tự như các chương trước. Tuy nhiên, việc gán dữ
+liệu thì phụ thuộc vào từng loại trường.
+      6.1.3. Các công cụ hỗ trợ tạo Report
+      Hiện tại, .NET đã thiết kế nhiều loại Report. Sau đây, chúng ta tìm hiểu
+
+về một vài điều khiển hỗ trợ cho việc thiết kế Report.
+        a) Report Wizard:
+      Là loại Report mà các bước trong việc thiết kế nó được hỗ trợ tốt, người
+sử dụng chỉ việc chọn lựa dữ liệu, cách hiển thị theo ý của mình. Report Wizard
+là cách tiếp cận được khuyến cáo cho những người dùng chưa nắm rõ về Report
+cũng như cách thiết kế Report.
+        b) Report:
+       Report là điều khiển thường dùng để thiết kế các mẫu in ngắn, trên một
+trang giấy. Cấu trúc của Report:
+
+        Phần                                      Mô tả
+
+Page Header          Xuất hiện trên cùng của mỗi trang. Vùng này chủ yếu là thể
+                     hiện tiêu đề, số trang, ngày giờ,…
+
+Body                 Thể hiện nội dung.
+
+Page Footer          Xuất hiện dưới cùng cùng của mỗi trang. Vùng này chủ yếu
+                     là thể hiện tiêu đề, số trang, ngày giờ,…
+
+Report               Không nằm trong thiết kế của Report, dùng để chứa dữ liệu
+Paramaters           được truyền tới Report.
+
+      Các điều khiển hỗ trợ cho Report gồm các điều khiển hiện có trên thanh
+công cụ và một số điều khiển nhúng. Sau đây là một số điều khiển thông dụng:
+        Tên                                      Ý nghĩa
+Text Box         Hiển thị các thông tin dạng Text.
+Line             Thể hiện đường kẻ. Chúng ta có thể dùng nhiều đường kẻ để
+                 vẽ bảng.
+Table            Thể hiện bảng dữ liệu như bảng trong CSDL.
+Matrix           Thể hiện dữ liệu kiểu ma trận.
+Rectangle        Khung như vật chứa các phần tử Report khác.
+List             Chứa danh sách Report.
+Image            Hiển thị hình ảnh.
+Subreport        Report con.
+Chart            Đồ thị, biểu đồ.
+
+         Để hiển thị Report, chúng ta dùng MicrosoftReportViewer.
+         Cách truyền dữ liệu cho Report:
+         1) Truyền cho tham số (Parameters):
+       Giả sử trên Report report1 có 2 TextBox để hiển thị mã sinh viên
+(=Parameters!masv.Value) và họ tên sinh viên (=Parameters!tensv.Value) từ 2
+tham số masv và tensv trong Report Parameters. ReportViewer reportViewer1
+dùng để hiển thị report1. Khi đó cách truyền dữ liệu cho 2 tham số masv và
+tensv như sau:
+         ReportParameter[] parms = new ReportParameter[2];
+     parms[0] = new ReportParameter("masv",
+'17D480201007');
+     parms[1] = new ReportParameter("tensv", 'Lê Quang
+Đạo');
+         this.reportViewer1.LocalReport.SetParameters(parms);
+         2) Truyền cho Table:
+     Giả sử cần hiện thị bảng dữ liệu danh sách sinh viên (masv, tensv) lên
+Report bằng cách sử dụng Table, ta thực hiện:
+         - Đầu tiên, tạo DataSet có tên ds_sv là dsSV gồm 2 cột dữ liệu: masv,
+tensv.
+         - Tạo Report có tên report1 có chứa Table tb1.
+         - Gán thuộc tính DataSetName của tb1 là ds_sv.
+      - Cột 1 của tb1 dùng để hiển thị masv (=Fields!masv.Value), cột 2 của tb1
+dùng để hiển thị tensv (=Fields!tensv.Value).
+         - Thiết kế Form có chứa reportViewer1 dùng để hiển thị report1.
+         - Trên Form chứa Report reportViewer1 ta thực hiện:
+      + Lấy dữ liệu danh sách sinh viên gồm (masv, tensv) về Form và gán vào
+biến DataTable dtsv.
+         + Truyền dữ liệu từ tb1 sang report1:
+     this.reportViewer1.LocalReport.DataSources.Add(new
+ReportDataSource("ds_sv", dtsv));
+         c) Crystal Report:
+       Crystal Report là một loại Report mở rộng. Giả sử ta cần in kết quả điểm
+thi tuyển sinh theo phòng và được sắp xếp theo tên thí sinh. Kết quả này được
+xem là một Report, thường được sử dụng Crystal Report để in. Một Crystal
+Report thường gồm các phần sau:
+
+     Phần                                        Mô tả
+
+Report Header     Xuất hiện ở trên cùng của trang đầu tiên của Report. Trong
+                  bảng điểm trên thì phần tiêu ngữ, tiên cơ quan, tên văn bản,…
+                  được xem là Report Header.
+
+Page Header       Xuất hiện sau Report Header ở trang đầu tiên và luôn xuất
+                  hiện trên cùng của mỗi trang. Vùng này chủ yếu là thể hiện số
+                  trang, ngày giờ,…
+
+Group Header      Xuất hiện ở nơi bắt đầu của một nhóm. Trong bảng điểm trên
+                  thì các thông tin về phòng thi được xem là Group Header.
+
+Detail            Các dòng thể hiện thông tin cụ thể. Thông thường, các dòng
+                  này tương ứng với các dòng trong Table trong CSDL. Trong
+                  bảng điểm trên thì các dòng thông tin về sinh viên (thông tin
+                  chung, điểm) được xem là thuộc Detail.
+
+Group Footer      Xuất hiện ở nơi kết thúc một nhóm. Trong bảng điểm trên thì
+                  các thông tin thông kê về phòng thi được xem là Group
+                  Footer.
+
+Page Footer       Xuất hiện ở cuối mỗi trang và có ý nghĩa tương tự như Page
+                  Header.
+
+Report Footer     Xuất hiện ở cuối trang cuối cùng của Report. Trong Report
+                  trên thì phần ký tên của cơ quan được xem là Report Footer.
+
+      Các điều khiển hỗ trợ cho Crystal Report gồm các điều khiển hiện có trên
+thanh công cụ và một số điều khiển nhúng. Sau đây là một số điều khiển thông
+dụng:
+
+     Tên                                        Ý nghĩa
+
+Text Object     Hiển thị các thông tin dạng Text.
+
+Line Object     Thể hiện đường kẻ. Chúng ta có thể dùng nhiều đường kẻ để
+                vẽ bảng.
+
+Box Object      Thể hiện khung cho một đối tượng.
+
+Picture         Hiển thị hình ảnh.
+
+OLE Object      Hiển thị đối tượng nhúng.
+
+Chart              Hiển thị biểu đồ, đồ thị
+
+Subreport          Report con
+
+      Field Explorer là thanh công cụ để hiển thị các trường. Crystal Report có
+các loại trường sau:
+
+          Tên                                    Ý nghĩa
+
+Database Fields           Các trường trong CSDL mà Report đã đưa vào.
+
+Formula Fields            Các trường mà được tính dựa vào công thức.
+
+Parameter Fields          Các trường là tham số của Report.
+
+Group Name Fields         Các trường nhóm.
+
+Running Total Fields      Các trường tính toán dựa vào thống kê.
+
+Special Fields            Các trường đặc biệt liên quan đến Report như số trang,
+                          ngày giờ,…
+
+Unbound Fields            Các trường mà giá trị của nó không phụ thuộc vào các
+                          giá trị khác.
+
+     Trong các trường trên, trường cần thiết lập đầu tiên là các trường
+Database. Các trường này thường được lấy từ CSDL thông qua DataSet.
+        Để hiển thị Crystal Report, chúng ta dùng CrystalReportViewer.
+      Sử dụng CSDL quản lý sinh viên (QLSV), xây dựng Report in tất cả sinh
+viên với thiết kế Crystal Report như sau:
+
+      Lưu ý: chúng ta cần gán cho Database Fields của Report một Table ban
+đầu. Table này có thể là một DataTable trong DataSet hay một Table trong
+CSDL.
+       Giả sử Crystal Report có tên là rp, Crystal Report Viewer có tên là crp,
+các trường tính toán có thứ tự như trên, sau đây là đoạn mã lệnh gán dữ liệu cho
+Report.
+      rptSINHVIEN rp = new rptSINHVIEN();
+      rp.SetDataSource(sv);
+     rp.DataDefinition.FormulaFields[0].Text =
+"{SINHVIEN.masv}";
+     rp.DataDefinition.FormulaFields[1].Text =
+"{SINHVIEN.tensv}";
+     rp.DataDefinition.FormulaFields[2].Text =
+"{SINHVIEN.ngaysinh}";
+     rp.DataDefinition.FormulaFields[3].Text =
+"{SINHVIEN.gioitinh}";
+     rp.DataDefinition.FormulaFields[4].Text =
+"{SINHVIEN.quequan}";
+     rp.DataDefinition.FormulaFields[5].Text =
+"count({SINHVIEN.masv})";
+      crp.ReportSource = rp;
+      crp.Refresh();
+      6.2. Đóng gói ứng dụng
+      6.2.1. Lợi ích
+      Việc đóng gói ứng dụng có nhiều lợi ích. Sau đây là một số lợi ích của
+việc đóng gói ứng dụng trong MS Visual Studio .NET:
+      - Sẽ tạo ra một gói duy nhất chứa đầy đủ các thành phần của ứng dụng.
+      - Tự động sinh ra Install và Uninstall cho người dùng.
+      - Giúp người dùng tạo các thư mục và Shortcut dễ dàng.
+      - Người dùng dễ dàng kiểm soát các tình huống: cài đặt lần đầu, gỡ bỏ
+hay sửa chữa.
+      6.2.2. Các thành phần đưa vào gói ứng dụng
+       Đối với ứng dụng nhỏ, đơn giản thì gói ứng dụng chỉ cần file chương
+trình. Tuy nhiên, đối với một ứng dụng lớn thì chương trình cần được chia thành
+nhiều phần và mỗi phần cần tách biệt nhau. Sau đây là một số thành phần
+
+thường được đưa vào trong gói ứng dụng:
+      - File chương trình (file chạy).
+      - Các file thư viện (*.DLL).
+      - Framework (đối với nơi phân phối bị hạn chế khả năng kết nối internet).
+      - Hình ảnh, âm thanh của ứng dụng.
+      - CSDL nếu dùng loại Server như Express.
+      - Các tập tin của đầu vào, đầu ra của chương trình.
+      - Tài liệu ứng dụng, hướng dẫn sử dụng.
+      - Các công cụ, thư viện mà chương trình yêu cầu.
+      6.2.3. Setup Project
+      MS Visual Studio .NET có nhiều loại đóng gói tùy theo mục đích khác
+nhau. Phần sau sẽ giới thiệu về loại đóng gói Setup Project. Kiểu đóng gói này
+cho phép chung ta tạo nên gói để phân phối ứng dụng trên Desktop.
+      Cấu trúc của gói này được chia làm ba phần chính: Application Folder,
+User’s Desktop và User’s Programs Menu. Trong đó:
+      - Application Folder: là thư mục chương trình trên máy người dùng ứng
+dụng. Thư mục này thường chứa toàn bộ các thành phần để ứng dụng chạy
+được.
+      - User’s Desktop: là thư mục màn hình Desktop của chương trình. Thông
+thường, trong thư mục này, người ta tạo một shortcut của file chương trình trong
+Application Folder.
+      - User’s Programs Menu: là thư mục chương trình trên thanh Programs
+(dễ nhìn thấy ở Windows 7 trở lại). Thông thường, trong thư mục này người ta
+tạo các thư mục theo phân cấp, phân chia để chứa các shortcut đến các thành
+phần trong ứng dụng.
+      Ngoài ra, cấu trúc của gói còn nhiều thư mục khác tương ứng với các thư
+mục User trong Windows. Một trong số đó có thư mục User's Application Data
+Folder. Thư mục này thường được dùng để chứa file cơ sở dữ liệu thay đổi được
+của ứng dụng (vì thư mục Application Folder không cho phép thay đổi dữ liệu).
+      6.3. Câu hỏi và bài tập
+      1) Xây dựng Report in danh sách sinh viên theo lớp.
+      2) Sử dụng Line Object, kẻ khung cho Report ở câu 1).
+      3) Đóng gói chương trình mà anh (chị) cho là phức tạp nhất của mình.
+
+      6.4. Bài mẫu
+       Xây dựng DataSet, các Report và liên kết vào các Form đã xây dựng ở bài
+trong trong Chương 5 như sau:
+     - Xây dựng DataSet có tên là dsTKGT với nguồn là View có tên là
+View_TKGT đã xây dựng ở bài mẫu ở Chương 4.
+
+     - Dùng DataSet dsTKGT trên và Chart, thiết kế Report có tên là
+rpTKGT.rdlc như sau:
+
+      - Xây dựng Form xem thống kê:
+
+      Form này chứa một MicrosoftReportViewer hiển thị Report rpTKGT vừa
+xây dựng trên.
+      - Bổ sung mã lệnh vào Form frmLOP để nối Form hiển thị Report thống
+kê vào Form quản lý lớp:
+private void btIn_Click(object sender, EventArgs e)
+{
+     frmTKGT f = new frmTKGT();
+     f.ShowDialog(this);
+}
+      - Thiết kế Report có tên là rpHoanNVQS.rdlc như sau nhằm in giấy xác
+nhận là sinh viên học tại trường:
+
+    - Tạo 4 tham số cho Report có kiểu String lần lượt là: s1, s2, s3, s4.
+     - Thiết kế Form có tên là frmInXNSV để hiển thị Report
+rpHoanNVQS.rdlc ở trên.
+
+    MicrosoftReportViewer của Form này có tên là rp.
+    + Kết quả in xác nhận của một sinh viên như sau:
+
+     - Mã lệnh Form frmInXNSV:
+using System;
+using System.Data;
+using System.Windows.Forms;
+using Microsoft.Reporting.WinForms;
+
+namespace Sample
+{
+    public partial class frmInXNSV : Form
+    {
+        string masv = null;
+        KetNoi kn = new KetNoi();
+
+        public frmInXNSV(string masv)
+        {
+            InitializeComponent();
+            this.masv = masv;
+        }
+
+        private void frmInXNSV_Load(object sender, EventArgs
+e)
+        {
+            DataTable dt = kn.GetTTSV(masv);
+            DataRow dr = dt.Rows[0];
+            string ns =
+DateTime.Parse(dr["ngaysinh"].ToString()).ToShortDateString();
+            string s1 = "Xác nhận anh (chị): " + dr["hotensv"]
++ "; Mã số sinh viên: " + masv + "; Ngày sinh: " + ns +
+                "; Giới tính: " + dr["phai"] + ".";
+            string s2 = "Là sinh viên năm thứ " + dr["namht"]
++ ", lớp " + dr["malop"] + ", Khoa " + dr["tenkhoa"]
++ ", hệ đào tạo chính qui tập trung tại trường.";
+            string s3 = "Thời gian khoá đào tạo: từ tháng 9/"
++ dr["khoa"] + " đến tháng 7/" + dr["namkt"] + ".";
+            DateTime homnay = DateTime.Now;
+            string s4 = "Quảng Ngãi, ngày " + homnay.Day
++ " tháng " + homnay.Month + " năm " + homnay.Year;
+            ReportParameter[] parms = new ReportParameter[4];
+            parms[0] = new ReportParameter("s1", s1);
+            parms[1] = new ReportParameter("s2", s2);
+            parms[2] = new ReportParameter("s3", s3);
+            parms[3] = new ReportParameter("s4", s4);
+            rpXN.LocalReport.SetParameters(parms);
+            rpXN.RefreshReport();
+            rpXN.SetDisplayMode(DisplayMode.PrintLayout);
+            rpXN.ZoomMode = ZoomMode.Percent;
+            rpXN.ZoomPercent = 100;
+        }
+
+    }
+}
+      - Bổ sung mã lệnh vào Form frmXemSV để nối Form hiển thị Report xác
+nhận sinh viên vào Form xem sinh viên:
+private void btIn_Click(object sender, EventArgs e)
+{
+     int index = lstSV.SelectedIndex;
+     if (index &gt; -1)
+     {
+          frmInXNSV f = new frmInXNSV(
+               dtSV.Rows[index][0].ToString()
+               );
+          f.ShowDialog(this);
+     }
+}
+
+                      TÀI LIỆU THAM KHẢO
+
+[1] Microsoft, C# Language Specification 1.2, 2003.
+
+[2] Microsoft, C# Language Specification 2.0, 2005.
+
+[3] Dương Quang Thiện, Lập trình Visual C# như thế nào?, NXB TH
+    TP.HCM, 2005.
+[4] Nguyễn Ngọc Bình Phương, Thái Thanh Phong, Các giải pháp lập trình
+    C#, NXB Giao thông Vận tải, 2006.
+
+[5] Simon Robinson, Burt Harvey,… , Profession C# (2nd Edition), Wrox
+    Press, 2002.</baihoc>
+<baitap bai="6" loai="tuluyen" de="Trình bày nội dung chính của mục: 6.1. Report" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="6" loai="tuluyen" de="Trình bày nội dung chính của mục: 6.1.1. Tổng quan về Report" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="6" loai="tuluyen" de="Trình bày nội dung chính của mục: 6.1.2. Tiến trình xây dựng Report" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="6" loai="tuluyen" de="Trình bày nội dung chính của mục: 6.1.3. Các công cụ hỗ trợ tạo Report" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="6" loai="tuluyen" de="Trình bày nội dung chính của mục: 6.2. Đóng gói ứng dụng" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="6" loai="tuluyen" de="Trình bày nội dung chính của mục: 6.2.1. Lợi ích" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="6" loai="tuluyen" de="Trình bày nội dung chính của mục: 6.2.2. Các thành phần đưa vào gói ứng dụng" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="6" loai="tuluyen" de="Trình bày nội dung chính của mục: 6.2.3. Setup Project" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+</mon>

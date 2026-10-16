@@ -1,4 +1,5 @@
- 1  cd D:\KIENTHUCCNTT
- 2  D:
- 3  PYTHON -m htttp.sever
- 4  http://localhost:8080
+1. cd D:\KIENTHUCCNTT
+2. D:
+3. python -m http.server 8080
+4. Mo trinh duyet: http://localhost:8080
+(Co the mo thu muc trong VS Code va go lenh o muc 3 trong Terminal)

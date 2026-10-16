@@ -1,0 +1,2318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mon id="cslt" ten="Cơ sở lập trình" nhom="Lập trình" drive="1OzPh71PiyO6alkpGxXR_yWalzzEurB0N" nguon="BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf">
+<mota>Khái niệm thuật toán, biến, cấu trúc điều khiển.</mota>
+<baihoc stt="1" tieude="Chương 1. Thuật toán">Chương 1. THUẬT TOÁN
+
+Số tiết: 02 tiết lý thuyết + 02 tiết thực hành (Tuần 1)
+
+  MỤC TIÊU CỦA CHƯƠNG (CLO1):
+ 1) Trình bày được khái niệm và năm đặc trưng cơ bản của thuật toán.
+ 2) Phân tích bài toán theo mô hình Input – Process – Output trước khi thiết kế thuật
+ toán.
+ 3) Mô tả thuật toán bằng ba phương pháp: ngôn ngữ tự nhiên, mã giả (pseudocode)
+ và lưu đồ (flowchart).
+ 4) Thiết kế thuật toán cho các bài toán cơ bản: tính toán, tìm kiếm, kiểm tra điều
+ kiện.
+
+1.1. Khái niệm về thuật toán
+
+1.1.1. Khái niệm
+
+     Thuật toán (Algorithm) là tập hữu hạn các bước được xác định rõ ràng, thực hiện
+theo một thứ tự xác định để giải quyết một bài toán hoặc thực hiện một nhiệm vụ cụ thể.
+Kết quả của việc thực hiện thuật toán phải có thể dự đoán được và phải kết thúc sau một
+số hữu hạn bước.
+     Có thể hiểu thuật toán một cách trực quan qua hình ảnh một công thức nấu ăn:
+công thức quy định rõ nguyên liệu cần có (đầu vào), trình tự các bước thực hiện (xử lý)
+và món ăn hoàn chỉnh thu được (đầu ra). Tương tự, thuật toán trong tin học mô tả chính
+xác từng bước cần thực hiện trên dữ liệu đầu vào để thu được kết quả mong muốn, mà
+không phụ thuộc vào việc sau này sẽ cài đặt bằng ngôn ngữ lập trình nào.
+     Cần phân biệt rõ hai khái niệm: thuật toán là lời giải mang tính ý tưởng, độc lập
+với ngôn ngữ lập trình; còn chương trình (program) là sự thể hiện cụ thể của thuật toán
+đó bằng một ngôn ngữ lập trình xác định (trong bài giảng này là ngôn ngữ C) để máy
+tính có thể thực thi được. Một thuật toán có thể được cài đặt thành nhiều chương trình
+khác nhau bằng các ngôn ngữ khác nhau, nhưng ý tưởng và các bước xử lý cốt lõi vẫn
+không thay đổi.
+
+                                           -1-
+     Thuật ngữ "algorithm" bắt nguồn từ tên nhà toán học người Ba Tư Muhammad ibn
+Musa al-Khwarizmi (780–850), người được coi là một trong những người đặt nền móng
+cho đại số và đã mô tả các phương pháp tính toán có hệ thống.
+
+1.1.2. Đặc trưng của thuật toán
+
+     Theo định nghĩa của Donald Knuth, mọi thuật toán phải có đủ năm đặc trưng sau:
+                   Bảng 1.1. Năm đặc trưng của thuật toán theo Donald Knuth
+
+    Đặc trưng          Tên tiếng Anh                   Giải thích và ví dụ minh họa
+
+ 1. Tính đúng đắn     Correctness         Phải cho kết quả đúng với mọi đầu vào hợp lệ. Ví
+                                          dụ: hàm căn bậc hai phải luôn trả về số không âm.
+
+ 2. Tính xác định     Definiteness        Mỗi bước phải rõ ràng, không mơ hồ. Ví dụ: "Thêm
+                                          5 gram muối" là xác định, còn "Thêm một ít muối"
+                                          thì không.
+
+ 3. Tính hữu hạn      Finiteness          Phải kết thúc sau số bước hữu hạn. Một vòng lặp
+                                          không có điều kiện dừng vi phạm đặc trưng này.
+
+ 4. Có đầu vào        Input               Không hoặc nhiều giá trị đầu vào từ một tập xác
+                                          định. Ví dụ: nhập n số nguyên để tính tổng.
+
+ 5. Có đầu ra         Output              Có ít nhất một kết quả đầu ra liên hệ rõ ràng với đầu
+                                          vào. Ví dụ: tổng của n số là đầu ra.
+
+1.1.3. Bài toán và thuật toán
+
+     Trước khi thiết kế thuật toán, cần phân tích bài toán rõ ràng theo mô hình IPO
+(Input – Process – Output):
+
+     Bảng 1.2. Mô hình IPO áp dụng cho bài toán giải phương trình bậc nhất ax + b = 0
+
+  Thành phần                        Ý nghĩa                         Ví dụ minh họa
+
+ Input (Đầu vào)     Dữ liệu cho trước, điều kiện ràng a, b là số thực bất kỳ
+                     buộc
+
+ Process (Xử lý)     Các bước biến đổi đầu vào thành Tính x = –b/a (nếu a ≠ 0)
+                     đầu ra
+
+                                              -2-
+ Output (Đầu ra)    Kết quả cần tìm, liên hệ với đầu Nghiệm x, hoặc thông báo vô
+                    vào                                 nghiệm/vô số nghiệm
+
+1.2. Phương pháp thiết kế thuật toán
+
+1.2.1. Quy trình thiết kế thuật toán
+
+       Quy trình thiết kế thuật toán gồm các bước sau, thường thực hiện lặp lại nhiều
+vòng cho đến khi đạt yêu cầu:
+   1. Xác định bài toán: hiểu đề, phân biệt Input/Output/ràng buộc, xét các trường hợp
+        biên.
+   2. Phân tích bài toán: chia bài toán lớn thành các bài toán con đơn giản hơn.
+   3. Chọn cấu trúc dữ liệu: quyết định cách lưu trữ và tổ chức dữ liệu phù hợp.
+   4. Xây dựng thuật toán: thiết kế các bước giải quyết theo chiến lược phù hợp.
+   5. Kiểm tra, xác minh: thử nghiệm tay với các trường hợp thông thường và biên.
+   6. Đánh giá và tối ưu: xét độ phức tạp thời gian, không gian và cải thiện nếu cần.
+       Trong thực tế, sáu bước trên không nhất thiết thực hiện tuần tự một lần duy nhất
+mà thường lặp lại nhiều vòng: sau khi kiểm tra phát hiện thuật toán chưa đúng hoặc chưa
+hiệu quả, người thiết kế quay lại các bước trước để điều chỉnh, cho đến khi thuật toán
+đáp ứng đầy đủ yêu cầu của bài toán.
+
+1.2.2. Các chiến lược thiết kế thuật toán
+
+                    Bảng 1.3. Các chiến lược thiết kế thuật toán phổ biến
+
+       Chiến lược                     Mô tả                        Ví dụ áp dụng
+
+ Vét      cạn   (Brute Thử tất cả khả năng. Đơn giản Tìm số nguyên tố bằng cách kiểm
+ Force)                   nhưng chậm, phù hợp bài toán tra từng số từ 2 đến n
+                          nhỏ.
+
+ Chia để trị (Divide &amp; Chia bài toán thành các bài toán Tìm kiếm nhị phân, sắp xếp trộn,
+ Conquer)                 con cùng dạng, giải từng phần rồi Tháp Hà Nội
+                          kết hợp.
+
+                                              -3-
+Tham lam (Greedy)     Mỗi bước chọn phương án tối ưu Đổi tiền lẻ, lập lịch công việc
+                      cục bộ; nhanh nhưng không luôn
+                      tối ưu toàn cục.
+
+Quy     hoạch   động Lưu kết quả bài toán con để tránh Dãy Fibonacci, bài toán cái túi
+(Dynamic              tính lại nhiều lần.
+Programming)
+
+1.3. Các phương pháp biểu diễn thuật toán
+
+1.3.1. Ngôn ngữ tự nhiên
+
+      Mô tả thuật toán bằng tiếng Việt hoặc tiếng Anh thông thường.
+      Ưu điểm: dễ hiểu với người không chuyên.
+      Nhược điểm: có thể mơ hồ, không chính xác.
+
+ Ví dụ: Tính điểm trung bình của n sinh viên (mô tả bằng ngôn ngữ tự nhiên)
+ Bước 1: Đọc số lượng sinh viên n.
+ Bước 2: Khởi tạo biến tổng = 0.
+ Bước 3: Lặp n lần: đọc điểm từng sinh viên, cộng vào tổng.
+ Bước 4: Tính điểm trung bình = tổng / n.
+ Bước 5: In ra điểm trung bình.
+
+1.3.2. Mã giả (Pseudocode)
+
+      Mã giả là ngôn ngữ trung gian, chính xác hơn ngôn ngữ tự nhiên nhưng không phụ
+thuộc một ngôn ngữ lập trình cụ thể nào. Mã giả dùng các từ khóa quy ước như
+BEGIN/END, INPUT/OUTPUT, IF/WHILE/FOR...
+
+           Bảng 1.4. Một số từ khóa mã giả thường dùng và tương đương trong C
+
+   Từ khóa mã giả            Tương đương trong C                      Ví dụ
+
+BEGIN ... END           { ... }                          BEGIN ... END
+
+INPUT x / OUTPUT x scanf(); / printf();                  INPUT n; OUTPUT S
+
+x ← giá trị             x = giá trị;                     tong ← 0
+
+                                            -4-
+ IF đk THEN...ELSE...   if (...) {...} else {...}      IF a&gt;b THEN max←a ELSE
+                                                       max←b
+
+ WHILE đk DO ...        while (...) {...}              WHILE i&lt;=n DO ...
+
+ FOR i←1 TO n DO ...    for (i=1;i&lt;=n;i++) {...}       FOR i←1 TO 10 DO ...
+
+     Trước khi vận dụng mã giả vào các ví dụ cụ thể, cần nắm vững cú pháp tổng quát
+của ba cấu trúc cơ bản thường dùng trong mã giả: cấu trúc rẽ nhánh (IF) và hai cấu trúc
+lặp (WHILE, FOR).
+
+a) Cấu trúc rẽ nhánh
+
+Cú pháp chung:
+ IF &lt;điều kiện&gt; THEN
+     &lt;khối lệnh thực hiện khi điều kiện đúng&gt;
+ ELSE
+     &lt;khối lệnh thực hiện khi điều kiện sai&gt;
+ END IF
+
+Trong đó:
+   – &lt;điều kiện&gt;: biểu thức logic, chỉ nhận giá trị Đúng hoặc Sai.
+   – Phần ELSE có thể bỏ qua nếu không cần xử lý trường hợp điều kiện sai.
+
+b) Cấu trúc lặp WHILE (lặp với điều kiện kiểm tra trước)
+
+Cú pháp chung:
+ WHILE &lt;điều kiện&gt; DO
+     &lt;khối lệnh lặp lại&gt;
+ END WHILE
+
+Trong đó:
+   – &lt;điều kiện&gt; được kiểm tra TRƯỚC mỗi lần lặp; còn đúng thì còn lặp tiếp.
+   – Khối lệnh lặp lại phải có bước làm thay đổi điều kiện, nếu không sẽ lặp vô hạn.
+
+c) Cấu trúc lặp FOR (lặp với số lần xác định trước)
+
+Cú pháp chung:
+ FOR &lt;biến đếm&gt; ← &lt;giá trị đầu&gt; TO &lt;giá trị cuối&gt; DO
+
+                                               -5-
+     &lt;khối lệnh lặp lại&gt;
+ END FOR
+
+Trong đó:
+   – &lt;biến đếm&gt; tự động tăng dần 1 đơn vị sau mỗi lần lặp, từ &lt;giá trị đầu&gt; đến &lt;giá
+       trị cuối&gt;.
+   – Phù hợp khi đã biết trước chính xác số lần cần lặp.
+
+Dưới đây là hai ví dụ cụ thể vận dụng các cấu trúc mã giả tổng quát nói trên để
+giải quyết bài toán thực tế.
+
+ Ví dụ: Tìm USCLN của hai số nguyên dương theo thuật toán Euclid (mã giả)
+ BEGIN
+   INPUT a, b
+   WHILE b ≠ 0 DO
+     r ← a mod b
+     a←b
+     b←r
+   END WHILE
+   OUTPUT "USCLN =", a
+ END
+
+1.3.3. Lưu đồ thuật toán (Flowchart)
+
+Lưu đồ biểu diễn thuật toán bằng các ký hiệu hình học chuẩn. Ưu điểm: trực quan, dễ
+theo dõi luồng thực thi. Nhược điểm: khó biểu diễn thuật toán phức tạp.
+
+                     Bảng 1.5. Các ký hiệu lưu đồ thuật toán chuẩn
+
+       Ký hiệu                 Tên gọi                   Ý nghĩa và sử dụng
+
+ Hình oval             Bắt     đầu/Kết   thúc Điểm bắt đầu (Start) hoặc kết thúc
+                       (Terminal)              (Stop/End) của thuật toán
+
+ Hình chữ nhật         Xử lý (Process)         Phép gán, tính toán, xử lý dữ liệu
+
+                                         -6-
+ Hình bình hành          Nhập/Xuất (I/O)         Nhập dữ liệu từ bàn phím hoặc xuất kết
+                                                 quả ra màn hình
+
+ Hình thoi               Quyết định (Decision)   Kiểm tra điều kiện, phân nhánh Đúng/Sai
+
+ Mũi tên                 Luồng (Flow)            Chỉ hướng thực hiện từ bước này sang
+                                                 bước tiếp theo
+
+ Ví dụ: Lưu đồ thuật toán tìm USCLN của hai số nguyên dương
+
+1.3.4. So sánh ba phương pháp biểu diễn
+
+Bảng 1.6. So sánh ba phương pháp biểu diễn thuật toán
+
+     Tiêu chí         Ngôn ngữ tự nhiên            Mã giả                 Lưu đồ
+
+ Tính chính xác      Thấp, có thể mơ hồ     Cao, có quy ước rõ     Cao, ký hiệu chuẩn
+
+ Dễ đọc, dễ hiểu     Rất dễ                 Trung bình             Rất dễ, trực quan
+
+                                           -7-
+ Phù hợp thuật      Không nên dùng          Tốt                    Khó, dài và rối
+ toán phức tạp
+
+ Trường hợp sử      Mô tả ý tưởng ban       Thiết kế chi tiết      Giao tiếp với người
+ dụng phổ biến      đầu                                            dùng
+
+ Ví dụ: Kiểm tra số nguyên tố (mã giả, minh họa thêm cho mục 1.3)
+ BEGIN
+   INPUT n
+   IF n &lt; 2 THEN OUTPUT "Khong la so nguyen to"; STOP
+   laNguyenTo ← TRUE
+   FOR i ← 2 TO sqrt(n) DO
+     IF n mod i = 0 THEN
+        laNguyenTo ← FALSE; BREAK
+     END IF
+   END FOR
+   IF laNguyenTo THEN OUTPUT "La so nguyen to"
+   ELSE OUTPUT "Khong la so nguyen to"
+ END
+
+1.4. Bài tập
+
+Yêu cầu: với mỗi bài, hãy xác định Input/Output, viết mã giả và vẽ lưu đồ thuật toán
+tương ứng.
+Bài 1.1. Thiết kế thuật toán tính n! (n giai thừa). Xét riêng trường hợp n = 0.
+Bài 1.2. Thiết kế thuật toán chuyển một số nguyên dương N từ hệ thập phân sang hệ nhị
+phân.
+Bài 1.3. Thiết kế thuật toán tìm Ước số chung nhỏ nhất (USCNN) của hai số a, b, biết
+USCNN = a×b / USCLN(a,b).
+Bài 1.4. Thiết kế thuật toán tính dãy Fibonacci: F(0)=0, F(1)=1, F(n)=F(n–1)+F(n–2).
+
+                                          -8-
+Bài 1.5. Thiết kế thuật toán sắp xếp ba số a, b, c theo thứ tự tăng dần bằng phép so sánh
+và hoán đổi.
+Bài 1.6. Phân tích bài toán đổi tiền lẻ N đồng ra các tờ tiền mệnh giá 500.000, 200.000,
+100.000, 50.000, 20.000, 10.000, 5.000, 2.000, 1.000. Xác định Input/Output/ràng buộc
+và thiết kế thuật toán theo chiến lược tham lam (Greedy). Mô phỏng tay với N =
+1.350.000 và N = 999.000.
+Bài 1.7. Viết mã giả và vẽ lưu đồ thuật toán Euclid tìm USCLN(a, b). Mô phỏng tay với
+USCLN(252, 105) và USCLN(100, 75). Mở rộng: viết mã giả tính USCNN(a, b) từ
+USCLN.
+Bài 1.8. Tìm hiểu thuật toán Sàng Eratosthenes tìm các số nguyên tố không vượt quá n.
+Viết mã giả, mô phỏng tay với n = 30 và so sánh hiệu quả với cách kiểm tra từng số.
+
+ CÂU HỎI ÔN TẬP
+ 1. Thuật toán là gì? Nêu và giải thích năm đặc trưng của thuật toán.
+ 2. Vì sao một vòng lặp không có điều kiện dừng lại vi phạm tính hữu hạn của thuật
+ toán?
+ 3. Trình bày mô hình IPO. Áp dụng mô hình này cho bài toán tính chu vi, diện tích
+ hình tròn.
+ 4. So sánh ưu, nhược điểm của ba phương pháp biểu diễn thuật toán đã học.
+ 5. Phân biệt chiến lược Tham lam (Greedy) và Chia để trị (Divide &amp; Conquer). Cho
+ ví dụ.
+
+ ĐỊNH HƯỚNG HOẠT ĐỘNG NHÓM
+ 1. Thảo luận:
+ - Một thuật toán "đúng" nhưng chạy rất chậm có còn được xem là một thuật toán tốt
+ không? Vì sao?
+ - Trong thực tế lập trình, khi nào nên ưu tiên viết mã giả trước, khi nào có thể bỏ qua
+ bước này?
+
+                                          -9-
+2. Thiết kế thuật toán cho bài toán quản lý điểm của 10 sinh viên (nhập điểm, tính
+trung bình, tìm max/min, xếp loại, sắp xếp). Mỗi nhóm trình bày lưu đồ tổng quát và
+mã giả chi tiết; chia sẻ qua nhóm Zalo/Teams.
+
+NĂNG LỰC SỐ TÍCH HỢP (Thông tư 02/2025/TT-BGDĐT)
+NLS1 (Khai thác thông tin): tìm kiếm, đánh giá tài liệu về các chiến lược thuật toán
+trên Internet.
+NLS2 (Giao tiếp, hợp tác số): thảo luận nhóm, chia sẻ lưu đồ qua môi trường số
+(Zalo, Teams, draw.io).
+NLS5 (Giải quyết vấn đề bằng công nghệ số): tư duy phân tích – thiết kế – kiểm tra
+thuật toán.
+
+TỔNG KẾT CHƯƠNG
+– Thuật toán là tập hữu hạn các bước xác định để giải một bài toán; phải có đủ 5 đặc
+trưng: đúng đắn, xác định, hữu hạn, có đầu vào, có đầu ra.
+– Trước khi thiết kế thuật toán cần phân tích bài toán theo mô hình IPO (Input –
+Process – Output).
+– Ba phương pháp biểu diễn thuật toán: ngôn ngữ tự nhiên (dễ hiểu), mã giả (chính
+xác), lưu đồ (trực quan).
+– Các chiến lược thiết kế phổ biến: vét cạn, chia để trị, tham lam, quy hoạch động.
+
+                                       - 10 -</baihoc>
+<baitap bai="1" loai="goc" de="Bài 1.1. Thiết kế thuật toán tính n! (n giai thừa). Xét riêng trường hợp n = 0." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 6-15."/>
+<baitap bai="1" loai="goc" de="Bài 1.2. Thiết kế thuật toán chuyển một số nguyên dương N từ hệ thập phân sang hệ nhị phân." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 6-15."/>
+<baitap bai="1" loai="goc" de="Bài 1.3. Thiết kế thuật toán tìm Ước số chung nhỏ nhất (USCNN) của hai số a, b, biết USCNN = a×b / USCLN(a,b)." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 6-15."/>
+<baitap bai="1" loai="goc" de="Bài 1.4. Thiết kế thuật toán tính dãy Fibonacci: F(0)=0, F(1)=1, F(n)=F(n–1)+F(n–2). -8-" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 6-15."/>
+<baitap bai="1" loai="goc" de="Bài 1.5. Thiết kế thuật toán sắp xếp ba số a, b, c theo thứ tự tăng dần bằng phép so sánh và hoán đổi." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 6-15."/>
+<baitap bai="1" loai="goc" de="Bài 1.6. Phân tích bài toán đổi tiền lẻ N đồng ra các tờ tiền mệnh giá 500.000, 200.000, 100.000, 50.000, 20.000, 10.000, 5.000, 2.000, 1.000. Xác định Input/Output/ràng buộc và thiết kế thuật toán theo chiến lược tham lam (Greedy). Mô phỏng tay với N = 1.350.000 và N = 999.000." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 6-15."/>
+<baitap bai="1" loai="goc" de="Bài 1.7. Viết mã giả và vẽ lưu đồ thuật toán Euclid tìm USCLN(a, b). Mô phỏng tay với USCLN(252, 105) và USCLN(100, 75). Mở rộng: viết mã giả tính USCNN(a, b) từ USCLN." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 6-15."/>
+<baitap bai="1" loai="goc" de='Bài 1.8. Tìm hiểu thuật toán Sàng Eratosthenes tìm các số nguyên tố không vượt quá n. Viết mã giả, mô phỏng tay với n = 30 và so sánh hiệu quả với cách kiểm tra từng số. CÂU HỎI ÔN TẬP 1. Thuật toán là gì? Nêu và giải thích năm đặc trưng của thuật toán. 2. Vì sao một vòng lặp không có điều kiện dừng lại vi phạm tính hữu hạn của thuật toán? 3. Trình bày mô hình IPO. Áp dụng mô hình này cho bài toán tính chu vi, diện tích hình tròn. 4. So sánh ưu, nhược điểm của ba phương pháp biểu diễn thuật toán đã học. 5. Phân biệt chiến lược Tham lam (Greedy) và Chia để trị (Divide &amp; Conquer). Cho ví dụ. ĐỊNH HƯỚNG HOẠT ĐỘNG NHÓM 1. Thảo luận: - Một thuật toán "đúng" nhưng chạy rất chậm có còn được xem là một thuật toán tốt không? Vì sao? - Trong thực tế lập trình, khi nào nên ưu tiên viết mã giả trước, khi nào có thể bỏ qua bước này? -9- 2. Thiết kế thuật toán cho bài toán quản lý điểm của 10 sinh viê' dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 6-15."/>
+<baitap bai="1" loai="goc" de="1. Thuật toán là gì? Nêu và giải thích năm đặc trưng của thuật toán." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 6-15."/>
+<baitap bai="1" loai="goc" de="2. Vì sao một vòng lặp không có điều kiện dừng lại vi phạm tính hữu hạn của thuật toán?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 6-15."/>
+<baitap bai="1" loai="goc" de="3. Trình bày mô hình IPO. Áp dụng mô hình này cho bài toán tính chu vi, diện tích hình tròn." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 6-15."/>
+<baitap bai="1" loai="goc" de="4. So sánh ưu, nhược điểm của ba phương pháp biểu diễn thuật toán đã học." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 6-15."/>
+<baitap bai="1" loai="goc" de="5. Phân biệt chiến lược Tham lam (Greedy) và Chia để trị (Divide &amp; Conquer). Cho ví dụ. ĐỊNH HƯỚNG HOẠT ĐỘNG NHÓM" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 6-15."/>
+<baitap bai="1" loai="goc" de='1. Thảo luận: - Một thuật toán "đúng" nhưng chạy rất chậm có còn được xem là một thuật toán tốt không? Vì sao? - Trong thực tế lập trình, khi nào nên ưu tiên viết mã giả trước, khi nào có thể bỏ qua bước này? -9-' dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 6-15."/>
+<baitap bai="1" loai="goc" de="2. Thiết kế thuật toán cho bài toán quản lý điểm của 10 sinh viên (nhập điểm, tính trung bình, tìm max/min, xếp loại, sắp xếp). Mỗi nhóm trình bày lưu đồ tổng quát và mã giả chi tiết; chia sẻ qua nhóm Zalo/Teams. NĂNG LỰC SỐ TÍCH HỢP (Thông tư 02/2025/TT-BGDĐT) NLS1 (Khai thác thông tin): tìm kiếm, đánh giá tài liệu về các chiến lược thuật toán trên Internet. NLS2 (Giao tiếp, hợp tác số): thảo luận nhóm, chia sẻ lưu đồ qua môi trường số (Zalo, Teams, draw.io). NLS5 (Giải quyết vấn đề bằng công nghệ số): tư duy phân tích – thiết kế – kiểm tra thuật toán. TỔNG KẾT CHƯƠNG – Thuật toán là tập hữu hạn các bước xác định để giải một bài toán; phải có đủ 5 đặc trưng: đúng đắn, xác định, hữu hạn, có đầu vào, có đầu ra. – Trước khi thiết kế thuật toán cần phân tích bài toán theo mô hình IPO (Input – Process – Output). – Ba phương pháp biểu diễn thuật toán: ngôn ngữ tự nhiên (dễ hiểu), mã giả (chín" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 6-15."/>
+<baihoc stt="2" tieude="Chương 2. Các thành phần cơ bản">Chương 2. CÁC THÀNH PHẦN CƠ BẢN
+
+Số tiết: 06 tiết lý thuyết + 06 tiết thực hành (Tuần 2 – 4)
+
+ MỤC TIÊU CỦA CHƯƠNG (CLO1, CLO2):
+ 1) Giải thích đặc điểm của ngôn ngữ C và nhận dạng cấu trúc một chương trình C.
+ 2) Khai báo và sử dụng đúng biến, hằng với các kiểu dữ liệu cơ sở trong C.
+ 3) Vận dụng đúng các loại toán tử: số học, quan hệ, logic, gán và chuyển đổi kiểu
+ dữ liệu.
+ 4) Thực hiện nhập, xuất dữ liệu có định dạng qua hàm printf()/scanf().
+ 5) Phân biệt câu lệnh, khối lệnh và cách viết ghi chú (comment) trong C.
+
+2.1. Giới thiệu ngôn ngữ lập trình C
+
+2.1.1. Lịch sử và vị trí của ngôn ngữ C
+
+                  Bảng 2.1. Các mốc phát triển quan trọng của ngôn ngữ C
+
+   Mốc thời
+                                Sự kiện                               Ý nghĩa
+        gian
+
+ 1969–1972       Dennis Ritchie tại Bell Labs phát Ngôn ngữ C ra đời, dùng để viết lại
+                 triển C từ ngôn ngữ B                hệ điều hành Unix
+
+ 1978            Kernighan và Ritchie xuất bản sách Trở thành chuẩn de-facto đầu tiên
+                 The C Programming Language           (K&amp;R C)
+
+ 1989/1990       ANSI C (C89) và ISO C (C90)          Chuẩn hóa quốc tế lần đầu tiên
+
+ 1999            C99 bổ sung kiểu bool, khai báo biến Cải tiến lớn, gần hơn với C++
+                 trong for, chú thích //
+
+ 2011 đến nay    C11, C17, C23                        Hỗ trợ đa luồng, Unicode và các cải
+                                                      tiến hiện đại
+
+2.1.2. Đặc điểm nổi bật của ngôn ngữ C
+
+                                           - 11 -
+     – Ngôn ngữ bậc trung: kết hợp cú pháp dễ đọc của ngôn ngữ bậc cao và khả năng
+        thao tác trực tiếp với bộ nhớ qua con trỏ.
+     – Hiệu năng cao: chương trình C thực thi nhanh, gần với mã máy.
+     – Tính di động (portable): chạy được trên hầu hết các nền tảng phần cứng và hệ
+        điều hành.
+     – Là nền tảng của nhiều ngôn ngữ khác: C++, Java, C#, Python đều chịu ảnh hưởng
+        cú pháp từ C.
+     – Phổ biến trong lập trình hệ thống và nhúng: hệ điều hành, vi điều khiển, thiết bị
+        IoT.
+
+2.1.3. Cấu trúc một chương trình C
+
+       Một chương trình C, dù đơn giản hay phức tạp, đều tuân theo một bố cục tổng quát
+gồm các phần: chỉ thị tiền xử lý, định nghĩa hằng/macro, khai báo biến toàn cục, khai
+báo nguyên mẫu hàm, hàm main() và định nghĩa các hàm khác. Trong đó, hàm main()
+luôn là điểm bắt đầu thực thi của chương trình.
+
+Cú pháp chung:
+ #include &lt;thư_viện_1&gt;               // Chỉ thị tiền xử lý
+ #include &lt;thư_viện_2&gt;
+
+ #define TÊN_HẰNG giá_trị              // Định nghĩa hằng (nếu có)
+
+ kiểu_trả_về tên_hàm(tham_số);              // Khai báo nguyên mẫu hàm (nếu có)
+
+ int main(void) {
+        // Khai báo biến và các câu lệnh xử lý
+        return 0;
+ }
+
+ kiểu_trả_về tên_hàm(tham_số) {             // Định nghĩa hàm (nếu có)
+        // Thân hàm
+ }
+
+Trong đó:
+     – Chỉ thị tiền xử lý (#include): nạp các thư viện cần dùng, luôn đặt ở đầu file.
+
+                                           - 12 -
+     – main(): hàm bắt buộc phải có trong mọi chương trình C, là nơi bắt đầu thực thi.
+     – Các phần #define, nguyên mẫu hàm, định nghĩa hàm khác là tùy chọn, có thể có
+        hoặc không.
+
+Ví dụ cụ thể dưới đây minh họa đầy đủ các phần nói trên trong một chương trình tính
+diện tích hình tròn:
+ /* === CẤU TRÚC CHƯƠNG TRÌNH C === */
+
+ #include &lt;stdio.h&gt;            /* Chỉ thị tiền xử lý: nạp thư viện nhập/xuất
+ chuẩn */
+ #include &lt;math.h&gt;              /* Thư viện toán học */
+
+ #define PI 3.14159             /* Định nghĩa hằng số bằng macro */
+
+ /* Khai báo nguyên mẫu hàm (prototype) */
+ float tinhDienTich(float banKinh);
+
+ /* Hàm main - điểm bắt đầu thực thi chương trình */
+ int main(void) {
+        float r;
+        printf("Nhap ban kinh: ");
+        scanf("%f", &amp;r);
+        printf("Dien tich = %.4f\n", tinhDienTich(r));
+        return 0;         /* 0 = chương trình kết thúc thành công */
+ }
+
+ /* Định nghĩa hàm */
+ float tinhDienTich(float banKinh) {
+        return PI * banKinh * banKinh;
+ }
+
+2.1.4. Quá trình biên dịch chương trình C
+
+                    Bảng 2.2. Bốn giai đoạn biên dịch một chương trình C
+
+ Giai
+                 Tên                       Thực hiện                       File kết quả
+ đoạn
+
+                                           - 13 -
+                               Xử lý #include, #define; loại bỏ
+  1     Tiền xử lý                                                            .i
+                               chú thích
+
+                               Chuyển C sang Assembly, kiểm
+  2     Biên dịch                                                             .s
+                               tra cú pháp
+
+                               Chuyển Assembly sang mã đối
+  3     Dịch hợp ngữ                                                       .o / .obj
+                               tượng nhị phân
+
+                               Kết hợp các file .o và thư viện
+  4     Liên kết                                                             .exe
+                               thành file thực thi
+
+2.2. Biến, hằng
+
+2.2.1. Biến (Variable)
+
+      Biến là tên đặt cho một vùng nhớ dùng để lưu trữ giá trị có thể thay đổi trong quá
+trình thực hiện chương trình. Khai báo biến sẽ cấp phát bộ nhớ và liên kết tên biến với
+địa chỉ vùng nhớ đó. Một biến trong C bắt buộc phải được khai báo (xác định kiểu dữ
+liệu) trước khi sử dụng; trình biên dịch dựa vào kiểu dữ liệu để biết cần cấp phát bao
+nhiêu byte bộ nhớ và cách diễn giải các byte đó.
+
+Cú pháp chung:
+ kiểu_dữ_liệu tên_biến;
+ kiểu_dữ_liệu tên_biến = giá_trị_khởi_tạo;
+ kiểu_dữ_liệu tên_biến_1, tên_biến_2, ..., tên_biến_n;
+
+Trong đó:
+   – kiểu_dữ_liệu: một trong các kiểu cơ sở của C (int, float, char...) — xem chi tiết
+       ở mục 2.3.
+   – tên_biến: do người lập trình tự đặt, phải tuân theo quy tắc đặt tên (xem bảng
+       dưới).
+   – giá_trị_khởi_tạo: giá trị ban đầu gán cho biến ngay khi khai báo (không bắt buộc
+       nhưng nên có).
+
+                          Bảng 2.3. Quy tắc đặt tên biến trong C
+
+            Quy tắc                 Ví dụ hợp lệ                  Ví dụ KHÔNG hợp lệ
+
+                                             - 14 -
+ Chỉ dùng a-z, A-Z, 0-9, _      diem_tb, soLuong       diem-tb, so luong
+
+ Không bắt đầu bằng số          tuoi20, sv01           20tuoi, 01sv
+
+ Phân biệt hoa/thường           diem ≠ Diem ≠ DIEM     —
+
+ Không trùng từ khóa của C      my_int, gia_tri        int, float, while
+
+Ví dụ cụ thể sau minh họa các cách khai báo biến theo cú pháp tổng quát nêu trên:
+ /* Khai báo không khởi tạo - giá trị KHÔNG XÁC ĐỊNH */
+ int tuoi;
+
+ /* Khai báo có khởi tạo - NÊN dùng */
+ int n = 10;
+ float pi = 3.14159f;
+ double e = 2.71828;
+ char kyTu = 'A';
+ int a = 5, b = 3, c;                 /* Nhiều biến cùng kiểu trên một dòng */
+
+2.2.2. Hằng (Constant)
+
+     Hằng là đại lượng có giá trị KHÔNG thay đổi trong suốt quá trình thực hiện
+chương trình. C cung cấp hai cách định nghĩa hằng số, mỗi cách có cú pháp và đặc điểm
+riêng.
+
+Cú pháp chung:
+ // Cách 1: macro tiền xử lý
+ #define TÊN_HẰNG giá_trị
+
+ // Cách 2: hằng có kiểu dữ liệu
+ const kiểu_dữ_liệu TÊN_HẰNG = giá_trị;
+
+Trong đó:
+   – #define không có dấu = và không kết thúc bằng dấu ; vì đây là chỉ thị tiền xử lý,
+         không phải câu lệnh C.
+   – const khai báo giống biến nhưng thêm từ khóa const ở đầu; bắt buộc phải khởi
+         tạo giá trị ngay khi khai báo.
+
+                                            - 15 -
+Ví dụ cụ thể sau minh họa cả hai cách định nghĩa hằng, cùng với cách biểu diễn hằng số
+nguyên ở các hệ đếm khác nhau:
+ /* Cách 1: #define - macro tiền xử lý, không có kiểu dữ liệu */
+ #define PI            3.14159265358979
+ #define MAX_SIZE 100
+
+ /* Cách 2: const - hằng có kiểu dữ liệu (khuyến khích dùng) */
+ const float PI2       = 3.14159265358979f;
+ const int       MAX   = 100;
+
+ /* Hằng số nguyên với hệ đếm khác */
+ int dec = 255;             /* Thập phân                */
+ int hex = 0xFF;            /* Thập lục phân (=255)*/
+ int oct = 0377;            /* Bát phân (=255)           */
+
+2.3. Kiểu dữ liệu cơ sở
+
+2.3.1. Các kiểu dữ liệu nguyên thủy
+
+                   Bảng 2.4. Các kiểu dữ liệu cơ sở trong ngôn ngữ C
+
+         Kiểu      Kích thước             Phạm vi giá trị               Định dạng
+
+ char             1 byte          −128 đến 127                   %c, %d
+
+ short int        2 bytes         −32.768 đến 32.767             %hd
+
+ int              4 bytes         −2.147.483.648              đến %d
+                                  2.147.483.647
+
+ unsigned int     4 bytes         0 đến 4.294.967.295            %u
+
+ long long int    8 bytes         −9,2×10¹⁸ đến 9,2×10¹⁸         %lld
+
+ float            4 bytes         ±3,4×10³⁸, 6–7 chữ số có nghĩa %f
+
+ double           8 bytes         ±1,8×10³⁰⁸, 15–16 chữ số có %lf
+                                  nghĩa
+
+ #include &lt;stdio.h&gt;
+ #include &lt;limits.h&gt;
+
+                                          - 16 -
+ int main() {
+      printf("int           : %zu byte(s)\n", sizeof(int));
+      printf("double        : %zu byte(s)\n", sizeof(double));
+      printf("INT_MIN = %d, INT_MAX = %d\n", INT_MIN, INT_MAX);
+      return 0;
+ }
+
+2.3.2. Ký tự và mã ASCII
+
+     Kiểu char lưu một ký tự dưới dạng số nguyên (mã ASCII), nhờ đó có thể thực hiện
+phép tính số học trên ký tự.
+ char c = 'A';                     /* Giá trị ASCII = 65 */
+ printf("%c %d\n", c, c);          /* In ra: A 65             */
+
+ char thuong = 'A' + 32;           /* 'A'(65)+32 = 97 = 'a' */
+ printf("%c\n", thuong);          /* In ra: a */
+
+ /* Một số mã ASCII quan trọng: */
+ /* '0'-'9' = 48-57 | 'A'-'Z' = 65-90 | 'a'-'z' = 97-122 */
+
+2.4. Toán tử và biểu thức
+
+2.4.1. Toán tử số học
+ int a = 17, b = 5;
+ printf("%d\n", a + b);          /* 22 */
+ printf("%d\n", a - b);          /* 12 */
+ printf("%d\n", a * b);          /* 85 */
+ printf("%d\n", a / b);          /* 3     - chia nguyên, mất phần dư! */
+ printf("%d\n", a % b);          /* 2     - phần dư của 17/5 */
+ printf("%.4f\n", (float)a / b);            /* 3.4000 - chia thực */
+
+ int x = 5;
+ printf("%d\n", x++);          /* In 5 trước, sau đó x=6 */
+ printf("%d\n", ++x);          /* Tăng trước, sau đó in 7 */
+
+2.4.2. Toán tử quan hệ và toán tử logic
+ int a = 10, b = 20;
+                                          - 17 -
+ printf("%d\n", a == b);         /* 0 (sai): 10 khác 20 */
+ printf("%d\n", a &lt; b);          /* 1 (đúng) */
+
+ /* LỖI THƯỜNG GẶP: nhầm = (gán) với == (so sánh) */
+ /* if (a = 5)        -&gt; SAI: gán 5 cho a, điều kiện luôn đúng! */
+ /* if (a == 5) -&gt; ĐÚNG: so sánh a với 5                                 */
+
+ int x = 5;
+ printf("%d\n", x &gt; 0 &amp;&amp; x &lt; 10);              /* 1: 5 trong khoảng (0,10) */
+ printf("%d\n", !(x &gt; 0));                      /* 0: phủ định x&gt;0 (đúng) */
+
+2.4.3. Toán tử gán kết hợp, toán tử điều kiện và độ ưu tiên
+ int a = 100;
+ a += 20;       /* a = a + 20 = 120 */
+ a -= 30;       /* a = a - 30 = 90        */
+ a %= 7;        /* a = a % 7     = 6      */
+
+ /* Toán tử điều kiện (ternary) */
+ int x = 10, y = 20;
+ int max = (x &gt; y) ? x : y;            /* max = 20 */
+
+ /* Thứ tự ưu tiên (cao -&gt; thấp, rút gọn):
+       ()                          Nhóm
+       ++ -- ! (type) sizeof       Đơn (phải sang trái)
+       * / %                       Nhân chia
+       + -                         Cộng trừ
+       &lt; &lt;= &gt; &gt;=     == !=         Quan hệ, bằng/khác
+       &amp;&amp; ||                       Logic
+       ?:                          Điều kiện
+       = += -= ...                 Gán (phải sang trái)        */
+
+2.4.4. Chuyển đổi kiểu dữ liệu
+
+       C cho phép chuyển đổi kiểu tự động (implicit) theo thứ bậc char &lt; int &lt; long &lt;
+float &lt; double, hoặc ép kiểu tường minh (explicit cast) khi cần kiểm soát chính xác kết
+quả.
+ int x = 7, y = 2;
+
+                                        - 18 -
+ float ketqua = x / y;
+ /* SAI Ý: chia nguyên 7/2=3, rồi mới đổi: 3.0 */
+ float ketqua2 = (float)x / y;
+ /* ĐÚNG: ép x sang float trước: 7.0/2 = 3.5 */
+
+ /* Ứng dụng: tính phần trăm chính xác */
+ int dung = 7, tong = 10;
+ float phantram = (float)dung / tong * 100;              /* 70.0% */
+ printf("Ti le dung: %.1f%%\n", phantram);
+
+ LƯU Ý
+ Luôn ép kiểu (float) hoặc (double) trước phép chia khi cần kết quả là số thực, nếu
+ không kết quả sẽ bị cắt phần thập phân do thực hiện phép chia nguyên trước.
+
+2.5. Nhập, xuất dữ liệu
+
+2.5.1. Hàm printf() – xuất dữ liệu
+
+     printf() là hàm thuộc thư viện stdio.h, dùng để xuất (in) dữ liệu ra màn hình theo
+một định dạng do người lập trình quy định.
+
+Cú pháp chung:
+ printf("chuỗi_định_dạng", đối_số_1, đối_số_2, ..., đối_số_n);
+
+Trong đó:
+   – chuỗi_định_dạng: chuỗi chứa văn bản cần in kèm các đặc tả định dạng (format
+       specifier) bắt đầu bằng %, ví dụ %d, %f, %c, %s tương ứng với kiểu int, float,
+       char, chuỗi.
+   – đối_số: các giá trị hoặc biến cần in ra, theo đúng thứ tự và đúng kiểu với các đặc
+       tả định dạng đã khai báo. Số đối số phải bằng số đặc tả định dạng trong chuỗi.
+
+Ví dụ cụ thể sau minh họa printf() với nhiều kiểu dữ liệu và các tùy chọn căn lề, làm
+tròn số:
+ int n = 42; float f = 3.14159f; char c = 'Z'; char s[] = "Xin chao";
+
+ printf("%d\n", n);             /* 42                     */
+ printf("%f\n", f);             /* 3.141590               */
+
+                                        - 19 -
+ printf("%c\n", c);              /* Z                     */
+ printf("%s\n", s);              /* Xin chao              */
+ printf("%x\n", n);              /* 2a (thập lục phân)*/
+
+ /* Điều chỉnh định dạng */
+ printf("|%10d|\n", n);           /* |            42| - căn phải, rộng 10 */
+ printf("|%-10d|\n", n);          /* |42            | - căn trái, rộng 10 */
+ printf("|%.2f|\n", f);           /* |3.14|          - 2 chữ số thập phân */
+
+2.5.2. Hàm scanf() – nhập dữ liệu
+
+     scanf() cũng thuộc thư viện stdio.h, dùng để đọc dữ liệu người dùng nhập từ bàn
+phím và lưu vào các biến trong chương trình.
+
+Cú pháp chung:
+ scanf("chuỗi_định_dạng", &amp;biến_1, &amp;biến_2, ..., &amp;biến_n);
+
+Trong đó:
+   – chuỗi_định_dạng: tương tự printf(), gồm các đặc tả định dạng tương ứng với kiểu
+      của từng biến cần đọc.
+   – &amp;biến: dấu &amp; là toán tử lấy địa chỉ, BẮT BUỘC phải có trước tên biến (trừ trường
+      hợp biến là mảng/chuỗi).
+Ví dụ cụ thể sau minh họa scanf() với các kiểu dữ liệu khác nhau và cách đọc chuỗi có
+khoảng trắng:
+ int tuoi; float diem; char ten[50];
+
+ printf("Nhap tuoi: "); scanf("%d", &amp;tuoi);
+ /* &amp; là toán tử lấy địa chỉ */
+ printf("Nhap diem: "); scanf("%f", &amp;diem);
+ printf("Nhap ten (khong khoang trang): "); scanf("%s", ten);
+ /* mảng: không cần &amp; */
+
+ /* Đọc cả dòng kể cả khoảng trắng */
+ getchar();
+ /* xóa ký tự \n còn lại trong buffer */
+ fgets(ten, sizeof(ten), stdin);
+ ten[strcspn(ten, "\n")] = '\0';
+ /* xóa \n ở cuối chuỗi đọc được */
+
+                                         - 20 -
+ LƯU Ý
+ scanf() trả về số lượng biến đọc thành công; nên kiểm tra: if (scanf("%d",&amp;n)!=1)
+ {...}
+ Quên dấu &amp; trước biến số là lỗi rất thường gặp; với mảng/chuỗi thì KHÔNG cần &amp;.
+
+2.5.3. Các hàm nhập xuất ký tự
+
+     Ngoài printf()/scanf() làm việc với dữ liệu có định dạng, C còn cung cấp các hàm
+đơn giản hơn để nhập/xuất từng ký tự hoặc từng chuỗi không cần định dạng:
+ int c = getchar();           /* Đọc một ký tự, trả về int (EOF = -1) */
+ putchar('A');                /* In ký tự 'A' */
+ puts("Xin chao!");           /* In chuỗi và tự xuống dòng */
+ /* Không nên dùng gets() vì có nguy cơ tràn bộ đệm (buffer overflow)
+ */
+
+2.6. Câu lệnh, nhóm câu lệnh, ghi chú
+
+2.6.1. Câu lệnh (Statement)
+
+     Câu lệnh là một chỉ thị hoàn chỉnh yêu cầu máy tính thực hiện một hành động,
+luôn kết thúc bằng dấu chấm phẩy (;). Có nhiều loại câu lệnh: câu lệnh gán, câu lệnh gọi
+hàm, câu lệnh điều kiện, câu lệnh lặp...
+ int x;                /* Câu lệnh khai báo */
+ x = 5;                /* Câu lệnh gán              */
+ printf("%d", x); /* Câu lệnh gọi hàm                */
+ ;                     /* Câu lệnh rỗng (hợp lệ nhưng không làm gì) */
+
+2.6.2. Nhóm câu lệnh / khối lệnh (Compound Statement)
+
+     Khối lệnh là một nhóm các câu lệnh được đặt trong cặp dấu ngoặc { }, được xem
+như MỘT câu lệnh duy nhất. Khối lệnh xác định phạm vi (scope) của các biến cục bộ
+được khai báo bên trong nó.
+
+Cú pháp chung:
+ {
+         câu_lệnh_1;
+                                           - 21 -
+        câu_lệnh_2;
+        ...
+        câu_lệnh_n;
+ }
+
+Trong đó:
+     – Toàn bộ các câu lệnh từ câu_lệnh_1 đến câu_lệnh_n được xem là một khối lệnh
+        duy nhất khi dùng trong if, while, for, hàm...
+
+       Ví dụ cụ thể sau minh họa cách dùng khối lệnh và phạm vi của biến khai báo bên
+trong khối:
+ if (diem &gt;= 5) {
+        printf("Dat\n");             /* Nhiều câu lệnh trong */
+        soLuongDat++;                    /* một khối {}                  */
+ }
+
+ {
+        int tam = 10;        /* tam chỉ tồn tại trong khối này */
+        printf("%d\n", tam);
+ }
+ /* printf("%d", tam); */            /* LỖI: tam không còn tồn tại ngoài khối
+ */
+
+2.6.3. Ghi chú (Comment)
+
+       Ghi chú giúp giải thích mã nguồn, không được biên dịch và không ảnh hưởng đến
+chương trình. C hỗ trợ hai dạng ghi chú:
+
+Cú pháp chung:
+ // nội dung ghi chú một dòng
+
+ /* nội dung ghi chú
+       có thể trải dài
+       trên nhiều dòng */
+
+Trong đó:
+     – // (chuẩn C99 trở lên): ghi chú từ vị trí // đến hết dòng hiện tại.
+     – /* ... */: ghi chú có thể trải dài nhiều dòng, kết thúc tại dấu */ đầu tiên gặp được.
+
+                                            - 22 -
+Ví dụ cụ thể sau minh họa cả hai dạng ghi chú khi áp dụng vào đoạn mã thực tế:
+ // Ghi chú một dòng (chuẩn C99 trở lên)
+ int x = 5;      // Khai báo và khởi tạo x
+
+ /* Ghi chú nhiều dòng
+       có thể trải dài qua
+       nhiều dòng văn bản */
+ int y = 10;
+
+ /* Lưu ý: ghi chú nhiều dòng KHÔNG được lồng nhau */
+
+2.7. Thực hành
+
+Yêu cầu: Cài đặt và làm quen với môi trường: Dev-C++, Code::Blocks, VS Code +
+MinGW, hoặc dùng công cụ trực tuyến (replit.com, onlinegdb.com).
+Bài 2.1. Viết chương trình in thông tin cá nhân (họ tên, ngày sinh, lớp, điểm trung bình)
+với định dạng căn lề rõ ràng (dùng %-25s, %10.2f).
+Bài 2.2. In kích thước (sizeof) và giới hạn (limits.h, float.h) của tất cả các kiểu dữ liệu
+cơ sở.
+Bài 2.3. Viết chương trình tính tổng, hiệu, tích, thương thực (4 số lẻ) và phần dư của hai
+số nguyên a, b nhập từ bàn phím.
+Bài 2.4. Giải phương trình bậc hai ax² + bx + c = 0. Xử lý đầy đủ các trường hợp: a = 0
+(suy biến về bậc nhất), Δ &gt; 0 (hai nghiệm), Δ = 0 (nghiệm kép), Δ &lt; 0 (vô nghiệm thực).
+Bài 2.5. Tính chỉ số BMI = cân nặng / (chiều cao)² và phân loại: thiếu cân (&lt;18.5), bình
+thường (18.5–24.9), thừa cân (25–29.9), béo phì (≥30).
+Bài 2.6. Máy tính đổi đơn vị nhiệt độ giữa độ C, độ F và độ K theo công thức chuyển
+đổi.
+Bài 2.7. Tính tiền điện sinh hoạt theo 6 bậc thang giá, có thuế VAT 8%, in hóa đơn chi
+tiết từng bậc và tổng cộng. Sử dụng ChatGPT/GitHub Copilot để xin gợi ý. Đánh giá
+code do AI đề xuất: đúng/đủ chưa, có xử lý hết các bậc giá không, rồi tự hoàn thiện.
+
+                                          - 23 -
+CÂU HỎI ÔN TẬP
+1. Trình bày các giai đoạn biên dịch một chương trình C. Vai trò của từng giai đoạn
+là gì?
+2. Phân biệt #define và const khi định nghĩa hằng số. Nên dùng cách nào và vì sao?
+3. Tại sao biểu thức (float)7/2 cho kết quả khác với (float)(7/2)? Giải thích bằng thứ
+tự thực hiện.
+4. Khối lệnh ({ }) có vai trò gì đối với phạm vi của biến cục bộ?
+5. Nêu sự khác nhau giữa hai kiểu ghi chú // và /* */ trong C.
+
+ĐỊNH HƯỚNG THẢO LUẬN NHÓM
+1. Vì sao một ngôn ngữ ra đời từ năm 1972 như C vẫn còn được sử dụng rộng rãi
+cho đến nay?
+2. Thảo luận về rủi ro an toàn khi dùng scanf("%s", ...) không giới hạn độ dài so với
+fgets().
+
+NĂNG LỰC SỐ TÍCH HỢP (Thông tư 02/2025/TT-BGDĐT)
+NLS1 (Khai thác thông tin): tra cứu tài liệu C trên cppreference.com, đánh giá nguồn
+tin cậy.
+NLS3 (Sáng tạo nội dung số): viết chương trình C đầu tiên là bước khởi đầu tạo ra
+sản phẩm số.
+NLS4 (An toàn số): nhận biết rủi ro buffer overflow khi dùng scanf()/gets() không
+kiểm soát.
+NLS6 (Ứng dụng AI): dùng AI hỗ trợ gợi ý lời giải, đánh giá và hiệu chỉnh kết quả
+AI đưa ra.
+
+TỔNG KẾT CHƯƠNG
+– Ngôn ngữ C là ngôn ngữ bậc trung, hiệu năng cao; biên dịch qua 4 giai đoạn: tiền
+xử lý, biên dịch, dịch hợp ngữ, liên kết.
+
+                                        - 24 -
+– Biến cần khai báo trước khi dùng; nên khởi tạo ngay khi khai báo. Hằng có thể
+định nghĩa bằng #define hoặc const.
+– Bảy kiểu dữ liệu cơ sở thường dùng: char, short, int, long long, float, double —
+chọn theo phạm vi và độ chính xác cần thiết.
+– Toán tử chia (/) giữa hai số nguyên cho kết quả nguyên; cần ép kiểu (float)/(double)
+để có kết quả thực chính xác.
+– Câu lệnh kết thúc bằng dấu ;, khối lệnh dùng { } xác định phạm vi biến; ghi chú
+dùng // hoặc /* */.
+
+                                        - 25 -</baihoc>
+<baitap bai="2" loai="goc" de="Bài 2.1. Viết chương trình in thông tin cá nhân (họ tên, ngày sinh, lớp, điểm trung bình) với định dạng căn lề rõ ràng (dùng %-25s, %10.2f)." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 16-30."/>
+<baitap bai="2" loai="goc" de="Bài 2.2. In kích thước (sizeof) và giới hạn (limits.h, float.h) của tất cả các kiểu dữ liệu cơ sở." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 16-30."/>
+<baitap bai="2" loai="goc" de="Bài 2.3. Viết chương trình tính tổng, hiệu, tích, thương thực (4 số lẻ) và phần dư của hai số nguyên a, b nhập từ bàn phím." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 16-30."/>
+<baitap bai="2" loai="goc" de="Bài 2.4. Giải phương trình bậc hai ax² + bx + c = 0. Xử lý đầy đủ các trường hợp: a = 0 (suy biến về bậc nhất), Δ &gt; 0 (hai nghiệm), Δ = 0 (nghiệm kép), Δ &lt; 0 (vô nghiệm thực)." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 16-30."/>
+<baitap bai="2" loai="goc" de="Bài 2.5. Tính chỉ số BMI = cân nặng / (chiều cao)² và phân loại: thiếu cân (&lt;18.5), bình thường (18.5–24.9), thừa cân (25–29.9), béo phì (≥30)." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 16-30."/>
+<baitap bai="2" loai="goc" de="Bài 2.6. Máy tính đổi đơn vị nhiệt độ giữa độ C, độ F và độ K theo công thức chuyển đổi." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 16-30."/>
+<baitap bai="2" loai="goc" de='Bài 2.7. Tính tiền điện sinh hoạt theo 6 bậc thang giá, có thuế VAT 8%, in hóa đơn chi tiết từng bậc và tổng cộng. Sử dụng ChatGPT/GitHub Copilot để xin gợi ý. Đánh giá code do AI đề xuất: đúng/đủ chưa, có xử lý hết các bậc giá không, rồi tự hoàn thiện. - 23 - CÂU HỎI ÔN TẬP 1. Trình bày các giai đoạn biên dịch một chương trình C. Vai trò của từng giai đoạn là gì? 2. Phân biệt #define và const khi định nghĩa hằng số. Nên dùng cách nào và vì sao? 3. Tại sao biểu thức (float)7/2 cho kết quả khác với (float)(7/2)? Giải thích bằng thứ tự thực hiện. 4. Khối lệnh ({ }) có vai trò gì đối với phạm vi của biến cục bộ? 5. Nêu sự khác nhau giữa hai kiểu ghi chú // và /* */ trong C. ĐỊNH HƯỚNG THẢO LUẬN NHÓM 1. Vì sao một ngôn ngữ ra đời từ năm 1972 như C vẫn còn được sử dụng rộng rãi cho đến nay? 2. Thảo luận về rủi ro an toàn khi dùng scanf("%s", ...) không giới hạn độ dài so với fgets(). NĂNG LỰC' dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 16-30."/>
+<baitap bai="2" loai="goc" de="1. Trình bày các giai đoạn biên dịch một chương trình C. Vai trò của từng giai đoạn là gì?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 16-30."/>
+<baitap bai="2" loai="goc" de="2. Phân biệt #define và const khi định nghĩa hằng số. Nên dùng cách nào và vì sao?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 16-30."/>
+<baitap bai="2" loai="goc" de="3. Tại sao biểu thức (float)7/2 cho kết quả khác với (float)(7/2)? Giải thích bằng thứ tự thực hiện." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 16-30."/>
+<baitap bai="2" loai="goc" de="4. Khối lệnh ({ }) có vai trò gì đối với phạm vi của biến cục bộ?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 16-30."/>
+<baitap bai="2" loai="goc" de="5. Nêu sự khác nhau giữa hai kiểu ghi chú // và /* */ trong C. ĐỊNH HƯỚNG THẢO LUẬN NHÓM" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 16-30."/>
+<baitap bai="2" loai="goc" de="1. Vì sao một ngôn ngữ ra đời từ năm 1972 như C vẫn còn được sử dụng rộng rãi cho đến nay?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 16-30."/>
+<baitap bai="2" loai="goc" de='2. Thảo luận về rủi ro an toàn khi dùng scanf("%s", ...) không giới hạn độ dài so với fgets(). NĂNG LỰC SỐ TÍCH HỢP (Thông tư 02/2025/TT-BGDĐT) NLS1 (Khai thác thông tin): tra cứu tài liệu C trên cppreference.com, đánh giá nguồn tin cậy. NLS3 (Sáng tạo nội dung số): viết chương trình C đầu tiên là bước khởi đầu tạo ra sản phẩm số. NLS4 (An toàn số): nhận biết rủi ro buffer overflow khi dùng scanf()/gets() không kiểm soát. NLS6 (Ứng dụng AI): dùng AI hỗ trợ gợi ý lời giải, đánh giá và hiệu chỉnh kết quả AI đưa ra. TỔNG KẾT CHƯƠNG – Ngôn ngữ C là ngôn ngữ bậc trung, hiệu năng cao; biên dịch qua 4 giai đoạn: tiền xử lý, biên dịch, dịch hợp ngữ, liên kết. - 24 - – Biến cần khai báo trước khi dùng; nên khởi tạo ngay khi khai báo. Hằng có thể định nghĩa bằng #define hoặc const. – Bảy kiểu dữ liệu cơ sở thường dùng: char, short, int, long long, float, double — chọn theo phạm vi và độ chính xác ' dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 16-30."/>
+<baihoc stt="3" tieude="Chương 3. Cấu trúc điều khiển">Chương 3. CẤU TRÚC ĐIỀU KHIỂN
+
+Số tiết: 06 tiết lý thuyết + 06 tiết thực hành (Tuần 5 – 7)
+
+ MỤC TIÊU CỦA CHƯƠNG (CLO2):
+ 1) Sử dụng thành thạo các câu lệnh rẽ nhánh: if, if–else, if–else–if lồng nhau, switch–
+ case.
+ 2) Viết đúng và hiệu quả ba loại vòng lặp: while, do–while, for; biết lựa chọn loại
+ phù hợp.
+ 3) Sử dụng break, continue đúng ngữ cảnh; hiểu tác dụng của goto và hạn chế khi
+ dùng.
+ 4) Áp dụng cấu trúc điều khiển để giải quyết các bài toán có điều kiện và lặp nhiều
+ cấp.
+
+3.1. Câu lệnh rẽ nhánh có điều kiện
+
+3.1.1. Câu lệnh if đơn
+
+      Câu lệnh if thực hiện một khối lệnh khi điều kiện có giá trị khác 0 (đúng). Trong
+C không có kiểu bool nguyên thủy (chuẩn C89): giá trị 0 là sai (false), mọi giá trị khác
+0 là đúng (true).
+
+Cú pháp chung:
+ if (điều_kiện) {
+         câu_lệnh;      // Thực hiện khi điều_kiện khác 0 (đúng)
+ }
+
+Trong đó:
+     – điều_kiện: một biểu thức bất kỳ (thường là biểu thức quan hệ hoặc logic), được
+         đặt trong cặp dấu ( ).
+     – Nếu khối lệnh chỉ có một câu lệnh duy nhất, có thể bỏ cặp dấu { } (xem lưu ý
+         bên dưới).
+
+                                          - 26 -
+Ví dụ cụ thể sau vận dụng cú pháp if đơn để tính giá trị tuyệt đối của một số nguyên:
+ int n = -5;
+ if (n &lt; 0) {
+       printf("%d la so am\n", n);
+       n = -n;                   /* Lấy giá trị tuyệt đối */
+ }
+ printf("Gia tri tuyet doi: %d\n", n);
+
+ LƯU Ý
+ Nếu chỉ có 1 câu lệnh sau if thì có thể bỏ {}, nhưng NÊN luôn dùng {} để tránh lỗi
+ logic khi sau này thêm câu lệnh thứ hai mà quên bổ sung {}.
+
+3.1.2. Câu lệnh if–else và if–else–if
+
+     Khi cần thực hiện một khối lệnh khác trong trường hợp điều kiện sai, ta dùng thêm
+thành phần else. Khi có nhiều điều kiện loại trừ nhau cần kiểm tra tuần tự, ta nối nhiều
+if–else liên tiếp thành cấu trúc if–else–if.
+
+Cú pháp chung:
+ if (điều_kiện_1) {
+       câu_lệnh_1;
+
+                                               - 27 -
+ } else if (điều_kiện_2) {
+        câu_lệnh_2;
+ } else if (điều_kiện_3) {
+        câu_lệnh_3;
+ } else {
+        câu_lệnh_cuối;       // Thực hiện khi tất cả điều kiện trên đều sai
+ }
+
+Trong đó:
+     – Các điều_kiện được kiểm tra LẦN LƯỢT từ trên xuống; gặp điều kiện đúng đầu
+        tiên thì thực hiện khối lệnh tương ứng rồi bỏ qua các điều kiện còn lại.
+     – Khối else (nếu có) chỉ thực hiện khi TẤT CẢ các điều kiện phía trên đều sai.
+
+Ví dụ cụ thể sau vận dụng cú pháp if–else–if để xếp loại học lực theo điểm số:
+ float diem; scanf("%f", &amp;diem);
+
+                                          - 28 -
+ if (diem &lt; 0 || diem &gt; 10) {
+      printf("Diem khong hop le!\n");
+ } else if (diem &gt;= 9.0) {
+      printf("Xuat sac\n");
+ } else if (diem &gt;= 8.0) {
+      printf("Gioi\n");
+ } else if (diem &gt;= 6.5) {
+      printf("Kha\n");
+ } else if (diem &gt;= 5.0) {
+      printf("Trung binh\n");
+ } else {
+      printf("Yeu\n");
+ }
+
+3.1.3. Câu lệnh if lồng nhau
+
+     Khi việc phân loại không chỉ phụ thuộc vào một điều kiện mà cần xét thêm các
+điều kiện phụ bên trong, ta đặt một câu lệnh if hoàn chỉnh bên trong khối lệnh của if
+khác — gọi là if lồng nhau (nested if). Cú pháp tổng quát chính là việc lặp lại cấu trúc
+if/if–else đã học ở trên tại bất kỳ vị trí nào có thể đặt một câu lệnh, không có cú pháp
+riêng biệt nào khác.
+
+                                         - 29 -
+Ví dụ: Phân loại tam giác theo ba cạnh a, b, c
+Kiểm tra điều kiện tạo thành tam giác (a+b&gt;c, b+c&gt;a, a+c&gt;b), sau đó lồng các if để
+phân loại: đều (3 cạnh bằng nhau), cân (2 cạnh bằng nhau), vuông (thỏa Pythagoras),
+hoặc thường. Đây là ví dụ điển hình của việc lồng nhiều cấp if để xử lý logic phức
+tạp.
+
+float a, b, c; scanf("%f %f %f", &amp;a, &amp;b, &amp;c);
+
+if (a &gt; 0 &amp;&amp; b &gt; 0 &amp;&amp; c &gt; 0 &amp;&amp; a+b&gt;c &amp;&amp; b+c&gt;a &amp;&amp; a+c&gt;b) {
+       if (a == b &amp;&amp; b == c) {
+           printf("Tam giac DEU\n");
+       } else if (a == b || b == c || a == c) {
+           printf("Tam giac CAN\n");
+       } else {
+           printf("Tam giac THUONG\n");
+       }
+} else {
+       printf("Khong tao thanh tam giac!\n");
+}
+
+                                       - 30 -
+3.1.4. Câu lệnh switch–case
+
+      switch–case phù hợp khi cần kiểm tra một biến nguyên hoặc ký tự với nhiều giá
+trị cụ thể, hiệu quả hơn if–else–if khi có nhiều nhánh rẽ.
+
+Cú pháp chung:
+ switch (biểu_thức) {
+        case giá_trị_1:
+               câu_lệnh_1;
+               break;
+        case giá_trị_2:
+               câu_lệnh_2;
+               break;
+        ...
+        default:
+               câu_lệnh_mặc_định;
+ }
+
+Trong đó:
+     – biểu_thức: phải có kiểu nguyên (int, char, enum); KHÔNG dùng được với float
+        hay chuỗi.
+     – Mỗi case so khớp biểu_thức với một giá_trị hằng cụ thể; break dùng để thoát
+        khỏi switch sau khi xử lý.
+     – default (không bắt buộc): thực hiện khi biểu_thức không khớp với bất kỳ case
+        nào.
+
+                                          - 31 -
+Ví dụ cụ thể sau vận dụng cú pháp switch–case để xác định số ngày của một tháng:
+ int thang; scanf("%d", &amp;thang);
+ switch (thang) {
+      case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+           printf("Co 31 ngay\n"); break;
+      case 4: case 6: case 9: case 11:
+           printf("Co 30 ngay\n"); break;
+      case 2:
+           printf("Co 28 hoac 29 ngay\n"); break;
+      default:
+           printf("Thang khong hop le!\n");
+ }
+
+ LƯU Ý
+
+                                       - 32 -
+ - Quên break sẽ làm chương trình chạy tiếp xuống case kế tiếp (fall-through) — lỗi
+ rất phổ biến.
+ - switch chỉ áp dụng được với giá trị kiểu nguyên (int, char, enum), không dùng được
+ với float hay chuỗi.
+
+3.2. Câu lệnh lặp
+
+3.2.1. Vòng lặp while
+
+      Kiểm tra điều kiện TRƯỚC khi thực hiện; thân vòng lặp có thể không chạy lần
+nào nếu điều kiện sai ngay từ đầu. Phù hợp khi không biết trước số lần lặp.
+
+Cú pháp chung:
+ while (điều_kiện) {
+        thân_vòng_lặp;      // Được lặp lại khi điều_kiện còn đúng
+ }
+
+Trong đó:
+     – điều_kiện được kiểm tra TRƯỚC mỗi lần thực hiện thân_vòng_lặp.
+     – thân_vòng_lặp bắt buộc phải chứa lệnh làm thay đổi điều_kiện, nếu không sẽ gây
+        lặp vô hạn.
+
+                                        - 33 -
+Ví dụ cụ thể sau vận dụng cú pháp while để tính tổng một dãy số:
+ /* Tính tổng S = 1 + 1/2 + 1/3 + ... + 1/n */
+ int n; scanf("%d", &amp;n);
+ double S = 0.0; int i = 1;
+ while (i &lt;= n) {
+        S += 1.0 / i;
+        i++;
+ }
+ printf("S = %.6f\n", S);
+3.2.2. Vòng lặp do–while
+Thực hiện thân vòng lặp TRƯỚC, kiểm tra điều kiện SAU; do đó thân vòng lặp luôn
+chạy ít nhất một lần. Phù hợp cho việc hiển thị menu và kiểm tra (validate) dữ liệu nhập.
+
+Cú pháp chung:
+ do {
+        thân_vòng_lặp;
+ } while (điều_kiện);          // Lưu ý dấu ; sau while(...)
+
+Trong đó:
+     – thân_vòng_lặp luôn được thực hiện ÍT NHẤT MỘT LẦN trước khi điều_kiện
+        được kiểm tra.
+     – Vòng lặp tiếp tục lặp lại khi điều_kiện còn đúng; dừng ngay khi điều_kiện trở
+        thành sai.
+
+                                         - 34 -
+Ví dụ cụ thể sau vận dụng cú pháp do–while để nhập và kiểm tra tính hợp lệ của dữ liệu:
+ int n;
+ do {
+        printf("Nhap so nguyen duong (1-100): ");
+        scanf("%d", &amp;n);
+        if (n &lt; 1 || n &gt; 100) printf("Khong hop le, nhap lai!\n");
+ } while (n &lt; 1 || n &gt; 100);
+ printf("Ban nhap hop le: %d\n", n);
+
+3.2.3. Vòng lặp for
+
+      Phù hợp nhất khi biết trước số lần lặp; cú pháp for gộp cả khởi tạo, điều kiện và
+bước nhảy vào một dòng.
+
+Cú pháp chung:
+ for (khởi_tạo; điều_kiện; bước_nhảy) {
+        thân_vòng_lặp;
+ }
+
+Trong đó:
+     – khởi_tạo: thực hiện DUY NHẤT MỘT LẦN trước khi vòng lặp bắt đầu, thường
+        dùng để khai báo biến đếm.
+
+                                         - 35 -
+   – điều_kiện: được kiểm tra TRƯỚC mỗi lần lặp; còn đúng thì còn thực hiện
+      thân_vòng_lặp.
+   – bước_nhảy: thực hiện SAU mỗi lần lặp, thường dùng để tăng/giảm biến đếm.
+
+Ví dụ cụ thể sau vận dụng cú pháp for cho ba bài toán: in bảng cửu chương, tính giai
+thừa và vẽ hình bằng for lồng nhau:
+ /* In bảng cửu chương của 7 */
+ for (int i = 1; i &lt;= 10; i++)
+      printf("%2d x %2d = %3d\n", 7, i, 7*i);
+
+ /* Tính n giai thừa */
+ long long gt = 1; int n = 15;
+ for (int i = 2; i &lt;= n; i++) gt *= i;
+ printf("%d! = %lld\n", n, gt);
+
+ /* For lồng nhau - vẽ hình chữ nhật rỗng */
+ int rows = 4, cols = 8;
+ for (int i = 1; i &lt;= rows; i++) {
+      for (int j = 1; j &lt;= cols; j++)
+           printf("%c", (i==1||i==rows||j==1||j==cols) ? '*' : ' ');
+
+                                       - 36 -
+         printf("\n");
+ }
+
+3.2.4. So sánh ba loại vòng lặp
+
+                             Bảng 3.1. So sánh while, do–while và for
+
+      Tiêu chí                while                    do–while                   for
+
+ Kiểm tra điều       Trước                    Sau                       Trước
+ kiện
+
+ Số lần chạy tối     0                        1                         0
+ thiểu
+
+ Phù hợp khi         Chưa biết số lần lặp     Cần chạy ít nhất 1 lần    Biết trước số lần lặp
+
+ Trường hợp          Đọc đến khi đủ điều      Menu, kiểm tra dữ         Duyệt mảng, in bảng
+ dùng điển hình      kiện                     liệu nhập
+
+3.3. Câu lệnh rẽ nhánh vô điều kiện
+
+3.3.1. break và continue
+
+        break và continue là hai câu lệnh đơn giản, chỉ gồm một từ khóa duy nhất kèm dấu
+chấm phẩy, dùng để thay đổi luồng thực hiện thông thường của vòng lặp.
+
+Cú pháp chung:
+ break;        // Thoát ngay khỏi vòng lặp (hoặc switch) chứa nó, gần nhất
+ continue;         // Bỏ qua phần lệnh còn lại, chuyển sang lần lặp kế tiếp
+
+Trong đó:
+     – break: thường dùng trong câu lệnh if đặt bên trong vòng lặp, để thoát sớm khi
+         gặp điều kiện mong muốn.
+     – continue: cũng thường đặt trong if, dùng để bỏ qua các bước xử lý không cần
+         thiết của lần lặp hiện tại.
+
+Ví dụ cụ thể sau vận dụng break để tìm số nguyên tố đầu tiên lớn hơn 20, và continue
+để chỉ in các số chia hết cho 3 hoặc 5:
+ /* break: thoát khỏi vòng lặp (hoặc switch) gần nhất */
+ for (int n = 21; ; n++) {
+
+                                              - 37 -
+        int laNT = 1;
+        for (int i = 2; i*i &lt;= n; i++)
+             if (n % i == 0) { laNT = 0; break; }
+     if (laNT) { printf("%d\n", n); break; }               /* tìm số NT đầu tiên
+ &gt; 20 */
+ }
+
+ /* continue: bỏ qua phần còn lại, sang lần lặp kế tiếp */
+ for (int i = 1; i &lt;= 30; i++) {
+        if (i % 3 != 0 &amp;&amp; i % 5 != 0) continue;
+        printf("%d ", i);        /* chỉ in số chia hết cho 3 hoặc 5 */
+ }
+
+3.3.2. Câu lệnh goto
+
+goto chuyển luồng thực hiện đến một nhãn (label) bất kỳ trong hàm. Vì làm code khó
+đọc và dễ gây lỗi logic, goto hầu như không được khuyến khích sử dụng trong lập trình
+hiện đại, ngoại trừ một số trường hợp đặc biệt như thoát khỏi nhiều vòng lặp lồng nhau
+cùng lúc.
+
+Cú pháp chung:
+ goto tên_nhãn;
+ ...
+ tên_nhãn:
+        câu_lệnh;
+
+Trong đó:
+     – tên_nhãn: do người lập trình tự đặt (theo quy tắc đặt tên giống biến), kết thúc
+        bằng dấu hai chấm (:) tại nơi định nghĩa.
+     – Câu lệnh goto có thể nhảy tới trước hoặc tới sau vị trí định nghĩa nhãn, miễn là
+        trong cùng một hàm.
+
+Ví dụ cụ thể sau vận dụng goto để thoát ra khỏi hai vòng lặp lồng nhau cùng lúc:
+ for (int i = 0; i &lt; 5; i++) {
+        for (int j = 0; j &lt; 5; j++) {
+             if (i*j == 6) goto found;
+              /* thoát thẳng ra ngoài 2 vòng lặp */
+        }
+
+                                          - 38 -
+ }
+ found:
+ printf("Da tim thay!\n");
+ /* Cách thay thế AN TOÀN hơn: dùng biến cờ (flag) thay cho goto */
+
+3.4. Thực hành
+
+Bài 3.1. Xử lý ngày tháng – nhập ngày/tháng/năm, kiểm tra hợp lệ, tính ngày kế tiếp và
+ngày trước đó (xử lý cuối tháng, cuối năm, năm nhuận).
+Bài 3.2. Máy tính bốn phép toán nâng cao – nhập hai số và phép toán (+,-,*,/,%, lũy
+thừa); xử lý chia cho 0.
+Bài 3.3. Phân loại tam giác theo ba cạnh nhập từ bàn phím (theo ví dụ mục 3.1.3).
+Bài 3.4. Viết chương trình kiểm tra email hợp lệ (có @, có dấu .) và mật khẩu mạnh (≥8
+ký tự, có số, có chữ hoa).
+Bài 3.5. Tính các dãy số:
+     (a) S = 1 − 1/3 + 1/5 − 1/7 + ...;
+     (b) số e theo công thức khai triển 1 + 1/1! + 1/2! + ...;
+Bài 3.6. Tham khảo AI về cách thực hiện bài toán tính sin(x) theo khai triển Taylor, so
+sánh với hàm sin() có sẵn.
+Bài 3.7. Tham khảo AI về cách thực hiện bài toán FizzBuzz (in 1–100, chia hết 3 in
+Fizz, chia hết 5 in Buzz, cả hai in FizzBuzz); dãy Hailstone; tìm các số hoàn hảo nhỏ
+hơn 1000.
+Bài 3.8. Mô phỏng Monte Carlo ước lượng số π bằng cách sinh ngẫu nhiên N điểm trong
+hình vuông và đếm tỉ lệ điểm rơi vào hình tròn nội tiếp. So sánh kết quả với N = 1.000,
+10.000, 100.000. Hỏi AI giải thích vì sao kết quả hội tụ về π khi N tăng.
+
+ CÂU HỎI ÔN TẬP
+ 1. Khi nào nên dùng switch–case thay cho if–else–if? Cho một ví dụ minh họa.
+ 2. So sánh sự khác biệt giữa while và do–while. Cho ví dụ mà do–while phù hợp hơn
+ while.
+ 3. break và continue khác nhau như thế nào trong vòng lặp for?
+ 4. Tại sao goto thường không được khuyến khích sử dụng trong lập trình hiện đại?
+
+                                          - 39 -
+5. Với vòng lặp lồng nhau, break ở vòng trong có ảnh hưởng đến vòng ngoài không?
+Giải thích.
+
+ĐỊNH HƯỚNG THẢO LUẬN NHÓM
+1. Trong bài toán tính tổng dãy số với điều kiện dừng không xác định trước, nên
+chọn while hay for? Vì sao?
+2. Vì sao việc đặt mật khẩu mạnh là vấn đề cần quan tâm?
+
+NĂNG LỰC SỐ TÍCH HỢP (Thông tư 02/2025/TT-BGDĐT)
+NLS3 (Sáng tạo nội dung số): cấu trúc điều khiển là công cụ chuyển hóa thuật toán
+thành mã chương trình.
+NLS4 (An toàn số): kiểm tra (validate) dữ liệu đầu vào trước khi xử lý là kỹ năng an
+toàn cơ bản.
+NLS5 (Giải quyết vấn đề): gỡ lỗi vòng lặp, phát hiện và tránh vòng lặp vô hạn.
+NLS6 (Ứng dụng AI): sử dụng AI hỗ trợ giải thích các thuật toán xác suất (Monte
+Carlo).
+
+TỔNG KẾT CHƯƠNG
+– Câu lệnh if–else–if dùng cho nhiều điều kiện; switch–case hiệu quả khi kiểm tra
+một biến nguyên/ký tự với nhiều giá trị cụ thể.
+– Ba vòng lặp: while (chưa biết số lần, kiểm tra trước), do–while (tối thiểu 1 lần),
+for (biết số lần, có biến đếm).
+– break thoát khỏi vòng lặp gần nhất; continue bỏ qua lần lặp hiện tại; goto nên hạn
+chế sử dụng.
+– Luôn đảm bảo điều kiện dừng của vòng lặp để tránh lặp vô hạn.
+
+                                       - 40 -</baihoc>
+<baitap bai="3" loai="goc" de="Bài 3.1. Xử lý ngày tháng – nhập ngày/tháng/năm, kiểm tra hợp lệ, tính ngày kế tiếp và ngày trước đó (xử lý cuối tháng, cuối năm, năm nhuận)." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 31-45."/>
+<baitap bai="3" loai="goc" de="Bài 3.2. Máy tính bốn phép toán nâng cao – nhập hai số và phép toán (+,-,*,/,%, lũy thừa); xử lý chia cho 0." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 31-45."/>
+<baitap bai="3" loai="goc" de="Bài 3.3. Phân loại tam giác theo ba cạnh nhập từ bàn phím (theo ví dụ mục 3.1.3)." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 31-45."/>
+<baitap bai="3" loai="goc" de="Bài 3.4. Viết chương trình kiểm tra email hợp lệ (có @, có dấu .) và mật khẩu mạnh (≥8 ký tự, có số, có chữ hoa)." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 31-45."/>
+<baitap bai="3" loai="goc" de="Bài 3.5. Tính các dãy số: (a) S = 1 − 1/3 + 1/5 − 1/7 + ...; (b) số e theo công thức khai triển 1 + 1/1! + 1/2! + ...;" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 31-45."/>
+<baitap bai="3" loai="goc" de="Bài 3.6. Tham khảo AI về cách thực hiện bài toán tính sin(x) theo khai triển Taylor, so sánh với hàm sin() có sẵn." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 31-45."/>
+<baitap bai="3" loai="goc" de="Bài 3.7. Tham khảo AI về cách thực hiện bài toán FizzBuzz (in 1–100, chia hết 3 in Fizz, chia hết 5 in Buzz, cả hai in FizzBuzz); dãy Hailstone; tìm các số hoàn hảo nhỏ hơn 1000." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 31-45."/>
+<baitap bai="3" loai="goc" de="Bài 3.8. Mô phỏng Monte Carlo ước lượng số π bằng cách sinh ngẫu nhiên N điểm trong hình vuông và đếm tỉ lệ điểm rơi vào hình tròn nội tiếp. So sánh kết quả với N = 1.000, 10.000, 100.000. Hỏi AI giải thích vì sao kết quả hội tụ về π khi N tăng. CÂU HỎI ÔN TẬP 1. Khi nào nên dùng switch–case thay cho if–else–if? Cho một ví dụ minh họa. 2. So sánh sự khác biệt giữa while và do–while. Cho ví dụ mà do–while phù hợp hơn while. 3. break và continue khác nhau như thế nào trong vòng lặp for? 4. Tại sao goto thường không được khuyến khích sử dụng trong lập trình hiện đại? - 39 - 5. Với vòng lặp lồng nhau, break ở vòng trong có ảnh hưởng đến vòng ngoài không? Giải thích. ĐỊNH HƯỚNG THẢO LUẬN NHÓM 1. Trong bài toán tính tổng dãy số với điều kiện dừng không xác định trước, nên chọn while hay for? Vì sao? 2. Vì sao việc đặt mật khẩu mạnh là vấn đề cần quan tâm? NĂNG LỰC SỐ TÍCH HỢP (Thông tư 02/2025" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 31-45."/>
+<baitap bai="3" loai="goc" de="1. Khi nào nên dùng switch–case thay cho if–else–if? Cho một ví dụ minh họa." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 31-45."/>
+<baitap bai="3" loai="goc" de="2. So sánh sự khác biệt giữa while và do–while. Cho ví dụ mà do–while phù hợp hơn while." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 31-45."/>
+<baitap bai="3" loai="goc" de="3. break và continue khác nhau như thế nào trong vòng lặp for?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 31-45."/>
+<baitap bai="3" loai="goc" de="4. Tại sao goto thường không được khuyến khích sử dụng trong lập trình hiện đại? - 39 -" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 31-45."/>
+<baitap bai="3" loai="goc" de="5. Với vòng lặp lồng nhau, break ở vòng trong có ảnh hưởng đến vòng ngoài không? Giải thích. ĐỊNH HƯỚNG THẢO LUẬN NHÓM" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 31-45."/>
+<baitap bai="3" loai="goc" de="1. Trong bài toán tính tổng dãy số với điều kiện dừng không xác định trước, nên chọn while hay for? Vì sao?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 31-45."/>
+<baitap bai="3" loai="goc" de="2. Vì sao việc đặt mật khẩu mạnh là vấn đề cần quan tâm? NĂNG LỰC SỐ TÍCH HỢP (Thông tư 02/2025/TT-BGDĐT) NLS3 (Sáng tạo nội dung số): cấu trúc điều khiển là công cụ chuyển hóa thuật toán thành mã chương trình. NLS4 (An toàn số): kiểm tra (validate) dữ liệu đầu vào trước khi xử lý là kỹ năng an toàn cơ bản. NLS5 (Giải quyết vấn đề): gỡ lỗi vòng lặp, phát hiện và tránh vòng lặp vô hạn. NLS6 (Ứng dụng AI): sử dụng AI hỗ trợ giải thích các thuật toán xác suất (Monte Carlo). TỔNG KẾT CHƯƠNG – Câu lệnh if–else–if dùng cho nhiều điều kiện; switch–case hiệu quả khi kiểm tra một biến nguyên/ký tự với nhiều giá trị cụ thể. – Ba vòng lặp: while (chưa biết số lần, kiểm tra trước), do–while (tối thiểu 1 lần), for (biết số lần, có biến đếm). – break thoát khỏi vòng lặp gần nhất; continue bỏ qua lần lặp hiện tại; goto nên hạn chế sử dụng. – Luôn đảm bảo điều kiện dừng của vòng lặp để tránh lặp vô hạn." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 31-45."/>
+<baihoc stt="4" tieude="Chương 4. Mảng, chuỗi và con trỏ">Chương 4. MẢNG, CHUỖI VÀ CON TRỎ
+
+Số tiết: 06 tiết lý thuyết + 06 tiết thực hành (Tuần 8 – 10)
+
+ MỤC TIÊU CỦA CHƯƠNG (CLO3):
+ 1) Khai báo, khởi tạo và truy xuất mảng một chiều và hai chiều trong C.
+ 2) Cài đặt được các thuật toán cơ bản trên mảng: thống kê, sắp xếp, tìm kiếm.
+ 3) Xử lý chuỗi ký tự bằng mảng char và các hàm trong string.h, ctype.h.
+ 4) Hiểu khái niệm con trỏ và mối quan hệ giữa con trỏ với mảng, chuỗi trong C.
+
+4.1. Mảng
+
+4.1.1. Mảng một chiều
+
+     Mảng (Array) là tập hợp các phần tử có cùng kiểu dữ liệu, được lưu liên tiếp trong
+bộ nhớ và truy xuất qua chỉ số (index) bắt đầu từ 0. Một khi đã khai báo, kích thước của
+mảng là CỐ ĐỊNH trong suốt thời gian tồn tại của nó.
+
+Cú pháp chung:
+ kiểu_dữ_liệu tên_mảng[kích_thước];
+ kiểu_dữ_liệu         tên_mảng[kích_thước]              =   {giá_trị_1, giá_trị_2,   ...,
+ giá_trị_n};
+ kiểu_dữ_liệu tên_mảng[] = {giá_trị_1, giá_trị_2, ..., giá_trị_n};
+ // tự suy ra kích thước
+
+Trong đó:
+   – kích_thước: một hằng số nguyên dương, xác định số phần tử tối đa mà mảng có
+       thể lưu trữ.
+   – tên_mảng[i]: cú pháp truy xuất phần tử thứ i của mảng, với i chạy từ 0 đến
+       kích_thước−1.
+
+ Ví dụ: Biểu diễn mảng int a[5] = {10, 20, 30, 40, 50} trong bộ nhớ
+ Chỉ số: a[0] a[1] a[2] a[3] a[4]
+ Giá trị: [ 10 ] [ 20 ] [ 30 ] [ 40 ] [ 50 ]
+
+                                               - 41 -
+ Truy xuất hợp lệ: chỉ số từ 0 đến 4. Truy xuất a[5] là VƯỢT giới hạn (nguy hiểm)!
+
+Ví dụ cụ thể sau vận dụng cú pháp khai báo mảng nói trên với nhiều cách khởi tạo khác
+nhau:
+ int a[5];                               /* Khai báo, chưa khởi tạo */
+ int b[5] = {3, 1, 4, 1, 5};             /* Khai báo và khởi tạo đầy đủ */
+ int c[] = {2, 7, 1, 8, 2, 8};           /* Kích thước tự xác định = 6 */
+ int n = sizeof(b) / sizeof(b[0]); /* Xác định số phần tử: n = 5 */
+
+ /* Nhập và xử lý mảng */
+ int a2[100], n2;
+ scanf("%d", &amp;n2);
+ for (int i = 0; i &lt; n2; i++) scanf("%d", &amp;a2[i]);
+
+Thuật toán thống kê trên mảng:
+ int a[8] = {5, 3, 8, 1, 9, 4, 7, 2};
+ int n = 8;
+ long long tong = 0; int min = a[0], max = a[0];
+ int i;
+ for (i = 0; i &lt; n; i++) {
+        tong += a[i];
+        if (a[i] &lt; min) min = a[i];
+        if (a[i] &gt; max) max = a[i];
+ }
+ printf("Tong=%lld TB=%.2f Min=%d Max=%d\n", tong, (double)tong/n,
+ min, max);
+
+Thuật toán sắp xếp phần tử trên mảng:
+Ý tưởng: tìm phần tử nhỏ nhất và đưa về vị trí đầu mảng
+ int i, j, tam;
+ for (i = 0; i &lt; n-1; i++) {
+         for (j = i+1; j &lt; n; j++)
+             if (a[j] &lt; a[i]){
+                 tam = a[i];
+                 a[i] = a[j];
+                  a[j] = tam;
+         }
+ }
+
+                                        - 42 -
+Thuật toán tìm kiếm trên mảng:
+ int n, x, i;
+ for (i = 0; i &lt; n; i++)
+        if (a[i] == x) return i;
+ return -1;
+
+4.1.2. Mảng hai chiều (ma trận)
+
+Mảng hai chiều dùng để lưu trữ dữ liệu có cấu trúc dạng bảng (hàng và cột), thường gặp
+khi biểu diễn ma trận trong toán học.
+
+Cú pháp chung:
+ kiểu_dữ_liệu tên_mảng[số_dòng][số_cột];
+ kiểu_dữ_liệu         tên_mảng[số_dòng][số_cột]         =   {{...},     {...},    ...,
+ {...}};
+
+Trong đó:
+     – số_dòng, số_cột: hai hằng số nguyên dương xác định kích thước mảng theo hai
+        chiều.
+     – tên_mảng[i][j]: cú pháp truy xuất phần tử ở dòng i, cột j (i từ 0 đến số_dòng−1, j
+        từ 0 đến số_cột−1).
+
+Ví dụ cụ thể sau vận dụng cú pháp khai báo mảng hai chiều để biểu diễn và xử lý một
+ma trận:
+ #define ROWS 3
+ #define COLS 4
+ int a[ROWS][COLS] = {{1,2,3,4},{5,6,7,8},{9,10,11,12}};
+ int i, j, tongCheo;
+ for (i = 0; i &lt; ROWS; i++) {
+        for (j = 0; j &lt; COLS; j++)
+                 printf("%5d", a[i][j]);
+        printf("\n");
+ }
+
+ /* Tổng đường chéo chính (ma trận vuông) */
+ tongCheo = 0, n = (ROWS&lt;COLS)?ROWS:COLS;
+ for (i = 0; i &lt; n; i++) tongCheo += a[i][i];
+                                          - 43 -
+4.2. Chuỗi
+
+4.2.1. Biểu diễn chuỗi trong C
+
+     Chuỗi trong C là một mảng char kết thúc bằng ký tự null '\0' (ASCII = 0). Đây là
+điểm khác biệt quan trọng so với nhiều ngôn ngữ khác. Chính vì biểu diễn chuỗi thực
+chất là một mảng char, cú pháp khai báo chuỗi cũng tuân theo cú pháp khai báo mảng
+đã học ở mục 4.1.1, với kiểu_dữ_liệu cố định là char.
+
+Cú pháp chung:
+ char tên_chuỗi[kích_thước];
+ char tên_chuỗi[kích_thước] = "nội_dung_chuỗi";
+ char tên_chuỗi[] = "nội_dung_chuỗi";                    // tự suy ra kích thước
+ char *tên_con_trỏ_chuỗi = "nội_dung_chuỗi";// con trỏ đến chuỗi HẰNG
+
+Trong đó:
+   – kích_thước: phải đủ lớn để chứa nội dung chuỗi CỘNG THÊM 1 byte cho ký tự
+       kết thúc '\0'.
+   – Khai báo bằng mảng char[] cho phép sửa nội dung; khai báo bằng con trỏ char*
+       trỏ đến chuỗi hằng thì KHÔNG được sửa.
+
+ Ví dụ: Biểu diễn chuỗi "Hello" trong bộ nhớ
+ char s[] = "Hello";
+ Chỉ số: s[0] s[1] s[2] s[3] s[4] s[5]
+ Ký tự: [ H ] [ e ] [ l ] [ l ] [ o ] [\0]
+ strlen(s) = 5 (không tính \0); sizeof(s) = 6 (có tính \0)
+
+Ví dụ cụ thể sau vận dụng cú pháp khai báo chuỗi cùng một số hàm xử lý chuỗi cơ bản:
+ char s1[50] = "Xin chao";
+ char *sp = "Chuoi hang"; /* Con trỏ đến chuỗi HẰNG - không sửa được
+ */
+
+ printf("Do dai: %zu\n", strlen(s1));
+ strcpy(s1, "Moi");                          /* Sao chép chuỗi */
+ strcat(s1, " Chao");                        /* Nối thêm chuỗi */
+
+                                               - 44 -
+ printf("%d\n", strcmp("abc", "abd"));                        /* &lt;0: "abc" trước "abd" */
+
+ int n = atoi("123");                         /* Chuỗi -&gt; int         */
+ double d = atof("3.14");                     /* Chuỗi -&gt; double */
+
+4.2.2. Các hàm xử lý chuỗi thường dùng
+
+                     Bảng 4.1. Một số hàm xử lý chuỗi trong string.h và ctype.h
+
+           Hàm                     Cú pháp                               Chức năng
+
+ strlen                    size_t strlen(s)               Độ dài chuỗi (không tính \0)
+
+ strcpy / strncpy          char* strcpy(dest,src)         Sao chép chuỗi (có/không giới hạn an
+                                                          toàn)
+
+ strcat / strncat          char* strcat(dest,src)         Nối chuỗi src vào cuối dest
+
+ strcmp                    int strcmp(s1,s2)              So sánh hai chuỗi: &lt;0, 0, &gt;0
+
+ strchr / strstr           char* strchr(s,c)              Tìm ký tự / chuỗi con trong chuỗi
+
+ toupper / tolower         int toupper(c)                 Đổi ký tự thành hoa / thường
+
+ isalpha / isdigit         int isalpha(c)                 Kiểm tra ký tự là chữ cái / chữ số
+
+ sprintf / sscanf          int sprintf(buf,fmt,...)       Ghi/đọc dữ liệu định dạng với chuỗi
+
+4.3. Con trỏ
+
+4.3.1. Khái niệm và khai báo
+
+      Con trỏ (pointer) là biến lưu trữ địa chỉ bộ nhớ của một đối tượng khác. Con trỏ là
+một trong những tính năng mạnh mẽ và đặc trưng của C, cho phép thao tác trực tiếp với
+bộ nhớ.
+
+Cú pháp chung:
+ kiểu_dữ_liệu *tên_con_trỏ;                   // Khai báo con trỏ, chưa trỏ tới đâu
+ kiểu_dữ_liệu *tên_con_trỏ = &amp;tên_biến;
+ // Khai báo và cho trỏ đến tên_biến
+
+Trong đó:
+    – Dấu * khi đặt trong khai báo biến (đứng trước tên biến) cho biết đây là một biến
+          con trỏ.
+                                                 - 45 -
+   – &amp;tên_biến: toán tử &amp; (lấy địa chỉ) trả về địa chỉ bộ nhớ của tên_biến.
+   – *tên_con_trỏ (khi dùng SAU khai báo, trong biểu thức): toán tử giải tham chiếu,
+        trả về giá trị tại địa chỉ mà con trỏ đang trỏ tới.
+
+Ví dụ cụ thể sau vận dụng cú pháp khai báo và sử dụng con trỏ để truy cập, thay đổi giá
+trị của một biến qua địa chỉ:
+ int a = 42;
+ int *p = &amp;a;        /* p lưu địa chỉ của a; &amp; là toán tử lấy địa chỉ */
+
+ printf("%d\n", a);                     /* 42 */
+ printf("%p\n", (void*)&amp;a);             /* địa chỉ của a */
+ printf("%d\n", *p);            /* 42 - giải tham chiếu (lấy giá trị tại p) */
+
+ *p = 100;                                /* Thay đổi a qua con trỏ */
+ printf("%d\n", a);                     /* 100 */
+
+ int *pNull = NULL;                       /* Con trỏ NULL - khởi tạo an toàn */
+
+4.3.2. Số học con trỏ
+ int a[] = {10, 20, 30, 40, 50};
+ int *p = a;                      /* p trỏ đến a[0] */
+
+ printf("%d\n", *p);                  /* 10 */
+ printf("%d\n", *(p+1));             /* 20 - cộng 1 đơn vị = tiến 1 phần tử (4
+ bytes) */
+ p++;                                  /* p chuyển sang trỏ đến a[1] */
+ printf("%d\n", *p);                  /* 20 */
+
+ for (int *ptr = a; ptr &lt; a+5; ptr++) printf("%d ", *ptr); /* 10 20
+ 30 40 50 */
+
+4.4. Mối quan hệ giữa con trỏ và mảng, chuỗi
+
+Tên mảng thực chất là một con trỏ HẰNG trỏ đến phần tử đầu tiên của mảng. Vì vậy,
+có nhiều cách tương đương để truy xuất một phần tử mảng.
+
+                                             - 46 -
+ int a[] = {1, 2, 3, 4, 5};
+ int *p = a;
+
+ /* Bốn cách truy xuất TƯƠNG ĐƯƠNG đến phần tử a[2] */
+ printf("%d\n", a[2]);               /* 1. Ký hiệu mảng              */
+ printf("%d\n", *(a+2));             /* 2. Số học con trỏ             */
+ printf("%d\n", p[2]);               /* 3. Con trỏ dùng như mảng */
+ printf("%d\n", *(p+2));             /* 4. Giải tham chiếu con trỏ */
+
+ /* a++; */       /* LỖI: a là con trỏ HẰNG, không thể thay đổi */
+ p++;             /* OK: p là con trỏ biến, có thể thay đổi */
+
+ /* Tương tự với chuỗi: */
+ char str[] = "Hello";             /* Mảng char - CÓ THỂ sửa nội dung */
+ char *sp        = "Hello";        /* Con trỏ đến chuỗi HẰNG - KHÔNG sửa được
+ */
+ str[0] = 'h';                      /* OK */
+ /* sp[0] = 'h'; */                 /* Hành vi không xác định - tránh dùng */
+
+4.5. Thực hành
+
+Bài 4.1. Quản lý điểm n sinh viên – nhập, kiểm tra hợp lệ, tính tổng/trung bình/min/max,
+thống kê số lượng theo xếp loại, sắp xếp giảm dần bằng Bubble Sort.
+Bài 4.2. Tìm kiếm và thao tác mảng – tìm kiếm nhị phân (sau khi sắp xếp); xóa phần tử
+tại vị trí k (dịch trái); chèn phần tử x vào vị trí k (dịch phải).
+Bài 4.3. Các bài toán cổ điển trên mảng – loại phần tử trùng nhau; tìm hai phần tử có
+tổng bằng S cho trước; xoay mảng k vị trí sang trái.
+Bài 4.4. Ma trận vuông n×n – tổng hai đường chéo, max mỗi hàng/min mỗi cột, chuyển
+vị, kiểm tra ma trận đối xứng.
+Bài 4.5. Xử lý chuỗi – đếm ký tự hoa/thường/số/khoảng trắng; đảo ngược chuỗi; kiểm
+tra palindrome (bỏ qua hoa/thường); xóa khoảng trắng thừa.
+Bài 4.6. Con trỏ cơ bản – viết hàm swap(int*, int*) hoán đổi hai số; thực hành số học
+con trỏ trên mảng.
+
+                                            - 47 -
+CÂU HỎI ÔN TẬP
+1. Tại sao chỉ số mảng trong C bắt đầu từ 0? Truy xuất a[n] với mảng n phần tử có
+hợp lệ không?
+2. So sánh độ phức tạp và điều kiện áp dụng của tìm kiếm tuyến tính và tìm kiếm nhị
+phân.
+3. Vì sao chuỗi trong C cần ký tự kết thúc '\0'? Điều gì xảy ra nếu thiếu ký tự này?
+4. Phân biệt khai báo char str[] = "Hello"; và char *sp = "Hello";
+5. Giải thích vì sao tên mảng được gọi là "con trỏ hằng".
+
+ĐỊNH HƯỚNG THẢO LUẬN NHÓM
+Ngoài các thuật toán đã học, tìm hiểu các thuật toán tìm kiếm, sắp xếp khác. Trình
+bày các ưu, nhược điểm của mỗi thuật toán.
+
+NĂNG LỰC SỐ TÍCH HỢP (Thông tư 02/2025/TT-BGDĐT)
+NLS1 (Khai thác thông tin): đọc và phân tích dữ liệu CSV là kỹ năng xử lý thông tin
+số thực tế.
+NLS3 (Sáng tạo nội dung số): thuật toán sắp xếp, tìm kiếm là nền tảng xây dựng
+phần mềm quản lý dữ liệu.
+NLS4 (An toàn số): hiểu hậu quả truy xuất ngoài giới hạn mảng (buffer overflow).
+
+TỔNG KẾT CHƯƠNG
+– Mảng lưu các phần tử cùng kiểu liên tiếp trong bộ nhớ, chỉ số từ 0 đến n−1, kích
+thước cố định.
+– Các thuật toán cơ bản: thống kê, tìm kiếm, sắp xếp
+– Chuỗi trong C là mảng char kết thúc bằng '\0'; xử lý bằng các hàm trong string.h,
+ctype.h.
+– Con trỏ lưu địa chỉ bộ nhớ; tên mảng là con trỏ hằng: a[i] ≡ *(a+i) ≡ p[i] ≡ *(p+i).
+
+                                        - 48 -</baihoc>
+<baitap bai="4" loai="goc" de="Bài 4.1. Quản lý điểm n sinh viên – nhập, kiểm tra hợp lệ, tính tổng/trung bình/min/max, thống kê số lượng theo xếp loại, sắp xếp giảm dần bằng Bubble Sort." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 46-53."/>
+<baitap bai="4" loai="goc" de="Bài 4.2. Tìm kiếm và thao tác mảng – tìm kiếm nhị phân (sau khi sắp xếp); xóa phần tử tại vị trí k (dịch trái); chèn phần tử x vào vị trí k (dịch phải)." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 46-53."/>
+<baitap bai="4" loai="goc" de="Bài 4.3. Các bài toán cổ điển trên mảng – loại phần tử trùng nhau; tìm hai phần tử có tổng bằng S cho trước; xoay mảng k vị trí sang trái." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 46-53."/>
+<baitap bai="4" loai="goc" de="Bài 4.4. Ma trận vuông n×n – tổng hai đường chéo, max mỗi hàng/min mỗi cột, chuyển vị, kiểm tra ma trận đối xứng." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 46-53."/>
+<baitap bai="4" loai="goc" de="Bài 4.5. Xử lý chuỗi – đếm ký tự hoa/thường/số/khoảng trắng; đảo ngược chuỗi; kiểm tra palindrome (bỏ qua hoa/thường); xóa khoảng trắng thừa." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 46-53."/>
+<baitap bai="4" loai="goc" de="Bài 4.6. Con trỏ cơ bản – viết hàm swap(int*, int*) hoán đổi hai số; thực hành số học con trỏ trên mảng. - 47 - CÂU HỎI ÔN TẬP 1. Tại sao chỉ số mảng trong C bắt đầu từ 0? Truy xuất a[n] với mảng n phần tử có hợp lệ không? 2. So sánh độ phức tạp và điều kiện áp dụng của tìm kiếm tuyến tính và tìm kiếm nhị phân. 3. Vì sao chuỗi trong C cần ký tự kết thúc '\0'? Điều gì xảy ra nếu thiếu ký tự này? 4. Phân biệt khai báo char str[] = &quot;Hello&quot;; và char *sp = &quot;Hello&quot;; 5. Giải thích vì sao tên mảng được gọi là &quot;con trỏ hằng&quot;. ĐỊNH HƯỚNG THẢO LUẬN NHÓM Ngoài các thuật toán đã học, tìm hiểu các thuật toán tìm kiếm, sắp xếp khác. Trình bày các ưu, nhược điểm của mỗi thuật toán. NĂNG LỰC SỐ TÍCH HỢP (Thông tư 02/2025/TT-BGDĐT) NLS1 (Khai thác thông tin): đọc và phân tích dữ liệu CSV là kỹ năng xử lý thông tin số thực tế. NLS3 (Sáng tạo nội dung số): thuật toán sắp xếp, tìm kiếm là nền tảng xây dựng p" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 46-53."/>
+<baitap bai="4" loai="goc" de="1. Tại sao chỉ số mảng trong C bắt đầu từ 0? Truy xuất a[n] với mảng n phần tử có hợp lệ không?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 46-53."/>
+<baitap bai="4" loai="goc" de="2. So sánh độ phức tạp và điều kiện áp dụng của tìm kiếm tuyến tính và tìm kiếm nhị phân." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 46-53."/>
+<baitap bai="4" loai="goc" de="3. Vì sao chuỗi trong C cần ký tự kết thúc '\0'? Điều gì xảy ra nếu thiếu ký tự này?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 46-53."/>
+<baitap bai="4" loai="goc" de='4. Phân biệt khai báo char str[] = "Hello"; và char *sp = "Hello";' dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 46-53."/>
+<baitap bai="4" loai="goc" de="5. Giải thích vì sao tên mảng được gọi là &quot;con trỏ hằng&quot;. ĐỊNH HƯỚNG THẢO LUẬN NHÓM Ngoài các thuật toán đã học, tìm hiểu các thuật toán tìm kiếm, sắp xếp khác. Trình bày các ưu, nhược điểm của mỗi thuật toán. NĂNG LỰC SỐ TÍCH HỢP (Thông tư 02/2025/TT-BGDĐT) NLS1 (Khai thác thông tin): đọc và phân tích dữ liệu CSV là kỹ năng xử lý thông tin số thực tế. NLS3 (Sáng tạo nội dung số): thuật toán sắp xếp, tìm kiếm là nền tảng xây dựng phần mềm quản lý dữ liệu. NLS4 (An toàn số): hiểu hậu quả truy xuất ngoài giới hạn mảng (buffer overflow). TỔNG KẾT CHƯƠNG – Mảng lưu các phần tử cùng kiểu liên tiếp trong bộ nhớ, chỉ số từ 0 đến n−1, kích thước cố định. – Các thuật toán cơ bản: thống kê, tìm kiếm, sắp xếp – Chuỗi trong C là mảng char kết thúc bằng '\0'; xử lý bằng các hàm trong string.h, ctype.h. – Con trỏ lưu địa chỉ bộ nhớ; tên mảng là con trỏ hằng: a[i] ≡ *(a+i) ≡ p[i] ≡ *(p+i). - 48 -" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 46-53."/>
+<baihoc stt="5" tieude="Chương 5. Hàm">Chương 5. HÀM
+
+Số tiết: 06 tiết lý thuyết + 06 tiết thực hành (Tuần 11 – 13)
+
+ MỤC TIÊU CỦA CHƯƠNG (CLO2, CLO4):
+ 1) Giải thích lợi ích của lập trình có cấu trúc, module hóa bằng hàm.
+ 2) Khai báo, định nghĩa và gọi hàm với các kiểu tham số và giá trị trả về khác nhau.
+ 3) Phân biệt truyền tham số theo giá trị và theo địa chỉ (con trỏ); biết khi nào dùng
+ loại nào.
+ 4) Thiết kế và cài đặt hàm đệ quy đúng với điều kiện dừng (base case) rõ ràng.
+ 5) Rèn luyện kỹ năng thiết kế, cài đặt, kiểm thử và gỡ lỗi chương trình dùng hàm.
+
+5.1. Khái niệm
+
+     Lập trình có cấu trúc (Structured Programming) dựa trên nguyên lý chia một bài
+toán lớn thành các chức năng nhỏ hơn, mỗi chức năng được hiện thực bằng một hàm
+(function). Phương pháp thiết kế từ tổng quát đến chi tiết này gọi là thiết kế từ trên
+xuống (Top-Down Design).
+
+                  Bảng 5.1. Lợi ích của việc tổ chức chương trình bằng hàm
+
+              Lợi ích                                 Giải thích cụ thể
+
+ Tái sử dụng (Reuse)               Viết hàm một lần, gọi lại nhiều lần ở nhiều nơi trong
+                                   chương trình.
+
+ Dễ đọc (Readability)              Chương trình chia thành các khối nhỏ có tên mô tả rõ
+                                   chức năng.
+
+ Dễ bảo trì (Maintainability)      Sửa lỗi hoặc cải tiến chỉ cần thay đổi trong một hàm,
+                                   không ảnh hưởng phần khác.
+
+ Dễ kiểm thử (Testability)         Có thể kiểm tra từng hàm một cách độc lập trước khi tích
+                                   hợp toàn bộ.
+
+ Hỗ trợ làm việc nhóm              Mỗi thành viên trong nhóm có thể đảm nhận viết các hàm
+                                   khác nhau.
+
+                                           - 49 -
+ Trừu tượng hóa (Abstraction)       Người gọi hàm chỉ cần biết hàm làm gì, không cần biết
+                                    cài đặt bên trong.
+
+5.2. Khai báo và sử dụng hàm
+
+5.2.1. Khai báo, định nghĩa và gọi hàm
+
+       Hàm trong C gồm ba thao tác liên quan: khai báo nguyên mẫu (cho trình biên dịch
+biết trước hàm tồn tại), định nghĩa (viết phần thân xử lý cụ thể) và gọi hàm (yêu cầu
+thực thi hàm tại một vị trí trong chương trình).
+
+Cú pháp chung:
+ // (1) Khai báo nguyên mẫu hàm — đặt trước main() nếu hàm định nghĩa
+ ở sau
+ kiểu_trả_về tên_hàm(kiểu_1 tham_số_1, kiểu_2 tham_số_2, ...);
+
+ // (2) Định nghĩa hàm — viết phần thân xử lý cụ thể
+ kiểu_trả_về tên_hàm(kiểu_1 tham_số_1, kiểu_2 tham_số_2, ...) {
+        // các câu lệnh xử lý
+        return giá_trị;         // bỏ qua nếu kiểu_trả_về là void
+ }
+
+ // (3) Gọi hàm — tại nơi cần sử dụng (thường trong main hoặc hàm
+ khác)
+ tên_hàm(đối_số_1, đối_số_2, ...);
+
+Trong đó:
+     – kiểu_trả_về: kiểu của giá trị mà hàm trả về (int, float, char...); dùng void nếu hàm
+        không trả về giá trị nào.
+     – tham_số (parameter): biến cục bộ nhận dữ liệu truyền vào khi gọi hàm, khai báo
+        trong phần định nghĩa.
+     – đối_số (argument): giá trị cụ thể truyền cho tham số tương ứng tại nơi gọi hàm.
+
+Ví dụ cụ thể sau vận dụng đầy đủ ba thao tác trên với hàm tính chỉ số BMI:
+ /* Nguyên mẫu hàm (prototype) - khai báo trước main() khi hàm định
+ nghĩa ở sau */
+ float tinhBMI(float canNang, float chieuCao);
+
+                                            - 50 -
+ void inKetQua(float bmi);
+
+ /* Hàm không tham số, không trả về giá trị */
+ void veKhung() {
+      printf("================================\n");
+ }
+
+ /* Hàm có tham số, có trả về giá trị */
+ float tinhBMI(float canNang, float chieuCao) {
+      if (chieuCao &lt;= 0) return -1;              /* Xử lý lỗi */
+      return canNang / (chieuCao * chieuCao);
+ }
+
+ /* Gọi hàm trong main */
+ int main() {
+      float bmi = tinhBMI(55.0f, 1.65f);
+      printf("BMI = %.2f\n", bmi);
+      return 0;
+ }
+
+5.2.2. Truyền tham số theo giá trị và theo địa chỉ
+
+Mặc định trong C, tham số được truyền THEO GIÁ TRỊ: hàm nhận một bản sao của giá
+trị, mọi thay đổi trong hàm KHÔNG ảnh hưởng đến biến gốc bên ngoài.
+ /* Truyền theo giá trị - KHÔNG hoán đổi được */
+ void hoanDoiSai(int a, int b) {
+      int t = a; a = b; b = t;             /* Chỉ đổi bản sao cục bộ */
+ }
+
+ /* Truyền theo địa chỉ (con trỏ) - hoán đổi ĐÚNG */
+ void hoanDoiDung(int *a, int *b) {
+      int t = *a; *a = *b; *b = t;
+ }
+
+ int main() {
+      int x = 5, y = 10;
+     hoanDoiSai(x, y);                   printf("%d %d\n", x, y);     /* 5 10 -
+ không đổi! */
+
+                                        - 51 -
+     hoanDoiDung(&amp;x, &amp;y);               printf("%d %d\n", x, y);         /* 10 5 -
+ đã đổi! */
+      return 0;
+ }
+
+5.2.3. Mảng và chuỗi làm tham số của hàm
+
+     Khi truyền mảng (hoặc chuỗi) vào hàm, thực chất là truyền địa chỉ của phần tử đầu
+tiên. Do đó thay đổi phần tử mảng trong hàm SẼ ảnh hưởng đến mảng gốc, khác với
+kiểu dữ liệu cơ sở.
+ void sapXep(int a[], int n) {                   /* a[] tương đương với int *a
+ */
+      for (int i = 0; i &lt; n-1; i++)
+            for (int j = 0; j &lt; n-1-i; j++)
+                  if (a[j] &gt; a[j+1]) { int t=a[j]; a[j]=a[j+1]; a[j+1]=t;
+ }
+      /* Thay đổi ở đây CÓ ảnh hưởng đến mảng gốc */
+ }
+
+ void inMangConst(const int a[], int n) {              /* const: đảm bảo không
+ sửa mảng */
+      for (int i = 0; i &lt; n; i++) printf("%d ", a[i]);
+ }
+
+5.2.4. Phạm vi biến và lớp lưu trữ
+ int demLanGoi = 0;        /* Biến toàn cục - dùng được trong mọi hàm */
+
+ void hamTest() {
+      int cucBo = 10;       /* Biến cục bộ - chỉ tồn tại trong hamTest */
+      static int demLan = 0;
+          /* static cục bộ - giữ giá trị qua các lần gọi */
+      demLan++; demLanGoi++;
+      printf("Lan goi: %d\n", demLan);
+ }
+
+ LƯU Ý
+ Nên hạn chế sử dụng biến toàn cục: làm chương trình khó debug, khó đọc, dễ xảy ra
+ lỗi trùng tên.
+
+                                        - 52 -
+5.3. Hàm đệ quy
+
+5.3.1. Khái niệm và cấu trúc
+
+Hàm đệ quy (Recursive function) là hàm tự gọi lại chính nó trong thân hàm. Mọi hàm
+đệ quy đúng phải có:
+     – Điều kiện dừng (Base case): trường hợp đơn giản nhất, giải được trực tiếp mà
+        không cần đệ quy.
+     – Bước đệ quy (Recursive case): gọi đệ quy với bài toán nhỏ hơn, tiến dần đến điều
+        kiện dừng.
+
+Cú pháp chung:
+ kiểu_trả_về tên_hàm(tham_số) {
+        if (điều_kiện_dừng) {
+             return giá_trị_cơ_sở;                    // Base case
+        } else {
+             return ...tên_hàm(tham_số_nhỏ_hơn)...;             // Recursive case
+        }
+ }
+
+Trong đó:
+     – điều_kiện_dừng: điều kiện để hàm KHÔNG gọi lại chính nó nữa, tránh đệ quy
+        vô hạn.
+     – tham_số_nhỏ_hơn: giá trị tham số truyền cho lần gọi đệ quy phải "gần"
+        điều_kiện_dừng hơn so với lần gọi hiện tại.
+
+ LƯU Ý
+ Thiếu điều kiện dừng hoặc bước đệ quy không tiến đến điều kiện dừng sẽ gây tràn
+ ngăn xếp (Stack Overflow). Với n rất lớn, nên ưu tiên cài đặt bằng vòng lặp thay cho
+ đệ quy.
+
+Ví dụ cụ thể sau vận dụng cú pháp đệ quy tổng quát nói trên để tính giai thừa của một
+số nguyên:
+
+ Ví dụ: Tính n giai thừa (n!) bằng đệ quy
+
+                                         - 53 -
+ n! = 1       nếu n = 0 hoặc 1 (điều kiện dừng)
+ n! = n × (n−1)! nếu n &gt; 1         (bước đệ quy)
+
+ long long giaiThua(int n) {
+      if (n &lt;= 1) return 1;                                 /* Base case */
+      return (long long)n * giaiThua(n-1);                  /* Recursive case */
+ }
+
+ Ví dụ: Bài toán Tháp Hà Nội (Tower of Hanoi)
+ N đĩa trên cọc A cần chuyển sang cọc C, dùng cọc B làm trung gian. Chỉ di chuyển
+ 1 đĩa/lần; đĩa lớn không được nằm trên đĩa nhỏ. Số bước tối thiểu là 2ⁿ − 1.
+
+ void hanoi(int n, char tu, char den, char qua) {
+      if (n == 1) {
+           printf("Di dia 1 tu %c sang %c\n", tu, den);
+           return;
+      }
+      hanoi(n-1, tu, qua, den);
+      printf("Di dia %d tu %c sang %c\n", n, tu, den);
+      hanoi(n-1, qua, den, tu);
+ }
+
+5.3.2. So sánh đệ quy và vòng lặp
+
+     Bảng 5.2. So sánh cài đặt bằng đệ quy và bằng vòng lặp (minh họa qua Fibonacci)
+
+                                    Đệ quy                          Vòng lặp
+
+Độ phức tạp bộ nhớ       Cao (dùng ngăn xếp gọi Thấp (chỉ vài biến)
+                         hàm)
+
+Tốc độ                   Chậm hơn do chi phí gọi Nhanh hơn
+                         hàm
+
+Phù hợp với              Bài toán có cấu trúc đệ quy Tính toán tuần tự: tổng, tích,
+                         tự nhiên: Hanoi, cây, đồ thị   Fibonacci
+
+Rủi ro                   Tràn ngăn xếp nếu đệ quy Lặp vô hạn nếu thiếu điều kiện
+                         quá sâu                        dừng
+ /* Fibonacci bằng đệ quy - đơn giản nhưng KÉM hiệu quả O(2^n) */
+
+                                          - 54 -
+ long long fibDeQuy(int n) {
+      if (n &lt;= 1) return n;
+      return fibDeQuy(n-1) + fibDeQuy(n-2);
+ }
+
+ /* Fibonacci bằng vòng lặp - hiệu quả O(n) */
+ long long fibVongLap(int n) {
+      if (n &lt;= 1) return n;
+      long long prev=0, curr=1;
+     for (int i = 2; i &lt;= n; i++) { long long t=prev+curr; prev=curr;
+ curr=t; }
+      return curr;
+ }
+
+5.4. Thực hành
+
+Bài 5.1. Xây dựng thư viện hàm toán học: laNguyenTo(), uscln(), giaiThua(), luyThua(),
+tongSoChanTu1DenN(). Viết main() kiểm thử từng hàm với nhiều trường hợp.
+Bài 5.2. Xây dựng thư viện xử lý mảng: nhapMang(), inMang(), timMax()/timMin(),
+tinhTong(), bubbleSort(), timNhiPhan(). Áp dụng xây dựng chương trình quản lý điểm
+sinh viên hoàn chỉnh
+Bài 5.3. Chia nhóm 3 người, mỗi người viết một hàm (nhập dữ liệu, xử lý, xuất kết quả),
+sau đó ghép lại thành một chương trình hoàn chỉnh.
+Bài 5.4. Đệ quy cơ bản – tính tổng 1+2+...+n; đếm số chữ số của n; tính tổng các chữ số
+của n; đảo ngược số nguyên n.
+Bài 5.5. Cài đặt và chạy thử bài toán Tháp Hà Nội với n=3, n=4; đếm số bước thực hiện;
+kiểm chứng công thức 2ⁿ−1.
+Bài 5.6. Cài đặt thuật toán QuickSort bằng đệ quy; so sánh thời gian thực thi với Bubble
+Sort trên mảng 1000 phần tử (dùng clock() trong time.h).
+Bài 5.7. Hỏi AI giải thích kỹ thuật Memoization; cài đặt fibMemo(n) dùng mảng lưu kết
+quả đã tính; so sánh thời gian fibDeQuy(40), fibMemo(40), fibVongLap(40).
+
+ CÂU HỎI ÔN TẬP
+ 1. Nêu các lợi ích của việc tổ chức chương trình thành các hàm.
+
+                                         - 55 -
+2. Phân biệt truyền tham số theo giá trị và theo địa chỉ. Khi nào cần dùng truyền theo
+địa chỉ?
+3. Vì sao khi truyền mảng vào hàm thì thay đổi trong hàm lại ảnh hưởng đến mảng
+gốc?
+4. Một hàm đệ quy bắt buộc phải có những thành phần nào? Thiếu thành phần nào
+sẽ gây lỗi gì?
+5. So sánh ưu, nhược điểm giữa cài đặt đệ quy và cài đặt vòng lặp cho cùng một bài
+toán.
+
+ĐỊNH HƯỚNG THẢO LUẬN NHÓM
+Bài toán Tháp Hà Nội có thể cài đặt bằng vòng lặp không? Nếu có, cách nào dễ hiểu
+hơn?
+
+NĂNG LỰC SỐ TÍCH HỢP (Thông tư 02/2025/TT-BGDĐT)
+NLS2 (Giao tiếp, hợp tác số): phân chia hàm theo chức năng là cơ sở phân công công
+việc nhóm.
+NLS3 (Sáng tạo nội dung số): xây dựng thư viện hàm là bước tạo ra sản phẩm phần
+mềm tái sử dụng được.
+NLS5 (Giải quyết vấn đề): phân tích và tối ưu từ đệ quy đơn giản sang kỹ thuật
+memoization.
+NLS6 (Ứng dụng AI): dùng AI hỗ trợ giải thích kỹ thuật mới; kiểm chứng và đánh
+giá kết quả AI.
+
+TỔNG KẾT CHƯƠNG
+– Hàm giúp chương trình dễ đọc, dễ bảo trì, dễ kiểm thử và hỗ trợ phân chia công
+việc nhóm.
+– Truyền theo giá trị: không ảnh hưởng biến gốc; truyền theo địa chỉ (con trỏ): có
+thể thay đổi và trả nhiều giá trị.
+
+                                        - 56 -
+– Mảng/chuỗi truyền vào hàm như con trỏ; dùng const để bảo vệ dữ liệu không bị
+sửa ngoài ý muốn.
+– Hàm đệ quy cần điều kiện dừng và bước tiến đến điều kiện dừng; ưu tiên vòng lặp
+khi có thể để tiết kiệm tài nguyên.
+
+                                      - 57 -</baihoc>
+<baitap bai="5" loai="goc" de="Bài 5.1. Xây dựng thư viện hàm toán học: laNguyenTo(), uscln(), giaiThua(), luyThua(), tongSoChanTu1DenN(). Viết main() kiểm thử từng hàm với nhiều trường hợp." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 54-62."/>
+<baitap bai="5" loai="goc" de="Bài 5.2. Xây dựng thư viện xử lý mảng: nhapMang(), inMang(), timMax()/timMin(), tinhTong(), bubbleSort(), timNhiPhan(). Áp dụng xây dựng chương trình quản lý điểm sinh viên hoàn chỉnh" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 54-62."/>
+<baitap bai="5" loai="goc" de="Bài 5.3. Chia nhóm 3 người, mỗi người viết một hàm (nhập dữ liệu, xử lý, xuất kết quả), sau đó ghép lại thành một chương trình hoàn chỉnh." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 54-62."/>
+<baitap bai="5" loai="goc" de="Bài 5.4. Đệ quy cơ bản – tính tổng 1+2+...+n; đếm số chữ số của n; tính tổng các chữ số của n; đảo ngược số nguyên n." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 54-62."/>
+<baitap bai="5" loai="goc" de="Bài 5.5. Cài đặt và chạy thử bài toán Tháp Hà Nội với n=3, n=4; đếm số bước thực hiện; kiểm chứng công thức 2ⁿ−1." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 54-62."/>
+<baitap bai="5" loai="goc" de="Bài 5.6. Cài đặt thuật toán QuickSort bằng đệ quy; so sánh thời gian thực thi với Bubble Sort trên mảng 1000 phần tử (dùng clock() trong time.h)." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 54-62."/>
+<baitap bai="5" loai="goc" de="Bài 5.7. Hỏi AI giải thích kỹ thuật Memoization; cài đặt fibMemo(n) dùng mảng lưu kết quả đã tính; so sánh thời gian fibDeQuy(40), fibMemo(40), fibVongLap(40). CÂU HỎI ÔN TẬP 1. Nêu các lợi ích của việc tổ chức chương trình thành các hàm. - 55 - 2. Phân biệt truyền tham số theo giá trị và theo địa chỉ. Khi nào cần dùng truyền theo địa chỉ? 3. Vì sao khi truyền mảng vào hàm thì thay đổi trong hàm lại ảnh hưởng đến mảng gốc? 4. Một hàm đệ quy bắt buộc phải có những thành phần nào? Thiếu thành phần nào sẽ gây lỗi gì? 5. So sánh ưu, nhược điểm giữa cài đặt đệ quy và cài đặt vòng lặp cho cùng một bài toán. ĐỊNH HƯỚNG THẢO LUẬN NHÓM Bài toán Tháp Hà Nội có thể cài đặt bằng vòng lặp không? Nếu có, cách nào dễ hiểu hơn? NĂNG LỰC SỐ TÍCH HỢP (Thông tư 02/2025/TT-BGDĐT) NLS2 (Giao tiếp, hợp tác số): phân chia hàm theo chức năng là cơ sở phân công công việc nhóm. NLS3 (Sáng tạo nội dung số): xây dự" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 54-62."/>
+<baitap bai="5" loai="goc" de="1. Nêu các lợi ích của việc tổ chức chương trình thành các hàm. - 55 -" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 54-62."/>
+<baitap bai="5" loai="goc" de="2. Phân biệt truyền tham số theo giá trị và theo địa chỉ. Khi nào cần dùng truyền theo địa chỉ?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 54-62."/>
+<baitap bai="5" loai="goc" de="3. Vì sao khi truyền mảng vào hàm thì thay đổi trong hàm lại ảnh hưởng đến mảng gốc?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 54-62."/>
+<baitap bai="5" loai="goc" de="4. Một hàm đệ quy bắt buộc phải có những thành phần nào? Thiếu thành phần nào sẽ gây lỗi gì?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 54-62."/>
+<baitap bai="5" loai="goc" de="5. So sánh ưu, nhược điểm giữa cài đặt đệ quy và cài đặt vòng lặp cho cùng một bài toán. ĐỊNH HƯỚNG THẢO LUẬN NHÓM Bài toán Tháp Hà Nội có thể cài đặt bằng vòng lặp không? Nếu có, cách nào dễ hiểu hơn? NĂNG LỰC SỐ TÍCH HỢP (Thông tư 02/2025/TT-BGDĐT) NLS2 (Giao tiếp, hợp tác số): phân chia hàm theo chức năng là cơ sở phân công công việc nhóm. NLS3 (Sáng tạo nội dung số): xây dựng thư viện hàm là bước tạo ra sản phẩm phần mềm tái sử dụng được. NLS5 (Giải quyết vấn đề): phân tích và tối ưu từ đệ quy đơn giản sang kỹ thuật memoization. NLS6 (Ứng dụng AI): dùng AI hỗ trợ giải thích kỹ thuật mới; kiểm chứng và đánh giá kết quả AI. TỔNG KẾT CHƯƠNG – Hàm giúp chương trình dễ đọc, dễ bảo trì, dễ kiểm thử và hỗ trợ phân chia công việc nhóm. – Truyền theo giá trị: không ảnh hưởng biến gốc; truyền theo địa chỉ (con trỏ): có thể thay đổi và trả nhiều giá trị. - 56 - – Mảng/chuỗi truyền vào hàm như c" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 54-62."/>
+<baihoc stt="6" tieude="Chương 6. Kiểu dữ liệu cấu trúc và tập tin">Chương 6. KIỂU DỮ LIỆU CẤU TRÚC VÀ TẬP TIN
+
+Số tiết: 04 tiết lý thuyết + 04 tiết thực hành (Tuần 14 – 15)
+
+ MỤC TIÊU CỦA CHƯƠNG (CLO3, CLO4):
+ 1) Định nghĩa kiểu struct, khai báo và thao tác trên biến struct và mảng struct.
+ 2) Xây dựng chương trình quản lý danh sách đối tượng bằng mảng struct.
+ 3) Đọc và ghi dữ liệu vào tệp văn bản và tệp nhị phân.
+ 4) Thiết kế chương trình quản lý dữ liệu kết hợp struct, hàm và tệp; rèn kỹ năng gỡ
+ lỗi.
+
+6.1. Kiểu cấu trúc
+
+6.1.1. Khái niệm và lý do sử dụng struct
+
+        Khi quản lý thông tin một sinh viên, cần nhiều biến liên quan: mã số, họ tên, năm
+sinh, các điểm số... Nếu quản lý 100 sinh viên, sẽ cần rất nhiều biến riêng lẻ. Kiểu struct
+cho phép nhóm các trường dữ liệu liên quan thành MỘT kiểu dữ liệu mới, giúp tổ chức
+chương trình gọn gàng và tự nhiên hơn.
+        Khác với mảng (nơi mọi phần tử phải CÙNG một kiểu dữ liệu), struct cho phép
+nhóm các thành phần có KIỂU DỮ LIỆU KHÁC NHAU vào trong một biến duy nhất.
+Đây chính là điểm khác biệt căn bản và cũng là lý do struct phù hợp để mô tả các đối
+tượng thực tế, vốn thường có nhiều thuộc tính khác kiểu (ví dụ: mã sinh viên là chuỗi,
+năm sinh là số nguyên, điểm số là số thực).
+
+6.1.2. Định nghĩa và khai báo struct
+
+        Việc sử dụng struct gồm hai giai đoạn: trước tiên ĐỊNH NGHĨA kiểu struct mới
+(mô tả các thành phần sẽ có), sau đó mới KHAI BÁO các biến thuộc kiểu struct đó.
+
+Cú pháp chung:
+ // Cách 1: định nghĩa struct dùng tag
+ struct tên_struct {
+         kiểu_dữ_liệu_1 tên_thành_phần_1;
+
+                                           - 58 -
+      kiểu_dữ_liệu_2 tên_thành_phần_2;
+      ...
+ };
+ struct tên_struct tên_biến;// Khai báo biến (phải có từ khóa struct)
+
+ // Cách 2: dùng typedef để đặt tên ngắn gọn hơn
+ typedef struct {
+      kiểu_dữ_liệu_1 tên_thành_phần_1;
+      kiểu_dữ_liệu_2 tên_thành_phần_2;
+      ...
+ } TênKiểuMới;
+ TênKiểuMới tên_biến;// Khai báo biến (KHÔNG cần từ khóa struct)
+
+Trong đó:
+   – tên_thành_phần (member/field): các trường dữ liệu của struct, có thể thuộc nhiều
+       kiểu khác nhau.
+   – Với cách 1, mỗi lần khai báo biến phải viết đầy đủ "struct tên_struct"; với cách 2
+       (typedef), chỉ cần viết TênKiểuMới.
+
+Ví dụ cụ thể sau vận dụng cả hai cách định nghĩa struct nói trên cho đối tượng sinh viên:
+ /* Định nghĩa struct dùng tag */
+ struct SinhVien {
+      char maSV[12];
+      char hoTen[60];
+      int namSinh;
+      float diemToan, diemLy, diemHoa;
+ };
+ struct SinhVien sv1;
+ struct SinhVien ds[100];
+
+ /* typedef - đặt tên ngắn gọn, không cần viết lại 'struct' mỗi lần
+ */
+ typedef struct {
+      char maSV[12];
+      char hoTen[60];
+      float diemToan, diemLy, diemHoa, diemTB;
+ } SinhVien;
+
+ SinhVien sv2;
+
+                                         - 59 -
+ SinhVien kho[200];
+
+6.1.3. Truy xuất và thao tác với struct
+
+      Sau khi đã khai báo biến struct, ta cần một cú pháp riêng để truy cập vào TỪNG
+thành phần bên trong biến đó. C cung cấp hai toán tử truy xuất, tùy theo biến struct là
+biến thường hay con trỏ trỏ đến struct.
+
+Cú pháp chung:
+ tên_biến.tên_thành_phần                              // Truy xuất qua biến struct
+ thường (dấu chấm)
+ tên_con_trỏ-&gt;tên_thành_phần                        // Truy xuất qua con trỏ struct
+ (dấu mũi tên)
+ (*tên_con_trỏ).tên_thành_phần                  // Tương đương với cách trên, ít
+ dùng hơn
+
+Trong đó:
+     – Dấu . (chấm): dùng khi tên_biến là một biến struct thông thường (không phải con
+        trỏ).
+     – Dấu -&gt; (mũi tên): dùng khi tên_con_trỏ là một con trỏ trỏ đến struct; viết gọn
+        hơn (*p).thành_phần.
+
+      Ví dụ cụ thể sau vận dụng cả hai toán tử truy xuất struct, kết hợp với việc truyền
+con trỏ struct vào hàm để tăng hiệu quả:
+ typedef struct {
+        char maSV[12]; char hoTen[60];
+        float diemToan, diemLy, diemHoa, diemTB;
+ } SinhVien;
+
+ float tinhDiemTB(SinhVien sv) {
+        return (sv.diemToan + sv.diemLy + sv.diemHoa) / 3.0f;
+ }
+
+ /* Truyền con trỏ để tránh sao chép toàn bộ struct (hiệu quả hơn)
+ */
+ void nhapSV(SinhVien *sv) {
+        printf("Ma SV: "); scanf("%11s", sv-&gt;maSV);
+        printf("D.Toan: "); scanf("%f", &amp;sv-&gt;diemToan);
+
+                                           - 60 -
+       sv-&gt;diemTB = tinhDiemTB(*sv);
+ }
+
+ int main() {
+       SinhVien sv1 = {"SV001", "Nguyen Van An", 8.5f, 7.0f, 9.0f, 0};
+     sv1.diemTB = tinhDiemTB(sv1);                     /* Truy xuất qua biến:
+ sv.truong */
+
+       SinhVien *p = &amp;sv1;
+     printf("%s\n", p-&gt;hoTen);                      /* Truy xuất qua con trỏ:
+ p-&gt;truong */
+       return 0;
+ }
+
+6.1.4. Mảng struct và ứng dụng quản lý danh sách
+ #define MAX_SV 100
+
+ void sapXepTheoTB(SinhVien ds[], int n) {
+       for (int i = 0; i &lt; n-1; i++)
+            for (int j = 0; j &lt; n-1-i; j++)
+                 if (ds[j].diemTB &lt; ds[j+1].diemTB) {
+                       SinhVien t = ds[j]; ds[j] = ds[j+1]; ds[j+1] = t;
+                 }
+ }
+
+ int timTheoMa(SinhVien ds[], int n, const char *ma) {
+       for (int i = 0; i &lt; n; i++)
+            if (strcmp(ds[i].maSV, ma) == 0) return i;
+       return -1;
+ }
+
+6.2. Kiểu tập tin
+
+6.2.1. Sự cần thiết của tệp (file)
+
+     Dữ liệu trong bộ nhớ RAM bị mất khi chương trình kết thúc. Tệp (file) cho phép
+lưu dữ liệu một cách bền vững (persistent) trên đĩa, có thể đọc lại ở những lần chạy
+chương trình sau.
+
+                                       - 61 -
+                        Bảng 6.1. So sánh tệp văn bản và tệp nhị phân
+
+      Đặc điểm                  Tệp văn bản (Text)             Tệp nhị phân (Binary)
+
+ Định dạng lưu          Chuỗi ký tự ASCII, mỗi dòng kết Dữ liệu nhị phân theo định dạng
+                        thúc bằng \n                      bộ nhớ
+
+ Mở     được      bằng Có, đọc được trực tiếp             Không, hiển thị ký tự không đọc
+ Notepad?                                                 được
+
+ Tốc độ đọc/ghi         Chậm hơn (cần định dạng/phân Nhanh hơn (sao chép trực tiếp từ
+                        tích)                             bộ nhớ)
+
+ Phù hợp dùng cho       Tệp cấu hình, log, dữ liệu CSV    Lưu trữ dữ liệu lớn, chính xác cao
+
+6.2.2. Làm việc với tệp văn bản
+
+      Để làm việc với một tệp bất kỳ trong C, luôn cần theo trình tự ba bước: mở tệp
+(fopen), thao tác đọc/ghi trên tệp, và đóng tệp (fclose) khi hoàn tất.
+
+Cú pháp chung:
+ FILE *con_trỏ_file = fopen("tên_tệp", "chế_độ");
+ if (con_trỏ_file == NULL) { /* xử lý lỗi mở tệp thất bại */ }
+
+ fprintf(con_trỏ_file, "chuỗi_định_dạng", đối_số...);                         // Ghi có
+ định dạng
+ fscanf(con_trỏ_file, "chuỗi_định_dạng", &amp;biến...);                      // Đọc có định
+ dạng
+ fgets(buf, kích_thước, con_trỏ_file);                                       // Đọc một
+ dòng văn bản
+
+ fclose(con_trỏ_file);             // Luôn đóng tệp sau khi dùng xong
+
+Trong đó:
+   – FILE *: kiểu con trỏ đặc biệt đại diện cho một tệp đang mở, do thư viện stdio.h
+       định nghĩa.
+   – chế_độ: quy định cách mở tệp — "r" (đọc), "w" (ghi, tạo mới/ghi đè), "a" (ghi
+       nối thêm vào cuối tệp).
+   – fopen() trả về NULL nếu mở tệp thất bại (ví dụ tệp không tồn tại khi mở ở chế
+       độ đọc) — luôn phải kiểm tra.
+
+                                            - 62 -
+Ví dụ cụ thể sau vận dụng cú pháp tổng quát nói trên để ghi, đọc và ghi nối thêm dữ liệu
+vào một tệp văn bản:
+ FILE *fw = fopen("diem.txt", "w");                   /* Mở để ghi (tạo mới/ghi
+ đè) */
+ if (fw == NULL) { perror("Loi mo file"); return 1; }
+ fprintf(fw, "SV001,Nguyen Van An,8.5\n");
+ fclose(fw);                                          /* LUÔN đóng file sau khi
+ dùng */
+
+ FILE *fr = fopen("diem.txt", "r");                   /* Mở để đọc */
+ char dong[200];
+ while (fgets(dong, sizeof(dong), fr) != NULL) printf("%s", dong);
+ fclose(fr);
+
+ FILE *fa = fopen("diem.txt", "a");                  /* Mở để ghi thêm (append)
+ */
+ fprintf(fa, "SV002,Tran Thi Bich,7.8\n");
+ fclose(fa);
+
+6.2.3. Làm việc với tệp nhị phân
+
+     Khác với fprintf/fscanf làm việc với dữ liệu dạng văn bản, đọc/ghi tệp nhị phân
+dùng cặp hàm fwrite/fread để sao chép trực tiếp vùng nhớ của biến (hoặc mảng) vào/ra
+tệp, mở tệp ở chế độ có thêm ký tự "b" (binary).
+
+Cú pháp chung:
+ FILE *con_trỏ_file = fopen("tên_tệp", "wb");                // wb: ghi nhị phân,
+ rb: đọc nhị phân
+
+ fwrite(địa_chỉ_dữ_liệu,              kích_thước_1_phần_tử,             số_phần_tử,
+ con_trỏ_file);
+ fread(địa_chỉ_dữ_liệu,              kích_thước_1_phần_tử,              số_phần_tử,
+ con_trỏ_file);
+
+Trong đó:
+   – địa_chỉ_dữ_liệu: địa chỉ của biến/mảng cần ghi ra tệp hoặc đọc dữ liệu vào.
+   – kích_thước_1_phần_tử: thường dùng sizeof(kiểu_dữ_liệu) để tự động tính đúng
+      số byte.
+
+                                         - 63 -
+     – số_phần_tử: số lượng phần tử cần ghi/đọc (1 nếu là một biến đơn, n nếu là mảng
+        n phần tử).
+
+      Ví dụ cụ thể sau vận dụng cú pháp fwrite/fread để ghi và đọc lại một mảng struct
+SinhVien dưới dạng tệp nhị phân:
+ int ghiFileBinary(const char *tenFile, SinhVien ds[], int n) {
+        FILE *f = fopen(tenFile, "wb");
+        if (!f) return 0;
+        fwrite(&amp;n, sizeof(int), 1, f);
+        fwrite(ds, sizeof(SinhVien), n, f);
+        fclose(f);
+        return 1;
+ }
+
+ int docFileBinary(const char *tenFile, SinhVien ds[], int *n) {
+        FILE *f = fopen(tenFile, "rb");
+        if (!f) return 0;
+        fread(n, sizeof(int), 1, f);
+        fread(ds, sizeof(SinhVien), *n, f);
+        fclose(f);
+        return 1;
+ }
+
+6.2.4. Một số hàm tệp quan trọng
+
+                      Bảng 6.2. Các hàm thao tác tệp thường dùng trong C
+
+                Hàm                    Trả về                      Chức năng
+
+fopen(path, mode)               FILE* hoặc NULL       Mở file. Modes: r, w, a, rb, wb, ab
+
+fclose(fp)                      0 hoặc EOF            Đóng file, giải phóng tài nguyên
+
+fprintf / fscanf                Số ký tự / số biến    Ghi / đọc dữ liệu có định dạng
+
+fgets / fputs                   buf / số ký tự        Đọc / ghi một dòng văn bản
+
+fread / fwrite                  Số phần tử            Đọc / ghi dữ liệu nhị phân
+
+feof(fp)                        Khác 0 nếu hết file   Kiểm tra đã đến cuối tệp
+
+remove(path)                    0 nếu thành công      Xóa tệp khỏi đĩa
+
+                                             - 64 -
+6.3. Thực hành
+
+Bài 6.1. Xây dựng kiểu SinhVien bằng struct; viết các hàm nhapSV, inSV, tinhDiemTB,
+xepLoai. Thao tác trên mảng SV: nhập n SV, in bảng, sắp xếp theo điểm TB giảm dần,
+tìm kiếm theo mã.
+Bài 6.2. Lưu danh sách SV (từ Bài 1) ra tệp văn bản dạng CSV; đọc lại tệp CSV vào
+mảng SV; thêm chức năng ghi nối (append) một SV mới vào cuối tệp.
+Bài 6.3. Lưu/đọc danh sách SV bằng tệp nhị phân (fwrite/fread); so sánh kích thước tệp
+.csv và .dat cho cùng một bộ dữ liệu; nhận xét ưu, nhược điểm mỗi loại.
+Bài 6.4. Xây dựng hệ thống quản lý sinh viên hoàn chỉnh với menu: nhập, hiển thị, tìm
+kiếm, thêm, xóa, sửa, sắp xếp, thống kê, lưu và nạp từ tệp. Sử dụng AI để đề xuất cải
+tiến giao diện menu; đánh giá và hiệu chỉnh đề xuất của AI.
+
+ CÂU HỎI ÔN TẬP
+ 1. struct khác gì so với khai báo nhiều biến riêng lẻ? Khi nào nên dùng struct?
+ 2. Phân biệt cách truy xuất thành phần struct qua biến (.) và qua con trỏ (-&gt;).
+ 3. Tại sao nên truyền con trỏ struct vào hàm thay vì truyền trực tiếp giá trị struct?
+ 4. Phân biệt tệp văn bản và tệp nhị phân. Khi nào nên chọn loại nào?
+ 5. Tại sao luôn phải kiểm tra giá trị trả về của fopen() trước khi sử dụng con trỏ
+ FILE?
+
+ ĐỊNH HƯỚNG THẢO LUẬN NHÓM
+ Nếu mất kết nối điện trong khi đang ghi tệp nhị phân, dữ liệu có thể bị hỏng như thế
+ nào? Có cách nào hạn chế rủi ro này không?
+
+ NĂNG LỰC SỐ TÍCH HỢP (Thông tư 02/2025/TT-BGDĐT)
+ NLS1 (Khai thác thông tin): đọc, phân tích và tổ chức dữ liệu từ tệp CSV.
+
+                                          - 65 -
+NLS3 (Sáng tạo nội dung số): xây dựng hệ thống quản lý sinh viên hoàn chỉnh là
+một sản phẩm số.
+NLS4 (An toàn số): kiểm tra fopen() != NULL, đóng file đúng cách để tránh mất dữ
+liệu.
+NLS6 (Ứng dụng AI): dùng AI hỗ trợ cải tiến chương trình; đánh giá và hiệu chỉnh
+đề xuất của AI.
+
+TỔNG KẾT CHƯƠNG
+– struct nhóm các trường dữ liệu khác kiểu thành một kiểu mới; truy xuất bằng dấu
+. (qua biến) hoặc -&gt; (qua con trỏ).
+– Mảng struct (ví dụ SinhVien ds[100]) là cách quản lý danh sách đối tượng phổ
+biến và hiệu quả trong C.
+– Tệp văn bản dùng fprintf/fscanf/fgets cho dữ liệu đọc được; tệp nhị phân dùng
+fwrite/fread, nhanh và nhỏ hơn.
+– Luôn kiểm tra fopen() != NULL và luôn gọi fclose() sau khi dùng xong để tránh
+mất dữ liệu.
+
+                                      - 66 -
+                            TÀI LIỆU THAM KHẢO
+
+Tiếng Việt
+[1]. Bộ Giáo dục và Đào tạo (2025), Thông tư số 02/2025/TT-BGDĐT ngày 24/01/2025
+   quy định Khung năng lực số cho người học, Hà Nội.
+[2]. Lương Văn Nghĩa, Phạm Khánh Bảo (2022), Kỹ thuật lập trình, NXB Khoa học Kỹ
+   thuật, Hà Nội.
+
+Tiếng Anh
+[3]. Kernighan B.W., Ritchie D.M. (1988), The C Programming Language (2nd ed.),
+   Prentice Hall, New Jersey.
+[4]. King K.N. (2008), C Programming: A Modern Approach (2nd ed.), W.W. Norton
+   &amp; Company, New York.
+
+Tài liệu trực tuyến
+[5].     cppreference.com       (2026),         C    Reference   Documentation,
+   https://en.cppreference.com/w/c, truy cập tháng 6/2026.
+
+                                       - 67 -</baihoc>
+<baitap bai="6" loai="goc" de="Bài 6.1. Xây dựng kiểu SinhVien bằng struct; viết các hàm nhapSV, inSV, tinhDiemTB, xepLoai. Thao tác trên mảng SV: nhập n SV, in bảng, sắp xếp theo điểm TB giảm dần, tìm kiếm theo mã." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 63-72."/>
+<baitap bai="6" loai="goc" de="Bài 6.2. Lưu danh sách SV (từ Bài 1) ra tệp văn bản dạng CSV; đọc lại tệp CSV vào mảng SV; thêm chức năng ghi nối (append) một SV mới vào cuối tệp." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 63-72."/>
+<baitap bai="6" loai="goc" de="Bài 6.3. Lưu/đọc danh sách SV bằng tệp nhị phân (fwrite/fread); so sánh kích thước tệp .csv và .dat cho cùng một bộ dữ liệu; nhận xét ưu, nhược điểm mỗi loại." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 63-72."/>
+<baitap bai="6" loai="goc" de="Bài 6.4. Xây dựng hệ thống quản lý sinh viên hoàn chỉnh với menu: nhập, hiển thị, tìm kiếm, thêm, xóa, sửa, sắp xếp, thống kê, lưu và nạp từ tệp. Sử dụng AI để đề xuất cải tiến giao diện menu; đánh giá và hiệu chỉnh đề xuất của AI. CÂU HỎI ÔN TẬP 1. struct khác gì so với khai báo nhiều biến riêng lẻ? Khi nào nên dùng struct? 2. Phân biệt cách truy xuất thành phần struct qua biến (.) và qua con trỏ (-&gt;). 3. Tại sao nên truyền con trỏ struct vào hàm thay vì truyền trực tiếp giá trị struct? 4. Phân biệt tệp văn bản và tệp nhị phân. Khi nào nên chọn loại nào? 5. Tại sao luôn phải kiểm tra giá trị trả về của fopen() trước khi sử dụng con trỏ FILE? ĐỊNH HƯỚNG THẢO LUẬN NHÓM Nếu mất kết nối điện trong khi đang ghi tệp nhị phân, dữ liệu có thể bị hỏng như thế nào? Có cách nào hạn chế rủi ro này không? NĂNG LỰC SỐ TÍCH HỢP (Thông tư 02/2025/TT-BGDĐT) NLS1 (Khai thác thông tin): đọc, phân tích và " dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 63-72."/>
+<baitap bai="6" loai="goc" de="1. struct khác gì so với khai báo nhiều biến riêng lẻ? Khi nào nên dùng struct?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 63-72."/>
+<baitap bai="6" loai="goc" de="2. Phân biệt cách truy xuất thành phần struct qua biến (.) và qua con trỏ (-&gt;)." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 63-72."/>
+<baitap bai="6" loai="goc" de="3. Tại sao nên truyền con trỏ struct vào hàm thay vì truyền trực tiếp giá trị struct?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 63-72."/>
+<baitap bai="6" loai="goc" de="4. Phân biệt tệp văn bản và tệp nhị phân. Khi nào nên chọn loại nào?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 63-72."/>
+<baitap bai="6" loai="goc" de="5. Tại sao luôn phải kiểm tra giá trị trả về của fopen() trước khi sử dụng con trỏ FILE? ĐỊNH HƯỚNG THẢO LUẬN NHÓM Nếu mất kết nối điện trong khi đang ghi tệp nhị phân, dữ liệu có thể bị hỏng như thế nào? Có cách nào hạn chế rủi ro này không? NĂNG LỰC SỐ TÍCH HỢP (Thông tư 02/2025/TT-BGDĐT) NLS1 (Khai thác thông tin): đọc, phân tích và tổ chức dữ liệu từ tệp CSV. - 65 - NLS3 (Sáng tạo nội dung số): xây dựng hệ thống quản lý sinh viên hoàn chỉnh là một sản phẩm số. NLS4 (An toàn số): kiểm tra fopen() != NULL, đóng file đúng cách để tránh mất dữ liệu. NLS6 (Ứng dụng AI): dùng AI hỗ trợ cải tiến chương trình; đánh giá và hiệu chỉnh đề xuất của AI. TỔNG KẾT CHƯƠNG – struct nhóm các trường dữ liệu khác kiểu thành một kiểu mới; truy xuất bằng dấu . (qua biến) hoặc -&gt; (qua con trỏ). – Mảng struct (ví dụ SinhVien ds[100]) là cách quản lý danh sách đối tượng phổ biến và hiệu quả trong C. – Tệp vă" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_CoSoLapTrinh_CNTT_3TC_Bao.pdf, trang 63-72."/>
+</mon>
