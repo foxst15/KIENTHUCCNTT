@@ -1,0 +1,4406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mon id="access" ten="Hệ quản trị CSDL Access" nhom="Cơ sở dữ liệu" drive="1JQNRH0g_jeDeiMu8aucZh7CldOL-XTAd" nguon="bg_hequantri_csdl_access.pdf">
+<mota>Microsoft Access: table, query, form, report.</mota>
+<baihoc stt="1" tieude="Chương 1. Tổng quan về hệ quản trị CSDL Access">Chương 1: TỔNG QUAN VỀ HỆ QUẢN TRỊ
+                            CƠ SỞ DỮ LIỆU ACCESS
+Thời lượng: 04 tiết lý thuyết
+
+Kết thúc chương này, sinh viên có thể:
+
+   • Hiểu được khái niệm CSDL và CSDL quan hệ
+
+   • Biết được các chức năng của hệ quản trị cơ sở dữ liệu
+
+   • Làm quen với giao diện Access
+
+   • Biết được các thành phần trong CSDL Access
+
+1.1 Khái niệm cơ sở dữ liệu - khái niệm cơ sở dữ liệu quan hệ
+
+1.1.1 Khái niệm cơ sở dữ liệu
+     Các cơ sở dữ liệu và các hệ cơ sở dữ liệu đã trở thành một thành phần chủ yếu
+trong cuộc sống hàng ngày của xã hội hiện đại. Trong vòng một ngày con người có thể
+có nhiều hoạt động cần có sự giao tiếp với cơ sở dữ liệu như: đến ngân hàng để rút tiền
+và gửi tiền, đăng ký chỗ trên máy bay hoặc khách sạn, truy cập vào thư viện đã tin học
+hoá để tìm sách báo, đặt mua tạp chí ở một nhà xuất bản. Tại các ngân hàng, các cửa
+hàng, người ta cũng cập nhật tự động việc quản lý tiền bạc, hàng hoá.
+
+     Tất cả các giao tiếp như trên được gọi là các ứng dụng của cơ sở dữ
+liệu truyền thống. Trong các cơ sở dữ liệu truyền thống, hầu hết các thông tin được lưu
+giữ và truy cập là văn bản hoặc số. Những năm gần đây, những tiến bộ về kỹ thuật đã
+đưa đến những ứng dụng mới của cơ sở dữ liệu. Các cơ sở dữ liệu đa phương tiện bây
+giờ có thể lưu trữ hình ảnh, phim và tiếng nói. Các hệ thống thông tin địa lý có thể lưu
+trữ và phân tích các bản đồ, các dữ liệu về thời tiết và các ảnh vệ tinh. Kho dữ liệu và
+các hệ thống phân tích trực tuyến được sử dụng trong nhiều công ty để lấy ra và phân
+tích những thông tin có lợi từ các cơ sở dữ liệu rất lớn nhằm đưa ra các quyết định.
+
+     Trong chương này chúng ta sẽ định nghĩa cơ sở dữ liệu, hệ quản trị cơ sở dữ liệu,
+mô hình cơ sở dữ liệu quan hệ và các thành phần của hệ quản trị cơ sở dữ liệu Access.
+
+     Cơ sở dữ liệu (Database): là tập hợp những thông tin có liên quan với nhau, được
+tổ chức theo một cấu trúc nào đó và được lưu trữ trên máy tính.
+
+     Ví dụ, để quản lý việc học tập trong một môi trường đại học, các dữ liệu là các
+thông tin về sinh viên, về các môn học, điểm thi….Chúng ta tổ chức các dữ liệu đó
+thành các bảng và lưu giữ chúng vào sổ sách hoặc sử dụng một phần mềm máy tính để
+lưu giữ chúng trên máy tính. Ta có một tập các dữ liệu có liên quan đến nhau và mang
+nhiều ý nghĩa, đó là một cơ sở dữ liệu.
+
+1.1.2 Khái niệm cơ sở dữ liệu quan hệ
+
+a. Mô hình dữ liệu quan hệ
+
+     Mô hình dữ liệu quan hệ được Codd đề xuất năm 1970 và đến nay trở thành mô
+hình được sử dụng phổ biến trong các hệ quản trị cơ sở dữ liệu thương mại. Nói một
+cách đơn giản, một cơ sở dữ liệu quan hệ là một cơ sở dữ liệu trong đó tất cả dữ liệu
+được tổ chức trong các bảng có mối quan hệ với nhau. Mỗi một bảng bao
+gồm các dòng và các cột: mỗi một dòng được gọi là một bản ghi (bộ) và mỗi một cột
+là một trường (thuộc tính).
+
+                      Hình 1.1. Các bảng trong một cơ sở dữ liệu
+
+      Bảng (Table): Một cơ sở dữ liệu bao gồm nhiều bảng và mỗi bảng được xác
+định duy nhất bởi tên bảng. Một bảng bao gồm một tập các dòng và các cột: mỗi một
+dòng trong bảng biểu diễn cho một thực thể (trong hình trên, mỗi một dòng trong bảng
+HOCSINH tương ứng với một học sinh); và mỗi một cột biểu diễn cho một tính chất
+của thực thể (chẳng hạn cột PHAI trong bảng HOCSINH biểu diễn cho giới tính
+của các học sinh được lưu trữ trong bảng).
+
+     Như vậy, liên quan đến mỗi một bảng bao gồm các yếu tố sau:
+
+     • Tên của bảng: được sử dụng để xác định duy nhất mỗi bảng trong cơ sở dữ liệu
+
+     • Cấu trúc của bảng: Tập các cột trong bảng. Mỗi một cột trong bảng được xác
+định bởi một tên cột và phải có một kiểu dữ liệu nào đó (chẳng hạn cột MAHS trong
+bảng HOCSINH ở hình trên có kiểu là TEXT). Kiểu dữ liệu của mỗi cột qui định
+giá trị dữ liệu có thể được chấp nhận trên cột đó.
+
+     • Dữ liệu của bảng: Tập các dòng (bản ghi) hiện có trong bảng.
+
+     Khóa của bảng             Hình 1.2. Các bảng thể hiện mối quan hệ và khóa ngoài
+
+     Trong một cơ sở dữ liệu được thiết kế tốt, mỗi một bảng phải có một hoặc một
+tập các cột mà giá trị dữ liệu của nó xác định duy nhất một dòng trong một tập các
+dòng của bảng. Tập một hoặc nhiều cột có tính chất này được gọi là khoá của bảng.
+
+      Việc chọn khoá của bảng có vai trò quan trọng trong việc thiết kế và cài đặt cơ
+sở dữ liệu quan hệ. Các dòng dữ liệu trong một bảng phải có giá trị khác nhau trên
+khoá. Bảng HOCSINH ở trên có khoá là cột MAHS
+
+     Một bảng có thể có nhiều tập các cột khác nhau có tính chất của khoá (tức là giá
+trị của nó xác định duy nhất một dòng dữ liệu trong bảng).
+
+     Mối quan hệ và khoá ngoài
+
+     Các bảng trong một cơ sở dữ liệu không tồn tại độc lập mà có mối quan hệ mật
+thiết với nhau về mặt dữ liệu. Mối quan hệ này được thể hiện thông qua ràng buộc n hệ
+này được thể hiện thông qua ràng buộc giá trị dữ liệu xuất hiện ở một bảng này phải có
+
+xuất hiện trước trong một bảng khác. Mối quan hệ giữa các bảng trong cơ sở dữ liệu
+nhằm đảm bảo được tính đúng đắn và hợp lệ của dữ liệu trong cơ sở dữ liệu.
+
+     Trong hình sau, hai bảng GIAOVIEN và LOPHOC có mối quan hệ với nhau. Mối
+quan hệ này đòi hỏi giá trị cột GVCN của một dòng trong bảng LOPHOC phải được
+xác định từ cột MAGV của bảng GIAOVIEN.
+
+     Mối quan hệ giữa các bảng trong một cơ sở dữ liệu thể hiện đúng mối quan hệ
+giữa các thực thể trong thế giới thực.
+
+     Khái niệm khoá ngoài (Foreign Key) trong cơ sở dữ liệu quan hệ được sử dụng để
+biểu diễn mối quan hệ giữa các bảng dữ liệu. Một hay một tập các cột trong một bảng mà
+giá trị của nó được xác định từ khóa chính của một bảng khác được gọi là khoá ngoài.
+Trong hình trên, cột GVCN của bảng LOPHOC được gọi là khoá ngoài của bảng này,
+khoá ngoài này tham chiếu đến khoá chính của bảng GIAOVIEN là cột MAGV.
+
+1.2 Khái niệm hệ quản trị CSDL
+
+     Hệ quản trị CSDL (Database Management System - DBMS): là hệ thống phần
+mềm có chức năng tạo lập và quản lý mọi truy cập của người dùng đến CSDL.
+
+     Một Hệ quản trị CSDL phải có ít nhất các chức năng sau:
+
+     • Định nghĩa dữ liệu
+
+     • Thêm, sửa, xóa dữ liệu
+
+     • Truy vấn dữ liệu
+
+     • Quản lý dữ liệu
+
+     • Sắp xếp, tìm kiếm
+
+     Một số hệ quản trị CSDL: MS Access, DB2, SQL Server, Oracle, MySQL…
+
+     Tất cả các hệ quản trị CSDL trên thị trường đều được xây dựng trên mô hình
+CSDL quan hệ.
+
+1.3 Tổng quan về Microsoft Access
+
+     • Microsoft Access là một thành phần trong bộ Microsoft Office của hãng
+Microsoft. MS Access cung cấp cho người dùng giao diện thân thiện và các thao tác
+đơn giản, trực quan trong việc xây dựng và quản trị cơ sở dữ liệu cũng như xây dựng
+các ứng dụng cơ sở dữ liệu.
+
+     • Access là một hệ quản trị cơ sở dữ liệu quan hệ (RDMS- Relational Database
+Management System), rất phù hợp cho các bài toán quản lý vừa và nhỏ. Hiệu năng cao và
+đặc biệt dễ sử dụng do giao diện giống các phần mềm khác trong bộ MS Office như MS
+Word, MS Excel.
+
+1.3.1 Cơ bản về Access 2010
+
+1.3.1.1 Khởi động Access 2010:
+
+     Để khởi động MS Access ta có thể dùng một trong các cách sau:
+
+     - Cách 1: Start • (All)Programs • Microsoft Office • Microsoft Office Access 2010
+
+     - Cách 2: Double click vào shortcut Ms Access trên desktop, xuất hiện cửa sổ khởi
+động Access như hình.
+
+                        Hình 1.3. Cửa sổ khởi động Access 2010
+
+1.3.1.2 Các thành phần trong cửa sổ khởi động:
+
+     Thanh Quick Access:
+
+     Thanh công cụ Quick Access: Hiển thị bên
+trái của thanh tiêu đề, mặc định thanh Quick
+Access gồm các nút công cụ Save, Undo, …
+
+     Bên phải của Quick Access chứa nút Customize,
+khi cơ sở dữ liệu đang mở, nếu click nút Customize
+sẽ xuất hiện một menu giúp bạn chỉ định các nút lệnh
+hiển thị trên thanh Quick Access, nếu các lệnh không
+có trong menu, bạn       có thể click nút        More
+                                                            Hình 1.4. Cửa sổ thanh Quick
+Commands hoặc click phải trên thanh Quick Access                       Access
+chọn Customize Quick Access Toolbar.
+
+      Để thêm nút lệnh vào Quick Access, bạn chọn lệnh trong khung choose
+commands from, Click nút Add • click OK
+
+     Vùng làm việc:
+
+     Khi khởi động Access, trong cửa sổ khởi động, mặc định tab File và lệnh New
+trong tab File được chọn, cửa sổ được chia thành 3 khung:
+
+     − Khung bên trái gồm các lệnh trong tab File
+
+     − Khung giữa: chứa các loại tập tin cơ sở dữ liệu mà bạn có thể tạo mới.
+
+     − Khung bên phải: để nhập tên và chọn vị trí lưu tập tin mới tạo và thực thi lệnh
+tạo mới cơ sơ dữ liệu.
+
+      Thanh Ribbon:
+
+     Bên dưới thanh tiêu đề, Access 2010 hiển thị các nút lệnh trên một thanh dài được
+gọi là Ribbon, thanh Ribbon có thể chiếm nhiều không gian màn hình, ta có thể thu nhỏ
+kích thước của Ribbon bằng cách Click Nút Minimize The Ribbon
+
+                                   Hình 1.5. Thanh Ribbon
+
+       Thanh Ribbon được tạo bởi nhiều tab khác nhau, để truy cập vào một tab bạn có thể
+click trên nhãn của tab hoặc dùng phím tắt. Nhấn phím Alt hoặc F10 để hiển thị tên của
+các phím tắt của các tab.
+
+                  Hình 1.6. Phím tắt của các tab trên thanh
+                                  Ribbon
+
+       Hầu hết các tab trên Ribbon được chia thành từng nhóm khác nhau, mỗi nhóm
+
+hiển thị tiêu đề con bên dưới của nhóm. Một số nhóm trong Ribbon có hiển thị nút
+khi click nút này sẽ xuất hiện cửa sổ cho phép thiết lập các thuộc tính của nhóm tương
+ứng.
+
+       Cửa sổ Properties
+
+       Cửa sổ Properties giúp bạn có thể hiệu hỉnh thuộc tính của đối tượng, tùy theo
+đối tượng đang được chọn mà cửa sổ thuộc tính sẽ chứa những thuộc tính tương ứng
+của đối tượng đó.
+
+       Để mở cửa sổ Properties, bạn chọn đối tượng muốn thay đổi thuộc tính, chọn tab
+Design hoặc nhấn tổ hợp phím Atl +Enter
+
+Cửa sổ Properties được chia thành năm nhóm
+
+       1. Format: Gồm các thuộc tính định dạng đối tượng
+
+     2. Data: Gồm các thuộc tính truy suất
+dữ liệu của đối tượng.
+
+     3. Event: Gồm các sự kiện (event) của
+đối tượng.
+
+     4. Other: Gồm các thuộc tính giúp bạn
+tạo hệ thống menu, toolbars,…
+
+     5. All: Gồm tất cả các thuộc tính trong bốn
+nhóm trên.                                             Hình 1.7. Cửa sổ Properties
+
+     Thanh Navigation Pane
+
+     Navigation Pane là    khung    chứa       nội
+dung chính của cơ sở dữ liệu. Từ khung
+Navigation Pane, bạn có thể mở bất kỳ Table,
+Query, Form, Report, Macro, hoặc Module
+
+1.3.2 Cách tạo tập tin cơ sở dữ liệu:            Hình 1.8.
+
+1.3.2.1 Tạo một cơ sở dữ liệu mới
+rỗng:
+
+     • Tại cửa sổ khởi động, click nút
+Blank Database.
+
+     • File name: nhập tên tập tin cơ
+sở dữ liệu, trong Access 2010, tập tin
+cơ sở dữ liệu được lưu với tên có
+phần mở rộng là .ACCDB.
+                                                Hình 1.9.
+     Nếu không chỉ định đường dẫn thì
+mặc định tập tin mới tạo sẽ được lưu trong thư mục Document, ngược lại, click nút
+
+Brows       để chỉ định vị trí lưu tập tin. Click nút Create để tạo tập tin cơ sở dữ liệu.
+
+1.3.2.2 Tạo cơ sở dữ liệu theo mẫu (Template)
+
+     • Tại cửa sổ khởi động.
+
+     • Chọn Sample Template • chọn một mẫu cơ sở dữ liệu có sẵn.
+
+     • Trong khung File name, nhập tên tập tin cơ sở dữ liệu và click nút Browse
+để chỉ định vị trí lưu tập tin, Click nút Create để tạo cơ sở dữ liệu.
+
+1.3.3 Quản lý cơ sở dữ liệu
+
+        Sau khi tạo cơ sở dữ liệu, hoặc mở một cơ sở dữ liệu thì Tab File sẽ hiển thị các
+lệnh quản lý tập tin cơ sở dữ liệu.
+
+1.3.3.1 Recent: Mục Recent hiển thị danh
+sách các tập tin cơ sở dữ liệu được mở gần
+nhất. Số tập tin hiển thị trong danh sách này
+mặc định là 17, có thể thay đổi bằng cách:
+
+     • Tại cửa sổ làm việc của Access,
+
+chọn tab File.                                    Hình 1.10. Thay đổi mặc định số tập tin
+                                                         hiển thị trong danh sách
+     • Chọn Options • Client Settings
+
+     • Trong mục Display, thay đổi giá trị của thuộc tính “Show This Number Of
+Recent Documents”
+
+     • Click OK.
+
+1.3.3.2 Mở một cơ sở dữ liệu:
+
+     Để mở một cơ sở dữ liệu đã có ta thực hiện một trong các cách sau:
+
+     Cách 1:
+
+     • Tại cửa sổ khởi động, trong tab File•Open…
+
+     • Chọn tập tin cơ sở dữ liệu cần mở•Open.
+
+     Cách 2: Double click vào tên tập tin cần mở.
+
+1.3.3.3 Thoát khỏi access:
+
+     Có thể thoát khỏi Access bằng một trong các cách:
+
+     • Chọn menu File •Exit
+
+     • Nhấn tổ hợp phím Alt + F4;
+
+     • Hoặc sử dụng nút Close trên cửa sổ Access đang mở.
+
+1.3.4 Các đối tượng trong cơ sở dữ liệu trong Access
+
+     Cơ sở dữ liệu là một tập hợp những
+số liệu liên quan đến một mục đích quản
+lý, khai thác dữ liệu nào đó, CSDL trong
+Access là cơ sở dữ liệu quan hệ gổm các
+thành   phần:       Tables,   Querys,   Forms,
+Reports, Pages, Macros, Modules.
+
+1.3.4.1 Bảng (Tables):                            Hình 1.11. Các đối tượng trong CSDL
+
+     Table là thành phần quan trọng
+nhất của tập tin cơ sở dữ liệu Access, dùng để lưu trữ dữ liệu. Do đó đây là đối tượng
+phải được tạo ra trước. Bên trong một bảng, dữ liệu được lưu thành nhiều cột và nhiều
+dòng.
+
+1.3.4.2 Truy vấn (Queries):
+
+     Query là công cụ để người sử dụng truy vấn thông tin và thực hiện các thao tác
+trên dữ liệu. Người sử dụng có thể sử dụng ngôn ngữ SQL hoặc công cụ QBE để thao
+tác trên dữ liệu.
+
+1.3.4.3 Biểu mẫu (Forms):
+
+     Form là công cụ để thiết kế giao diện cho chương trình, dùng để cập nhật hoặc xem
+dữ liệu. Biểu mẫu giúp thân thiện hóa quá trình nhập, thêm, sửa, xóa và hiển thị dữ liệu.
+
+1.3.4.4 Báo cáo (Reports):
+
+     Report là công cụ giúp người dùng tạo các kết xuất dữ liệu từ các bảng, sau đó định
+dạng và sắp xếp theo một khuôn dạng cho trước và có thể in ra màn hình hoặc máy in.
+
+1.3.4.5 Tập lệnh (Macros):
+
+     Macro là một tập hợp các lệnh nhằm thực hiện một loạt các thao tác được qui
+định trước. Tập lệnh của Access có thể được xem là một công cụ lập trình đơn giản
+đáp ứng các tình huống cụ thể.
+
+1.3.4.6 Bộ mã lệnh (Modules):
+
+     Là công cụ lập trình trong môi trường Access mà ngôn ngữ nền tảng của nó là
+ngôn ngữ Visual Basic for Application. Đây là một dạng tự động hóa chuyên sâu hơn
+tập lệnh, giúp tạo ra những hàm người dùng tự định nghĩa. Bộ mã lệnh thường dành
+cho các lập trình viên chuyên nghiệp.
+
+     Công cụ để tạo các đối tượng trong Access được tổ chức thành từng nhóm trong
+tab Create của thanh Ribbon
+
+             Hình 1.12. Tab Create để tạo các đối tượng trong thanh Ribbon
+
+1.3.5 Thao tác với các đối tượng trong cơ sở dữ liệu:
+
+     Để làm việc trên đối tượng, ta chọn đối tượng trên thanh Access object, các thành
+viên của đối tượng sẽ xuất hiện bên dưới tên của đối tượng.
+
+1.3.5.1 Tạo mới một đối tượng:
+
+     • Click tab Create trên thanh Ribbon.
+
+     • Trong nhóm công cụ của từng đối tượng, chọn cách tạo tương ứng.
+
+1.3.5.2 Thiết kế lại một đối tượng:
+
+     • Nếu đối tượng đang đóng:
+
+     • Click phải trên đối tượng cần thiết kế lại.
+
+     • Chọn Design view.
+
+     • Nếu đối tượng đang mở: Click nút Design View
+
+1.3.5.3 Xem nội dung trình bày của một đối tượng:
+
+     • Nếu đối tượng đang mở ở chế độ Design View
+
+        • Click nút View.
+
+     • Nếu đối tượng đang đóng:
+
+         • Click phải trên tên đối tượng cần xem.
+
+         • Chọn Open.
+
+1.3.5.4 Xóa một đối tượng
+
+     • Click phải chuột trên đối tượng cần xóa,
+
+     • Chọn mục delete trên Menu Popup.
+
+     • Hoặc chọn rồi nhấn phím Delete. Hoặc nút        trên thanh công cụ.
+
+1.3.5.5 Đổi tên đối tượng
+
+     • Click phải chuột trên đối tượng, chọn rename,
+
+     • Hoặc nhấn F2
+
+     • Nhập tên mới.
+
+1.3.5.6 Sao chép một đối tượng
+
+     • Click phải chuột lên thành viên cần chép
+
+     • Chọn mục copy để chép đối tượng vào Clipboard.
+
+     • Click nút Paste trên thanh Menu để chép vào cửa sổ database.
+
+     • Nhập tên cho đối tượng sao chép.
+
+     • Đối với kiểu đối tượng Table, ta có thể lựa chọn 1 trong 3 kiểu sao chép
+
+•     Structure only: Sao chép cấu trúc
+
+•     Structure and data: Sao chép cấu trúc và dữ liệu
+
+•     Append Data to Exiting Table: Thêm dữ liệu vào một bảng đang tồn tại.
+
+1.3.5.7 Chép dữ liệu từ Access sang ứng dụng khác (Export).
+
+Có thể xuất dữ liệu sang cơ sở dữ liệu Access khác, hoặc Excel,Word, Pdf …
+
+     Cách thực hiện:
+
+     • Chọn đối tượng muốn xuất sang ứng dụng khác.
+
+     • Chọn tab External Data.
+
+     • Trong nhóm công cụ Export, chọn loại ứng dụng mà bạn muốn xuất dữ liệu:
+Excel, Text file, XML file, Word, Access…
+
+                    Hình 1.13. Chọn loại ứng dụng để xuất dữ liệu
+
+     • Click nút Browse… chỉ định vị trí xuất dữ liệu.
+
+     • Click OK hoàn tất việc export dữ liệu.
+
+1.3.5.8 Chép dữ liệu từ ứng dụng khác vào cơ sở dữ liệu Access hiện hành
+(Import)
+
+     Có thể chép dữ liệu từ ứng dụng khác như Excel, ODBC Database, XML file,
+Access, …vào cơ sở dữ liệu hiện hành.
+
+                         Hình 1.14. Chép dữ liệu từ ứng dụng khác
+
+     Cách thực hiện:
+
+     Chọn tab External Data.
+
+•     Trong nhóm lệnh Import &amp; Link, chọn ứng dụng mà bạn muốn chép dữ liệu.
+
+•     Lần lượt làm theo các bước hướng dẫn của Access.
+
+• Sao chép dữ liệu từ Excel vào Access
+
+     • Trong cửa sổ làm việc của Access, chọn tab External Data, click nút Excel
+trong nhóm lệnh Import &amp; Link.
+
+     • Chọn tập tin Excel cần chép (Click nút Browse… để tìm tập tin Excel) •
+Open OK, sau đó thực hiện theo các bước hướng dẫn của Access
+
+                       Hình 1.15. Sao chép dữ liệu từ Excel vào Access
+
+     •Chọn sheet chứa dữ liệu cần chép, •Next.
+
+     • Chọn dòng làm tiêu đề cho bảng, •Next.
+
+     + Chỉ định thuộc tính cho các field •Next.
+
+     • Chọn cách tạo khóa cho bảng
+
+     ▪ Let Access add primary key: Access tự tạo khóa.
+
+     ▪ Chose my own primary key: Bạn chỉ định khóa.
+
+     ▪ No primary key: Không tạo khóa.
+
+     • Nhập tên cho bảng • Finish.
+
+     • Access hiển thị thông báo cho biết hoàn tất quá trình import một file Excel
+thành một bảng trong Access.
+
+• Chép dữ liệu từ cơ sở dữ liệu Access khác vào cơ sở dữ liệu hiện hành.
+
+     • Trong cửa sổ làm việc của Access, chọn tab External Data, click nút Access
+trong nhóm lệnh Import &amp; Link.
+
+     • Chọn tập tin Access chứa dữ liệu
+cần chép (Click nút Browse… để tìm tập
+tin Access) • Open.
+
+     • Chọn tùy chọn “Import table,
+query, form, report, macro and modules
+into the current database” để chỉ định vị
+trí lưu trữ dữ liệu trong cơ sở dữ liệu hiện
+hành• Trong      cửa   sổ    Import object,
+                                                    Hình 1.16,
+chọn đối tượng cần chép. Có thể chọn
+nhiều đồng thời đối tượng hoặc chọn tất
+cả bằng cách click nút Select All•OK.
+
+                    Hình 1.17. Tùy chọn s
+
+                          BÀI TẬP KẾT THÚC CHƯƠNG 1
+     1. Anh/chị hiểu như thế nào về mô hình CSDL quan hệ? Cho một vài ví dụ mô tả
+về CSDL quan hệ.
+     2. Hệ quản trị cơ sở dữ liệu là gì? Chức năng của nó. Nêu một số hệ quản trị cơ sở
+dữ liệu đang được sử dụng hiện nay?
+     3. Đối với hệ thống dữ liệu như thế nào thì nên dùng hệ quản trị CSDL Access?</baihoc>
+<baitap bai="1" loai="goc" de="1. Anh/chị hiểu như thế nào về mô hình CSDL quan hệ? Cho một vài ví dụ mô tả về CSDL quan hệ." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 4-19."/>
+<baitap bai="1" loai="goc" de="2. Hệ quản trị cơ sở dữ liệu là gì? Chức năng của nó. Nêu một số hệ quản trị cơ sở dữ liệu đang được sử dụng hiện nay?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 4-19."/>
+<baitap bai="1" loai="goc" de="3. Đối với hệ thống dữ liệu như thế nào thì nên dùng hệ quản trị CSDL Access?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 4-19."/>
+<baihoc stt="2" tieude="Chương 2. Thiết kế bảng và thiết lập quan hệ giữa các bảng">Chương 2. THIẾT KẾ BẢNG VÀ THIẾT LẬP QUAN HỆ
+                                 GIỮA CÁC BẢNG
+Thời lượng: 08 tiết lý thuyết +08 tiết thực hành
+
+Kết thúc chương này, sinh viên có thể:
+
+   • Hiểu được chức năng của bảng trong cơ sở dữ liệu
+
+   • Biết thiết kế cấu trúc của bảng và các thuộc tính liên quan
+
+   • Biết thực hiện liên kết giữa các bảng
+
+   • Thực hiện các thao tác nhập, tìm kiếm, sắp xếp và lọc dữ liệu trên bảng
+
+2.1. Thiết kế bảng
+     Xây dựng cơ sở dữ liệu là công việc quan trọng đầu tiên trong toàn bộ quy trình
+phát triển một ứng dụng trên Access. Một cơ sở dữ liệu được thiết kế và xây dựng tốt
+sẽ là những thuận lợi trong quá trình phát triển ứng dụng.
+
+     Một cơ sở dữ liệu Access bao gồm tập hợp các bảng dữ liệu có quan hệ chặt chẽ,
+phù hợp để phục vụ lưu trữ dữ liệu cho một ứng dụng quản lý.
+
+     Ví dụ: Một cơ sở dữ liệu Quản lý sinh viên bao gồm tập hợp các bảng dữ liệu:
+SINHVIEN, LOP, MONHOC, KETQUA được kết nối nhau một cách phù hợp phục vụ
+việc lưu trữ dữ liệu cho ứng dụng quản lý sinh viên. Cấu trúc cơ sở dữ liệu quản lý
+sinh viên trong Access được mô tả như sau:
+
+                            Hình 2.1. Cấu trúc CSDL Quản lý Sinh viên
+2.1.1 Khái niệm bảng
+     Bảng (Table): Là thành phần cơ bản trong cơ sở dữ liệu của MS Access. Đây là
+
+đối tượng quan trọng nhất, dùng dể lưu trữ dữ liệu, mỗi bảng lưu trữ thông tin về một
+đối tượng đang quản lý. Một bảng gồm có nhiều cột (field) và nhiều hàng (record)
+
+     Cột (Field) : Mỗi field (field hoặc cột) trong một bảng chỉ chứa một loại dữ liệu duy
+nhất, nó lưu trữ một thuộc tính của đối tượng. Trong một bảng phải có ít nhất một field.
+
+     Dòng (Record): Là một thể hiện dữ liệu của các field trong bảng. Trong một bảng
+có thể không có record nào hoặc có nhiều records. Trong một bảng thì dữ liệu trong
+các record không được trùng lắp.
+
+     Ví dụ: Bảng SINHVIEN, lưu trữ thông tin của đối tượng sinh viên, gồm các
+field MASV, HOSV, TENSV, PHAI, NGAYSINH, DIACHI, MALOP.
+
+     Các field biểu diễn thông tin của sinh viên
+
+              Hình 2.2. Bảng Sinhvien trong CSDL Quản lý Sinh viên
+
+2.1.2 Khóa chính (Primary key)
+
+     Khóa chính của một bảng là một hoặc nhiều field kết hợp mà theo đó Access sẽ
+xác định một record duy nhất trong bảng. Dữ liệu trong field khóa chính không được
+trùng và không rỗng. Thông thường, trong mỗi bảng nên có khóa chính để tạo quan hệ
+giữa các bảng trong cơ sở dữ liệu và để MS Access tự động kiểm tra ràng buộc dữ liệu
+khi người dùng nhập liệu.
+
+      Ví dụ: trong bảng sinh viên Mã sinh viên xác định một sinh viên duy nhất.
+                        Khóa
+                        chính
+
+        Hình 2.3. Khóa chính trong bảng Sinhvien
+                                         19      trong CSDL Quản lý Sinh viên
+         Khi một field hoặc nhiều field kết hợp được chỉ định là khóa chính thì Access sẽ
+tự động tạo chỉ mục cho chúng.
+
+         Khi nhập dữ liệu, Access sẽ tự động kiểm tra khóa chính và không cho phép
+trùng lắp, và không rỗng.
+
+2.1.3 Khóa ngoại (Foreign Key)
+
+         • Là mục khóa thiết lập trên một hay nhiều Field của Bảng và dùng tham chiếu
+đến một hay nhiều Field là khóa chính trong Table khác.
+
+         • Một Foreign Key chỉ ra mối quan hệ của Bảng này với các Bảng chứa khóa
+chính tương ứng.
+
+         • Kiểu dữ liệu trong Field được chỉ định là Foreign Key và Primary Key phải
+cùng kiểu và chiều dài với nhau (không nhất thiết cùng tên).
+
+2.1.4 Cách tạo bảng
+
+a. Tạo bảng bằng chức năng Table Design:
+
+         Bước 1: Trong cửa sổ làm việc của Access, trên thanh Ribbon, click tab Create,
+trong nhóm lệnh Table, click nút lệnh Table Design, xuất hiện cửa sổ thiết kế bảng
+gồm các thành phần:
+
+         − Field Name: định nghĩa các fields trong bảng.
+
+         − Data Type: chọn kiểu dữ liệu để lưu trữ dữ liệu
+của field tương ứng.                                                Hình 2.4. Tạo bảng
+
+         − Description: dùng để chú thích ý nghĩa của
+field.
+
+         − Field Properties: thiết lập các thuộc tính của Field, gồm có hai nhóm:
+
+         • General: là phần định dạng dữ liệu cho field trong cột Field Name.
+
+         • Lookup: là phần quy định dạng hiển thị / nhập dữ liệu cho Field .
+
+                          Hình 2.5. Thiết kế cấu trúc bảng
+
+     Bước 2: Trong cửa sổ thiết kế, thực hiện các công việc sau:
+
+     − Nhập tên field trong cột field Name, chấp nhận khoảng trắng, không phân biệt
+chữ hoa, chữ thường. Nên nhập tên field theo tiêu chí: Ngắn gọn, dễ nhớ, gợi nghĩa, và
+không có khoảng trắng.
+
+     − Chọn kiểu dữ liệu cho field trong cột Data Type
+
+     − Chú thích cho field trong cột Description.
+
+     − Chỉ định thuộc tính cho field trong khung Field Properties.
+
+     Bước 3: Xác định khóa chính cho bảng:
+
+     − Đặt trỏ tại field được chọn làm khóa chính (hoặc chọn các field đồng thời làm khóa)
+
+     − Click nút Primary key trên thanh công cụ Table (Table Tools), hoặc click phải
+trên tên field, chọn lệnh Primary key.
+
+                                Hình 2.6. Tạo khóa chính
+
+     Bước 4: Lưu bảng vừa tạo bằng cách:
+
+     − Click vào nút    trên thanh Quick Access
+
+     − Nhập tên cho bảng trong hộp thoại Save as (trong trường hợp Table mới tạo,
+chưa đặt tên).
+
+     Lưu ý: Nếu bảng chưa được đặt khóa chính thì Access sẽ hiển thị một hộp thoại
+thông báo:
+
+                            Hình 2.7. Thông báo nhắc tạo khóa chính
+
+     • Nhấn nút Cancel để trở lại cửa sổ thiết kế, đặt khoá chính cho bảng.
+
+     • Nhấn nút No để lưu mà không cần đặt khóa chính, có thể đặt sau.
+
+     • Nhấn nút Yes để Access tự tạo khoá chính có tên là ID, kiểu Autonumber.
+
+b. Tạo bảng trong chế độ Datasheet View
+
+     Có thể tạo bảng bằng cách định nghĩa trực tiếp các cột trong chế độ DataSheet
+View như sau:
+
+     − Trong cửa sổ làm việc của
+Access, chọn tab Create trên thanh
+Ribbon, trong nhóm lệnh Table, click
+nút Table, xuất hiện bảng mới ở chế độ
+Datasheet View.
+
+     −Thanh Ribbon chuyển sang tab
+Field với nhóm lệnh Add &amp; Delete giúp
+bạn chọn kiểu dữ liệu cho Field mới khi
+                                               Hình 2.8. Tạo bảng
+thêm Field vào bảng.
+
+                                      Hình 2.9. Tab Field
+
+        − Đặt trỏ trong ô bên dưới Field mới (Click to
+Add), sau đó chọn một trong các kiểu dữ liệu trong
+nhóm Add &amp; Delete trên thanh Ribbon. Hoặc click
+chuột trên Click to Add, chọn kiểu dữ liệu trong
+menu. Có thể click nút More Fields để chọn các kiểu
+dữ liệu khác.
+
+        − Nhập tên cho Field mới.
+
+   • Tạo Field tính toán:
+                                                            Hình 2.10. Tạo
+        −Khi thiết kết bảng ở chế độ
+DataSheet View, bạn có thể tạo một
+Field mới mà nó là kết quả của một biểu
+thức tính toán từ các Field trước, bằng
+cách:
+
+        • Click tiêu đề Click to Add của
+Field mới như hình trên.
+
+        • Chọn lệnh Calculated Field, xuất
+hiện cửa sổ Expression Builder                              Hình 2.11. Tạo
+
+        • Nhập biểu thức tính toán.
+
+2.1.5 Các kiểu dữ liệu (Data Type)
+
+        Trong Access mỗi Field có thể nhận một trong các kiểu dữ liệu sau:
+
+                                     Data Type
+ Kiểu dữ liệu                             Dữ liệu                       Kích thước
+
+     Text       Văn bản                                                 Tối đa 255
+                                                                           ký tự
+     Memo       Văn bản nhiều dòng, nhiều trang                            Tối đa
+                                                                           65.535
+                Kiểu số (bao gồm số nguyên và số thực). dùng để
+                                                                       1, 2, ký
+                                                                             4, hoặc
+                                                                                tự
+    Number      thực hiện tính toán, các định dạng dữ liệu kiểu số
+                                                                          8 byte
+                được thiết lập trong Control Panel.
+
+                Dữ liệu kiểu Date và Time. Các định dạng của dữ
+   Date/Time
+                liệu Date/Time được thiết lập trong Control Panel.         8 byte
+
+   Currency      Kiểu tiền tệ, mặc định là $.                              8 byte
+
+ AutoNumber Access sẽ tự động tăng tuần tự hoặc ngẫu nhiên khi             4 byte
+            một mẫu tin mới được tạo, không thể xóa, sửa.
+
+    Yes/no      Kiểu luận lý (Boolean). Chỉ chấp nhận dữ liệu có giá        1bit
+                trị Yes/No, True/False, On/Off
+
+  OLE Object Dữ liệu là các đối tượng được tạo từ các phần mềm          Tối đa 1 GB
+             khác.
+  HyperLink      Dữ liệu của field là các link.
+
+                Lookup Wizard không phải là kiểu dữ liệu, mà là
+    Lookup
+                chức năng để tạo một danh sách mà giá trị của nó
+    Wizard
+                được nhập bằng tay hoặc được tham chiếu từ một
+                bảng khác trong cơ sở dữ liệu.
+                Đính kèm dữ liệu từ các chương trình khác, nhưng
+  Attachment
+                bạn không thể nhập văn bản hoặc dữ liệu số.
+
+     Để thay đổi những định dạng mặc định của các kiểu dữ liệu trong môi trường
+Window, chọn Start • Control Panel • Regional and Language • Customize.
+
+     −Tab Numbers để thay đổi định dạng số như
+dấu thập phân, phân cách hàng ngàn…
+
+     −Tab Date/Time để thay đổi định dạng
+ngày/giờ.
+
+     −Tab Currency để thay đổi đơn vị tiền tệ.
+
+2.1.6 Các thuộc tính của Field:                          Hình 2.12. Thay đổi định dạng
+     Property (thuộc tính) là các tính chất gán cho mỗi đối tượng liên quan. Các tính
+chất này có thể do Access tự gán khi đối tượng được tạo hay do người sử dụng gán cho
+đối tượng. Thuộc tính của Field là các tính chất liên quan đến Field. Thuộc tính của
+Bảng là các tính chất liên quan đến Bảng.
+
+a. Field Size: Quy định kích thước của field, tuỳ thuộc vào kiểu dữ liệu.
+
+     Chỉ có hiệu lực với các Field có kiểu là Text hoặc Number.
+
+     − Dữ liệu kiểu text: giới hạn kích thước từ 0- 255 ký tự, mặc định là 50 ký tự.
+
+     − Dữ liệu kiểu Memo: giới hạn kích thước từ 0- 65.535 ký tự.
+
+     − Đối với kiểu dữ liệu Number: kiểu Number bao gồm một số kiểu con, giới hạn
+kích thước kiểu Number chính là xác định kiểu con.
+
+               Field size               Miền giá trị              Số lẻ tối đa
+               Byte                         0- 255                      0
+              Integer                  -32768- 32767                    0
+            Long integer         - 214783648 – 214783647                0
+               Single               -3.4×1038- 3.4×1038                7
+
+              Double              -1.79×10308-1.79×10308               15
+
+              Decimal                 -1028-1 – 1028-1                 20
+
+  b. Decimal Places: Dùng để chỉ định số ký số cho phần thập phân và chỉ ảnh hưởng
+  lên phần hiển thị chứ không thay đổi trị của dữ liệu.
+
+  Chỉ định thuộc tính này bị vô hiệu nếu thuộc tính Format được xác lập hay là General Number
+
+      Xác lập                                        Mô tả
+
+         Auto      (Mặc định) Các số hiển thị theo chỉ thị của thuộc tính Format
+
+         0-15      Chỉ định ký số thập phân
+
+  c. Format: Quy định dạng hiển thị của dữ liệu trên màn hình hoặc ra máy in, phụ
+  thuộc vào kiểu dữ liệu. Có thể chọn các định dạng do Access cung cấp sẵn hoặc tạo
+  một chuỗi ký tự định dạng riêng.
+
+         Định dạng kiểu dữ liệu Text
+
+                               Các ký tự định dạng kiểu dữ liệu Text
+                   Ký tự định dạng                               Tác dụng
+
+                        @                                        Chuỗi ký tự
+                        &gt;                                Đổi toàn bộ ký tự ra chữ hoa
+                        &lt;                              Đổi toàn bộ ký tự ra chữ thường
+                  “chuỗi ký tự”                          Chuỗi ký tự giữa 2 dấu nháy
+                    \&lt;ký tự&gt;                                 Ký tự nằm sau dấu \
+     [Black] [White] [Red] [Green] [Blue]          Màu (ký hiệu màu theo sau một trong
+           [Yellow] [Magenta] [Cyan]               các ký tự định dạng chuỗi phía trên)
+Ví dụ:
+
+                Định dạng                 Dữ liệu nhập                 Hiển thị
+
+           @@@-@@-@@@                    12345678                  123-45-678
+
+                    &gt;                    Lý Tự Trọng               LÝ TỰ TRỌNG
+
+                    &lt;                    Lý Tự Trọng               lý tự trọng
+
+Định dạng dữ liệu kiểu number
+
+    •   Các kiểu định dạng Access cung cấp sẵn
+
+         Ký tự                                     Tác dụng
+
+         General          Hiển thị đúng như số nhập vào
+        Number
+        Currency          Có dấu phân cách, dấu thập phân và ký hiệu tiền tệ.
+
+         Fixed            Hiển thị giống như cách định dạng trong Regional Settings của
+                         Control Panel, phần số lẻ thập phân phụ thuộc vào Decimal
+        Standard          Giống như dạng Fix, nhưng có dấu phân cách hàng ngàn.
+
+        Percent            Hiển thị số dạng phần trăm (%)
+
+        Scientific         Hiển thị số dạng khoa học
+
+    Ví dụ:
+
+                  Dạng                    Dữ liệu nhập vào               Hiển thị
+           General Number                         1234.5                1234.5
+               Currency                           1234.5               $1,234.50
+                  Fixed                           1234.5                1234.5
+               Standard                           1234.5                1,234.5
+                 Percent                          0.123                 12.30%
+               Scientific                         1234.5               1.23E+03
+    Các ký tự định dạng đối với dữ liệu kiểu số:
+
+                     Ký tự                                  Tác dụng
+              .(period)              Dấu chấm thập phân
+              ,(comma)               Dấu phân cách ngàn
+                     0               Số (0-9)
+                     #               Số hoặc khoảng trắng (blank)
+
+              Ký tự                                    Tác dụng
+              $               Dấu $
+              %               Phần trăm
+         E+ E- e+ e-          Số dạng khoa học
+   Khoảng trắng (blank)       Khoảng trắng
+Định dạng dữ liệu kiểu Data/Time:
+
+                               Các ký tự định dạng:
+
+Định dạng dữ liệu kiểu Yes/No:
+
+                    Định dạng                                Ý nghĩa
+                  Yes/No                                  Đúng/Sai
+               True/Fasle                                 Đúng/Sai
+                  On/Off                                  Đúng/Sai
+Chuỗi ký tự định dạng kiểu yes/no gồm 3 phần: First; Second; Third.
+
+−First: bỏ trống, định dạng trong mục này không ảnh hưởng đến dữ liệu kiểu Yes/No.
+
+−Second: field hợp nội dung field mang giá trị đúng.
+
+−Third: field hợp nội dung field mang giá trị sai.
+
+     Ví dụ:
+
+            Chuỗi định dạng                                  Hiển thị
+                                             Field (True)            Field (Fasle)
+      ; “Nam”; “Nữ”                             Nam                     Nữ
+      ; “Biên chế”; “ ”                        Biên chế
+d. Input Mask (mặt nạ nhập liệu):
+
+     Quy định khuôn định dạng dữ liệu. Người sử dụng khi nhập dữ liệu vào bảng
+bắt buộc phải tuân theo đúng định dạng đó.
+
+     Chú ý: Khi quy định Input Mask cho bảng, các qui định này sẽ được áp dụng cho cả
+biểu mẫu ( Form ), truy vấn (Query), báo cáo (Report). Nếu chỉ muốn áp dụng cho riêng
+biểu mẫu hoặc báo cáo thì qui định Input Mask cho riêng biểu mẫu hay báo cáo đó.
+
+     Những field cùng lúc qui định thuộc tính Format và Input Mask, Access sẽ hiển
+thị theo dạng qui định trong Format khi hiển thị dữ liệu. Tuy nhiên nếu điều chỉnh dữ
+liệu thông qua biểu mẫu, Access dùng dạng thức qui định trong Input Mask.
+
+     Các ký tự dùng định dạng trong Input Mask.
+
+         Ký tự                                         Ý nghĩa
+
+           0       Vị trí bắt buộc nhập, ký tự số từ 0-9, không cho phép nhập dấu.
+
+           9       Không bắt buộc nhập, ký tự số hoặc khoảng trắng, không cho
+                   phép nhập dấu.
+           #       Nhập số 0-9, khoảng trắng, dấu + -, không bắt buộc nhập.
+
+           L       Bắt buộc nhập, ký tự chữ.
+
+           ?       Không bắt buộc nhập, ký tự A-Z.
+
+           A       Bắt buộc nhập, ký tự chữ hoặc số.
+
+           a       Không bắt buộc nhập, ký tự chữ hoặc số.
+
+  Ký tự                                      Ý nghĩa
+
+    &amp;       Bắt buộc nhập, ký tự bất kỳ.
+
+    C       Không bắt buộc nhập, ký tự bất kỳ.
+
+    .,      Dấu phân cách thập phân, hàng ngàn. Tùy thuộc vào định dạng
+
+    /:      của
+            DấuWindows
+                phân cách ngày, giờ. Tùy thuộc vào định dạng của
+
+     &lt;      Windows
+            Các ký tự bên phải được đổi thành chữ thường
+
+     &gt;      Các ký tự bên phải được đổi thành chữ hoa.
+
+     !      Dữ liệu ghi từ phải sang trái.
+
+ \&lt;ký tự&gt; Ký tự theo sau dấu \ sẽ được đưa thẳng vào dữ liệu
+
+Password Nhập dữ liệu kiểu mật khẩu (chỉ hiển thị dấu *)
+
+Vài kiểu Input Mask thường dùng
+
+    Input Mask                                   Ví dụ
+
+   (000) 000-0000      (206) 555-0248
+
+   (999) 999-9999      (206) 555-0248 hay ( ) 555-0248
+
+ (000) AAA-AAAA        (206) 555-TELE
+
+         #999          -20
+
+  &gt;L????L?000L0        GREENGR339M3 hay MAY R 452B7
+
+     &gt;L0L 0L0          T2F 8M4
+
+    00000-9999         98115- hay 98115-3007
+
+&gt;L&lt;?????????????? Maria hay Bendan
+
+        SSN 000-00-0000        SSN 555-55-5555
+
+         &gt;LL00000-0000         DB51392-0493
+
+     GHI CHÚ: Khi đặt Input Mask và Format cho cùng một dữ liệu, Format sẽ có
+hiệu lực cho hiển thị dữ liệu và Input Mask có hiệu lực khi nhập liệu.
+
+e. Validation rule (Quy tắc hợp lệ):
+
+     Kiểm tra tính hợp lệ của dữ liệu khi nhập liệu. Nếu dữ liệu không thỏa điều kiện
+cho trước, Access xuất hiện trên màn hình một thông báo chứa dòng văn bản quy định
+ở Validation text. Trong validation rule có các phép toán sau:
+
+     −Phép toán so sánh: &gt; , &lt; , &gt;=, &lt;=, =, &lt;&gt;
+
+     −Phép toán quan hệ: or; and; not
+
+     −Phép toán về chuỗi: toán tử Like (giống như).Có thể sử dụng toán tử Like kèm
+với các ký tự thay thế như:
+
+     • Dấu *: thay thế tất cả các ký tự.
+
+     • Dấu #: thay thế các ký tự số.
+
+     • Dấu ?: thay thế ký tự tại vị trí có dấu ?.
+
+f. Validation text (Thông báo lỗi):
+
+     Chuỗi thông báo xuất hiện khi dữ liệu nhập vào không thoả điều kiện của
+Validation Rule, chuỗi trong validation text có độ dài tối đa 255 ký tự.
+
+     Vài ví dụ
+
+                 &lt;&gt;0              Trị nhập vào phải khác không
+
+          &gt;1000 Or Is Null        Trị nhập vào phải lớn hơn 100 hay rỗng
+
+           Like “A????”           Trị nhập vào phải có 5 ký tự và bắt đầu là chữ A
+
+          &gt;= #1/1/96#And             Trị nhập vào phải là ngày trong năm 1996
+
+              &lt;#1/1/97#
+
+g. Required (Yêu cầu):
+
+       Có yêu cầu bắt buộc nhập dữ liệu cho một field hay có thể để trống.
+
+           Xác lập                                       Mô tả
+
+              Yes          Field bắt buộc phải có một giá trị
+
+              No               (Mặc định) Field không bắt buộc phải có một giá trị
+
+h. AllowZeroLength:
+
+       Quy định field có kiểu text hay Memo có thể có (yes) hoặc không có (no) chuỗi
+có độ dài Zero. Nếu field là field khoá thì thuộc tính này là No.
+
+       Chú ý: Cần phân biệt field có giá trị null (trống chưa có dữ liệu) và một field
+chứa chuỗi có độ dài là zero (đó là chuỗi “”). Khi hiển thị ra màn hình cả hai có hình
+thức giống nhau.
+
+i. Index ( Chỉ mục/ Sắp xếp)
+
+     Quy định thuộc tính Index để tạo chỉ mục đơn (chỉ mục trên một field).
+
+     −Nếu chọn No thì không sắp xếp dữ liệu.
+
+     −Nếu chọn Yes (No Duplicates) thì tạo chỉ mục (sắp xếp) trên field và không cho
+phép các giá trị trùng nhau.
+
+     −Nếu chọn Yes (Duplicates Yes) thì tạo chỉ mục (sắp xếp) trên field và cho
+phép các giá trị trùng nhau.
+
+j. Caption:
+
+     Qui định nhãn là một chuỗi ký tự xuất hiện tại dòng tên field. Chuỗi này cũng
+
+xuất hiện tại tiêu đề của các điều khiển trong các biểu mẫu hoặc báo cáo. Nếu giá trị
+này bỏ trống thì Access sẽ lấy tên field làm tiêu đề.
+
+k. Defaut value:
+
+     Quy định giá trị mặc nhiên cho cột. Access sẽ tự động gán giá trị này vào khi
+thêm mẩu tin mới. Người sử dụng có thể gán một biểu thức cho thuộc tính này.
+
+l. Tạo field Lookup Wizard:
+
+     Một lookup field cho phép bạn nhập dữ liệu cho field từ một danh sách giá trị.
+Có hai cách để lookup field có thể nhận giá trị từ một danh sách các giá trị.
+
+     −Lookup từ một danh sách nhập bằng tay.
+
+     −Lookup từ một Table hoặc một Query trong cơ sở dữ liệu.
+
+     Cách tạo:
+
+     −Trong cửa sổ thiết kế bảng, tại
+field muốn tạo Lookup Wizard, cột Data
+type chọn Lookup Wizard.
+
+     −Xuất hiện cửa sổ Lookup Wizard,
+với hai tùy chọn tương ứng với hai cách
+tạo danh sách cho lookup field.
+
+     −Nếu chọn dữ liệu nguồn cho field bằng cách lấy giá trị từ Table hoặc Query
+khác thì chọn tùy chọn “I want the lookup field to get the values from another table or
+query” và click next.
+
+     • Chọn bảng hoặc query cung cấp giá trị cho lookup field, click Next.
+
+     • Chọn field chứa danh sách giá trị cho lookup field, click Next.
+
+     • Chọn field sắp xếp, click next.
+
+     • Hiệu chỉnh độ rộng của lookup field, click Finish để kết thúc.
+
+                      Chọn field sắp xếp
+
+                   Chọn field sắp xếp
+     Nếu tạo dữ liệu nguồn cho lookup field bằng cách nhập bằng tay thì trong cửa sổ
+Lookup Wizard, chọn tùy chọn “I will type in the values that I want”. Click Next.
+
+1. Nhập giá trị cho lookup field. Click Next.
+
+2. Nhập nhãn cho lookup field, click Finish
+
+2.1.7 Hiệu chỉnh cấu trúc của bảng:
+
+     Mở bảng ở chế độ thiết kế (Design View) bằng cách: Trong cửa sổ Database,
+chọn bảng muốn thay đổi cấu trúc, click phải, chọn Design View.
+
+     Thanh Ribbon chuyển sang Tab Design gồm các công cụ cho phép hiệu chỉnh
+cấu trúc của bảng.
+
+     −Insert Rows: chèn thêm một field trên field hiện hành.
+
+     −Delete Rows: xóa các field được đánh dấu chọn.
+
+     −Di chuyển field: Click chọn tên field muốn di chuyển, drag chuột vào tên field,
+di chuyển đến vị trí mới.
+
+                      Hình 2.17. Hiệu chỉnh cấu trúc bảng
+
+2.2 Cách nhập dữ liệu cho bảng:
+
+2.2.1 Cách nhập dữ liệu
+
+Để nhập dữ liệu cho bảng, trước hết phải mở bảng ở chế độ Datasheet View.
+
+                       Hình 2.18. Nhập dữ liệu cho bảng
+
+     - Trong cửa sổ Database chọn object Table• chọn bảng muốn nhập hoặc sửa
+dữ liệu•click phải chọn Open. Hoặc double click vào tên bảng muốn mở.
+
+     - Bảng được mở ở chế độ nhập liệu (Chế độ Data Sheet view)
+
+     −Mặc định, luôn có một dòng rỗng            để nhập record mới ở cuối bảng.
+
+     −Khi nhập dữ liệu phải nhập theo từng Record, dữ liệu nhập vào phải thỏa mãn
+các thuộc tính của bảng và thuộc tính của field khi thiết kế bảng. Nếu dữ liệu không
+thỏa mãn thì Access sẽ thông báo lỗi.
+
+     −Đối với field có kiểu dữ liệu OLE object:
+
+     • Tại vị trí nhập, click chuột phải,
+
+     • Chọn Insert - Object.
+
+     • Chọn Create New nếu muốn tạo đối tượng mới.
+
+     • Chọn Create from file nếu muốn lấy đối tượng từ tập tin trên đĩa (thường là
+hình ảnh) chọn file cần sử dụng.
+
+                     Hình 2.19. Nhập
+
+2.2.2 Một số định dạng trong chế độ Database View
+
+     Để thực hiện các thao tác định dạng bảng, ta phải mở bảng ở chế độ DataSheet View.
+
+a) Thay đổi font chữ:
+
+     −Trên thanh Ribbon chọn tab Home.
+
+     −Trong nhóm lệnh Text Formatting, chọn font chữ cho Table và các định dạng khác.
+
+     −Click nút               trên nhóm Text Formatting sẽ xuất hiện cửa sổ Datasheet
+Formatting cho phép bạn hiệu chỉnh các thuộc tính của Datasheet như màu nền , màu lưới, …
+
+Hình 2.20. Cửa sổ thiết lập thuộc tính Datasheet
+
+b) Thay đổi độ rộng cột: Khi tạo bảng bằng Datasheet View thì Access tạo bảng với
+các cột có độ rộng mặc định, nếu độ rộng của cột quá nhỏ sẽ làm cho dữ liệu bị che
+khuất. Để thay đổi độ rộng của cột ta có thể sử dụng một trong các cách sau:
+
+     − Cách 1: Đặt trỏ ở đường biên bên phải của cột, khi trỏ có dạng mũi tên 2
+chiều thì drag chuột để thay đổi độ rộng của cột.
+
+  − Cách 2: Click phải trên tên của cột
+  muốn thay đổi độ rộng và chọn Field
+  width. Nhập kích thước của cột vào ô             Hình 2.21. Thay đổi độ rộng của cột
+
+  Column Width.
+
+c) Thay đổi vị trí cột:
+
+     −Click vào tiêu đề cột.
+
+      Drag để thay đổi vị trí cột (chuột vẫn đang ở tại tiêu đề cột).
+
+d) Che dấu (Hide column) và hiển thị (Unhide column)cột:
+
+      −Chọn cột muốn ẩn.
+
+      −Trên thanh Ribbon, trong nhóm lệnh
+Records, click nút More, chọn lệnh Hide
+fields.
+
+      −Muốn hiển thị tại cột bị ẩn, ta làm
+tương tự như thao tác ẩn cột, nhưng trong
+menu lệnh của nút More ta chọn lệnh
+                                                           Hình 2.22. Thao tác ẩn cột
+Unhide fields.
+
+e) Cố định và bỏ cố định cột:
+
+      −Chọn cột cần cố định.
+
+      −Trên thanh Ribbon, trong nhóm lệnh Records, click nút More, chọn lệnh Freeze Fields.
+
+      −Ngược lại, muốn bỏ cố định cột ta chọn lệnh UnFreeze All Fields.
+
+f) Thay đổi chiều cao dòng:
+
+      −Đặt con trỏ vào đường biên của dòng sao cho xuất hiện mũi tên 2 chiều, Drag
+để thay đổi chiều cao của dòng.
+
+2.3 Thiết lập quan hệ giữa các bảng trong cơ sở dữ liệu
+
+      Sau khi thiết kế các bảng, ta được cấu trúc của các bảng, nhưng giữa các bảng
+chưa có các thông tin quan hệ với nhau. Do đó việc thiết lập mối quan hệ giữa các
+bảng sẽ giúp MS Access quản lý dữ liệu được hợp lý hơn và bảo vệ các ràng buộc toàn
+vẹn của dữ liệu trong quá trình nhập dữ liệu.
+
+      Để thiết lập được quan hệ thì các field dùng liên kết giữa các Table phải có cùng
+kiểu dữ liệu.
+
+2.3.1 Các loại quan hệ
+
+     Trong Access tồn tại 3 kiểu quan hệ: quan hệ 1-1 (một-một), quan hệ 1-n (một-nhiều)
+
+     Quan hệ 1-1: một record của bảng này sẽ liên kết với duy nhất một record của
+bảng kia và ngược lại.
+
+     Ví dụ:
+
+                               Hình 2.23. Mối quan hệ 1-1
+
+       Quan hệ 1-n: mỗi record của bảng 1 sẽ liên kết với một hoặc nhiều record của bảng
+n, ngược lại một record của bảng n chỉ liên kết với duy nhất một record trong bảng 1.Thể
+hiện dữ liệu của quan hệ 1-n
+
+                                Hình 2.24. Mối quan hệ 1-n
+
+     Quan hệ n-n: một record của bảng A sẽ liên kết với nhiều record của bảng B, và
+ngược lại một mẫu tin trong bảng B liên kết với nhiều mẫu tin trong bảng A.
+
+     Ví dụ: Xét trong CSDL Quản lý bán hàng. Trong mỗi hóa đơn khách hàng mua
+sẽ có nhiều mặt hàng, ngược lại mỗi mặt hàng có thể có trong nhiều hóa đơn (nhiều
+khách hàng mua cùng mặt hàng)
+
+                            Hình 2.25. Mối quan hệ n-n
+
+2.3.2 Cách tạo quan hệ:
+
+     −Tại cửa sổ làm việc của Access, chọn tab Database Tools trên thanh Ribbon,
+click nút Relationships.
+
+                           Hình 2.26. Tạo mối quan hệ
+
+     −Nếu là lần đầu tiên (CSDL chưa có quan hệ) thì hộp thoại Show Tables sẽ xuất hiện.
+
+     −Nếu không có cửa sổ Show Table thì Click nút
+Show Table trên thanh Ribbon.
+
+     • Tab Tables: hiển thị tất cả các bảng trong cơ sở dữ liệu
+
+     • Tab Queries: hiển thị các truy vấn đã tạo trong
+cơ sở dữ liệu.
+                                                                  Hình 2.27. Cửa sổ Show Table
+     • Tab Both: hiển thị tất cả Table và Query.
+
+       −Chọn bảng hoặc Query cần thiết lập quan hệ, click Add.
+
+       −Click nút Close đóng cửa sổ Show Table.
+
+       −Cửa sổ RelationShips chứa các bảng muốn thiết lập quan hệ.
+
+                           Hình 2.28. Cửa sổ RelationShips
+
+     - Drag chuột kéo field quan hệ
+từ bảng này sang bảng kia. (vd: Kéo
+field MaSV từ bảng SINHVIEN
+sang MaSV của bảng KETQUA).
+Xuất hiện cửa sổ Edit RelationShips
+với các tùy chọn:
+
+                                                      Hình 2.29. Cửa sổ Edit RelationShips
+     • Enforce Referential Integrity nếu muốn quan hệ có tính ràng buộc toàn vẹn.
+Quan hệ có tính ràng buộc toàn vẹn sẽ đảm bảo các vấn đề sau:
+
+     • Khi nhập dữ liệu, dữ liệu của field tham gia quan hệ ở bảng “nhiều” (bảng con)
+phải tồn tại trong bảng “một” (bảng cha). Ví dụ: muốn nhập một sinh viên cho bảng
+
+KETQUA thì MaSV đó phải tồn tại trong bảng SINHVIEN.
+
+     • Không thể xóa những mẩu tin trong bảng “một” khi những mẩu tin trong bảng
+“nhiều” có quan hệ với mẩu tin bên “một”
+
+     Nếu vi phạm các nguyên tắc trên thì Access sẽ không nhận dữ liệu và thông báo lỗi.
+
+     • Cascade Update Related Field: cho phép bạn sửa giá trị khóa chính của mẩu tin
+trong bảng “một” (bảng cha) của quan hệ, lúc đó thay vì báo lỗi Access sẽ tự động cập
+nhật sự thay đổi đó vào các field tương ứng (có quan hệ) trên các bảng “nhiều” (bảng
+con) của quan hệ.
+
+     • Cascade Delete Related Records: cho phép bạn xóa mẩu tin trong bảng “một”
+(bảng cha) của quan hệ, lúc đó thay vì báo lỗi, Access sẽ tự động xóa tất cả các mẩu tin
+trong bảng “nhiều” (bảng con) của quan hệ nếu như những mẩu tin đó có liên quan với
+mẩu tin vừa xóa.
+
+     Lưu ý: + Nếu cả hai field tham gia liên kết đều là khóa chính, Access tự tạo ra
+quan hệ 1-1 (One to one): mỗi mẩu tin trong bảng này sẽ quan hệ với 1 và chỉ một mẩu
+tin trong bảng kia.
+
+     • Nếu một bên là field khóa chính, bên còn lại là khóa ngoại, Access sẽ tạo quan
+hệ 1-nhiều (One to many): Mỗi mẩu tin trong bảng “một” (bảng cha) có quyền quan hệ
+với nhiều mẩu tin trong bảng “nhiều” (bảng con), ngược lại mỗi mẩu tin trong bảng
+“nhiều” chỉ được quyền quan hệ với một mẩu tin trong bảng “một”.
+
+2.3.3. Cách xóa quan hệ
+
+     Muốn xóa quan hệ giữa 2 bảng, ta Click phải mối quan hệ muốn xóa, chọn
+Delete, hoặc chọn mối quan hệ và nhấn phím Delete.
+
+                   Hình 2.30. Cửa sổ RelationShips để xóa quan hệ
+     Lưu ý:
+
+    −Nếu nhập dữ liệu trước khi tạo quan hệ thì khi nhập liệu ta có thể nhập dữ liệu
+cho các bảng theo trình tự tùy ý.
+
+    −Ngược lại, nếu tạo quan hệ trước, nhập liệu sau thì khi nhập liệu ta phải nhập
+bảng 1 (bảng cha) trước và bảng n (bảng con) sau.
+
+2.3.4. Kiểu kết nối (Join type):
+
+    Có 3 kiểu liên kết giữa các bảng:
+
+    − 1: Only include rows where the joined field from both tables are equal: đây là
+loại liên kết phổ biến nhất giữa hai bảng. Trong đó dữ liệu khi thể hiện trên bảng kết
+quả sẽ gồm những mẩu tin mà dữ liệu chứa trong field liên kết ở hai bảng phải hoàn
+toàn giống nhau. Liên kết này còn gọi là liên kết nội.
+
+    − 2: Include all records from “bảng bên trái” and only those records from “bảng
+bên phải” where the joined fields are equal: Trong kiểu liên kết này, Access sẽ thể hiện
+trên bảng kết quả toàn bộ dữ liệu trên “bảng bên trái” và chỉ những mẩu tin bên “bảng
+bên phải” có nội dung trong field liên kết giống field tương ứng với “bảng bên trái”.
+
+    − 3: Include all records from “bảng bên phải” and only those records from “bảng
+bên trái” where the joined fields are equal: Trong kiểu liên kết này, Access sẽ thể hiện
+trên bảng kết quả toàn bộ dữ liệu trên “bảng bên phải” và chỉ những mẩu tin bên “bảng
+bên trái” có nội dung trong field liên kết giống field tương ứng với “bảng bên phải”.
+
+     Cách chọn kiểu liên kết giữa hai bảng:
+
+    −Từ cửa sổ Edit Relationships
+
+    −Click vào nút Join type để mở cửa sổ Join Properties.
+
+                                    Hình 2.31. Cửa sổ thiết lập liên kết
+    −Chọn loại liên kết.
+
+2.4 Tìm kiếm, sắp xếp dữ liệu trên bảng
+
+2.4.1 Tìm kiếm
+
+     −Để tìm một giá trị trong bảng ta click nút Find               trong nhóm lệnh Find
+trên thanh Ribbon .
+
+                           −
+                               Hình 2.32. Cửa sổ Find and Replace
+     Xuất hiện cửa sổ Find and Replace.
+
+     • Find What: Nhập giá trị cần tìm
+
+     • Look In: Phạm vi tìm kiếm.
+
+     • Kiểu so trùng giá trị cần tìm với giá trị trong ô
+
+     • Search: hướng tìm
+
+     • Match Case: Tìm phân biệt chữ hoa và chữ thường
+
+     - Click nút Find Next để thực hiện tìm kiếm, nếu tìm hết access sẽ cho xuất hiện
+hộp thông báo hoàn tất việc tìm kiếm.
+
+2.4.2 Sắp xếp
+
+a. Sắp xếp theo một field
+
+     −Đặt trỏ tại field chứa dữ liệu cần sắp xếp
+
+     −Click nút sort Ascending           (sắp xếp tăng dần)/Sort Descending         (sắp
+xếp giảm dần) trong nhóm lệnh sort &amp; Filter trên thanh Ribbon.
+
+b. Sắp xếp theo nhiều fields: Để sắp xếp theo
+nhiều field, trong nhóm lệnh sort &amp; Filter trên
+thanh Ribbon, click nút lệnh Advanced filter
+options
+
+     −Chọn lệnh •Advanced Filter/Sort
+
+     −Xuất hiện cửa sổ Filter• Double click chọn
+các field chứa dữ liệu cần sắp xếp, thứ tự ưu tiên từ
+trái sang phải.
+                                                           Hình 2.33. Sắp xếp cột
+     −Ở mục Sort• chọn kiểu sắp xếp.
+
+     −Để thực hiện sắp xếp ta chọn lệnh Apply Filter/Sort
+
+     Ví dụ: Sắp xếp dữ liệu trong bảng HoaDon theo chiều tăng dần của MaKH, nếu
+trùng MaKH thì sắp xếp theo MaNV tăng dần, nếu trùng MaNV thì sắp xếp theo
+
+NgayLapHD giảm dần.
+
+                                Hình 2.34. Cửa sổ sắp xếp cột
+
+2.5 Lọc dữ liệu
+
+2.5.1 Filter by selection
+
+     Filter by selection giúp bạn chọn ra những Record dựa trên một giá trị hiện hành.
+Cách thực hiện:
+
+     −Đặt trỏ tại field chứa giá trị lọc, chọn giá trị làm điều kiện lọc.
+
+     −Click nút lệnh Seletion trong nhóm lệnh Sort &amp; Filter trên thanh Ribbon.
+
+     −Chọn một trong các lệnh trong menu:
+
+     • Equals …: lọc các records có giá trị bằng với giá trị được chọn.
+
+     • Does Not Equal…: lọc các records có giá trị khác với giá trị được chọn.
+
+     • Contains …: lọc các records chứa giá trị được chọn.
+
+     • Does Not Contains …: lọc các records không chứa giá trị được chọn.
+
+                             Hình 2.35. Cửa sổ lọc dữ liệu
+
+      −Ngoài ra, cũng có thể lọc bằng cách click nút công cụ Selection button bên phải
+tên field.
+
+      −Đánh dấu check vào giá trị làm điều kiện lọc.
+
+      −Click OK
+
+2.5.2 Filter by form
+
+      Filter by form giúp bạn lọc bằng cách nhập
+giá trị lọc vào một dòng trên Datasheet.
+
+      −Click nút Advanced trong nhóm lệnh Sort
+&amp; Filter, chọn lệnh Filter By Form.
+
+      −Chuyển dạng Datasheet của bảng thành
+một dòng trống, và xuất hiện các nút Dropdown
+                                                            Hình 2. 36. Cửa sổ lọc dữ liệu
+list trên mỗi field cho phép chọn giá trị lọc.
+
+                                    Hình 2. 37. Cửa sổ kết quả lọc dữ liệu
+
+      −Nếu lọc theo nhiều giá trị thì click tab Or và chọn giá trị làm điều kiện lọc tiếp theo.
+
+      −Click nút Toggle Filter để thực hiện lọc.
+
+2.5.3 Advanced filter
+
+      Chức năng Advanced filter cho phép lọc với nhiều điều kiện ở nhiều field khác nhau.
+
+      −Click nút Advanced, chọn lệnh Advanced filter/Sort, xuất hiện cửa sổ Filter, với
+các dòng:
+
+     Field: Nhập tên các field chứa điều kiện lọc
+
+     Sort: Chọn kiểu sắp xếp (nếu có yêu cầu)
+
+     Criteria: Nhập điều kiện lọc. Nếu các điều kiện lọc ở các field bắt buộc thỏa mãn
+đồng thời (và) thì các điều kiện phải được nhập trên cùng một dòng. Nếu các điều kiện
+không thỏa mãn đồng thời (hoặc) thì nhập trên khác dòng.
+
+     Ví dụ: Lọc các những sinh viên có môn học “CSDL” và điểm thi lần 1&gt;=5.
+
+                                Hình 2.38. Cửa sổ lọc dữ liệu (và)
+     Ví dụ: Lọc các những sinh viên có môn học “CSDL” hoặc điểm thi lần 1&gt;=5.
+
+                           Hình 2.39. Cửa sổ lọc dữ liệu (hoặc)
+
+2.6 Một số toán tử -hàm -biểu thức trong Access
+
+a. Toán tử
+
+     Toán tử số học
+
+           Toán tử                   Mô tả                     Ví dụ
+                 +        Cộng 2 toán hạng            [lương]+[thương]
+                 -        Trừ 2 toán hạng             [lương]-[tạm ứng]
+                 *        Nhân 2 toán hạng            [hệ số]*[lương cb]
+                 /        Chia 2 toán hạng            15.2/2
+                 \        Phép chia nguyên            5\2
+                Mod       Chia lấy phần dư            5Mod 2
+                 ^        Lủy thừa                    4^2
+Toán tử so sánh
+
+              Toán tử       Ví dụ                      Mô tả
+                 =       ="MN"         Tìm những record có giá trị là MN.
+                 &lt;        &lt;10          Tìm những record có giá trị &lt;10.
+                &lt;=        &lt;=10         Tìm những record có giá trị &lt;=10.
+                 &gt;        &gt;10          Tìm những record có giá trị &gt;10.
+                &gt;=        &gt;=10         Tìm những record có giá trị &gt;=10.
+                &lt;&gt;        &lt;&gt;10         Tìm những record có giá trị khác10.
+    Kết quả của toán tử so sánh là True hoặc False.
+
+Toán tử logic
+
+          Toán tử          Mô tả                            Ví dụ
+                And             Và     [điểm]&lt;=5 And [năm sinh]&gt;1990
+                Or           Hoặc      [điểm]&lt;=5 Or [năm sinh]&gt;1990
+                Not          Đảo       Not True
+Toán tử khác
+
+          Toán tử            Ví dụ                             Ý nghĩa
+                      BETWEEN #1/1/99#            Tìm những record có giá trị trong
+
+       BETWEEN          AND #12/31/99#          khoảng
+                                              Tìm những1/1/99
+                                                         recordvàchứa
+                                                                  12/31/99.
+                                                                      text được bắt
+
+       LIKE           LIKE "S*"               đầu bằng ký tự "S."
+
+          IS NULL       IS NULL                    Tìm những record có giá trị rỗng
+                                                   Tìm những record có giá trị trong
+Toán tửIN(v1,
+        nối chuỗi
+              v2, In(“java”, “C++”)                danh sách liệt kê.
+
+         …) để nối các chuỗi thành một chuỗi.
+         Dùng
+
+            Toán tử                                      Ví dụ
+                  &amp;         “Nguyễn ” &amp; “ ” &amp; “An” • Nguyễn An.
+                  +         “Nguyễn ” + “ ” + “An” • Nguyễn An.
+b. Hàm
+
+Hàm xử lý kiểu dữ liệu Text
+
+                  Hàm                Ý nghĩa                               Ví dụ
+           Left(string, n) Trích từ bên trái của string , n       Left(“ABC”, 2)
+                              ký tự ra từ bên phải của
+                              Trích
+          Mid(string, m,n)
+          Right(string,     string,ran từ
+                         n) Trích      kýstring,
+                                          tự     tại vị trí m ,   Mid(“ABC”,2,1)
+                                                                  Right(“ABC”, 2)
+            Len(string)     nTrả
+                              kývề
+                                 tựchiều dài của string           Len(“ABC”)
+                              Định dạng biểu thức theo các        Format(Date(), “dd-
+            UCase(exp)
+            Format(exp)       dạngvềthức
+                              Trả        thích
+                                      phiên bảnhợp.             Chữ hoa)của
+                                                ch một chuỗi. mm-yyyy”
+                              Trả về phiên bản chữ thường         UCase(“Lan”)
+              Str(exp)
+             LCase(exp)       của một một
+                              Chuyển  chuỗi.
+                                          số thành một            Str(123.45)
+                                                                  LCase(“Lan”)
+              Val(exp)        chuỗi. một chuỗi thành một
+                              Chuyển                              Val(“123.45”)
+Hàm ngày giờ                  số
+
+             Hàm                        Ý nghĩa                             Ví dụ
+
+         Date()          Hàm trả về kết quả là ngày hiện          Date()
+                         hành của máy.
+         Day(exp)        Trả về ngày trong tháng.                 Day(#6/12/2010#)
+
+         Month(exp)      Trả về kết quả là tháng trong biểu thức Month(#6/12/2010#)
+                         ngày
+
+        Year(exp)       Trả về kết quả là năm trong biểu         Year(#6/12/2010#)
+                        thức ngày
+        datePart(“d/    d: trả về ngày trong biểu thức ngày      Datepart(“q”,#6/12/
+        m/ww/q/yyy      m: trả về tháng trong biểu thức ngày 2010#)
+        y”, exp)
+                        ww: trả về tuần trong biểu thức ngày
+
+                        q: trả về quý trong biểu thức ngày
+
+                        yyyy: trả về năm trong biểu thức
+                        ngày
+
+Hàm điều kiện
+
+     Hàm IIF trả về một trong 2 giá trị: giá trị 1 hoặc giá trị 2, tùy thuộc vào giá trị
+của Biểu thức điều kiện.
+
+     −Biểu thức điều kiện: là một biểu thức logic cho kết quả là True hoặc False.
+
+     −Giá trị 1: giá trị trả về của hàm IIF nếu Biểu thức điều kiện có giá trị là true.
+
+     −Giá trị 2: giá trị trả về của hàm IIF nếu Biểu thức điều kiện có giá trị là false
+
+     Ví dụ: IIF([điểm]&gt;=5, “Đậu”, “Rớt”)
+
+Hàm cơ sở dữ liệu
+
+     −Hàm Dcount: Đếm số Record trong phạm vi xác định theo điều kiện. Mặc định,
+hàm không đếm các record có giá trị Null. Nếu dùng ký tự đại diện “*”, hàm sẽ đếm
+các record có giá trị Null.
+
+     Ví dụ: Đếm số sinh viên lớp CDTHA
+
+     Dcount(“[Masv]”, “SinhVien”, “[Malop]=’CDTHA’”)
+
+     −Hàm Dlookup: Tìm giá trị trong phạm vi được xác định theo điều kiện.
+
+     Ví dụ: Tìm sinh viên A01 thuộc lớp nào Dlookup(“[MaLop]”, “SinhVien”,
+[MaSV]=’A01’”)
+
+c. Biểu thức
+
+     Trong Access, một biểu thức tương đương với một công thức trong Excel. Một
+biểu thức bao gồm các yếu tố định danh (tên của các field, điều khiển, hoặc thuộc
+tính), các toán tử, các hằng số, và giá trị và các hàm.
+
+     Một biểu thức được tính toán để lấy giá trị cung cấp cho một query, xác định quy
+tắc, tạo các ô hoặc field tính toán, và xác định phân nhóm cho report.
+
+     Ví dụ:Tạo field tính toán: ThanhTien: [soluong]*[dongia]
+
+     Một biểu thức có thể sử dụng ở nhiều đối tượng trong cơ sở dữ liệu như: tables,
+queries, forms, reports, và macros.
+
+     Trong các biểu thức, tên field, tên điều khiển phải được đặt trong dấu ngoặc
+vuông [], thông thường Access sẽ tự đóng ngoặc vuông quanh tên field hoặc tên ô điều
+khiển nhưng nếu tên field hoặc điều khiển bao gồm các khoảng trắng hoặc các ký tự
+đặc biệt, thì bạn phải tự gõ dấu ngoặc [] quanh tên đó.
+
+                           BÀI TẬP KẾT THÚC CHƯƠNG 2
+Bài 1:
+1. Tạo tập tin CSDL để quản lý các công trình xây dựng, đặt tên QLCT.ACCDB
+2. Trong tập tin QLCT.ACCDB hãy tạo các table sau đây:
+Table CONGTRINH có cấu trúc sau: đặt khóa chính là MACT
+
+  Field Name       DataType           Field size    Yêu cầu
+  MACT                Text            5              Mã công trình, khóa chính. Gồm 2 ký tự CT
+                                                    và 3 ký số (chữ CT có lưu trong field).
+                                                    Input Mask: “CT”000;0
+  TENCT               Text            50            Tên công trình
+  NGAYKC              Datetime                       Ngày khởi công, nhỏ hơn ngày hiện tại
+                                                    Validation Rule: &lt; Date()
+                                                     Validation Text: Ngày khởi công phải nhỏ
+                                                    hơn ngày hiện tại
+Table VATTU có cấu trúc: đặt khóa chính là MAVT
+FieldName      DataType Fieldsize          Yêu cầu
+MAVT           Text          5             Mã vật tư, khóa chính. Gồm 2 ký tự hoa và 3 ký số.
+                                            Input Mask: &gt;LL000
+TENVT          Text          20            Tên vật tư , nhập 1 chữ đầu hoa, còn lại là chữ thường.
+                                           Input Mask: &gt;L&lt;???????????????????
+DVT            Text          10            Đơn vị tính, dùng combo box. Chọn trang Lookup:
+                                           Display control: là combo box
+                                            Row source type: Value list
+                                            Row source: bao;thùng;kg;tấn;mét;m3
+Table XUAT_VT có cấu trúc: đặt khóa chính là SOPHIEU
+Field Name     Data Type          Fieldsize         Yêu cầu
+SOPHIEU        Text               4                 Số phiếu xuất, gồm 1 ký tự X và 3 ký số
+                                                    (chữ X có lưu trong field).
+                                                    Input Mask: \X000;0
+NGAY           Datetime                             Ngày xuất nhỏ hơn hay bằng ngày hiện
+                                                    tại. Validation Rule: &lt;= Date()
+                                                    Validation text: Ngày xuất phải nhỏ hơn
+                                                    hay bằng ngày hiện tại
+MACT           Text               5                 Mã công trình, tạo Combo box chọn từ
+                                                    Table CONGTRINH. Bấm trang Lookup
+                                                    Display control: Combo box
+                                                    Row source type: Table/Query
+
+                                                  Row source: CONGTRINH
+                                                  Bound column: 1
+                                                  Column count: 2
+                                                  Column widths: 1;2
+                                                  List width: 3
+
+Table CHITIET_XUAT có cấu trúc: khóa chính là SOPHIEU và MAVT
+Field Name      DataType Field size Yêu cầu
+SOPHIEU          Text       4           Số phiếu
+MAVT             Text       5           Mã vật tư dùng combo box chọn từ Table
+                                        VATTU. Bấm trang Lookup
+                                         Display control: Combo box
+                                        Row source type: Table/Query Row source:
+                                        VATTU
+                                        Bound column: 1
+                                        Column count: 2
+                                         Column widths: 1; 1.5
+                                         List width: 2.5
+SOLUONG          Number     Long        Số lượng, định dạng nhóm 3 số lại và phải
+                            Integer     nhập lớn hơn 0
+                                         Format: #,###
+                                        Validation Rule: &gt; 0
+DONGIA           Number      Long       Đơn giá, định dạng nhóm 3 số lại có ký hiệu
+                            Integer     tiền VN và phải nhập lớn hơn 0
+                                        Format: #,### “đ”
+                                        Validation Rule: &gt; 0
+
+3. Liên kết các Table và nhập dữ liệu sau:
+
+Table VATTU
+MAVT              TENVT                   DVT
+CA001             Cát                     m3
+DA002             Đá xanh                 tấn
+SA003             Sắt cuộn                kg
+TL004             Tôn lạnh                mét
+XM005             Xi măng                 bao
+Table CONGTRINH
+MACT            TENCT                           NGAYKC
+CT001           Nhà nghỉ công đoàn              01/10/2016
+CT002           Nhà trẻ Hoa mai                 16/12/2015
+CT003           Công viên Tháng 8               22/01/2016
+CT004           Nhà máy Thắng lợi               01/02/2014
+CT005           Trường Kim đồng                 10/02/2016
+Table XUAT_VT
+SOPHIEU         NGAY                 MACT
+X001            01/11/2016           CT001
+X002            05/12/2016           CT001
+X003            06/02/2016           CT001
+X004            21/12/2016           CT003
+X005            02/03/2016           CT003
+X006            22/03/2016           CT004
+
+Table CHITIET_XUAT
+SOPHIEU            MAVT            SOLUONG              DONGIA
+X001               CA001           12                   12000
+X001               DA002           7                    314000
+X001               SA003           400                  4500
+X002              SA003            100                  5300
+X002              XM005            100                  43000
+X003              CA001            70                   15000
+X003               SA003           120                  4000
+X004               TL004           750                  78000
+X004              XM005            150                  45000
+X005              DA002            9                    270000
+X006              XM005            90                   45000
+X006              CA001            20                   18000
+Bài 2
+1. Tạo tập tin CSDL để quản lý cửa hàng mua bán văn phòng phẩm đặt tên là
+VPP.ACCDB
+2. Trong tập tin VPP.ACCDB hãy tạo các table sau đây
+Table KHACH_HANG: khóa chính là MAKH
+Field Name      DataType    Fieldsize          Field Properties
+MAKH            Text        4                  Gồm 1 ký tự K và 3 ký số (chữ K có lưu
+                                               trong field).
+                                               Input Mask: \K000;0
+TENKH          Text         40                 Có nhập hiện màu xanh, nếu không nhập
+                                               thì hiện chữ “khách vãng lai” màu đỏ
+                                               Format: @[Blue];”Khách vãng lai”[Red]
+DIACHI          Text        50
+DIENTHOAI      Text         10                 Input Mask: 000-0000
+Dữ liệu nhập
+MAKH         TENKH                      DIACHI                          DIENTHOAI
+
+K001         Cty TNHH Minh Đức          66 Trần Quang Khải, Q3             8327890
+K002         Cty Du lịch Đồng           365 Điện Biên Phủ, Q10             8453612
+             Tháp
+K003         Khách sạn Hương Sen        155 Nguyễn Đình Chiểu, Q3
+K004         Xí nghiệp Điện Biên        81 Lạc Long Quân, TB               8456432
+K005         Khách sạn Hải Dương        60 Bach Đằng, Q1                   8917645
+K006         Xí nghiệp Đồng Tâm         212 Hai Bà Trưng, Q1               8154981
+K007         Xí nghiệp giày Đống        181 Trần Quang Diệu, Q1            8651299
+             Đa
+K008         Cty TNHH Hoàn Cầu          254 An Dương Vương, Q5
+K009         Xí nghiệp Dược             314 CMT8, Q3
+             phẩm2/9
+K010         Cty giầy dép Vina          489 Hùng Vương,Q5                  8235471
+Table MAT_HANG: khóa chính là MAMH
+FieldName        DataType Fieldsize             Field Properties
+MAMH             Text         3                 Gồm 1 ký tự V và 2 ký số (chữ V có lưu
+                                                trong field).
+                                                Input Mask: \V00;0
+TENMH            Text         30                Tên mặt hàng
+DVT              Text         10                Đơn vị tính, nhập 1 chữ đầu hoa, còn lại
+                                                là chữ thường.
+                                                Input Mask: &gt;L&lt;?????????
+                                                Dùng combo box liệt kê các giá trị để
+                                                chọn như Cái; Hộp; Cây; Gam; Cuộn …
+DONGIA           Number        Long             Format: #,###
+                              Integer           Validation Rule: &gt;= 5000
+                                                Validation text: Đơn giá từ 5000 trở lên
+Table HOADON: khóa chính là SOHD
+Field Name     Data Type       Fieldsize   Field Properties
+SOHD           Text           3            Input Mask: 000
+MAKH           Text            4           Là combo box chọn từ table KHACH_HANG
+
+                                          Display control: Combo box
+                                          Row source type: Table/Query
+                                          Row source: KHACH_HANG
+                                          Bound column: 1
+                                           Column count: 2
+                                           Column widths: 1;2
+                                          List width: 3
+NGAYDAT         Date/Time                  nhỏ hơn hay bằng ngày hiện tại
+                                           Validation rule: &lt;=Date()
+NGAYGIAO        Date/Time                 Ngày giao hàng
+Validation Rule: gõ vào [NGAYDAT]&lt;=[NGAYGIAO]
+Table CHITIET_HD: khóa chính là SOHD và MAMH
+Field Name        Data Type         Field Size            Ghi chú
+SOHD              Text              3                     Số hóa đơn
+MAMH              Text              3                     Mã mặt hàng
+SOLUONG           Number            Long Integer          Số lượng, lớn hơn 0
+3. Thiết lập mối quan hệ giữa các Table, sau đó nhập dữ liệu sau vào các table
+MAT_HANG, HOADON, CHITIET_HD:
+
+Table MAT_HANG
+MAMH              TENMH                          DVT             DONGIA
+V01               Bút chì                        Cây            13000
+V02               Bút lông viết bảng             Hộp            55000
+V03               Giấy vi tính A4                Gam            36000
+V04               Đĩa mềm1,4 MB Maxell           Hộp            45000
+
+V05             Bút bi Thiên Long            Hộp           13000
+V06             Thước vẽ                     Cây           8500
+V07             Kẹp giấy                     Hộp           7000
+V08             Bìa hồ sơ                    Cái           28000
+V09             Băng keo 2 mặt               Cuộn          8500
+V10             Bút xóa                      Cây           15000
+Table HOADON
+SOHD            MAKH                NGAYDAT          NGAYGIAO
+001             K006                14/01/2016       15/01/2016
+002             K007                15/01/2016       21/01/2016
+003             K001                28/03/2016       30/03/2016
+004             K009                12/12/2016       15/12/2016
+005             K002                22/10/2016       26/12/2016
+006             K006                25/11/2016       12/12/2016
+Table CHITIET_HD
+ SOHD     MAHH      SOLUONG                   SOHD   MAHH          SOLUONG
+001       V02          40                    004     V01           150
+001       V04          50                    004     V05           180
+001      V06        40                       004     V10           50
+001      V01        100                      005     V08           200
+002      V05        80                       005     V03           60
+002       V01       50                       006     V03           200
+003      V04        100                      006     V04           60
+003       V03          20                    006     V05           50
+003      V07        90                       006     V06           20
+
+4. Copy table MAT_HANG thành table HANGHOA.
+5. Export table HANGHOA ra file Excel. Xóa table HANGHOA.
+6. Đóng Access, mở Excel và xem tập tin HANGHOA.XLSX
+
+Bài 3:
+1. Xây dựng CSDL Quản lý lương cán bộ (QLLUONG.ACCDB) một cơ quan có
+cấu trúc như sau :
+
+Yêu cầu :
+    - Thiết kế cấu trúc các bảng một cách phù hợp : kiểu dữ liệu các trường; trường
+      khoá; thuộc tính Lookup và các thuộc tính khác;
+    - Tất cả các trường tạo cần phải có nhập thông tin phần Caption có dấu tiếng Việt.
+    - Thiết lập mối liên hệ giữa các bảng như trong hình.
+Nhập dữ liệu cho các table trong CSDL QLLƯƠNG.MDB như sau:
+1. Table canbo
+
+2. Table phongban
+
+3. Table chucvu
+
+Bài 4: Xây dựng CSDL Quản lý việc bán hàng (QLBH.ACCDB) cho một cửa hàng có
+cấu trúc như sau :
+
+Yêu cầu :
+   - Thiết kế cấu trúc các bảng một cách phù hợp : kiểu dữ liệu các trường; trường
+     khoá; thuộc tính Lookup và các thuộc tính khác;
+   - Tất cả các trường tạo cần phải có nhập thông tin phần Caption có dấu tiếng Việt.
+   - Thiết lập mối liên hệ giữa các bảng như trong hình.
+   - Nhập dữ liệu cho các table trong CSDL QLBH.MDB như sau:
+     + 5 khách hàng
+      + 15 danh mục hàng hóa có bán
+      + 10 hóa đơn bán hàng
+      + 25 lượt hàng hóa được bán ra</baihoc>
+<baitap bai="2" loai="goc" de="Bài 1: 1. Tạo tập tin CSDL để quản lý các công trình xây dựng, đặt tên QLCT.ACCDB 2. Trong tập tin QLCT.ACCDB hãy tạo các table sau đây: Table CONGTRINH có cấu trúc sau: đặt khóa chính là MACT Field Name DataType Field size Yêu cầu MACT Text 5 Mã công trình, khóa chính. Gồm 2 ký tự CT và 3 ký số (chữ CT có lưu trong field). Input Mask: “CT”000;0 TENCT Text 50 Tên công trình NGAYKC Datetime Ngày khởi công, nhỏ hơn ngày hiện tại Validation Rule: &lt; Date() Validation Text: Ngày khởi công phải nhỏ hơn ngày hiện tại Table VATTU có cấu trúc: đặt khóa chính là MAVT FieldName DataType Fieldsize Yêu cầu MAVT Text 5 Mã vật tư, khóa chính. Gồm 2 ký tự hoa và 3 ký số. Input Mask: &gt;LL000 TENVT Text 20 Tên vật tư , nhập 1 chữ đầu hoa, còn lại là chữ thường." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 20-63."/>
+<baitap bai="2" loai="goc" de="Bài 3: 1. Xây dựng CSDL Quản lý lương cán bộ (QLLUONG.ACCDB) một cơ quan có cấu trúc như sau : Yêu cầu : - Thiết kế cấu trúc các bảng một cách phù hợp : kiểu dữ liệu các trường; trường khoá; thuộc tính Lookup và các thuộc tính khác; - Tất cả các trường tạo cần phải có nhập thông tin phần Caption có dấu tiếng Việt. - Thiết lập mối liên hệ giữa các bảng như trong hình. Nhập dữ liệu cho các table trong CSDL QLLƯƠNG.MDB như sau: 1. Table canbo 2. Table phongban 3. Table chucvu" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 20-63."/>
+<baitap bai="2" loai="goc" de="Bài 4: Xây dựng CSDL Quản lý việc bán hàng (QLBH.ACCDB) cho một cửa hàng có cấu trúc như sau : Yêu cầu : - Thiết kế cấu trúc các bảng một cách phù hợp : kiểu dữ liệu các trường; trường khoá; thuộc tính Lookup và các thuộc tính khác; - Tất cả các trường tạo cần phải có nhập thông tin phần Caption có dấu tiếng Việt. - Thiết lập mối liên hệ giữa các bảng như trong hình. - Nhập dữ liệu cho các table trong CSDL QLBH.MDB như sau: + 5 khách hàng + 15 danh mục hàng hóa có bán + 10 hóa đơn bán hàng + 25 lượt hàng hóa được bán ra" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 20-63."/>
+<baitap bai="2" loai="goc" de="1. Tạo tập tin CSDL để quản lý các công trình xây dựng, đặt tên QLCT.ACCDB" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 20-63."/>
+<baitap bai="2" loai="goc" de="2. Trong tập tin QLCT.ACCDB hãy tạo các table sau đây: Table CONGTRINH có cấu trúc sau: đặt khóa chính là MACT Field Name DataType Field size Yêu cầu MACT Text 5 Mã công trình, khóa chính. Gồm 2 ký tự CT và 3 ký số (chữ CT có lưu trong field). Input Mask: “CT”000;0 TENCT Text 50 Tên công trình NGAYKC Datetime Ngày khởi công, nhỏ hơn ngày hiện tại Validation Rule: &lt; Date() Validation Text: Ngày khởi công phải nhỏ hơn ngày hiện tại Table VATTU có cấu trúc: đặt khóa chính là MAVT FieldName DataType Fieldsize Yêu cầu MAVT Text 5 Mã vật tư, khóa chính. Gồm 2 ký tự hoa và 3 ký số. Input Mask: &gt;LL000 TENVT Text 20 Tên vật tư , nhập 1 chữ đầu hoa, còn lại là chữ thường. Input Mask: &gt;L&lt;???????????????????" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 20-63."/>
+<baitap bai="2" loai="goc" de="3. Liên kết các Table và nhập dữ liệu sau: Table VATTU MAVT TENVT DVT CA001 Cát m3 DA002 Đá xanh tấn SA003 Sắt cuộn kg TL004 Tôn lạnh mét XM005 Xi măng bao Table CONGTRINH MACT TENCT NGAYKC CT001 Nhà nghỉ công đoàn 01/10/2016 CT002 Nhà trẻ Hoa mai 16/12/2015 CT003 Công viên Tháng 8 22/01/2016 CT004 Nhà máy Thắng lợi 01/02/2014 CT005 Trường Kim đồng 10/02/2016 Table XUAT_VT SOPHIEU NGAY MACT X001 01/11/2016 CT001 X002 05/12/2016 CT001 X003 06/02/2016 CT001 X004 21/12/2016 CT003" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 20-63."/>
+<baitap bai="2" loai="goc" de="1. Tạo tập tin CSDL để quản lý cửa hàng mua bán văn phòng phẩm đặt tên là VPP.ACCDB" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 20-63."/>
+<baitap bai="2" loai="goc" de="2. Trong tập tin VPP.ACCDB hãy tạo các table sau đây Table KHACH_HANG: khóa chính là MAKH Field Name DataType Fieldsize Field Properties MAKH Text 4 Gồm 1 ký tự K và 3 ký số (chữ K có lưu trong field). Input Mask: \K000;0 TENKH Text 40 Có nhập hiện màu xanh, nếu không nhập thì hiện chữ “khách vãng lai” màu đỏ Format: @[Blue];”Khách vãng lai”[Red] DIACHI Text 50 DIENTHOAI Text 10 Input Mask: 000-0000 Dữ liệu nhập MAKH TENKH DIACHI DIENTHOAI K001 Cty TNHH Minh Đức 66 Trần Quang Khải, Q3 8327890 K002 Cty Du lịch Đồng 365 Điện Biên Phủ, Q10 8453612 Tháp K003 Khách sạn Hương Sen 155 Nguyễn Đình Chiểu, Q3 K004 Xí nghiệp Điện Biên 81 Lạc Long Quân, TB 8456432" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 20-63."/>
+<baitap bai="2" loai="goc" de="3. Thiết lập mối quan hệ giữa các Table, sau đó nhập dữ liệu sau vào các table MAT_HANG, HOADON, CHITIET_HD: Table MAT_HANG MAMH TENMH DVT DONGIA V01 Bút chì Cây 13000 V02 Bút lông viết bảng Hộp 55000 V03 Giấy vi tính A4 Gam 36000 V04 Đĩa mềm1,4 MB Maxell Hộp 45000 V05 Bút bi Thiên Long Hộp 13000 V06 Thước vẽ Cây 8500 V07 Kẹp giấy Hộp 7000 V08 Bìa hồ sơ Cái 28000 V09 Băng keo 2 mặt Cuộn 8500 V10 Bút xóa Cây 15000 Table HOADON SOHD MAKH NGAYDAT NGAYGIAO" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 20-63."/>
+<baitap bai="2" loai="goc" de="4. Copy table MAT_HANG thành table HANGHOA." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 20-63."/>
+<baitap bai="2" loai="goc" de="5. Export table HANGHOA ra file Excel. Xóa table HANGHOA." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 20-63."/>
+<baitap bai="2" loai="goc" de="6. Đóng Access, mở Excel và xem tập tin HANGHOA.XLSX Bài 3:" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 20-63."/>
+<baitap bai="2" loai="goc" de="1. Xây dựng CSDL Quản lý lương cán bộ (QLLUONG.ACCDB) một cơ quan có cấu trúc như sau : Yêu cầu : - Thiết kế cấu trúc các bảng một cách phù hợp : kiểu dữ liệu các trường; trường khoá; thuộc tính Lookup và các thuộc tính khác; - Tất cả các trường tạo cần phải có nhập thông tin phần Caption có dấu tiếng Việt. - Thiết lập mối liên hệ giữa các bảng như trong hình. Nhập dữ liệu cho các table trong CSDL QLLƯƠNG.MDB như sau:" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 20-63."/>
+<baitap bai="2" loai="goc" de="3. Table chucvu Bài 4: Xây dựng CSDL Quản lý việc bán hàng (QLBH.ACCDB) cho một cửa hàng có cấu trúc như sau : Yêu cầu : - Thiết kế cấu trúc các bảng một cách phù hợp : kiểu dữ liệu các trường; trường khoá; thuộc tính Lookup và các thuộc tính khác; - Tất cả các trường tạo cần phải có nhập thông tin phần Caption có dấu tiếng Việt. - Thiết lập mối liên hệ giữa các bảng như trong hình. - Nhập dữ liệu cho các table trong CSDL QLBH.MDB như sau: + 5 khách hàng + 15 danh mục hàng hóa có bán + 10 hóa đơn bán hàng + 25 lượt hàng hóa được bán ra" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 20-63."/>
+<baihoc stt="3" tieude="Chương 3. Thao tác dữ liệu với truy vấn">Chương 3. THAO TÁC DỮ LIỆU VỚI TRUY VẤN
+
+Thời lượng: 06 tiết lý thuyết + 06 tiết thực hành
+
+Kết thúc chương này, sinh viên có thể:
+
+       • Hiểu mục đích việc sử dụng truy vấn
+
+       • Biết các chế độ hiển thị và các loại truy vấn thông dụng
+
+       • Biết các loại truy vấn
+
+       • Tạo được truy vấn theo mục đích sử dụng
+
+3.1 Khái niệm về truy vấn, các chế độ hiển thị cửa sổ truy vấn
+
+3.1.1 Khái niệm
+
+     Mục đích chính của một cơ sở dữ liệu là lưu trữ và trích lọc thông tin. Thông tin
+có thể được lấy từ cơ sở dữ liệu ngay lập tức sau khi dữ liệu được thêm vào. Tất nhiên,
+lấy thông tin từ các bảng cơ sở dữ liệu đòi hỏi kiến thức về cách thức mà cơ sở dữ liệu
+được thiết kế.
+
+     Query là các câu lệnh SQL (Structured Query Language - ngôn ngữ truy vấn
+mang tính cấu trúc) là một loại ngôn ngữ phổ biến để tạo, hiệu chỉnh, và truy vấn dữ
+liệu từ một cơ sở dữ liệu quan hệ.
+
+     Trong access, Query là một công cụ mạnh dùng để khai thác và xử lý dữ liệu,
+đáp ứng các nhu cầu tra cứu dữ liệu, gồm các loại query: Select queries, Total queries,
+Parameter queries, Crosstab queries và Action queries.
+
+     Các loại query
+
+     −Select query: là truy vấn lựa chọn thông tin từ một hoặc nhiều bảng, tạo ra một
+recordset. Nói chung, dữ liệu trả về của một truy vấn lựa chọn là có thể cập nhật và
+thường được sử dụng để đưa các form và report.
+
+     −Total query: là một loại đặc biệt của truy vấn chọn. Thực hiện chức năng tổng
+
+hợp dữ liệu trên một nhóm các record.
+
+     - Parameter queryes: là loại Query sử dụng điều kiện lọc trực tiếp khi cho thực
+hiện Query
+
+     −Crosstab query: là loại query có thể hiển thị dữ liệu dưới dạng tóm tắt như một
+bảng tính, với các tiêu đề hàng và tiêu đề cột dựa trên các field trong bảng. Dữ liệu
+trong các ô của Recordset được tính toán từ dữ liệu trong các bảng.
+
+     −Action query: gồm các loại query như Make-Table, Delete, Update, Append
+cho phép bạn tạo ra các bảng mới hoặc thay đổi dữ liệu trong các bảng hiện có của cơ
+sở dữ liệu. action query khi thực thi sẽ ảnh hưởng đến nhiều recored trong các bảng.
+
+3.1.2 Các chế độ hiển thị query:
+
+Cửa sổ Query có 4 chế độ hiển thị.
+
+a. Datasheet View
+
+     • Là dạng hiển thị chuẩn khi chạy Query (như dạng hiển thị của Bảng) gồm dòng
+đầu tiên là tên các Field và các dòng còn lại là các mẫu tin.
+
+                      Hình 3.1. Chế độ hiển thị Query dạng Datasheet View
+
+b. Design View
+
+     Hiển thị Query theo dạng thiết kế. Dùng để thiết kế hay hiệu chỉnh Query.
+
+                  Hình 3.2: Chế độ hiển thị Query dạng Design View
+c. SQL View
+
+     • Hiển thị thiết kế Query dưới dạng dòng lệnh theo ngôn ngữ SQL. Các dòng
+lệnh này do Access tạo ra khi thiết kế Query hay do người dùng khai báo.
+
+     • Thao tác: Mở Query trong chế độ Datasheet View hay Design View và chọn
+lệnh View-SQL View trên thẻ Home.
+
+               Hình 3.3. Chế độ hiển thị Query dạng SQL View
+
+d. Print PreView
+
+     • Là chế độ xem trước khi in (Kết quả hiển thị giống như khi in). Chọn Query
+cần hiển thị trong cửa sổ Database hay mở Query theo chế độ Datasheet View.
+
+     • Chọn lệnh File /Print / Print Preview
+
+3.2 Tạo truy vấn chọn
+
+3.2.1 Cách tạo select query bằng Wizard
+
+Để tạo query bạn chọn tab Create trên thanh Ribbon, click nút query
+
+Wizard trong nhóm lệnh Queries.
+
+     • Chọn mục Simple Query Wizard trong hộp thoại New Query
+
+     • Chọn Bảng / Query và Field tham gia Query
+
+                                                           Hình 3.4. C
+
+     - Chọn Bảng hay Query trong khung Table / Queries
+
+     - Chọn các Field tham gia trong khung Available Field và chuyển sang (click nút
+&gt; bên cạnh) khung Selected Field.
+
+     - Nếu chọn tất cả Field thì click nút &gt;&gt;
+
+     - Click nút &lt; hay &lt;&lt; để chuyển các Field trong khung Selected Field trở lại khung
+Available Fields.
+
+     - Thực hiện tương tự trên với các Bảng / Query khác nếu có nhiều Bảng / Query
+tham gia.
+
+     - Thực hiện xong, click NEXT để qua bước tiếp theo.
+
+     • Chọn loại Query chi tiết hay Query tính tổng
+
+                Hình 3.5. C
+     Chọn một trong hai mục
+
+     - Nếu chọn DETAIL : Các mẫu tin thỏa điều kiện đều được hiển thị.
+
+     - Nếu chọn SUMMARY
+
+     • Click nút Summary Options để mở hộp thoại Summary Options
+
+     • Chỉ định phép toán cho Summary (SUM, AVG, MIN, MAX).
+
+     - Thực hiện xong bấm NEXT.
+
+     • Đặt tiêu đề cho Query chọn cách kết thúc
+
+     - Đặt TITLE cho Query trong khung What title do you want for your query
+
+     - Và chọn một trong hai mục để kết thúc quy trình tạo Query
+
+     • Mở QUERY khi WIZARD tạo xong (Open the Query to view information):
+Query được hiển thị theo dạng DataSheet View.
+
+     • Hay hiệu chỉnh cấu trúc Query (Modify this Query Design): của sổ Design View
+được hiển thị để thực hiện các hiệu chỉnh.
+
+3.2.2 Cách tạo select query bằng Design view
+
+     Để tạo query bạn chọn tab Create trên thanh Ribbon, click nút query
+
+Design trong nhóm lệnh Queries.
+
+     Xuất hiện cửa sổ thiết kế query và cửa sổ Show table cho phép chọn các
+bảng hoặc query tham gia truy vấn.
+
+     −Chọn các bảng chứa các field mà bạn muốn hiển thị trong kết quả, hoặc các
+field cần trong các biểu thức tính toán.
+
+     −Click nút Add để thêm các bảng vào cửa sổ thiết kế query.
+
+     −Sau khi chọn đủ các bảng hoặc query cần thiết, click nút close để đóng cửa sổ
+Show Table.
+
+                   Hình 3.6. Cửa sổ tạo
+    −Chọn các field cần hiển thị trong kết quả vào lưới thiết kế bằng cách drag chuột
+kéo tên field trong field list hoặc double click vào tên field.
+
+    −Nhập điều kiện lọc tại dòng Criteria.
+
+    −Click nút View để xem trước kết quả, click nút run để thực thi.
+
+a. Các thành phần trong cửa sổ thiết kế query:
+
+     Cửa sổ thiết kế query gồm 2 phần
+
+     −Table/query pane: khung chứa các bảng hoặc query tham gia truy vấn.
+
+     −Lưới thiết kế (Query by Example: QBE) : Chứa tên field tham gia vào truy vấn
+và bất kỳ tiêu chuẩn được sử dụng để chọn các records. Mỗi cột trong lưới QBE chứa
+thông tin về một field duy nhất từ một bảng hoặc query trên Table/query pane. Lưới
+thiết kế bao gồm các thành phần:
+
+                                Field list        Table/Query pane
+
+                                           Lưới QBE
+                Hình 3.7. Cửa sổ tạo
+
+     • Field: là nơi mà các tên field được tạo vào hoặc thêm vào và hiển thị trong kết
+quả truy vấn.
+
+     • Table: hiển thị tên của các bảng chứa các field tương ứng trên dòng Field.
+
+     • Sort: chỉ định kiểu sắp xếp dữ liệu của các field trong query.
+
+     • Show: quyết định để hiển thị các field trong Recordset.
+
+     • Criteria: Nhập các điều kiện lọc các record.
+
+     • Or: thêm các điều kiện lọc tương ứng với phép OR, nếu các biểu thức điều
+kiện ở các field cùng đặt trên một dòng thì tương ứng với phép AND.
+
+b. Các thao tác trong cửa sổ thiết kế query:
+
+     • Chọn field trong lưới thiết kế: Để chọn một field hoặc nhiều field trong
+
+                      Hình 3.8. Cửa sổ c
+
+lưới thiết kế, ta đưa chuột lên trên tên field khi chuột có dạng mũi tên màu đen hướng
+xuống thì click chuột để chọn, drag chuột để chọn nhiều field.
+
+     • Di chuyển field: Drag chuột trên tên field để di chuyển
+
+     • Chèn thêm field hoặc xóa field:
+
+     −Chèn thêm field: click nút Insert Columns, mặc định cột mới sẽ được chèn
+vào trước field hiện hành.
+
+     −Xóa field: chọn field cần xóa, click nút
+Delete Columns.
+                                                        Hình 3.9. Cửa sổ chèn cột
+     • Tạo nhãn cho field:
+
+        Để làm cho bảng dữ liệu truy vấn dễ dàng hơn để đọc, bạn có thể cung cấp
+các nhãn cho các field trong truy vấn điều này không ảnh hưởng đến tên của field hoặc
+cách dữ liệu được lưu trữ và sử dụng truy cập.
+
+     −Click phải trên tên field, chọn properties
+
+     −Tại thuộc tính Caption, nhập nhãn cho field.
+
+     • Thêm Table/Query vào truy vấn: Khi thiết kế query, nếu cần chọn thêm
+bảng, click nút Show Table trong nhóm lệnh Query Setup.
+
+     • Xóa Table/Query trong khỏi truy vấn: Click phải trên Table/Query cần xóa,
+chọn Remove Table.
+
+3.2.3 Sử dụng biểu thức điều kiện
+
+a. Cách nhập biểu thức điều kiện: Ngoài việc sử dụng các truy vấn để chọn các
+field hiển thị các thông tin cần thiết, bạn còn có thể sử dụng các truy vấn để hiển thị
+một số các record theo một điều kiện nào đó.
+
+    Biểu thức điều kiện là các quy tắc lọc áp dụng cho dữ liệu khi chúng được chiết
+xuất từ cơ sở dữ liệu, nhằm giới hạn các record trả về của truy vấn.
+
+     Ví dụ: người dùng chỉ muốn xem thông tin về các sinh viên của một lớp CDTHA.
+
+     Biểu thức điều kiện được nhập trên dòng Criteria và dòng Or của lưới thiết kế
+query và tại cột chứa giá trị
+của biểu thức điều kiện lọc.
+
+     Ví dụ: Chuỗi điều
+kiện “CDTHA” là giá
+trị trong field Malop, do
+đó    chuỗi   “CDTHA”
+được nhập trên dòng                    Hình 3.10. Cửa sổ ví dụ cách nhập biểu thức điều kiện
+Critetia tại cột Malop.
+
+b.Các loại dữ liệu dates, times, text, và giá trị trong biểu thức điều kiện:
+
+                            Kiểu dữ liệu                   Ví dụ
+                             Text              “Text”
+                             Date              #1-Feb-2010#
+                             Time              #12:00AM#
+                           Number              10
+                          Field name           [field name]
+c. Toán tử được sử dụng trong biểu thức điều kiện:
+
+                            Toán tử                       Ví dụ
+                            =             [Ngaylaphd]=#01/01/08#
+                            &lt;             [Ngaylaphd]&lt;#01/01/08#
+                           &lt;=              Year([ngaysinh])&lt;=1980
+                            &gt;              [soluong]&gt;50
+                           &gt;=              [dongia]&gt;=100
+                            &lt;&gt;             [donvitinh]&lt;&gt;”Kg”
+                  Between… and            Between 1/1/99 And 12/31/99
+
+                         Like             Like "s*"
+                        Is null           Is null
+                    In(v1, v2, …)         In(“java”, “c++”)
+     − Ngoài ra các hàm ngày giờ, hàm dữ liệu chuỗi,… cũng được sử dụng trong
+biểu thức điều kiện.
+
+3.3 Các toán tử sử dụng vào tiêu chuẩn lựa chọn
+
+3.3.1 Sử dụng ký tự đại diện
+
+    • Dùng ký tự đại diện để trích chọn các Field có trị là chuỗi ký tự hay Date/Time.
+
+      • Ký tự *        : Thay thế một nhóm ký tự bất kỳ.
+
+      • Ký tự ? : Thay thế 1 ký tự.
+
+      • Ký tự [ ] : Thay thế các ký tự trong ngoặc vuông.
+
+      • Ký tự !        : Phủ định.
+
+      • Ký tự -        : Từ ký tự đến ký tự.
+
+    • Vài ví dụ
+
+       Biểu thức tiêu             Access hiển thị              Tìm những trị
+           chuẩn
+
+           Sm?th            Like “Sm?th”               Smith, Smyth …
+
+           L*ng             Like “L*ng”                Ling, Levering,
+
+                                                       LakaTravel and Trading, …
+
+            *th             Like “*th”                 128th, Perth, …
+
+          */10/93           Like “*/10/93”             tất cả ngày của tháng 10/93
+
+3.3.2 Trích những mẩu tin không khớp với một trị khai báo
+
+    • Dùng toán tử NOT trong biểu thức tiêu chuẩn.
+
+    • Ví dụ:
+
+     + NOT “H*” hay NOT LIKE “H*” : những mẩu tin có ký tự đầu không phải là H
+
+    + NOT 2 : những mẩu tin có trị không phải là 2
+
+3.3.3 Trích mẩu tin có hoặc không có dữ kiện
+
+    • Dùng biểu thức NOT NULL hay IS NOT NULL cho Criteria để trích mẩu tin
+của Field có dữ kiện.
+
+    • Dùng biểu thức NULL hay IS NULL cho Criteria để trích mẩu tin của Field
+không có dữ kiện.
+
+3.3.4 Trích mẩu tin ứng với ngày hiện hành của máy hay 1 danh sách
+
+    • Nhập hàm DATE() vào dòng Criteria để trích những Record ứng với ngày hiện
+hành của máy tính.
+
+    • Dùng toán tử IN (tên1, tên2,…) để trích một trị trong danh sách. Danh sách
+được ghi trong cặp ngoặc đơn của toán tử IN và phân cách nhau bởi dấu phẩy.
+
+Ví dụ: In (“France”, “Germany”, “Japan”)
+
+3.3.5 Khai báo các phép tính trong biểu thức tiêu chuẩn
+
+     • Có thể khai báo các phép tính trong Field tiêu chuẩn, đặc biệt là với Field
+Date/Time. Ví dụ: Between DATE() And DATE()-5
+
+     • Trong biểu thức tiêu chuẩn, muốn tham chiếu đến trị của một Field khác thì rào
+tên Field bằng dấu ngoặc vuông [].
+
+     Ví dụ: &lt;=[ORDER DATE] + 30
+
+3.3.6 Truy vấn có nhiều điều kiện ở nhiều fields
+
+     Khi bạn muốn giới hạn các records dựa trên nhiều điều kiện ở nhiều field khác
+nhau, thì Access sẽ kết hợp các điều kiện lại với nhau bằng cách sử dụng toán tử And
+
+và Or, cho hai trường hợp:
+
+     −Nếu các điều kiện phải được thoả mãn đồng thời thì các điều kiện phải được
+liên kết nhau bởi phép AND, bằng cách nhập các điều kiện trên cùng một dòng
+Criteria trong lưới thiết kế query.
+
+     Ví dụ: Tìm những sinh viên có điểm môn CSDL &gt;=5
+
+         Hình 3.11. Cửa sổ ví dụ về truy vấn có nhiều điều kiện ở nhiều fields
+
+     - Nếu chỉ cần thỏa mãn một trong các điều kiện thì các điều kiện được liên kết
+nhau bởi phép OR, bằng cách nhập các điều kiện trên các dòng khác nhau trong lưới
+thiết kế query.
+
+Ví dụ: Tìm những sinh viên có điểm môn “CSDL” hoặc “CTDL” &gt;=5
+
+            Hình 3.12. Cửa sổ ví dụ về truy vấn có nhiều điều kiện ở nhiều fields
+
+a. Top value
+
+     Chức năng top value được sử dụng để hiển thị những record trên cùng của danh
+sách được tạo ra bởi một truy vấn.
+
+     Cách thực hiện:
+
+     −Nếu muốn hiển thị danh sách các record có giá trị cao nhất ở field được chỉ định
+thì sắp xếp field đó theo chiều giảm dần (Descending)
+
+     • Nếu muốn hiển thị danh sách các record có giá trị thấp nhất ở field được chỉ
+định thì sắp xếp field đó theo chiều tăng dần (Ascending).
+
+     • Trong ô return ta nhập vào số giá trị muốn hiển thị.
+
+     Các tùy chọn trong Top Values:
+
+     • All : Hiển thị tất cả các record của Query.
+
+     • 5 : Hiển thị 5 record đầu tiên.
+
+     • 25 : Hiển thị 25 record đầu tiên.
+
+     • 100 : Hiển thị 100 record đầu tiên.
+
+     • 5% : Hiển thị 5% record đầu tiên trên tổng số record.
+
+     • 25% : Hiển thị 25% record đầu tiên trên tổng số record.
+
+     Nếu các record thuộc Top Values có giá trị trùng nhau thì chúng cũng xuất hiện
+trong kết quả.
+
+     Nếu muốn chỉ xuất hiện duy nhất một record trong các record có giá trị trùng
+nhau ta click phải trong cửa sổ thiết kế query• chọn properties, tại thuộc tính Unique
+Values• chọn yes.
+
+       Hình 3.13. Cửa sổ thuộc tính để chọn record trong các record trùng nhau
+
+b. Tạo field tính toán trong query
+
+     Access có thể thực hiện các phép toán trong các query, form, report, và macro.
+Tuy nhiên các field tính toán thường được thực hiện trong query, từ ñó, bất kỳ form,
+report, hoặc macro có sử dụng các truy vấn này sẽ tự động truy cập tính giá trị.
+
+     Để làm được các phép tính trong một truy vấn, bạn tạo một field tính toán mới
+trong query. Tên của field tính toán không trùng với tên của các field trong bảng.
+
+     Cú pháp:
+
+     Ví dụ: Tạo Field ThanhTien:[SoLuong]*[DonGiaBan]
+
+                                  Field lấy từ bảng             Field tính toán
+
+                     Hình 3.14. Cửa sổ tạo field tính toán trong query
+
+c. Sử dụng Expresstion Builder
+
+     Expression Builder là một công cụ để giúp bạn tạo các biểu thức nhanh và dễ
+dàng hơn và có thể truy cập vào thư viện hàm của Access. Để sử dụng Expression
+Builder để xây dựng một biểu thức điều kiện hoặc tạo một field mới trong query ta
+thực hiện như sau:
+
+     • Trong cửa sổ thiết kế query.
+
+     • Click nút Builder trong nhóm lệnh
+Query Setup.
+
+     • Xuất hiện cửa sổ Expression Builder bao gồm khung trên cùng cho phép nhập biểu
+thức, bên dưới là 3 khung giúp bạn tìm tên field và các hàm cần thiết cho biểu thức.
+
+     • Khung Expression Elements chứa các đối tượng trong cơ sở dữ liệu.
+
+     • Để chọn các field ssưa vào biểu thức ta mở mục Database bằng cách double
+click vào tên của cơ sở dữ liệu hiện hành, chọn table hoặc query, các field trong table
+hoặc query sẽ hiển thị trong khung Expression Categories, double click để chọn tên
+field đưa vào biểu thức.
+
+    • Để chọn hàm bạn click mục function
+
+     • Khung Expression Categories: hiển thị
+các thành phần của expression theo nhóm.
+
+     • Khung Expression values chứa giá trị
+của các phần tử trong biểu thức, hoặc các hàm
+nếu chọn function trong khung Expression
+elements.                                             Hình 3.15. Cửa sổ
+
+3.4 Total query
+
+     Access cung cấp chức năng kết nhóm các record và thực hiện các phép thống kê
+dữ liệu trên nhóm record đó. Các hàm count, sum, min, max, avg là các hàm cơ bản
+trong Total Query.
+
+     Ví dụ: Đếm tất cả các học sinh trong mỗi lớp.
+
+     Kết quả của query trước khi tổng hợp dữ liệu
+
+                        Mã Lớp               Tên Lớp         Mã SV
+                       CCT1A        Cao đẳng Tin Học 1A       A101
+                       CCT1A        Cao đẳng Tin Học 1A       A102
+                       CCT1A        Cao đẳng Tin Học 1A       A103
+                       CCT1A        Cao đẳng Tin Học 1A       A104
+                       CCT1B        Cao đẳng Tin Học 1B       B101
+                       CCT1B        Cao đẳng Tin Học 1B       B102
+                       CCT1B        Cao đẳng Tin Học 1B       B103
+                       CCT1B        Cao đẳng Tin Học 1B       B104
+                       CCT1B        Cao đẳng Tin Học 1B       B105
+                       CCT2A        Cao đẳng Tin Học 2A       A201
+                       CCT2A        Cao đẳng Tin Học 2A       A202
+                       CCT2A        Cao đẳng Tin Học 2A       A203
+                       CCT2A        Cao đẳng Tin Học 2A       A204
+Sau khi tổng hợp dữ liệu ta có kết quả:
+
+                       Mã Lớp             Tên Lớp         TongsoSV
+                         CCT1A Cao đẳng Tin Học 1A             4
+                         CCT1B     Cao đẳng Tin Học 1B         5
+                         CCT2A Cao đẳng Tin Học 2A             4
+  3.4.1 Cách tạo Total Query:
+
+        Để tạo một Total query, bạn thực hiện các
+  bước sau:
+
+        • Tạo một query mới bằng Design view.
+
+        • Chọn các table cần sử dụng trong query từ cửa sổ Show Table.
+
+        • Chọn các field chứa dữ liệu cần thống kê vào lưới thiết kế.
+
+    • Chọn Query Tools, chọn tab Design.
+
+    • Trong nhóm lệnh Show/Hide, click nút Totals.
+
+    • Trên lưới thiết kế query xuất hiện thêm dòng Total.
+
+    • Tại mỗi field, chọn các tùy chọn trên dòng Total.
+
+                     Hình 3.16. Cửa sổ sử dụng Total Query
+
+3.4.2 Các tùy chọn trên dòng Total:
+
+         Tùy chọn                                Ý nghĩa
+        Group by      Nhóm các record có giá trị giống nhau tại một số field
+                      được chỉ định thành một nhóm.
+          Sum         Tính tổng các giá trị trong một nhóm record tại field được chỉ
+                      định.
+           Avg        Tính trung bình cộng các giá trị trong một nhóm record tại
+                      field được chỉ định.
+          Max         Tìm giá trị lớn nhất trong nhóm record tại field được chỉ
+           Min        định. giá trị nhỏ nhất trong nhóm record tại field được chỉ
+                      Tìm
+          Count       định.
+                       Dếm số record trong nhóm.
+          First       Tìm giá trị đầu tiên trong nhóm tại cột được chỉ định.
+           Last        Tìm giá trị cuối cùng trong các giá trị trên cột của nhóm
+
+          Tùy chọn                                      Ý nghĩa
+         Expression       Dùng cho field chứa biểu thức tính toán.
+
+           Where          Dùng cho field chứa điều kiện dùng ñể lọc Record trước
+                     khi tính toán và không hiển thị trong kết quả.
+3.5 Queries tham số (Parameter Queries)
+
+     Query tham số là query nhắc người dùng nhập điều kiện cho query tại thời điểm
+query thực thi.
+
+     Cách tạo:
+
+     • Trong cửa sổ thiết kế query, chọn các bảng/query tham gia truy vấn.
+
+     • Chọn các field hiển thị trong kết quả .
+
+     • Tại field chứa diều kiện lọc, nhập câu nhắc trên dòng Critetia và dặt trong cặp dấu [ ].
+
+     Ví dụ: Xem thông tin điểm của một sinh viên tùy ý
+
+                      Hình 3.17. Cửa sổ sử dụng Parameter Query
+
+Khi thực thi query, chương trình yêu cầu nhập giá trị cho tham số
+
+            Hình 3. 18. Cửa sổ
+3.6 Crosstab query
+
+3.6.1 Khái niệm:
+
+     Crosstab query là một query dùng để tổng hợp dữ liệu dưới dạng bảng tính hai
+chiều, trong đó tiêu đề của dòng và cột của bảng là các giá trị được kết nhóm từ các
+field trong bảng dữ liệu, phần thân của bảng tính là dữ liệu được thống kê bởi các hàm:
+Sum, count, avg, min, max, và các chức năng khác.
+
+     Ví dụ: Thống kê tổng số sinh viên theo loại giỏi, khá, trung bình, yếu theo từng lớp
+
+                                  Hình 3.19. Dạng crosstab
+3.6.2 Cách tạo:
+
+     a) Tạo Crosstab query bằng chức năng
+Wizard:
+
+     • Trên thanh Ribbon, click nút Create.
+
+     • Trong nhóm lệnh Query, chọn Query
+Wizard.
+
+     • Trong cửa sổ New Query, chọn Crosstab
+Query Wizard•OK.
+
+• Chọn dữ liệu nguồn cho Crosstab
+  Query, có thể là table hoặc
+  Query• Next.
+
+• Chọn field làm Row heading trong
+  khung Available Fields
+
+• Click nút &gt; để chọn field.
+
+• Click Next.
+
+- Chọn field làm column heading
+
+•Next.
+
+     • Chọn field chứa dữ liệu
+thống kê trong khung Fields.
+
+     • Chọn hàm thống kê trong
+khung Function•Next
+
+     • Nhập tên cho query và click
+nút Finish để kết thúc.
+                                     Hình 3.20. Các bước tạo Crosstab query bằng wizard
+
+      Hạn chế khi tạo crosstab query bằng wizard:
+
+     Nếu các field trong Crosstab query được lấy từ nhiều bảng hoặc trong query có
+chứa các điều kiện lọc dữ liệu thì phải tạo một select query chứa tất cả các field và các
+điều kiện, sau đó lấy select query này làm dữ liệu nguồn tạo crosstab query.
+
+b) Tạo Crosstab query bằng Design
+
+     Một crosstab query cần ít nhất là 3 field:
+
+     • Một field để lấy giá trị làm tiêu đề cho cột gọi là column heading.
+
+     • Một field (hoặc nhiều field) để lấy giá trị làm tiêu đề cho dòng gọi là row heading.
+
+     • Một field chứa dữ liệu thống kê (Value)
+
+      Ví dụ:
+
+                                                        Column heading
+
+                                                                                Value
+                        Hình 3.21. Dạng thể hiện Crosstab query
+
+     Để tạo một Crosstab query bằng Design View ta thực hiện như sau:
+
+     • Trong cửa sổ thiết kế Query, trên thanh
+Ribbon, chọn Query Tools, chọn Tab Design.
+
+     • Trong nhóm lệnh Query Type, chọn
+Crosstab.
+
+      Trong lưới thiết kế query xuất hiện thêm dòng Crosstab và dòng Total.
+
+     Chỉ định chức năng cho các field:
+
+     • Đối với các field làm row heading và column heading thì trên dòng Total ta
+chọn chức năng Group by, trên dòng Crosstab, chỉ định chức năng Row Heading hoặc
+Column Heading.
+
+     • Đối với field chứa dữ liệu để thống kê thì trên dòng Total, chọn hàm thống kê
+(Sum, Avg, Count, Min, Max, …), trên dòng Crosstab chọn Value.
+
+     • Đối với các field chứa điều kiện lọc dữ liệu thì trên dòng Total chọn Where, các
+field này sẽ không xuất hiện trong kết quả.
+
+            Hình 3.22. Cửa sổ tạo Crosstab query bằng Design View
+
+     Lưu ý: Row Heading và Column Heading có thể hoán đổi nhau, nhưng đối với
+những field chứa nhiều giá trị thì nên chọn làm Row Heading.
+
+3.7 Các loại query tạo bằng chức năng Wizard
+
+3.7.1 Find Duplicate query
+
+     Find Duplicate query Wizard dùng để tìm những record có giá trị trùng lắp ở một
+số field. Ví dụ, tìm những nhân viên có trùng ngày sinh, trùng tên, …
+
+Cách tạo:
+
+     • Trong cửa sổ làm việc của Access, trên thanh Ribbon, chọn tab Create.
+
+     • Trong nhóm lệnh Queries click nút Query Wizard.
+
+     • Trong cửa sổ New Query chọn Find Duplicate query Wizard.
+
+     • Xuất hiện cửa sổ Find Duplicates
+query wizard• OK.
+
+     • Chọn bảng chứa field muốn tìm
+dữ liệu trùng lắp• Next.
+
+     • Chọn field chứa     dữ liệu trùng
+lắp•Next.
+                                                      Hình 3.23. Cửa sổ tạo
+     • Chọn các field muốn hiển thị trong kết quả• Next.
+
+     • Nhập tên cho query•Finish.
+
+3.7.2 Find Unmatched query Wizard
+
+     Trong quan hệ 1-n, một record trong bảng 1 quan hệ với nhiều record trong bảng
+n. Tuy nhiên cũng có những record không quan hệ với bất kỳ record nào trong bảng n.
+
+     Ví dụ, những nhân viên chưa tham gia lập hóa đơn, những nhân viên này tồn tại
+trong bảng NHANVIEN, nhưng không tồn tại trong bảng HOADON.
+
+   Find Unmatched query Wizard dùng để tìm những record có trong bảng 1 nhưng
+không có trong bảng n
+
+     Cách tạo: Trong cửa sổ làm việc của Access, trên thanh Ribbon, chọn tab Create.
+
+     • Trong nhóm lệnh Queries click nút Query Wizard.
+
+     • Trong cửa sổ New Query chọn Find Unmatched query Wizard• OK.
+
+     • Xuất hiện cửa sổ Find Unmatched query wizard.
+
+     o Chọn bảng 1 là bảng chứa các record cần tìm• Next
+
+     o Chọn bảng n là bảng chứa record quan hệ• Next
+
+     Ví dụ: tìm những sinh viên
+chưa thi, bảng 1 là bảng SINHVIEN,
+bảng n là bảng KETQUA, field quan
+hệ là field MASV
+
+     • Chọn field quan hệ giữa hai
+bảng • Next.
+
+     • Chọn các field hiển thị
+trong kết quả•Next.                                  Hình3.24. Cửa sổ tạo
+
+     • Nhập tên cho query• Finish.
+
+3.8 Action query
+
+     Action query là loại query mà khi thực thi sẽ làm thay đổi dữ liệu trong các bảng
+của cơ sở dữ liệu, sự thay đổi có thể làm cho cơ sở dữ liệu bị sai, do đó trước khi thực
+thi các loại action query bạn nên chép một file dự phòng.
+
+     Có 4 loại action query:
+
+     • Update query.
+
+     • Make-Table query.
+
+     • Append query.
+
+     • Delete query.
+
+3.8.1   Update query
+
+a) Chức năng: Update query dùng để cập nhật dữ liệu trong các bảng.
+
+b) Cách tạo
+
+     •Trong cửa sổ làm việc của Access, trên thanh Ribbon chọn tab Create, trong
+nhóm lệnh Queries, click nút Query Design.
+
+     •Chọn các bảng chứa dữ liệu
+muốn cập nhật.
+
+     •Thanh Ribbon chuyển sang tab Design
+
+     •Trong nhóm lệnh Query Type, Click nút Update, Trong lưới thiết kế xuất hiện
+dòng Update to.
+
+     •Chọn field chứa dữ liệu cần cập nhật và các field chứa điều kiện.
+
+     •Tại field chứa dữ liệu muốn cập nhật và trên dòng Update to ta nhập biểu thức
+cập nhật dữ liệu.
+
+                 Hình 3.25. Cửa sổ tạo
+
+c) Thực thi Update Query:
+
+     • Click nút run để thực thi query.
+
+     • Khi thực thi query sẽ xuất hiện hộp thoại thông báo số record được Update.
+
+      • Nếu đồng ý• click yes.
+
+      • Xem kết quả trong bảng chứa dữ liệu Update.
+
+3.8.2 Make-Table query
+
+a) Chức năng: Make-Table dùng để tạo một bảng mới dựa trên các bảng hoặc query có sẵn.
+
+b) Cách tạo: Trong cửa sổ làm việc của Access, trên thanh Ribbon chọn tab Create,
+  trong nhóm lệnh Queries, click nút Query Design.
+
+     • Chọn các bảng hoặc query làm dữ liệu nguồn cho Make- Table. Thanh Ribbon
+chuyển sang tab Design
+
+     • Chọn các field muốn hiển thị trong
+bảng mới.
+
+     • Trong nhóm lệnh Query Type, click nút Make-Table.
+
+     • Xuất hiện hộp thoại Make Table với các tùy chọn:
+
+     • Table name: Nhập tên bảng mới.
+
+                        Hình 3.26. Cửa sổ tạo Make-Table
+     • CurrentDatabase: Bảng mới ñược lưu trong cơ sở dữ liệu hiện hành.
+
+     • Another Database: Bảng mới được lưu trong một cơ sở dữ liệu khác, click
+nút browse để tìm cơ sở dữ liệu chứa bảng mới.
+
+     • Click nút OK để tạo Make-Table.
+
+c) Thực thi Make-Table Query
+
+     Click nút Run để thực thi query, xuất hiện hộp thông báo số record được đưa vào
+bảng mới.
+
+Nếu đồng ý• Click yes, khi đó bảng mới sẽ được tạo, xem kết quả trong phần Table.
+
+3.8.3 Append query
+
+a) Chức năng: Append query dùng để nối dữ liệu vào cuối một bảng có sẵn.
+
+b) Cách tạo: Trong cửa sổ làm việc của Access, trên thanh Ribbon chọn tab Create,
+
+trong nhóm lệnh Queries, click nút Query Design.
+
+     • Chọn các bảng hoặc query làm dữ liệu nguồn cho Append Query. Thanh
+Ribbon chuyển sang tab Design.
+
+     • Chọn các field chứa dữ liệu nối vào bảng có sẵn, các field được chọn phải
+tương ứng với các field trong bảng muốn nối dữ liệu vào.
+
+     • Click nút Append trong nhóm lệnh Query Type.
+
+     • Xuất hiện hộp thoại Append•Chọn bảng muốn
+nối dữ liệu vào.
+
+     • Trong lưới thiết kế xuất hiện dòng Append to, chứa tên các field tương ứng
+trong bảng có sẵn.
+
+                     Make-Table
+                       Hình 3.27. Cửa sổ tạo Append
+c) Thực thi Append query
+
+     • Click nút run để thực thi query.
+
+     • Xuất hiện hộp thông báo số record được nối vào.
+
+     • Nếu đồng ý • click yes, xem kết quả trong phần Table.
+
+3.8.4 Delete query
+
+a) Chức năng:Delete query xóa các record từ các bảng, thông thường dựa trên các
+điều kiện mà bạn cung cấp, Delete query xóa tất cả các record trong một bảng trong
+khi vẫn giữ nguyên cấu trúc của bảng.
+
+     Delete Query là nguy hiểm vì nó xóa vĩnh viễn dữ liệu từ các bảng trong cơ sở
+dữ liệu của bạn, do đó trước khi thực thi loại query này cần phải có một backup.
+
+b) Cách tạo:
+
+     Trong cửa sổ làm việc của Access, trên thanh Ribbon chọn tab Create, trong
+nhóm lệnh Queries, click nút Query Design.
+
+     • Chọn bảng hoặc query chứa dữ liệu cần xóa. Thanh Ribbon chuyển sang tab Design.
+
+     • Click nút Delete trong nhóm Query Type.
+
+     • Chọn field chứa điều kiện xóa, lưới thiết
+kế xuất hiện dòng Delete•tại field chứa điều
+kiện xóa ta chọn where.
+
+     • Nhập điều kiện xóa trên dòng Criteria.
+
+                               Hình 3.28. Cửa sổ tạo
+
+c) Thực thi Delete Query
+
+Click nút run để thực thi, xuất hiện hộp thông báo số record bị xóa
+
+                 Hình 3.29: Cửa sổ xác nhận thực thi
+
+Nếu đồng ý • yes, các record trong bảng đã bị xóa, xem kết quả trong phần Table.
+
+                          BÀI TẬP KẾT THÚC CHƯƠNG 3
+
+CÂU 1: Thực hiện trên CSDL Quản lý công trình (QLCT.ACCDB) các yêu cầu:
+
+Mở tập tin QLCT.ACCDB ra và chọn trang Queries, thực hiện các truy vấn sau:
+Q1: Liệt kê các công trình có tên bắt đầu là chữ N và khởi công năm 2016.
+Q2: Liệt kê các vật tư có chữ A trong mã vật tư
+Q3: Liệt kê các công trình đã khởi công từ 3 năm trở lên
+Q4: Liệt kê MAVT, TENVT, SOLUONG, DONGIA mà có giá trị từ 50000 đến
+100000.
+Q5: Liệt kê MAVT, TENVT, SOLUONG, DONGIA, THANHTIEN trong đó
+THANHTIEN=DONGIA*SOLUONG
+Q6: Liệt kê MACT, TENCT, NGAYKC, tổng thành tiền vật tư đã xuất trong tháng
+3/2016.
+Q7: Cập nhật số lượng trong bảng CHITIET_XUAT thêm 10 đơn vị
+Q8: Tạo Query theo mẫu sau:
+
+Câu 2: Thực hiện trên CSDL VPP .ACCDB các yêu cầu:
+Mở tập tin VPP .ACCDB ra và chọn trang Queries, thực hiện các truy vấn sau:
+
+- Liệt kê các khách hàng ở Q1.
+- Liệt kê các khách hàng không có số điện thoại
+- Liệt kê các mặt hàng có đơn giá dưới 100000
+- Liệt kê các mặt hàng bút có đơn vị tính là cây
+- Liệt kê các mặt hàng đã được đặt trong tháng 1/2016
+- Liệt kê các hóa đơn đã đặt và giao trong vòng 3 ngày
+- Liệt kê các mặt hàng có tổng số lượng bán trên 100
+- Liệt kê các hóa đơn có tổng trị giá từ 1 triệu trở lên
+- Liệt kê khách hàng với tổng giá trị hóa đơn mua hàng nhiều nhất
+- Thêm dữ liệu “KH11”; “ĐH Phạm Văn Đồng”; “986 QUANG TRUNG”; “8353657” vào bảng
+KHACHHANG
+-Tạo bảng MUA_HANG với các trường MAKH, TENKH, SOHD, SOLUONG
+Câu 3:Thực hiện trên CSDL Quản lý lương cán bộ (QLLUONG.MDB) các yêu
+cầu:
+Bài số 1: Hãy tính và in ra bảng lương của cơ quan bao gồm các thông tin: Hoten,
+ngaysinh, tenchucvu, tenphongban, luongchinh, phucapcv, dangphi,congdoanphi,
+thuclinh.
+Trong đó: Luongchinh = hesoluong * 290000
+            Dangphi = 20,000 với những ai là Đảng viên
+            Congdoanphi = 5%Luongchinh với những ai đã vào công đoàn
+Bài số 2: Hãy đưa ra danh sách các cán bộ là Đảng viên mà chưa vào công đoàn;
+Bài số 3: Hãy lọc ra danh sách cán bộ của một phòng ban nào đó, tên phòng ban được
+nhập từ bàn phím khi query được kích hoạt;
+Bài số 4: Hãy lọc ra danh sách cán bộ mà năm sinh rơi vào trong một khoảng năm nào
+đó được nhập vào từ bàn phím. Ví dụ: khi kích hoạt query, Access yêu cầu nhập vào
+khoảng năm sinh từ năm nào, đến năm nào. Khi đó query sẽ lọc ra danh sách các cán
+bộ thoả mãn điều kiện đó;
+
+Bài số 5: Lọc ra danh sách cán bộ có tên được nhập vào từ bàn phím khi kích hoạt
+query. Ví dụ: khi query kích hoạt sẽ hỏi: Gõ vào tên cần xem? Sau khi gõ vào một tên
+(có thể cả họ hoặc cả họ và tên), máy tính sẽ lọc ra danh sách cán bộ thảo mãn điều
+kiện;
+Bài số 6: Lọc ra danh sách cán bộ đến tuổi nghỉ hưu, biết rằng điều kiện nghỉ hưu xác
+định như sau: - Là Nam giới, tuổi &gt;=60
+     - Là Nữ giới, tuổi &gt;=55
+Bài số 7: Hãy đưa ra bảng tổng hợp số cán bộ đã vào Đảng hay chưa vào Đảng
+theo giới tính như sau:
+
+Bài số 8: Hãy đưa ra bảng tổng hợp tổng số cán bộ theo từng loại chức vụ của các
+phòng ban như sau:
+
+Bài số 9: Đưa ra bảng tổng hợp về chức vụ theo giới tính như sau:
+
+Bài số 10: Đưa ra bảng tổng hợp lương theo từng phòng ban như sau:
+
+Câu 4: Thực hiện trên CSDL Quản lý bán hàng các yêu cầu:
+Bài số 1: Tạo query hiển thị chi tiết thông tin từng hàng bán:
+
+Bài số 2: Tạo query đưa ra bảng tổng hợp tổng tiền bán được từng ngày của cửa hàng
+như sau:
+
+Bài số 3: Tạo query đưa ra bảng tổng hợp tổng số bán và tổng tiền đã bán ra của từng
+loại mặt hàng như sau:
+
+Bài số 3: Tạo bảng tính tổng tiền từng hoá đơn bán hàng như sau:
+
+Bài số 4: Lập bảng tổng hợp số lượng bán ra từng ngày của từng mặt hàng như
+sau:
+
+Bài số 5: Lập bảng tổng hợp số lượng mua từng mặt hàng của các khách hàng
+như sau:
+
+               BÀI TẬP VỀ CÁC LOẠI QUERY KHÁC
+
+  1. Tạo tập tin CSDL để quản lý điểm của học sinh đặt tên là
+QLD.ACCDB và tạo trong đó các table sau đây:
+Table GIAOVIEN có cấu trúc:
+
+Table LOPHOC có cấu trúc:
+
+Table HOCSINH có cấu trúc: khóa chính là MAHS
+
+Table TONGKET có cấu trúc sau: khóa chính là MAHS và MON
+
+3. Liên kết các table và nhập dữ liệu sau:
+
+Table HOCSINH
+
+Tạo query Update field LOP với nội dung là 4 ký tự đầu của field MAHS
+trong HOCSINH
+Table DIEMDANH có cấu trúc sau: khóa chính là MAHS và NGAY
+
+4. Thực hiện các truy vấn sau
+- Query 1: Liệt kê MAHS, HO, TEN, LOP, TENGV chủ nhiệm lớp và học buổi
+“Chiều”
+- Query 2: Liệt kê MAHS, HO, TEN, LOP, MON, điểm TB cả năm của một môn học
+bất kỳ nhập vào.
+- Query 3: Liệt kê MAHS, HO, TEN, LOP, điểm tổng kết (là trung bình cộng
+của điểm cả năm các môn học cộng lại) theo từng học sinh.
+- Query 4: Liệt kê các học sinh chưa có nhập điểm tổng kết các môn học.
+- Query 5: Liệt kê lớp, tổng số học sinh, tổng số học sinh nam, tổng số học sinh nữ.
+- Query 6: dùng make table query tạo table mới tên HS_KG gồm MAHS, HO,
+TEN, MON, điểm cả năm của học sinh mà đạt từ 7 điểm trở lên.
+
+- Query 7: Dựa vào query 3, liệt kê tất cả thông tin kèm theo cột xếp loại với nội
+dung là Yếu nếu điểm tổng kết dưới 5, là Trung bình nếu điểm tổng kết từ 5
+đến dưới 7, là Khá nếu
+điểm tổng kết từ 7 đến dưới 9, ngược lại từ 9 đến 10 là Giỏi.
+- Query 8: Liệt kê các giáo viên không chủ nhiệm lớp nào.
+- Query 9: Liệt kê MAHS, HO, TEN, LOP, tổng số ngày nghỉ trong một tháng bất kỳ
+nhập vào.
+- Query 10: Liệt kê MAHS, HO, TEN, số ngày nghỉ có phép, số ngày nghỉ không
+phép.
+- Query 11: Liệt kê lớp có tổng số ngày nghỉ của học sinh nhiều nhất.
+- Query 12: dùng make table query tạo ra table mới tên NGHI_K10 gồm
+MAHS, HO, TEN, LOP, NGAY, PHEP của học sinh thuộc khối lớp 10.
+- Query 13: Dựa vào query 10, liệt kê tất cả thông tin kèm theo cột xếp loại đạo đức
+với nội dung là D nếu nghỉ không phép từ 3 ngày trở lên, là C nếu không phép từ 1 đến
+2 ngày, là B nếu nghỉ có phép từ 3 ngày trở lên, ngược lại các điều trên thì là A.
+- Query 14: dùng append query để thêm vào các field trong
+Query 14: dùng append query để thêm vào các field trong table NGHI_K10
+phần điểm danh nghỉ học của các học sinh thuộc khối lớp 11.
+- Query 15: dùng delete query để xóa các record trong table HS_KG mà có điểm
+cả năm là dưới 8.</baihoc>
+<baitap bai="3" loai="goc" de="CÂU 1: Thực hiện trên CSDL Quản lý công trình (QLCT.ACCDB) các yêu cầu: Mở tập tin QLCT.ACCDB ra và chọn trang Queries, thực hiện các truy vấn sau: Q1: Liệt kê các công trình có tên bắt đầu là chữ N và khởi công năm 2016. Q2: Liệt kê các vật tư có chữ A trong mã vật tư Q3: Liệt kê các công trình đã khởi công từ 3 năm trở lên Q4: Liệt kê MAVT, TENVT, SOLUONG, DONGIA mà có giá trị từ 50000 đến 100000. Q5: Liệt kê MAVT, TENVT, SOLUONG, DONGIA, THANHTIEN trong đó THANHTIEN=DONGIA*SOLUONG Q6: Liệt kê MACT, TENCT, NGAYKC, tổng thành tiền vật tư đã xuất trong tháng 3/2016. Q7: Cập nhật số lượng trong bảng CHITIET_XUAT thêm 10 đơn vị Q8: Tạo Query theo mẫu sau:" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 64-100."/>
+<baitap bai="3" loai="goc" de="Câu 2: Thực hiện trên CSDL VPP .ACCDB các yêu cầu: Mở tập tin VPP .ACCDB ra và chọn trang Queries, thực hiện các truy vấn sau: - Liệt kê các khách hàng ở Q1. - Liệt kê các khách hàng không có số điện thoại - Liệt kê các mặt hàng có đơn giá dưới 100000 - Liệt kê các mặt hàng bút có đơn vị tính là cây - Liệt kê các mặt hàng đã được đặt trong tháng 1/2016 - Liệt kê các hóa đơn đã đặt và giao trong vòng 3 ngày - Liệt kê các mặt hàng có tổng số lượng bán trên 100 - Liệt kê các hóa đơn có tổng trị giá từ 1 triệu trở lên - Liệt kê khách hàng với tổng giá trị hóa đơn mua hàng nhiều nhất - Thêm dữ liệu “KH11”; “ĐH Phạm Văn Đồng”; “986 QUANG TRUNG”; “8353657” vào bảng KHACHHANG -Tạo bảng MUA_HANG với các trường MAKH, TENKH, SOHD, SOLUONG" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 64-100."/>
+<baitap bai="3" loai="goc" de="Câu 3:Thực hiện trên CSDL Quản lý lương cán bộ (QLLUONG.MDB) các yêu cầu: Bài số 1: Hãy tính và in ra bảng lương của cơ quan bao gồm các thông tin: Hoten, ngaysinh, tenchucvu, tenphongban, luongchinh, phucapcv, dangphi,congdoanphi, thuclinh. Trong đó: Luongchinh = hesoluong * 290000 Dangphi = 20,000 với những ai là Đảng viên Congdoanphi = 5%Luongchinh với những ai đã vào công đoàn Bài số 2: Hãy đưa ra danh sách các cán bộ là Đảng viên mà chưa vào công đoàn; Bài số 3: Hãy lọc ra danh sách cán bộ của một phòng ban nào đó, tên phòng ban được nhập từ bàn phím khi query được kích hoạt; Bài số 4: Hãy lọc ra danh sách cán bộ mà năm sinh rơi vào trong một khoảng năm nào đó được nhập vào từ bàn phím. Ví dụ: khi kích hoạt query, Access yêu cầu nhập vào khoảng năm sinh từ năm nào, đến năm nào. Khi đó query sẽ lọc ra danh sách các cán bộ thoả mãn điều kiện đó; Bài số 5: Lọc ra danh sách cán bộ có tê" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 64-100."/>
+<baitap bai="3" loai="goc" de="Câu 4: Thực hiện trên CSDL Quản lý bán hàng các yêu cầu: Bài số 1: Tạo query hiển thị chi tiết thông tin từng hàng bán: Bài số 2: Tạo query đưa ra bảng tổng hợp tổng tiền bán được từng ngày của cửa hàng như sau: Bài số 3: Tạo query đưa ra bảng tổng hợp tổng số bán và tổng tiền đã bán ra của từng loại mặt hàng như sau: Bài số 3: Tạo bảng tính tổng tiền từng hoá đơn bán hàng như sau: Bài số 4: Lập bảng tổng hợp số lượng bán ra từng ngày của từng mặt hàng như sau: Bài số 5: Lập bảng tổng hợp số lượng mua từng mặt hàng của các khách hàng như sau: BÀI TẬP VỀ CÁC LOẠI QUERY KHÁC 1. Tạo tập tin CSDL để quản lý điểm của học sinh đặt tên là QLD.ACCDB và tạo trong đó các table sau đây: Table GIAOVIEN có cấu trúc: Table LOPHOC có cấu trúc: Table HOCSINH có cấu trúc: khóa chính là MAHS Table TONGKET có cấu trúc sau: khóa chính là MAHS và MON 3. Liên kết các table và nhập dữ liệu sau: Table HOCSINH T" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 64-100."/>
+<baitap bai="3" loai="goc" de="1. Tạo tập tin CSDL để quản lý điểm của học sinh đặt tên là QLD.ACCDB và tạo trong đó các table sau đây: Table GIAOVIEN có cấu trúc: Table LOPHOC có cấu trúc: Table HOCSINH có cấu trúc: khóa chính là MAHS Table TONGKET có cấu trúc sau: khóa chính là MAHS và MON" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 64-100."/>
+<baitap bai="3" loai="goc" de="3. Liên kết các table và nhập dữ liệu sau: Table HOCSINH Tạo query Update field LOP với nội dung là 4 ký tự đầu của field MAHS trong HOCSINH Table DIEMDANH có cấu trúc sau: khóa chính là MAHS và NGAY" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 64-100."/>
+<baitap bai="3" loai="goc" de="4. Thực hiện các truy vấn sau - Query 1: Liệt kê MAHS, HO, TEN, LOP, TENGV chủ nhiệm lớp và học buổi “Chiều” - Query 2: Liệt kê MAHS, HO, TEN, LOP, MON, điểm TB cả năm của một môn học bất kỳ nhập vào. - Query 3: Liệt kê MAHS, HO, TEN, LOP, điểm tổng kết (là trung bình cộng của điểm cả năm các môn học cộng lại) theo từng học sinh. - Query 4: Liệt kê các học sinh chưa có nhập điểm tổng kết các môn học. - Query 5: Liệt kê lớp, tổng số học sinh, tổng số học sinh nam, tổng số học sinh nữ. - Query 6: dùng make table query tạo table mới tên HS_KG gồm MAHS, HO, TEN, MON, điểm cả năm của học sinh mà đạt từ 7 điểm trở lên. - Query 7: Dựa vào query 3, liệt kê tất cả thông tin kèm theo cột xếp loại với nội dung là Yếu nếu điểm tổng kết dưới 5, là Trung bình nếu điểm tổng kết từ 5 đến dưới 7, là Khá nếu điểm tổng kết từ 7 đến dưới 9, ngược lại từ 9 đến 10 là Giỏi. - Query 8: Liệt kê các giáo viên khô" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 64-100."/>
+<baihoc stt="4" tieude="Chương 4. Thiết kế giao diện với biểu mẫu (Form)">Chương 4: THIẾT KẾ GIAO DIỆN VỚI BIỂU MẪU (FORM)
+
+Thời lượng: 06 tiết lý thuyết + 06 tiết thực hành
+
+Kết thúc chương này, sinh viên có thể:
+
+   • Hiểu được khái niệm biểu mẫu
+
+   • Biết được các thành phần của biểu mẫu
+
+   • Biết chức năng của các điều khiển trên biểu mẫu
+
+   • Thiết kế được các loại biểu mẫu
+
+   • Tạo được ô tính toán trên biểu mẫu
+
+4.1 Khái niệm về biểu mẫu:
+
+     Biểu mẫu hay còn gọi là Form, là giao diện chính dùng để giao tiếp giữa người
+dùng và ứng dụng, form được sử dụng để nhập dữ liệu, xem thông tin, chỉnh sửa dữ
+liệu, hiển thị thông báo, điều khiển ứng dụng, …
+
+     Để thiết kế form cần phải chọn dữ liệu nguồn cho form, dữ liệu nguồn của form
+có thể là table hoặc query. Nếu dữ liệu nguồn là các field trên một bảng thì lấy bảng đó
+làm dữ liệu nguồn, nếu dữ liệu nguồn là các field trên nhiều bảng thì phải tạo query
+làm dữ liệu nguồn cho form.
+
+4.2 Các thành phần của biểu mẫu, chức năng của các điều khiển Control
+
+4.2.1 Các thành phần của biểu mẫu
+
+     • Form header: Chứa nội dung tiêu đề của form. Để chèn nội dung vào tiêu đề
+của form ta sử dụng các công cụ trong nhóm lệnh Header/Footer
+
+     • Form footer: Chứa nội dung của phần cuối form, thường đặt các ô tính toán
+thống kê dữ liệu cho form trong phần form footer. Để bật hoặc tắt thanh form
+Header/Footer click phải trên thanh Header/Footer của form, chọn hoặc bỏ chọn lệnh
+Form Header/Footer.
+
+     • Detail: chứa nội dung chính của form, phần này hiển thị nội dung trong dữ liệu
+nguồn của form hoặc các control đưa vào từ toolbox.
+
+     • Page Header / Page Footer: Là phần tùy chọn và xuất hiện ở đầu cuối trang chỉ
+định (hiệu lực khi in).
+
+              Hình 4.1.
+
+4.2.2 Chức năng của các điều khiển Control
+
+4.2.2.1 Thêm một control vào form
+
+     Để thêm một control vào form ta làm các bước như sau:
+
+     • Chuyển form sang dạng Design view, Thanh Ribbon chuyển sang Form Design Tools.
+
+     • Chọn tab Design, trong nhóm Control, chọn các control
+
+     • Drag chuột vẽ vào form tại bất kỳ vị trí nào mà bạn mong muốn.
+
+     • Đối với các control có sự trợ giúp của Control Wizard thì có thể thiết kế bằng
+hai cách: Design hoặc Wizard bằng cách bật tắt nút Cotrol Wizard.
+
+                         Hình 4.2. Các control để thiết kế form
+4.2.2.2.   Các loại form control
+
+    Control       Tên                                    Ý nghĩa
+                                     Có 2 loại
+
+                Textbox      − Bound control: chứa nội dung của field
+
+                             − Unbound control: không có dữ liệu nguồn, thường
+                             dùng để nhập công thức tính toán.
+                 Label       Sử dụng để tạo nhãn hoặc hyperlink
+
+                 Button      Nút lệnh dùng để thực hiện lệnh khi click
+                  Tab        Hiển thị dữ liệu thành từng nhóm trên nhiều tab khác
+                             nhau.
+               Hyperlink        Tạo hyperlink
+
+              Web Browser       Cửa sổ trình duyệt
+
+               Navigation       Tab dùng để hiển thị From hoặc Report trong cơ sở dữ
+                             liệu.
+              Option group      Nhóm các tùy chọn
+
+               Page Break       Ngắt trang
+
+              Combo box          Là một Drop-down menu cho phép chọn một tùy
+                             chọn trong danh sách hoặc nhập thêm tùy chọn mới
+                  Char           Tạo một đồ thị bằng wizard
+
+                  Line           Vẽ đường thẳng
+
+    Control          Tên                                     Ý nghĩa
+                 Toggle button       Nút có hai trạng thái on/off
+
+                                     Là một Drop-down menu cho phép chọn một tùy
+
+                   List box      chọn trong danh sách nhưng không được nhập thêm giá
+                                 trị mới
+                   Rectangle          Vẽ hình chữ nhật
+
+                  Check box          Hộp chọn, có hai trạng thái check và uncheck
+
+                   Unbound           Cho phép nhúng các đối tượng từ các phần mềm
+                 object frame khác như: graph, picture,… mà nó không được lưu trữ
+                                 trong field của bảng
+                  Attachment         Sử dụng cho những field có kiểu Attachment
+
+                 Option button       Là một thành phần của option group
+
+                   Subform/          Dùng để tạo subform hoặc subreport
+                   Subreport
+                 Bound object        Cho phép nhúng các đối tượng từ các phần mềm khác
+
+                    frame        như: graph, picture,… mà nó được lưu trữ trong field của
+                                 bảng
+                    Image               Hình loại Bitmap
+
+4.2.2.3         Định dạng các control trên form
+
+a) Canh lề cho các control
+
+     Chọn các control cần canh lề và thực hiện một trong các
+cách như sau:
+
+     • Click phải và chọn Align, sau đó chọn một trong các
+kiểu canh lề trên submenu.
+
+      • Chọn tab Arrange trên Form Design Tools.
+
+      • Trong nhóm lệnh Sizing &amp; Ordering, click nút Align và chọn một trong các
+kiểu canh lề trong Submenu.
+
+b) Hiệu chỉnh kích thước và khoảng cách giữa các control trên form
+
+      • Chọn các control cần hiện chỉnh.
+
+      • Chọn tab Arrange trên Form Design Tools.
+
+      • Trong nhóm lệnh Sizing &amp; Ordering, click nút Size/Space.
+
+      • Chọn lệnh hiệu chỉnh thích hợp.
+
+4.3 Thiết kế biểu mẫu
+
+      Để tạo form, chọn tab Create trên thanh Ribbon, chọn
+cách tạo form bằng các nút lệnh trong nhóm lệnh Forms.
+
+     − Form Design: Tạo ra một Form mới trống và hiển thị nó trong chế độ Design
+View. Nếu một Table hoặc Query được chọn trong khung Navigation thì khi click nút
+Form Design, form mới sẽ tự động bị ràng buộc với nguồn dữ liệu là Table hoặc
+Query đó.
+
+     − Blank Form: Tạo ra một form trống, form mới không bị ràng buộc với một
+nguồn dữ liệu, và nó sẽ mở ra trong chế độ Layout View. Bạn phải chỉ định một
+nguồn dữ liệu (bảng hoặc truy vấn) và thiết kế form bằng cách thêm các điều khiển từ
+field list.
+
+     − Form Wizard: Access hổ trợ các bước để thiết kế form đơn giản. Wizard sẽ yêu
+cầu các nguồn dữ liệu, chọn các field hiển thị trên form, và cho phép bạn chọn layout
+cho form mới.
+
+     − Navigation Form: là một form đặc biệt hoàn toàn mới trong Access 2010, nhằm
+thiết kế form dạng Navigation user, cho phép người dùng dễ dàng di chuyển giữa các
+thành phần trong form.
+
+4.3.1   Tạo một Single Form
+
+     Access cung cấp một cách dễ dàng và thuận lợi để tạo một form dựa trên dữ liệu
+nguồn là Table/Query. Cách thực hiện:
+
+     • Tronng Navigation, chọn table hoặc query mà bạn muốn sử dụng làm dữ liệu
+nguồn cho from.
+
+     • Chọn tab trên thanh Ribbon
+
+     • Trong nhóm lệnh Form, click nút Form.
+
+     • Xuất hiện một Form mới ở dạng Layout view
+
+     • Single form hiển thị một record tại một thời điểm
+
+     • Mặc định mỗi field hiển thị trên một dòng và theo thứ tự của các field trong
+bảng hoặc query dữ liệu nguồn.
+
+                           Hình 4.3. Dạng hiển thị Single form
+
+     • Nếu dữ liệu nguồn của form là bảng cha có liên kết với bảng con, thì kết quả
+form sẽ hiển thị các record quan hệ trong bảng con.
+
+     Ví dụ:
+
+                       Hình 4.4. Dạng hiển thị Single form
+4.3.2 Tạo form bằng chức năng Form Wizard
+
+     Chức năng Form Wizard là công cụ tạo form qua các bước trung gian với một
+loạt các câu hỏi gợi ý để giúp bạn chọn lựa và xây dựng một form phù hợp nhất.
+
+     Cách tạo:
+
+     • Trong cửa sổ làm việc của Access, chọn tab Create trên thanh Ribbon.
+
+     • Click nút Form Wizard trong nhóm lệnh Forms.
+
+     • Xuất hiện cửa sổ Form Wizard
+
+     • Chọn Table hoặc Query làm dữ liệu nguồn cho form.
+
+     • Chọn các field hiển thị trên form trong khung Available Fields, click nút
+
+     để chọn một field, click nút      để chọn tất cả các field trong Table/Query dữ
+liệu nguồn, có thể chọn nhiều fields trên nhiều bảng. Click Next.
+
+     Chọn dạng form gồm các dạng:
+
+     • Columnar.
+
+     • Tabular.
+
+     • Datasheet
+
+     • Click Next.
+
+     • Nhập tiêu đề cho form• Finish.
+
+       Hình 4.5: Các bước tạo
+
+4.3.3 Tạo Form bằng Design
+
+     Công cụ Form và Form Wizard giúp bạn thiết kế
+form một cách nhanh chóng và dễ dàng. Với Design
+view, bạn sẽ thiết kế một form bằng tay mà không có
+sự hỗ trợ nào của Access. Có hai cách để thiết kế một
+form bằng Design view: Form Design và Layout View (Blank Form).
+
+4.3.3.1 Layout View:
+
+     Với cách thiết kế này bạn có thể can thiệp vào các control: Textbox, checkbox,
+label, … như di chuyển chúng, thay đổi kích thước chúng, thêm hoặc loại bỏ các điều
+khiển. Layout view làm cho việc sắp xếp các control trở nên dễ dàng hơn.
+
+    Cách tạo:
+
+     • Chọn tab Create trên thanh Ribbon, click nút Blank Form trong nhóm lệnh Forms.
+
+     • Xuất hiện một form trắng ở chế độ Layout view.
+
+     • Drag chuột kéo các field từ field list vào form
+
+       Hình 4.6. Các bước tạo                        Design view:Layout
+       View
+
+4.3.3.2 Design view
+
+     Khi thiết kế form bằng Design view thì các control khi thả vào form nó không tự
+động canh theo hàng và cột như Blank Form.
+
+     Cách tạo:
+
+ • Chọn tab Create trên thanh Ribbon, click nút Design View trong nhóm lệnh Forms.
+
+ • Xuất hiện một form trắng ở chế độ Design view.
+
+        • Drag chuột kéo các field từ field list vào form.
+
+   Hình 4.7. Các bước tạo                        Design view: Form Design
+
+4.4 Thiết lập thuộc tính các điều khiển trên form
+
+4.4.1 Thiết lập thuộc tính cho Form
+
+    • Chọn form cần thiết lập thuộc tính.
+
+    • Click nút Properties Sheet.
+
+    • Chọn thuộc tính.
+
+    Các thuộc tính trong Properties Sheet được hiển thị theo từng nhóm.
+
+    • Các thuộc tính quan trọng trong nhóm Format:
+
+          Thuộc tính                               Công dụng
+          Caption          Tạo tiêu đề cho form.
+
+                          Thiết lập dạng hiển thị của form.
+
+        Default view         • Single Form chỉ hiển thị một Record tại một thời điểm.
+
+                             • Continuous Form: hiển thị các record liên tiếp nhau.
+
+                             • Datasheet hiển thị dữ liệu dạng bảng.
+         Scroll Bar          Thiết lập chế độ hiển thị thanh cuộn.
+       Record Selectors     Bật/tắt thanh chọn record.
+       Navigation           Bật/tắt các nút duyệt record.
+        Buttons lines
+        Dividing            Bật/tắt các đường kẽ phân cách các phần của form.
+        Auto Center         Tự động hiển thị form ngay giữa màn hình.
+        Border Style         Chọn kiểu đường viền của form.
+       Min Max botton        Bật/tắt nút Max/Min.
+        Close Button         Bật/tắt nút close form.
+     Picture Alignment      Canh vị trí cho các picture trên form.
+   • Các thuộc tính thông dụng trong nhóm Data
+
+        Thuộc tính                                Công dụng
+       Record Source       Chọn dữ liệu nguồn cho form.
+
+         Thuộc tính                                  Công dụng
+             Filter             Khai báo điều kiện lọc.
+           Order by             Khai báo field cần sắp xếp số liệu.
+          Allow filter          Cho phép/không cho phép lọc các record.
+          Allow Edits           Cho phép/ không cho phép chỉnh sửa.
+     Allow Additions          Cho phép nhập thêm các record hay không.
+4.4.2 Thiết lập thuộc tính cho control
+
+•      Chọn control cần thiết lập thuộc tính
+
+•      Click nút properties Sheet trong nhóm lệnh Tools trên thanh Ribbon
+
+                      Hình 4.8. Thiết lập thuộc tính cho control
+
+4.5 Sử dụng Form
+
+     Một form khi thiết kế xong, nó có ba dạng xem: Layout view, Design view, Form view.
+
+     • Layout view: cho phép bạn xem những gì trông giống như form của bạn, sắp
+xếp lại các field, và áp dụng định dạng.
+
+     • Design view: cho phép bạn tinh chỉnh lại form, trong chế độ design view, bạn
+không nhìn thấy dữ liệu thực.
+
+     • Form view: hai dạng form Layout view và Design view giúp bạn hiệu chỉnh
+thiết kế form, thì Form view là dạng form được sử dụng để thực hiện các thao tác trên
+dữ liệu thông qua form.
+
+4.5.1 Tìm kiếm và chỉnh sửa một record
+
+4.5.1.1 Sử dụng form để tìm kiếm một record
+
+•         Mở form ở dạng form view.
+
+•         Chọn tab Home trên thanh
+          Ribbon.
+
+•         Đặt trỏ trong field chứa dữ liệu
+          cần tìm, Click nút Find trong
+          nhóm lệnh Find.
+
+•         Xuất hiện cửa sổ Find and
+                                                   Hình 4.9. Cửa sổ tìm kiếm một record
+          Replace.
+
+     • Find What: nhập giá trị cần tìm.
+
+     • Look in: Phạm vi tìm kiếm.
+
+     • Search: Hướng tìm
+
+     • Match: Chọn cách so trùng giá trị nhập trong ô Find What với giá trị trong
+field chứa dữ liệu cần tìm.
+
+4.5.1.2 Thay thế hoặc chỉnh sửa dữ liệu
+
+     Khi đã tìm thấy record cần tìm, bạn thực hiện chỉnh sửa thì giá trị sau khi chỉnh
+sửa sẽ cập nhật xuống bảng. Nếu cần thay thế giá trị thì chọn tab Replace trong cửa sổ
+Find and Replace.
+
+ •        Nhập giá trị cần thay thế trong ô Replace with
+
+ •        Click nút Replace hoặc Replace All nếu cần thay tất cả giá trị trong bảng.
+
+4.5.2 Thêm một record
+
+     Khi làm việc trên form, để thêm một record mới bạn thực hiện như sau:
+
+      •     Mở form ở chế độ form view
+
+      •   click nút New Record trên thanh Navigation button bên dưới cửa sổ form.
+
+      •   Form sẽ chuyển đến record trống, cho phép bạn nhập dữ liệu. Tuy nhiên
+khi nhập dữ liệu phải thỏa mãn các ràng buộc trong cơ sở dữ liệu.
+
+                   Hình 4.10. Cửa sổ thể hiện thêm một record
+
+4.5.3 Xóa một record
+
+     • Di chuyển đến record cần xóa.
+
+     • Trong nhóm lệnh Record trên thanh Ribbon,
+chọn lệnh Delete• Chọn Delete Record. Tuy
+nhiên khi xóa record phải xem xét ảnh hưởng đến
+các Record quan hệ.
+
+4.5.4 Lọc dữ liệu trên form.
+
+     • Mở form ở dạng Form view.
+
+     • Trong nhóm lệnh Sort &amp; Filter trên
+thanh Ribbon, click nút Advanced, Chọn
+lệnh Filter by Form.
+
+     • Form chuyển sang dạng Filter.
+
+     • Click nút combobox của field chứa            Hình 4.11. Cửa sổ thể hiện lọc dữ
+                                                                liệu trên form
+
+giá trị chọn điều kiện lọc.
+
+     • Nếu có nhiều điều kiện thì bạn chọn tab OR bên dưới cửa sổ Filter, chọn điều
+kiện lọc tiếp theo.
+
+     • Click nút Toggle Filter để thực hiện lọc.
+
+     • Click nút Toggle Filter để bỏ lọc.
+
+                              Hình 4.12: Cửa sổ thể hiện kết quả lọc dữ
+
+4.6 Nâng cấp biểu mẫu
+
+4.6.1 Cách tạo các control có hỗ trợ của chức năng Wizard
+
+4.6.1.1 Command button
+
+     • Chọn button trong nhóm Controls, drag
+chuột vẽ vào form.
+
+     • Xuất hiện cửa sổ Command button Wizard.
+
+     • Trong khung Categories chọn nhóm lệnh.
+                                                   Hình 4.13: Tạo Command button bằng wizard
+
+     • Record Navigation: chứa các lệnh di chuyển giữa các record như:
+
+     • Go To First Record: di chuyển đến record đầu,
+
+     • Go To Last Record: di chuyển đến record cuối,
+
+• Go To Next Record: di chuyển đến record kế record hiện hành,
+
+• Go To Previous Record: di chuyển đến record trước record hiện hành.
+
+Các lệnh này thường dùng để tạo thanh navigation buttons trên form.
+
+• Record Operations: gồm các lệnh thêm record hoặc xóa record như:
+
+• Add New Record: Thêm record mới.
+
+• Delete Record: Xóa record
+
+• Duplicate Record: Tạo các record có giá trị trùng ở tất cả các field.
+
+• Print Record:
+
+• Save Record: lưu những thay đổi trước khi chuyển đến record tiếp theo.
+
+• Undo Record: Hủy sự thay đổi sau cùng.
+
+• Form Operations: gồm các lệnh về form
+
+• CloseForm: đóng form hiện hành.
+
+• Print Current Form: in form hiện hành.
+
+• Open Form: Mở một form khác.
+
+• Report Operations: gồm các lệnh về Report
+
+• Open Report: mở report.
+
+• Preview Report: xem một report trước khi in.
+
+• Print Report: in report.
+
+• Application: gồm lệnh liên quan đến ứng dụng như Quit Application.
+
+• Miscellaneous: chứa những lệnh tổng hợp
+
+• Run Query
+
+• Run Macro.
+
+     • Chọn lệnh cho nút trong khung Action, click Next.
+
+     • Chọn Text hoặc Picture hiển thị trên nút, click Next.
+
+     • Đặt tên cho nút, Finish.
+
+4.6.1.2 Option group
+
+     • Chọn công cụ option group trong nhóm Controls.
+
+     • Xuất hiện cửa sổ Option group Wizard.
+
+     • Nhập nhãn cho các option, click Next.
+
+     • Chọn/không chọn option mặc định, click
+Next.
+
+     • Nhập giá trị cho các option, mặc định,
+option đầu tiên sẽ có option value là 1, click Next.
+
+                               Hình 4.14. Tạo Option group bằng wizard
+     • Chọn vị trí lưu trữ giá trị của option group, click Next.
+
+     • Chọn loại option trong option group và style cho option group, các option này
+có hình dạng khác nhau nhưng chức năng là giống nhau, click Next.
+
+     • Nhập nhãn cho Option group, click Finish.
+
+                          Hình 4.15. Tạo Option group bằng wizard
+
+4.6.1.3 Combo box và List box:
+
+a) Tạo bằng wizard:
+
+    • Chọn công cụ Combo box/List box
+trong nhóm Controls.
+
+    • Drag chuột vẽ vào form, xuất hiện
+cửa sổ Combo box Wizard với hai lựa chọn
+ứng với hai chức năng của combo box:
+
+    • Nếu chọn I want the combo box to get
+the values from another table or query thì sau
+khi click Next để thực hiện bước tiếp theo ta
+chọn bảng chứa dữ liệu nguồn cho Combo
+box, dữ liệu nguồn có thể là Table hoặc
+Query, click Next.
+
+    • Chọn field chứa dữ liệu đưa vào
+
+Combo box, click nút            để chọn một
+
+field hoặc click nút          để chọn nhiều
+field, click Next.
+
+    - Chọn field sắp xếp (có thể bỏ qua),
+mặc định các field đã được sắp xếp, click
+Next.
+
+    • Điều chỉnh độ rộng của cột dữ liệu
+trong combo box.
+
+    • Hide key column (recommended): ẩn
+hoặc hiện cột khóa. Mặc định mục Hide key
+column được chọn (cột khóa bị ẩn), nếu muốn
+combo box hiển thị field khóa thì bỏ check,
+click Next.
+
+    - Chọn field chứa giá trị của combo box,
+click Next.
+
+    • Nhập nhãn cho combo box, click
+Finish.
+
+    • Nếu chọn I will type in the values that
+I want, thì sau khi chọn xong, click Next.
+
+    • Nhập số cột trong ô Number of
+columns,
+
+    • Nhập giá trị cho các cột trong combo
+box, click Next.
+                                              Hình 4.16. Các bước tạo Combo Box bằng wizard
+    • Nhập nhãn cho combo box, click
+Finish.
+
+4.6.2 Mainform – subform:
+
+     Trong việc thiết kế Form, có thể thiết kế Form trong Form tức là có một Form
+chính (Main Form) hiển thị các thông tin đồng thời chứa một Form khác gọi là Form
+
+phụ (SubForm). Mỗi form sử dụng dữ liệu nguồn khác nhau, hiển thị đồng thời và có
+thể thao tác trên cả hai FORM.
+
+     Những mẩu tin dùng trong MainForm và SubForm thường có mối quan hệ với nhau
+
+     - Quan hệ một - một : Một mẩu tin trong Main Form sẽ ứng với một mẩu tin trong SubForm.
+
+     - Quan hệ một - nhiều : Một mẩu tin trong Main Form sẽ ứng với nhiều mẩu tin
+trong SubForm.
+
+     Access sử dụng các thuộc tính LinkMasterFields và LinkChildFields của subform
+để lựa chọn các record trong subform có liên quan đến mỗi record trong mainform.
+
+     Ví dụ bảng LOP và bảng SINHVIEN trong cơ sở dữ liệu QLSV. Khi tạo form từ
+bảng lớp thì nó sẽ hiển thị danh sách các record quan hệ trong bảng con SINHVIEN.
+
+                         Hình 4.17. Ví dụ về MainForm - SubForm
+
+4.6.2.1 Tạo mainform – subform bằng Wizard:
+
+     • Tạo main form: dữ liệu nguồn của main form thường là thông tin ở bảng cha, do đó
+dạng form thường là những dạng hiển thị một record tại một thời điểm như columnar.
+
+     • Mở main form ở chế độ Design.
+
+     • Bật nút control Wizard.
+
+                  Hình 4.18. Tạo MainForm - SubForm bằng wizard
+
+     • Chọn công cụ SubForm/SubReport trong nhóm Controls vẽ vào Form, xuất hiện
+cửa sổ SubForm Wizard với hai tùy chọn:
+
+   • Use existing Tables and Queries (sử
+       dụng bảng và các query làm dữ liệu
+       nguồn cho subform) • Next.
+
+     Chọn bảng hoặc query làm dữ liệu
+nguồn cho sub form, trong bảng hoặc query
+phải có field liên kết với main form •Next.
+
+   •Chọn field liên kết với subform•Next.
+
+ • Nhập tên cho subform• Finish.                      Hình 4.19. Tạo MainForm -
+                                                         SubForm bằng wizard
+ • Use an existing form: sử dụng form có
+                     sẵn làm subform.
+
+ • Chọn form làm subform•Next
+
+ •      Nhập tên cho SubForm•Finish
+
+4.6.2.2 Tạo bằng Design:
+
+     • Nếu dữ liệu nguồn của subform được lấy từ nhiều bảng thì phải tạo query,
+trong query phải chứa field liên kết với main form (link child filed)
+
+     • Dạng của subform thể hiện quan hệ n, do đó thường chọn dạng Datasheet hoặc Tabular.
+
+      • Mở main form ở chế độ design, chọn công cụ subform/Subreport trong nhóm
+Controls drag chuột vẽ vào main form.
+
+      • Mở Properties Sheet và thiết lập các thuộc tính:
+
+  •     Source object: Chọn Table/Query làm dữ liệu nguồn cho Subform, hoặc chọn
+                      form nếu đã thiết kế form để làm subform.
+
+  •     Link child field: nhập tên của field trong subform liên kết với main form
+
+  •     Link master field: nhập tên field của main form liên kết với subform.
+
+4.6.2.2 Tạo ô tính toán trong subform
+
+      Khi tạo một subform, bạn có thể muốn hiển thị subform thông tin tổng hợp ở
+dạng tổng thể. Ví dụ, bạn có thể muốn hiển thị số lượng của các record trong subform
+tại một vị trí nào đó trên Mainform.
+
+      Ví dụ: Cần hiển thị sỉ số sinh viên trong mỗi lớp trên main form
+
+                       Hình 4.20. Vi dụ t
+      Trước khi đặt ô tính toán tổng hợp dữ liệu trên Mainform thì giá trị của nó phải
+được tính trong Subform. Ô tính toán tổng hợp dữ liệu phải được đặt trong phần
+footer của Subform.
+
+     Ví dụ: Đếm tổng số sinh viên theo lớp.
+
+                       Hình 4.21. Vi dụ đếm tổng số sinh viên theo lớp
+     Sau     đó, trên Mainform bạn chèn một text box với ControlSource được
+thiết lập giá trị như sau:
+
+     Trong đó:
+
+    • SubformName: là tên của Subform
+
+    • ControlName_inSubform: tên của ô tính toán tổng hợp dữ liệu trong Subform.
+
+                   Hình 4.22. Vi dụ đếm tổng số sinh viên theo lớp
+
+                      BÀI TẬP KẾT THÚC CHƯƠNG 4
+
+BÀI TẬP 1:
+1. Mở tập tin QLD.ACCDB, chọn trang Forms và tạo Form sau đây cho table
+HOCSINH
+
+Bài tập 2:
+1. Mở tập tin VPP.ACCDB, tạo Form CẬP NHẬT sau đây cho table KHACHHANG
+
+2: Thiết kế form theo mẫu:
+
+Bài tập 3: Cơ sở Quản lý lương cán bộ
+1. Tạo form cho phép xem danh sách cán bộ từng phòng ban như sau:
+
+Mỗi khi chọn một phòng ban từ hộp thả
+
+danh sách cán bộ phòng ban đó được hiển thị lên Subform.
+
+Bài số 2: Tạo form cho phép tìm kiếm cán bộ theo tên như sau:
+
+Sau khi gõ một tên (có thể là đệm + Tên hoặc đầy đủ họ và tên), danh sách các kết quả
+tìm thấy sẽ được liệt kê lên Subform.
+
+Trên CSDL Quản lý bán hàng hãy:
+Bài số 3: Thiết kế form lập hoá đơn bán hàng theo mẫu:
+
+Yêu cầu chi tiết:
+   -   Các nút Tiến, Lùi để định vị hoá đơn cần làm việc;
+   -   Nút Thêm mới để bắt đầu tạo mới một hoá đơn;
+
+   -   Nút Xoá HĐ để xoá hoá đơn hiện tại. Yêu cầu phải có xác nhận trước khi xoá;
+   -   Nút In HĐ để in chi tiết hoá đơn bán hàng ra report (chức năng này sẽ được
+   -   hoàn thiện sau khi học xong Chương Report)
+
+Bài số 4: Tạo form theo dõi thông tin hoá đơn bán hàng của một khách hàng nào đó:
+
+Sau khi chọn tên một khách, thông tin về các hoá đơn mua hàng được hiển thị.</baihoc>
+<baitap bai="4" loai="goc" de="Bài tập 2: 1. Mở tập tin VPP.ACCDB, tạo Form CẬP NHẬT sau đây cho table KHACHHANG 2: Thiết kế form theo mẫu:" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 101-126."/>
+<baitap bai="4" loai="goc" de="Bài tập 3: Cơ sở Quản lý lương cán bộ 1. Tạo form cho phép xem danh sách cán bộ từng phòng ban như sau: Mỗi khi chọn một phòng ban từ hộp thả danh sách cán bộ phòng ban đó được hiển thị lên Subform. Bài số 2: Tạo form cho phép tìm kiếm cán bộ theo tên như sau: Sau khi gõ một tên (có thể là đệm + Tên hoặc đầy đủ họ và tên), danh sách các kết quả tìm thấy sẽ được liệt kê lên Subform. Trên CSDL Quản lý bán hàng hãy: Bài số 3: Thiết kế form lập hoá đơn bán hàng theo mẫu: Yêu cầu chi tiết: - Các nút Tiến, Lùi để định vị hoá đơn cần làm việc; - Nút Thêm mới để bắt đầu tạo mới một hoá đơn; - Nút Xoá HĐ để xoá hoá đơn hiện tại. Yêu cầu phải có xác nhận trước khi xoá; - Nút In HĐ để in chi tiết hoá đơn bán hàng ra report (chức năng này sẽ được - hoàn thiện sau khi học xong Chương Report) Bài số 4: Tạo form theo dõi thông tin hoá đơn bán hàng của một khách hàng nào đó: Sau khi chọn tên một khách, " dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 101-126."/>
+<baitap bai="4" loai="goc" de="1. Mở tập tin QLD.ACCDB, chọn trang Forms và tạo Form sau đây cho table HOCSINH" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 101-126."/>
+<baitap bai="4" loai="goc" de="1. Mở tập tin VPP.ACCDB, tạo Form CẬP NHẬT sau đây cho table KHACHHANG 2: Thiết kế form theo mẫu:" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 101-126."/>
+<baitap bai="4" loai="goc" de="1. Tạo form cho phép xem danh sách cán bộ từng phòng ban như sau: Mỗi khi chọn một phòng ban từ hộp thả danh sách cán bộ phòng ban đó được hiển thị lên Subform. Bài số 2: Tạo form cho phép tìm kiếm cán bộ theo tên như sau: Sau khi gõ một tên (có thể là đệm + Tên hoặc đầy đủ họ và tên), danh sách các kết quả tìm thấy sẽ được liệt kê lên Subform. Trên CSDL Quản lý bán hàng hãy: Bài số 3: Thiết kế form lập hoá đơn bán hàng theo mẫu: Yêu cầu chi tiết: - Các nút Tiến, Lùi để định vị hoá đơn cần làm việc; - Nút Thêm mới để bắt đầu tạo mới một hoá đơn; - Nút Xoá HĐ để xoá hoá đơn hiện tại. Yêu cầu phải có xác nhận trước khi xoá; - Nút In HĐ để in chi tiết hoá đơn bán hàng ra report (chức năng này sẽ được - hoàn thiện sau khi học xong Chương Report) Bài số 4: Tạo form theo dõi thông tin hoá đơn bán hàng của một khách hàng nào đó: Sau khi chọn tên một khách, thông tin về các hoá đơn mua hàng được" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 101-126."/>
+<baihoc stt="5" tieude="Chương 5. Thiết kế báo cáo (Report)">Chương 5. THIẾT KẾ BÁO CÁO (REPORT)
+
+Thời lượng: 04 tiết lý thuyết + 04 tiết thực hành
+
+Kết thúc chương này, sinh viên có thể:
+
+   • Hiểu được khái niệm báo cáo
+
+   • Biết được các thành phần của báo cáo
+
+   • Thiết kế được các loại biểu mẫu
+
+   • Biết xây dựng báo cáo theo nhóm và tổng hợp số liệu theo nhóm
+
+5.1 Khái niệm về báo cáo, các chế độ hiển thị cửa sổ
+
+     Report là công cụ để tạo các báo cáo, kết xuất dữ liệu ra màn hình hoặc máy in.
+
+     Giống như form, dữ liệu nguồn của report có thể là bảng hoặc là query. Report
+cung cấp một cách linh hoạt nhất để xem và in thông tin tổng hợp. Nó hiển thị thông
+tin chi tiết theo mức độ mà người dùng mong muốn, cho phép bạn xem hoặc in thông
+tin theo nhiều định dạng khác nhau.
+
+    •      Các chế độ hiển thị:
+
+- Design View: chế độ thiết kế để hiệu chỉnh.
+
+- Print Preview: để xem trước kết quả thiết kế.
+
+- Report View : Giống Print Preview
+
+5.2 Thiết kế báo cáo
+
+5.2.1 Tạo bằng lệnh Report:
+
+        Chức năng Report là công cụ tạo Report
+ nhanh và dễ dàng, thường dùng để tạo những
+ Report đơn giản có dữ liệu nguồn từ một bảng
+ hoặc một query. Để tạo bằng chức năng Report
+ ta phải chọn dữ liệu nguồn cho Report
+
+      • Click nút Report trong nhóm lệnh Report trên thanh Ribbon.
+
+      • Xuất hiện report dạng Tabular ở chế độ Layout.
+
+                     Hình 5.1. Tạo report nhanh dạng Tabular
+
+5.2.2 Tạo report bằng chức năng Wizard
+
+       • Chọn tab Create trên thanh
+Ribbon, trong nhóm lệnh Reports, click
+nút Report Wizard.
+
+       • Chọn Table/Query làm dữ liệu
+nguồn cho Report.
+
+       • Chọn các field hiển thị trên
+Report trong khung Available Field
+
+click nút        để chọn một field và click
+
+nút         để chọn nhiều field. Click Next.
+
+       • Nếu report lấy dữ liệu nguồn từ
+một bảng thì bỏ qua bước này, ngược lại
+nếu dữ liệu lấy từ nhiều bảng thì chọn
+field kết nhóm. Click Next.
+
+       • Chọn field mà bạn muốn sắp
+xếp dữ liệu cho report. Có thể sắp xếp
+kết quả trong report bằng cách kết hợp
+tối đa là 4 field.
+
+    Chọn dạng Report
+
+     • Layout: gồm 3 dạng Columnar,
+Tabular, Justified.
+
+     • Orientation: chọn hướng trang in
+Portrait (trang đứng), Landscape (trang
+ngang). Click Next.
+
+     • Nhập tiêu đề cho report
+
+     • Chọn chế độ xem report sau khi
+tạo xong
+
+     • Preview the report.
+                                                   Hình 5.2 . Các bước tạo report bằng
+     • Modify the report’s design.
+                                                                  wizard
+     • Click Finish để kết thúc.
+
+5.2.3 Tạo report bằng Design
+
+     Cách tạo: - Chọn Table/Query làm dữ liệu nguồn cho report.
+
+     • Chọn tab Create trên thanh Ribbon, trong nhóm lệnh Reports, click nút Report Design.
+
+     • Xuất hiện cửa sổ thiết kế report và field list chứa các field trong dữ liệu nguồn
+của report.
+
+     • Lần lượt drag chuột kéo các field trong field list hoặc các control trong nhóm
+lệnh Controls trên thanh Ribbon thả vào report.
+
+                      Hình 5.3. Cửa sổ thiết kế report bằng Design
+
+5.3    Các phần trong cửa sổ thiết kế report
+
+      Một report gồm các phần: Page Header/Footer, Report Header/Footer, Detail,
+Group Header/Footer (Các report có phân nhóm).
+
+                         Hình 5.4. Các thành phần của report
+
+      • Page Header/Footer: Chứa tiêu đề đầu trang và cuối trang. Nội dung đặt trong
+phần Page Header/Footer sẽ xuất hiện ở đầu và cuối mỗi trang.
+
+                Report header
+
+                                                  Page header
+
+                                                 Page footer
+
+                     Hình 5.5. Các thành phần của report
+
+      Các nội dung thường đặt trong Page Header/Footer.
+
+                 •     Page Numbers: Chèn số trang.
+
+                 • Logo: chèn Logo cho Report.
+
+                 • Title: chèn tiêu đề cho Report.
+
+                 • Date and Time: Chèn ngày giờ hiện hành của máy.
+
+     Lưu ý: Page Header không chứa các ô thống kê dữ liệu.
+
+     • Report Header/Footer: Tiêu đề đầu và cuối report, nội dung đặt trong Report
+Header/Footer chỉ xuất hiện ở phần đầu của trang đầu tiên và phần cuối trang của trang
+cuối cùng. Các nội dung thường đặt trong Report Header/Footer.
+
+     • Detail: chứa nội dung chính của report, hiển thị dữ liệu trong dữ liệu nguồn
+dưới dạng các textbox bound control, mỗi textbox là một field dữ liệu hoặc các textbox
+dạng unbound control dùng để tạo thêm field mới.
+
+     • Group Header/Footer (Các report có phân nhóm): đối với các report có phân
+nhóm giống như form dạng main-sub thì ngoài các phần cơ bản còn có thêm phần kết
+nhóm là group header/Footer.
+
+        • Nội dung trong phần group header/Footer là tiêu đề của nhóm.
+
+        • Thống kê dữ liệu theo nhóm.
+
+5.4 Tạo report có phân nhóm
+
+     Chức năng kết nhóm của Report là một công cụ mạnh và không thể thiếu để làm
+khối lượng lớn dữ liệu có ý nghĩa bằng cách sắp xếp chúng thành các nhóm nhỏ hơn,
+và thực hiện các phép tính toán thống kê trên mỗi nhóm riêng biệt. Có 3 cách sử dụng
+nhóm để phân tích dữ liệu trong report
+
+     • Sử dụng Total Query.
+
+     • Sử dụng Report Grouping.
+
+     • Sử dụng Subreports.
+
+5.4.1 Sử dụng Total Query
+
+     Trong trường hợp này, report không chứa phần chi tiết mà chỉ chứa các ô thống
+kê dữ liệu: Sum, Avg, Min, Max trong phần Detail của report. Cách thực hiện như sau:
+
+     Tạo Total Query, trong query chọn field làm tiêu chuẩn thống kê, field chứa dữ
+liệu thống kê và chọn phép thống kê.
+
+     Ví dụ: Tạo report tính tổng số lượng và tổng tiền đã bán của từng sản phẩm
+
+                    Hình 5.6. Tạo Total Query để tạo report
+
+     Tạo report, sử dụng Total query đã tạo ở trên.
+
+                           Hình 5.7. Tạo report sử dụng Total Query
+
+                   Hình 5.8. Tạo report sử dụng Total Query
+
+5.4.2 Report Grouping
+
+      Report grouping giúp bạn có thể tổ chức khối lượng lớn các thông tin vào các
+nhóm. Với cách này report sẽ thể hiện dữ liệu chi tiết trong từng nhóm và có thể thêm
+nhiều cấp độ nhóm theo các tiêu chí khác nhau. Cách tạo như sau:
+
+      • Trên thanh Ribbon, chọn tab Create,
+trong nhóm lệnh Reports,      click     nút Report
+Design. Xuất hiện cửa sổ thiết kế Report, thanh
+Ribbon chuyển sang tab Design.
+
+      • Trong Properties              Sheet, chọn
+Tab Data, tại thuộc tính Record source, chọn            Hình 5.8. Cửa sổ Property Sheet
+
+Table/Query làm dữ liệu nguồn cho Report.
+
+      • Click nút Group&amp; Sort
+
+      trong nhóm lệnh Grouping &amp; Totals.
+
+      • Trong cửa sổ thiết kế xuất hiện
+khung Group, Sort and Total bên dưới cửa
+sổ thiết kế.
+
+      • Click khung Add a Sort để chọn               Hình 5.9. Cửa sổ thiết kế xuất hiện
+                                                       khung Group, Sort and Total
+field sắp xếp.
+
+     • Click nút Add a group để chọn
+field kết nhóm, chọn field kết nhóm trong
+
+field list, trên cửa sổ thiết kế xuất hiện thanh
+group header.
+
+     • Khung Group, Sort and Total có
+dạng như hình:
+
+    • Mở thanh group footer và thực hiện
+    các phép thống kê bằng cách click nút
+    More, cửa sổ Group, Sort and Total có
+    dạng:
+
+     • Click nút with no Total để mở menu Totals:
+
+     • Total On: chọn field chứa dữ liệu
+thống kê
+
+     • Type: Chọn phép thống kê.
+
+     • Chọn vị trí đặt các ô thống kê bằng
+cách check vào các ô tùy chọn:
+                                                    Hình 5.10. Các bước tạo
+     o Show Grand Total: đặt ô thống kê
+trong phần report header/footer.
+
+     o Show group subtotal as % of Grand Total: Đặt ô thống kê trong phần report
+header/footer.
+
+     o Show subtotal in group header: đặt ô thống kê trong phần group header.
+
+     o Show subtotal in group footer: Đặt ô thống kê trong phần group footer.
+
+     Drag chuột kéo các field phân nhóm đưa vào group header, và các field còn lại
+đưa vào phần detail.
+
+     Ví dụ: thiết kế report Hóa đơn bán hàng
+
+                   Hình 5.11. Cửa sổ thiết kế Report Hóa đơn bán hàng
+
+     Nếu cần thêm field kết nhóm thì trong khung Group, Sort and Total click tiếp
+trong ô Add a group để chọn field tiếp theo.
+
+5.4.3 SubReport
+
+     Subreport có tác dụng tương tự như Report grouping. Sự khác biệt duy nhất là
+tạo các report trong hai phần riêng biệt: Main Report và SubReport.
+
+                                                   Main Report
+
+                                               SubReport
+
+                    Hình 5.12. Cửa sổ thiết kế Main report – SubReport
+     Cách tạo:
+
+     − Tạo Main Report, dữ liệu nguồn thường là bảng cha.
+
+     − Tạo Sub Report, dữ liệu nguồn phải chứa field liên kết với Main Report.
+
+     − Đưa Sub Report vào Main Report có thể dùng công cụ SubForm/SubReport
+trong nhóm lệnh Controls.
+
+     − Thiết lập thuộc tính Link child Fields và Link master Fields.
+
+5.4.4 Tạo report có phân nhóm bằng wizard
+
+     Dữ liệu nguồn cho report có phân nhóm thường được lấy từ nhiều bảng có quan
+hệ 1-n, field kết nhóm thường là field khóa chính của bảng 1.
+
+     − Tạo dữ liệu nguồn cho report theo yêu cầu
+phân nhóm.
+
+     − Trên thanh Ribbon, chọn tab Create, click
+nút Report Wizard
+
+     − Chọn dữ liệu nguồn cho report là query đã
+tạo trước.
+
+     − Chọn các field hiển thị trong kết quả
+•Next.
+
+     − Nếu dữ liệu có quan hệ 1-n thì access tự
+phân nhóm•Next.
+
+     − Chọn thêm field kết nhóm thứ hai nếu có
+yêu cầu (hiển thị hai quan hệ 1-n), nếu không thì
+click Next.
+
+     − Nếu trong report có chứa field có dữ liệu kiểu
+số thì trong cửa sổ ở bước này xuất hiện nút
+Summary Option…
+
+     − Click nút Summary Options … để chọn phép
+thống kê.
+
+     −Các phép thống kê gồm: Sum, Avg, Min, Max.
+
+     − Trong mục Show có hai tùy chọn
+
+     • Detail and Summary: hiển thị chi tiết và ô
+thống kê dữ liệu.
+
+     • Summary Only: chỉ hiển thị ô thống kê dữ liệu.
+
+     −Chọn xong click OK và click Next để tiếp tục.
+
+     − Chọn Layout cho report, có ba dạng Layout:
+
+     • Steped: tiêu đề của cột lặp lại ở đầu của mỗi trang.
+                                                              Hình 5.12. Các bước tạo
+     • Block và Ouline: tiêu đề của cột lặp lại trong          Report bằng wizard
+từng nhóm.
+
+     − Orientation: chọn hướng giấy in.
+
+     • Portrait: trang đứng.
+
+     • Landscape: trang ngang.
+
+     − Chọn xong click Next, nhập tiêu đề cho report, click Finish.
+
+5.4.5 Ngắt trang trong report phân nhóm
+
+     Đối với các report có phân nhóm, thường người dùng có nhu cầu hiển thị dữ liệu
+trong mỗi nhóm trên một trang, để thực hiện ta dùng chức năng ngắt trang theo nhóm:
+
+     − Click phải trên thanh group header, chọn properties•Tại thuộc tính Force
+New Page• chọn Before section.
+
+5.4.6 Preview Rport
+
+     Sau khi thiết kế xong, bạn phải xem Report trước khi in, hình thức
+
+của report xem ở chế độ preview sẽ là hình thức khi in ra giấy.
+
+     Để xem report trước khi in bạn chọn một trong các cách sau:
+
+     Chọn Tab File• Chọn Print• Print Preview.
+
+     Chọn tab Home• View• Print Preview.
+
+5.5 Định dạng report
+
+     Access 2010 cung cấp một công cụ cho phép định dạng report với các mẫu
+phong phú và đẹp giúp bạn có thể định dạng font chữ và màu chữ cho report một cách
+nhanh chóng và dễ dàng.
+
+5.5.1 Tạo lưới cho report:
+
+     Mở report ở chế độ Layout.
+
+     Thanh Ribbon chuyển sang Report Layout Tools.
+
+     Chọn khối dữ liệu cần tạo lưới.
+
+     Click nút Gridline• chọn kiểu lưới.
+
+5.5.2 Thiết lập thuộc tính của các đối tượng trong report
+
+     Click phải trên đối tượng cần thay đổi thuộc tính, chọn properties Sheet.
+
+            Property                                         Mô tả
+            Format               Định dạng kiểu dữ liệu numbers, dates, times, text .
+            Decimal Places       Số số lẻ.
+            Visible              Hiển thị hoặc ẩn control.
+            Left                 Xác định vị trí của control theo chiều ngang.
+            Top                  Xác định vị trí của control theo chiều dọc.
+            Width                Xác định độ rộng của control.
+            Height               Xác định chiều cao của control.
+            Back Color           Chọn màu nền của control. Click nút     để chọn màu.
+
+            Special Effect        Chọn hiệu ứng 3-D cho control.
+            Border Style          Chỉ định kiểu đường viền của control transparent
+                              lines, solid lines, dashed lines…
+
+            Border Color          Màu đường viền.
+            Border Width          Độ rộng của đường viền.
+            Fore Color            Chỉ định màu cho văn bản trong các control.
+            Font Name             Chọn font chữ.
+            Font Weight           Chữ đậm.
+            Font Italic           Chữ nghiêng.
+            Font Underline        Gạch dưới.
+            Text Align            Canh lề cho văn bản trong control.
+5.5.3 Định dạng dữ liệu
+
+a) Tạo cột số thứ tự
+
+     Khi tạo report có dạng danh sách, ngoài các field trong cơ sở dữ liệu, ta có thể
+tạo thêm cột số thứ tự cho danh sách:
+
+     • Mở report ở chế độ design.
+
+     • Tạo một textbox trong phần detail
+
+     • Nhâp nội dung cho textbox        =1
+
+     • Click phải trên textbox• properties• chọn tab Data.
+
+     • Tại thuộc tính Running Sum: chọn kiểu đánh số thứ tự.
+
+     • No: không đánh số thứ tự
+
+     • Over Group: đánh số thứ tự theo nhóm, dùng cho report có phân nhóm.
+
+     • Over All: đánh số thứ tự trên toàn bộ danh sách, dùng cho report không phân nhóm.
+
+b) Định dạng dữ liệu kiểu Text
+
+     Định dạng văn bản trong các control
+dùng thanh công cụ trong nhóm Text
+Formatting
+
+     − Mở report ở chế độ Design hoặc Layout view.
+
+     − Chọn các ô chứa văn bản cần định dạng .
+
+     − Chọn font chữ trong khung font, kích thước trong khung size...
+
+     − Ngoài ra các định dạng khác, có thể sử dụng menu tắt khi click chuột phải trên
+các control cần định dạng.
+
+                        BÀI TẬP KẾT THÚC CHƯƠNG 5
+     Bài 1: Thực hiện trên CSDL VPP.ACCDB
+        1.   Mở tập tin VPP.ACCDB, chọn trang Reports và tạo report theo mẫu:
+
+2.    Mở tập tin VPP.ACCDBDB, chọn trang Reports và tạo report theo mẫu:
+
+Mẫu 1
+
+Mẫu 2
+
+   Bài 2: Trên cơ sở dữ liệu QLD.ACCDB, tạo Report theo mẫu sau:</baihoc>
+<baitap bai="5" loai="goc" de="Bài 1: Thực hiện trên CSDL VPP.ACCDB 1. Mở tập tin VPP.ACCDB, chọn trang Reports và tạo report theo mẫu: 2. Mở tập tin VPP.ACCDBDB, chọn trang Reports và tạo report theo mẫu: Mẫu 1 Mẫu 2" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 127-141."/>
+<baitap bai="5" loai="goc" de="Bài 2: Trên cơ sở dữ liệu QLD.ACCDB, tạo Report theo mẫu sau:" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 127-141."/>
+<baitap bai="5" loai="goc" de="1. Mở tập tin VPP.ACCDB, chọn trang Reports và tạo report theo mẫu:" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 127-141."/>
+<baitap bai="5" loai="goc" de="2. Mở tập tin VPP.ACCDBDB, chọn trang Reports và tạo report theo mẫu: Mẫu 1 Mẫu 2 Bài 2: Trên cơ sở dữ liệu QLD.ACCDB, tạo Report theo mẫu sau:" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 127-141."/>
+<baihoc stt="6" tieude="Chương 6. Tạo Macro">Chương 6. TẠO MACRO
+
+Thời lượng: 02 tiết lý thuyết +04 tiết thực hành
+
+Kết thúc chương này, sinh viên có thể:
+
+   • Khái niệm về Macro
+
+   • Cách tạo và thực hiện một tập lệnh Macro
+
+   • Gắn macro vào các điều khiển trên form
+
+   • Tạo và sử dụng Submacro
+
+   • Sử dụng Macro để thiết kế được form điều khiển
+
+6.1 Giới thiệu
+
+6.1.1 Khái niệm về Macro
+
+    • Một macro là một tập hợp của một hoặc nhiều hành động thực hiện chính
+xác theo một trình tự từ trên xuống để phục vụ các yêu cầu thao tác trên các đối
+tượng trong cơ sở dữ liệu.
+
+    • ACCESS cung cấp nhiều hành động Macro cho phép tự động hóa chương
+trình ứng dụng.
+
+    • Macro đặt biệt hữu ích khi tạo những chương trình ứng dụng nhỏ.
+
+6.1.2 Công dụng
+
+       Bất cứ tác vụ nào phải thực hiện thường xuyên thì nên tạo một Macro. Dùng
+Macro để nâng cao tính hiệu quả và Macro luôn thực hiện theo cách đã chỉ định
+không bao giờ sai lệch.
+
+Có thể sử dụng Macro để:
+
+     • Mở Bảng, Truy vấn, Biểu mẫu, Báo biểu trong khung nhìn (View Mode)
+bất kỳ và đóng các đối tượng này.
+
+     • Định giá trị cho các điều khiển của Biểu mẫu, Báo biểu.
+
+     • Cũng có thể mô phỏng hành động bàn phím (cung cấp đầu vào hộp thoại hệ thống)
+
+     • Thi hành hàm Visual Basic hay Macro khác. Thi hành lệnh trên Menu của
+Access. Tạo Menu tùy biến.
+
+   • Khởi động / thoát chương trình ứng dụng. Và các công dụng khác.
+
+     Ví dụ: Xây dựng một Form với nút đóng Form bằng cách tạo nút trên Form và
+xây dựng một Macro để đóng Form sau đó gán Macro cho sự kiện Click của nút.
+
+                                                                Object: Button
+
+                                                                  Event: Click
+
+                                                                 Action: Close
+                             Hình 6.1.Ví dụ về Macro
+
+6.2 Cách tạo và thực thi macros:
+
+6.2.1 Cách tạo:
+
+      Chọn tab Create trên thanh Ribbon, trong nhóm lệnh
+Macro &amp; Code, click nút Macro. Xuất hiện cửa sổ thiết kế
+Macro với các thành phần:
+
+      • Khung bên trái dùng để chọn các action trong Macro.
+
+      • Khung bên phải chứa các Action theo nhóm và các đối tượng trong cơ sở
+dữ liệu đã được gán macro.
+
+                                Hình 6.2.141
+                                          Cửa sổ tạo Macro
+     Chọn Action trong khung Add New Action.
+
+     Ứng với những Action khác nhau thì xuất hiện các
+ô cho bạn chọn hoặc nhập các argument tương ứng.
+
+     Ví dụ: khi chọn Action là GotoRecord thì sẽ xuất
+hiện các Argument như hình.
+
+                              Hình 6.3. Cửa sổ tạo Macro
+
+     Tiếp tục chọn Action tiếp theo bằng cách click Add new Action.
+
+6.2.2 Thực thi macro
+
+     Đối với macro không gán cho sự kiện của một đối tượng cụ thể thì chọn tên
+
+macro và click nút run    để thực thi hoặc double click vào tên macro.
+
+     Đối với macro mà chỉ có thể thực thi khi tác động vào một đối tượng cụ thể
+trên form hoặc report thì sau khi tạo và lưu macro
+thì phải gán macro cho sự kiện của đối tượng cụ
+thể. Các thực hiện:
+
+     Mở form hoặc report chứa đối tượng cần
+gán macro.
+
+     • Click phải trên đối          tượng chọn
+properties, hoặc chọn đối tượng• Mở properties
+Sheet.
+
+     • Chọn tab Event, chọn sự kiện (event).          Hình 6.4. Cửa sổ tạo properties
+                                                                  Sheet
+     • Trong danh sách xổ xuống chọn tên Macro.
+
+6.2.3 Sub Macro:
+
+     Các macro có cùng tính chất, cùng chức năng hoặc thực hiện các hành động
+trên cùng một form, report thường được tạo trong cùng một macro, các macro
+được tạo bên trong một macro gọi là Submacro. Một macro chứa nhiều
+Submacro bên trong nó vì vậy mỗi Submacro thành phần bên trong phải được phân
+biệt bằng một tên riêng.
+
+     Cách tạo:
+
+     − Trong cửa sổ thiết kế Macro, mở khung Action
+Catalog bằng cách click nút Action Catalog trong tab
+Design trên thanh Ribbon.
+
+     − Drag chuột kéo
+Submacro    trong     khung
+Action Catalog vào cửa sổ
+thiết kế macro.
+
+     − Trong cửa sổ thiết
+kế   xuất    hiện     khung
+Submacro.
+
+     −   Nhập       tên   cho
+                                  Hình 6.5. Cửa sổ tạo Submacro
+Submacro
+
+     −   Chọn Action cho
+Submacro.
+
+     −   Khi              gán
+Submacro, ta truy xuất
+vào tên của Submacro.
+
+                                 Hình 6.6. Cửa sổ tạo Submacro
+
+6.2.3 Sử dụng Submacro tạo form điều khiển
+
+     Giả sử muốn với CSDL như trên hình 1.1, muốn tạo form điều khiển dạng như sau:
+
+                                 Hình 6.7. Ví dụ về form điều khiển
+     Ta thực hiện như sau:
+
+     Trong cửa sổ thiết kế Form ta chọn điều khiển Option Group với các tùy chọn
+như hình sau:
+
+     Lần lượt từng bước như sau:
+
+Nhấn Next
+
+                  Hình 6.7 . Các bước tạo Option Group
+
+Nhấn Next, ghi tiêu đề cho Option Group và nhấn Finish.
+
+Giả sử ta đặt tên cho Option Group là CHON.
+
+     Ta tạo Macro để gắn cho nút THỰC HIỆN như sau:
+
+     Ta dùng Macro dạng điều kiện IF, với mỗi mức giá trị như trong Option
+Group thì tương ứng bên một hành động của Macro, xem ví dụ sau:
+
+       Hình 6.8. Tạo Macro đề gắn vào nút THỰC HIỆN trong Option Group
+6.2.4 Các Actions và các Events thông dụng
+
+a. Actions: Trong Access 2010 action được chia thành nhóm theo chức năng.
+
+            Data Entry Operations               Macro Commands
+
+            • DeleteRecord                      • OnError
+
+            • EditListItems                     • RemoveAllTempVars
+
+            • SaveRecord                        • RunDataMacro
+
+            Database Objects                    • RunMenuCommand
+
+            • GotoControl                       • SetLocalVar
+
+            • GotoPage                          • SetTempVar
+
+            • GotoRecord                        • StopAllMacros
+
+            • OpenForm                          • StopMacro
+
+            • OpenReport                        System Commands
+
+            • OpenTable                         • Beep
+
+            • PrintObject                       • CloseDatabase
+
+            • PrintPreview                      • QuitAccess
+
+            • SelectObject                     User Interface
+                                               Commands
+            • SetProperty
+                                                • AddMenu
+            Filter/Query/Search
+                                                • BrowseTo
+            • ApplyFiler
+                                                • LockNavigationPane
+            • FindNextRecord
+                                                • MessageBox
+            • FindRecord
+                                                • SetMenuItem
+            • OpenQuery
+                                                • UndoRecord
+            • Refresh
+                                                Window Management
+            • RemoveFilterSort
+b. Events: Sự• kiện                             • CloseWindow
+                    tác động lên đối tượng để thực thi macro. Tùy thuộc vào đối
+                SetFilter
+tượng khác nhau sẽ có những event khác nhau.    • MaximizeWindow
+             • SetOrderBy
+                                                • MinimizeWindow
+            • ShowAllRecords          147
+
+                                                • RetoreWindow.
+− Mouse và Keyboard event
+
+    Event              Ý nghĩa
+     Click         click chuột trên đối tượng.
+   DblClick        Double click trên đối tượng.
+  MouseDown        Nhấn phím của chuột trên một đối tượng.
+  MouseMove        Di chuyển chuột ngang đối tượng.
+   MouseUp         Thả phím của chuột khi đang trỏ đến đối tượng
+   KeyDown         Nhấn phím của bàn phím
+    KeyUp          Thả phím
+− Form Event
+
+    Event              Ý nghĩa
+     Open          Khi form được mở, nhưng record đầu tiên chưa hiển thị
+     Load          Khi form được load vào bộ nhớ nhưng chưa mở
+    Resize         Khi kích thước của form thay đổi
+    Unload         Khi đóng form và record unload, và trước khi form di
+                  chuyển khỏi màn hình
+     Close         Khi đóng form
+   Activate        Khi form nhận focus, trở thành cửa sổ active
+   GotFocus        Khi form không active
+   LostFocus       Khi form mất focus
+− Form Data Events
+
+    Event                                  Ý nghĩa
+     Current       Khi di chuyển một record khác đến record hiện hành
+
+   BeforeInsert    Sau khi dữ liệu đầu tiên được nhập vào new record và
+               trước khi record thực sự được tạo
+    AfterInsert After the new record được thêm vào bảng
+ BeforeUpdate      Trước khi dữ liệu thay đổi được cập nhật vào record.
+   AfterUpdate     Sau khi dữ liệu thay đổi được cập nhật vào record.
+
+    Event                                 Ý nghĩa
+     Filter        Khi filter được chỉ định nhưng trước khi nó được áp dụng.
+
+  ApplyFilter      Sau khi filter được áp dụng vào form.
+− Control Event
+
+    Event                                 Ý nghĩa
+ BeforeUpdate      Trước khi dữ liệu trong control thay đổi thì cập nhật vào
+                  recordset.
+  AfterUpdate      Sau khi sự thay đổi dữ liệu được cập nhật vào recordset
+                  của form.
+    Change         Khi nội dung trong text box thay đổi.
+   GotFocus        Khi một control nhận focus
+   LostFocus       Khi một control mất focus
+     Click         Khi click chuột
+   DblClick        Khi double click
+
+                     BÀI TẬP KẾT THÚC CHƯƠNG 6
+   Bài 1: Thực hiện trên CSDL VPP.ACCDB
+  Thiết kê form DIEUKHIEN như sau:
+
+Bài 2: Trên CSDL Quản lý lương cán bộ thực hiện các yêu cầu sau:
+
+1. In danh sách cán bộ một phòng ban nào đó như sau:
+
+Sau khi chọn tên một phòng ban, nhấn nút In danh sách cán bộ. đan sách cán bộ
+phòng ban đã chọn sẽ được in ra một report.
+
+2. Thiết kế query in ra bảng tổng hợp cán bộ như sau:
+
+ 3. Tạo form và report để xem và in bảng lương của các phòng ban như sau:
+Sau khi chọn tên một phòng ban, bảng lương các cán bộ phòng đó hiển thị lên sub-
+form. Nhấn nút In bảng lương, bảng lương riêng phòng ban đó sẽ được in ra một
+report.
+
+4. Thiết kế form tìm kiếm nhân viên theo mã số như sau:
+    • Nút lệnh Tìm nhân viên gắn với một macro. Macro này thực hiện thao tác
+       mở một query chứa các thong tin liên quan đến nhân viên có mã số cần tìm
+       kiếm.
+    • Nút lệnh thoát: Thoát khỏi Access
+
+5.Thiết kê form quản lý nhân viên như sau:
+
+                         BÀI TẬP TỔNG HỢP
+Câu 1: Tạo CSDL có tên là Quanlydien.Accdb
+Câu 2 : Thiết kế bảng - Tạo mối quan hệ - Nhập dữ liệu vào bảng theo các yêu
+cầu sau
+- Khachhang : MAKH(T,4); TENKHACH(T,10); DIACHI(T,40)
+- Sudung : MASD(T,2); LOAISD(T,15); DONGIA(N,Int)
+- Chitiet : MASD(T,2); MAKH(T,4); SOKW(N,Int); THANHTIEN(N,Double)
+
+Câu 2 : Tạo các Query thực hiện các yêu cầu sau
+   1. Tính cột THANHTIEN trong bảng CHITIET biết THANHTIEN = SOKW*DONGIA, nếu
+        SOKW&lt;=100 dongia giữ nguyên; nếu 100&lt;SOKW&lt;=200 dongia được tính gấp 1,5 lần;
+        nếu SOKW&gt;200 dongia dược tính gấp 2 lần.
+   2. Tìm danh sách hộ phải trả tiền điện nhiều nhất.
+   3. Thêm dữ liệu “KH07”; “NAM”; “10 KHU DÂN CƯ CHÍNH NGHĨA” vào bảng
+        KHACHHANG.
+Câu 3 : Tạo Form TIENDIEN như hình sau; yêu cầu :
+
+Câu 4 : Tạo Report HOADON như hình sau
+
+Câu 5 : Tạo Form điều khiển như hình sau, yêu cầu:
+  1. Chọn Form tiền điện và nhấn nút thực hiện sẽ mở form tiendien
+  2. Chọn Report hóa đơn và nhấn nút thực hiện sẽ mở report hoadon ra trên màn
+      hình.
+
+                          TÀI LIỆU THAM KHẢO
+
+[1] Đỗ Trọng Danh, Nguyễn Vũ Ngọc Tùng, Tự học Microsof Access 2010, NXB
+Đại học Sư Phạm, 2012
+
+[2] Giáo trình Access 2007, Đại học công nghệ thông tin, TP. Hồ Chí Minh
+
+[3] Giáo trình Access 2010, Trung tâm tin học, Đại học Bách khoa TP Hồ Chí MInh</baihoc>
+<baitap bai="6" loai="goc" de="Bài 1: Thực hiện trên CSDL VPP.ACCDB Thiết kê form DIEUKHIEN như sau:" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="Bài 2: Trên CSDL Quản lý lương cán bộ thực hiện các yêu cầu sau: 1. In danh sách cán bộ một phòng ban nào đó như sau: Sau khi chọn tên một phòng ban, nhấn nút In danh sách cán bộ. đan sách cán bộ phòng ban đã chọn sẽ được in ra một report. 2. Thiết kế query in ra bảng tổng hợp cán bộ như sau: 3. Tạo form và report để xem và in bảng lương của các phòng ban như sau: Sau khi chọn tên một phòng ban, bảng lương các cán bộ phòng đó hiển thị lên sub- form. Nhấn nút In bảng lương, bảng lương riêng phòng ban đó sẽ được in ra một report. 4. Thiết kế form tìm kiếm nhân viên theo mã số như sau: • Nút lệnh Tìm nhân viên gắn với một macro. Macro này thực hiện thao tác mở một query chứa các thong tin liên quan đến nhân viên có mã số cần tìm kiếm. • Nút lệnh thoát: Thoát khỏi Access 5.Thiết kê form quản lý nhân viên như sau: BÀI TẬP TỔNG HỢP" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="Câu 1: Tạo CSDL có tên là Quanlydien.Accdb" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="Câu 2 : Thiết kế bảng - Tạo mối quan hệ - Nhập dữ liệu vào bảng theo các yêu cầu sau - Khachhang : MAKH(T,4); TENKHACH(T,10); DIACHI(T,40) - Sudung : MASD(T,2); LOAISD(T,15); DONGIA(N,Int) - Chitiet : MASD(T,2); MAKH(T,4); SOKW(N,Int); THANHTIEN(N,Double)" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="Câu 2 : Tạo các Query thực hiện các yêu cầu sau 1. Tính cột THANHTIEN trong bảng CHITIET biết THANHTIEN = SOKW*DONGIA, nếu SOKW&lt;=100 dongia giữ nguyên; nếu 100&lt;SOKW&lt;=200 dongia được tính gấp 1,5 lần; nếu SOKW&gt;200 dongia dược tính gấp 2 lần. 2. Tìm danh sách hộ phải trả tiền điện nhiều nhất. 3. Thêm dữ liệu “KH07”; “NAM”; “10 KHU DÂN CƯ CHÍNH NGHĨA” vào bảng KHACHHANG." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="Câu 3 : Tạo Form TIENDIEN như hình sau; yêu cầu :" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="Câu 4 : Tạo Report HOADON như hình sau" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="Câu 5 : Tạo Form điều khiển như hình sau, yêu cầu: 1. Chọn Form tiền điện và nhấn nút thực hiện sẽ mở form tiendien 2. Chọn Report hóa đơn và nhấn nút thực hiện sẽ mở report hoadon ra trên màn hình. TÀI LIỆU THAM KHẢO [1] Đỗ Trọng Danh, Nguyễn Vũ Ngọc Tùng, Tự học Microsof Access 2010, NXB Đại học Sư Phạm, 2012 [2] Giáo trình Access 2007, Đại học công nghệ thông tin, TP. Hồ Chí Minh [3] Giáo trình Access 2010, Trung tâm tin học, Đại học Bách khoa TP Hồ Chí MInh" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="1. In danh sách cán bộ một phòng ban nào đó như sau: Sau khi chọn tên một phòng ban, nhấn nút In danh sách cán bộ. đan sách cán bộ phòng ban đã chọn sẽ được in ra một report." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="2. Thiết kế query in ra bảng tổng hợp cán bộ như sau:" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="3. Tạo form và report để xem và in bảng lương của các phòng ban như sau: Sau khi chọn tên một phòng ban, bảng lương các cán bộ phòng đó hiển thị lên sub- form. Nhấn nút In bảng lương, bảng lương riêng phòng ban đó sẽ được in ra một report." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="4. Thiết kế form tìm kiếm nhân viên theo mã số như sau: • Nút lệnh Tìm nhân viên gắn với một macro. Macro này thực hiện thao tác mở một query chứa các thong tin liên quan đến nhân viên có mã số cần tìm kiếm. • Nút lệnh thoát: Thoát khỏi Access" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="5.Thiết kê form quản lý nhân viên như sau:" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="1. Tính cột THANHTIEN trong bảng CHITIET biết THANHTIEN = SOKW*DONGIA, nếu SOKW&lt;=100 dongia giữ nguyên; nếu 100&lt;SOKW&lt;=200 dongia được tính gấp 1,5 lần; nếu SOKW&gt;200 dongia dược tính gấp 2 lần." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="2. Tìm danh sách hộ phải trả tiền điện nhiều nhất." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="3. Thêm dữ liệu “KH07”; “NAM”; “10 KHU DÂN CƯ CHÍNH NGHĨA” vào bảng KHACHHANG. Câu 3 : Tạo Form TIENDIEN như hình sau; yêu cầu : Câu 4 : Tạo Report HOADON như hình sau Câu 5 : Tạo Form điều khiển như hình sau, yêu cầu:" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="1. Chọn Form tiền điện và nhấn nút thực hiện sẽ mở form tiendien" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+<baitap bai="6" loai="goc" de="2. Chọn Report hóa đơn và nhấn nút thực hiện sẽ mở report hoadon ra trên màn hình. TÀI LIỆU THAM KHẢO [1] Đỗ Trọng Danh, Nguyễn Vũ Ngọc Tùng, Tự học Microsof Access 2010, NXB Đại học Sư Phạm, 2012 [2] Giáo trình Access 2007, Đại học công nghệ thông tin, TP. Hồ Chí Minh [3] Giáo trình Access 2010, Trung tâm tin học, Đại học Bách khoa TP Hồ Chí MInh" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file bg_hequantri_csdl_access.pdf, trang 142-156."/>
+</mon>

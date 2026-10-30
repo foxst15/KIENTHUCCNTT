@@ -1,0 +1,2846 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mon id="hdh" ten="Nguyên lý hệ điều hành" nhom="Nền tảng &amp; toán" drive="1Zyo3ReBYTdaTUMvolIbtFvV-dpf2lVWl" nguon="BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf">
+<mota>Tiến trình, lập lịch CPU, bộ nhớ, deadlock.</mota>
+<baihoc stt="1" tieude="Chương 1. Tổng quan về hệ điều hành">Chương 1. TỔNG QUAN VỀ HỆ ĐIỀU HÀNH
+     Mục tiêu của chương 1:
+Kết thúc chương này, sinh viên có thể: trình bày vị trí, chức năng và lịch sử phát triển
+của hệ điều hành, phân loại hệ điều hành theo cách quản lý CPU và theo yêu cầu thời
+gian đáp ứng [CLO1]; phân biệt các loại tài nguyên hệ thống và các khái niệm chương
+trình, tiến trình, luồng, shell, kernel, chế độ người dùng/kernel, system call, interrupt,
+trap [CLO2].
+1.1. Chức năng và lịch sử phát triển của hệ điều hành
+1.1.1. Vị trí của hệ điều hành trong hệ thống máy tính
+     Một hệ thống máy tính hiện đại thường gồm bốn thành phần cơ bản: phần cứng,
+hệ điều hành, chương trình ứng dụng và người sử dụng [4]. Phần cứng cung cấp khả
+năng tính toán, lưu trữ và trao đổi dữ liệu. Chương trình ứng dụng giải quyết các nhu
+cầu cụ thể như soạn thảo văn bản, lập trình, duyệt web. Hệ điều hành đứng giữa phần
+cứng và chương trình ứng dụng, có nhiệm vụ quản lý, điều phối và cung cấp môi trường
+hoạt động cho toàn bộ hệ thống.
+     Nếu không có hệ điều hành, người dùng hoặc lập trình viên phải tác động trực tiếp
+vào phần cứng - phải hiểu CPU thực hiện lệnh như thế nào, bộ nhớ lưu dữ liệu ra sao, ổ
+đĩa đọc ghi theo cơ chế nào. Đây là công việc rất phức tạp. Hệ điều hành ra đời để che
+giấu phần lớn sự phức tạp đó, cung cấp những khái niệm dễ dùng hơn như tập tin, thư
+mục, tiến trình, tài khoản người dùng.
+
+               Hình 1. 1. Vị trí của hệ điều hành trong hệ thống máy tính
+       Ví dụ: Khi mở đồng thời Visual Studio Code để lập trình, trình duyệt để tra cứu
+tài liệu và Zalo để trao đổi nhóm học tập, hệ điều hành phải đồng thời: nạp chương trình
+vào bộ nhớ, tạo tiến trình, cấp phát RAM, điều phối CPU, xử lý bàn phím, chuột, màn
+hình, kết nối mạng và lưu tập tin. Người dùng chỉ nhìn thấy các cửa sổ ứng dụng, nhưng
+phía sau là hoạt động điều phối liên tục của hệ điều hành.
+
+     Hệ điều hành là một hệ thống chương trình có nhiệm vụ quản lý tài nguyên của
+máy tính, điều khiển việc thực hiện các chương trình và cung cấp môi trường giao tiếp
+thuận tiện giữa người sử dụng, chương trình ứng dụng với phần cứng máy tính [1].
+       Ba ý chính cần nhớ:
+   ̶    Phần mềm hệ thống: hệ điều hành là phần mềm hệ thống, không phải phần mềm
+        ứng dụng thông thường.
+   ̶    Quản lý tài nguyên: CPU, bộ nhớ, ổ đĩa, thiết bị vào ra, tập tin, mạng, thời gian
+        xử lý.
+   ̶    Cung cấp môi trường sử dụng: để người dùng và chương trình khai thác phần
+        cứng mà không cần hiểu chi tiết kỹ thuật bên dưới.
+
+      Ghi nhớ: Có thể xem hệ điều hành như một “người quản lý”, không trực tiếp
+ làm thay mọi việc, nhưng chịu trách nhiệm phân phối tài nguyên, kiểm soát quyền sử
+ dụng, xử lý tranh chấp và bảo đảm hệ thống vận hành có trật tự.
+
+1.1.2. Chức năng tổng quát của hệ điều hành
+          ➢ Máy tính mở rộng (extended machine)
+     Máy tính vật lý rất phức tạp: CPU không hiểu khái niệm “mở trình duyệt”, bộ nhớ
+không tự biết vùng nào thuộc chương trình nào [6]. Hệ điều hành che giấu chi tiết phức
+tạp của phần cứng và cung cấp một môi trường logic dễ sử dụng hơn - người dùng chỉ
+cần biết tên tập tin và thư mục, không cần biết dữ liệu nằm ở sector nào trên đĩa.
+     Ví dụ: Khi lưu file ‘BaiTapLon.docx’ vào thư mục ‘HocTap’, hệ điều hành thực
+hiện nhiều thao tác bên dưới: xác định vùng trống trên ổ đĩa, ghi dữ liệu, cập nhật bảng
+quản lý tập tin, gán quyền truy cập. Nhưng với người dùng, thao tác chỉ là chọn Save.
+          ➢ Quản lý tài nguyên hệ thống
+       Tài nguyên máy tính luôn có giới hạn: số lõi CPU, dung lượng RAM, không gian
+đĩa... Hệ điều hành phải cấp phát, thu hồi, chia sẻ và bảo vệ tài nguyên.
+     Ví dụ: Khi nhiều chương trình cùng cần CPU, hệ điều hành quyết định tiến trình
+nào được chạy, chạy bao lâu. Khi một chương trình kết thúc, hệ điều hành thu hồi bộ
+nhớ, đóng tập tin, giải phóng thiết bị.
+                        Bảng 1. 1. Chức năng tổng của hệ điều hành
+
+ Chức năng        Ý nghĩa                            Ví dụ
+
+ Máy tính mở Che giấu chi tiết phần cứng, tạo Người dùng thao tác với tập tin
+ rộng        môi trường dễ dùng               thay vì sector đĩa
+
+ Chức năng         Ý nghĩa                           Ví dụ
+
+ Quản lý tài Cấp phát, chia sẻ, bảo vệ và thu Chia CPU cho nhiều tiến trình, cấp
+ nguyên      hồi tài nguyên                   RAM cho ứng dụng
+
+      Từ hai chức năng tổng quát trên, hệ điều hành hiện đại thực hiện các chức năng cụ
+thể sau:
+   ̶   Quản lý tiến trình
+   ̶   Quản lý bộ nhớ chính và bộ nhớ phụ
+   ̶   Quản lý thiết bị vào ra
+   ̶   Quản lý tập tin và thư mục
+   ̶   Bảo vệ và an toàn hệ thống
+   ̶   Cung cấp giao diện người dùng và giao diện lập trình ứng dụng (API)
+                       Bảng 1. 2. Một số chức năng của hệ điều hành
+
+ Chức năng           Nội dung chính                  Ví dụ thực tế
+
+                                                     Chạy Chrome, VS Code, Zalo
+ Quản lý tiến trình Tạo, hủy, điều phối tiến trình
+                                                     cùng lúc
+
+                     Cấp phát, thu hồi, bảo vệ
+ Quản lý bộ nhớ                                Mỗi ứng dụng có vùng nhớ riêng
+                     RAM
+
+ Quản lý I/O         Điều khiển thiết bị vào ra      In tài liệu, đọc USB, kết nối Wi- Fi
+
+ Quản lý tập tin     Tổ chức và bảo vệ dữ liệu       Lưu, xóa, đổi tên tập tin
+
+                     Xác thực, phân quyền, bảo vệ Đăng nhập, quyền admin, cập nhật
+ Bảo mật
+                     hệ thống                     bảo mật
+
+                     Hỗ trợ người dùng và lập
+ Giao diện                                    Desktop, Terminal, API
+                     trình viên
+
+1.1.3. Lịch sử phát triển của hệ điều hành
+     Lịch sử hệ điều hành gắn liền với sự phát triển của phần cứng và nhu cầu sử dụng
+máy tính. Mỗi giai đoạn ra đời để khắc phục hạn chế của giai đoạn trước, đây là nội
+dung mấu chốt để hiểu vì sao hệ điều hành hiện đại có cấu trúc như ngày nay.
+
+                Bảng 1. 3. Các giai đoạn phát triển của hệ điều hành [6]
+
+                                                          Hạn chế được khắc phục ở
+Giai đoạn              Đặc điểm
+                                                          giai đoạn sau
+
+                       Gom nhiều công việc thành Người dùng không tương tác
+Xử lý theo lô          một lô, chạy lần lượt không được trong lúc chạy; CPU rảnh
+                       cần người vận hành can thiệp khi chờ I/O
+
+                   Nhiều chương trình cùng nằm
+                                                  Tận dụng CPU tốt hơn, nhưng
+Đa          chương trong bộ nhớ; khi chương trình
+                                                  vẫn chưa có tương tác thời
+(multiprogramming) này chờ I/O, CPU chuyển sang
+                                                  gian thực với người dùng
+                   chương trình khác
+
+                  CPU chia thành lát thời gian
+                                               Nền tảng của đa nhiệm hiện
+Chia sẻ thời gian nhỏ, cấp lần lượt cho nhiều
+                                               đại (Windows, Linux desktop
+(time- sharing)   tiến trình → cảm giác chạy
+                                               ngày nay)
+                  đồng thời
+
+                       MS- DOS, Windows, macOS
+                       đưa máy tính đến người dùng Đưa HĐH ra khỏi phòng thí
+Máy tính cá nhân
+                       phổ thông; giao diện đồ họa ra nghiệm
+                       đời
+
+Mạng, phân      tán, Hỗ trợ chia sẻ tài nguyên qua Nền tảng cho Internet, web
+máy chủ              mạng, đăng nhập từ xa         server, database server
+
+Di động, ảo hóa, Android, iOS, máy ảo, Docker Phù hợp môi trường công nghệ
+cloud            container, Kubernetes, IoT   thông tin hiện nay
+
+                   Hình 1. 2. Dòng thời gian phát triển của hệ điều hành
+
+1.2. Một số khái niệm cơ bản của hệ điều hành
+1.2.1. Tài nguyên hệ thống
+      Tài nguyên hệ thống là những thành phần mà chương trình cần sử dụng trong quá
+trình thực hiện: CPU, bộ nhớ chính, bộ nhớ phụ, thiết bị vào ra, tập tin, kết nối mạng...
+       Hai cách phân loại quan trọng nhất :
+   ̶     Theo khả năng chia sẻ: tài nguyên chia sẻ được (CPU, bộ nhớ, băng thông mạng
+         - phục vụ nhiều tiến trình theo cơ chế phân chia) và tài nguyên không chia sẻ
+         được tại một thời điểm (máy in, một vùng dữ liệu đang bị khóa - chỉ nên cấp cho
+         một tiến trình) [5].
+   ̶     Theo bản chất: tài nguyên vật lý (CPU, RAM, ổ cứng, máy in) và tài nguyên
+         logic (tập tin, tiến trình, socket mạng, semaphore, mutex).
+      Ví dụ: Máy in là tài nguyên vật lý không chia sẻ được. Nếu ba người dùng cùng
+gửi lệnh in, hệ điều hành dùng hàng đợi in (spool) để nhận nhiều yêu cầu, sắp xếp và
+gửi lần lượt - biến một tài nguyên khó chia sẻ thành tài nguyên phục vụ được nhiều
+người dùng theo trật tự.
+                            Bảng 1. 4. Một số tài nguyên hệ thống
+
+ Tài nguyên          Vai trò                             Vấn đề cần quản lý
+
+ CPU                 Thực hiện lệnh                      Điều phối tiến trình
+
+ RAM                 Lưu chương trình đang chạy          Cấp phát, thu hồi, bảo vệ
+
+ Ổ đĩa               Lưu dữ liệu lâu dài                 Quản lý block, không gian trống
+
+ Thiết bị I/O        Nhập xuất dữ liệu                   Driver, hàng đợi, ngắt
+
+ Tập tin             Đơn vị lưu trữ logic                Đọc, ghi, phân quyền
+
+ Đối tượng đồng
+                Phối hợp tiến trình, luồng               Tránh tranh chấp tài nguyên
+ bộ
+
+1.2.2. Chương trình, tiến trình và luồng
+   ̶     Chương trình: tập hợp lệnh lưu trữ trên thiết bị lưu trữ, ở trạng thái tĩnh (ví dụ:
+         file chrome.exe).
+   ̶     Tiến trình: một chương trình đang được thực hiện. Có mã lệnh, dữ liệu, vùng
+         nhớ, trạng thái, tài nguyên được cấp phát riêng.
+
+   ̶   Luồng (thread): đơn vị thực thi nhỏ hơn tiến trình. Các luồng trong cùng một
+       tiến trình chia sẻ không gian địa chỉ nhưng mỗi luồng có ngữ cảnh riêng (bộ đếm
+       chương trình, thanh ghi, stack).
+      Ví dụ: Một trình duyệt web hiện đại tạo nhiều tiến trình và luồng để xử lý giao
+diện, tab, âm thanh, tải dữ liệu. Khi một tab bị lỗi, toàn bộ trình duyệt không nhất thiết
+phải đóng.
+                    Bảng 1. 5. Phân biệt chương trình, tiến trình và luồng
+
+ Khái niệm         Bản chất                                    Ví dụ
+
+ Chương trình      Tập lệnh lưu trên ổ đĩa, trạng thái tĩnh File python.exe
+
+                   Chương trình đang chạy, có tài nguyên Một phiên Python đang thực
+ Tiến trình
+                   riêng                                 thi
+
+                                                               Luồng giao diện, luồng đọc dữ
+ Luồng             Dòng thực thi bên trong tiến trình
+                                                               liệu
+
+                Hình 1. 3. Mối quan hệ giữa chương trình, tiến trình và luồng
+1.2.3. Trạng thái cơ bản của tiến trình
+     Mô hình đơn giản gồm 5 trạng thái: New → Ready → Running →
+Waiting/Blocked → Terminated [4].
+    Ví dụ: Khi chương trình đang đọc dữ liệu từ ổ đĩa, tiến trình chuyển sang Waiting;
+CPU được cấp cho tiến trình khác. Khi dữ liệu sẵn sàng, tiến trình quay lại hàng đợi
+Ready.
+      Liên hệ thực tế: Một ứng dụng ‘không phản hồi’ có thể đang kẹt trong trạng thái
+chờ tài nguyên hoặc chờ I/O. Một máy tính ‘chậm’ có thể do quá nhiều tiến trình ở trạng
+thái Ready nhưng CPU không đủ khả năng phục vụ kịp.
+                       Hình 1. 4. Sơ đồ chuyển trạng thái tiến trình
+1.2.4. Shell, Kernel và các chế độ hoạt động
+     ̶ Shell là bộ thông dịch lệnh, đóng vai trò trung gian giữa người dùng và hệ điều
+hành: nhận lệnh, phân tích, yêu cầu hệ điều hành thực hiện, trả kết quả.
+         ●    Shell dòng lệnh: Bash, Zsh, PowerShell, Command Prompt.
+         ●    Shell đồ họa: môi trường desktop, trình quản lý file, menu ứng dụng.
+
+      Lưu ý: shell là lớp giao tiếp giữa người dùng và hệ điều hành, dù ở dạng dòng
+ lệnh hay đồ họa.
+
+      Ví dụ: Khi gõ lệnh ls trên Terminal Linux, shell nhận lệnh, phân tích, gọi chương
+trình phù hợp, hiển thị danh sách tập tin.
+       Phân biệt Shell với Kernel: Shell giao tiếp với người dùng; kernel trực tiếp quản
+lý tài nguyên lõi của hệ thống. Shell có thể thay đổi tùy người dùng, kernel là phần trung
+tâm cố định của hệ điều hành.
+      ̶ Kernel là thành phần lõi của hệ điều hành, chịu trách nhiệm quản lý CPU, bộ
+nhớ, tiến trình, thiết bị. Kernel hoạt động ở chế độ đặc quyền cao để truy cập phần cứng
+và quản lý hệ thống. C. hương trình ứng dụng không được tùy ý truy cập trực tiếp phần
+cứng, phải gửi yêu cầu thông qua lời gọi hệ thống.
+     ̶ Chế độ người dùng và chế độ nhân
+     Bảng 1. 6. So sánh chế độ người dùng (User mode) và chế độ nhân (Kernel mode)
+
+                                                                       Chế     độ    nhân
+ Tiêu chí    Chế độ người dùng (User mode)
+                                                                       (Kernel mode)
+
+ Đối tượng Ứng dụng thông thường                                       Kernel, driver
+
+                                                                 Chế     độ    nhân
+ Tiêu chí    Chế độ người dùng (User mode)
+                                                                 (Kernel mode)
+
+             Bị giới hạn - không được thực hiện lệnh đặc quyền
+ Quyền                                                         Rất cao - được thực
+             (ví dụ: HLT dừng CPU, thao tác thanh ghi điều
+ truy cập                                                      hiện mọi lệnh máy
+             khiển ngắt)
+
+ Mức độ                                                          Lỗi có thể ảnh hưởng
+         Lỗi thường chỉ ảnh hưởng ứng dụng đó
+ an toàn                                                         toàn hệ thống
+
+                                                                 Bộ lập lịch, quản lý
+ Ví dụ       Trình duyệt, phần mềm soạn thảo
+                                                                 bộ nhớ, driver
+
+1.2.5. Cơ chế giao tiếp ứng dụng – hệ điều hành
+     ̶ Lời gọi hệ thống (system call) là cơ chế để chương trình yêu cầu dịch vụ từ hệ
+điều hành: tạo tiến trình, mở/đọc/ghi file, cấp phát bộ nhớ, tạo socket... [4]. Trên hệ
+thống kiểu Unix/Linux: fork, exec, open, read, write, close.
+     ̶ Interrupt (ngắt) là cơ chế cho phép phần cứng báo cho CPU biết có sự kiện cần
+xử lý (nhấn phím, dữ liệu đĩa đọc xong, gói tin mạng đến) [4]. Interrupt phát sinh bất
+đồng bộ, từ bên ngoài luồng lệnh đang chạy.
+     ̶ Trap là một dạng ngắt phần mềm (software interrupt) - do chính chương trình
+đang chạy chủ động kích hoạt để chuyển quyền điều khiển sang hệ điều hành. Trap xảy
+ra đồng bộ với luồng lệnh hiện tại, ở hai trường hợp:
+         ● Chương trình chủ động gọi dịch vụ hệ thống (system call) - đây là cách
+    phổ biến nhất.
+         ● Một ngoại lệ (exception) phát sinh ngoài ý muốn: chia cho 0, truy cập
+    vùng nhớ không hợp lệ.
+
+      Lưu ý: Lời gọi hệ thống chính là một dạng trap - khi chương trình gọi open (),
+ CPU thực hiện một lệnh máy đặc biệt (ví dụ syscall trên x86- 64, hoặc int 0x80 trên
+ các hệ cũ) để chủ động chuyển (trap) quyền điều khiển từ user mode sang kernel
+ mode. Đây chính là cơ chế trap được dùng để hiện thực hóa lời gọi hệ thống.
+
+Hình 1. 5. Chương trình ứng dụng gọi dịch vụ hệ điều hành thông qua lời gọi hệ thống (trap)
+   ̶    API - Giao diện lập trình ứng dụng
+     API là tập các hàm/thủ tục mà hệ điều hành cung cấp để chương trình ứng dụng
+sử dụng, giúp lập trình viên không cần gọi trực tiếp lời gọi hệ thống ở mức thấp.
+     Ví dụ: Windows API cung cấp hàm tạo cửa sổ, đọc ghi file. POSIX API là chuẩn
+cho hệ thống kiểu Unix. Android API cung cấp dịch vụ truy cập camera, cảm biến.
+     Liên hệ thực tế: Khi gặp lỗi “permission denied”, “file is being used by another
+process”, “address already in use” - đó là dấu hiệu chương trình đang tương tác với tài
+nguyên do hệ điều hành kiểm soát thông qua API/system call.
+1.3. Hệ điều hành và phân loại hệ điều hành
+1.3.1. Phân loại theo cách quản lý CPU theo thời gian
+                       Bảng 1. 7. Phân loại theo cách quản lý CPU
+
+ Loại                   Đặc điểm              Ưu điểm          Hạn chế      Ví dụ
+
+                        Chạy công việc                          Sao lưu dữ
+                                         Tốt cho xử lý Ít tương
+ Xử lý theo lô          theo nhóm, không                        liệu, tạo báo
+                                         định kỳ       tác
+                        tương tác                               cáo cuối ngày
+
+                    Nhiều       chương                Quản lý Hệ       thống
+ Đa          chương                     Tận      dụng
+                    trình cùng trong bộ               bộ nhớ chạy nhiều
+ (multiprogramming)                     CPU tốt hơn
+                    nhớ                               phức tạp tác vụ nền
+
+ Loại                   Đặc điểm              Ưu điểm          Hạn chế    Ví dụ
+
+                                     Người dùng Cần lập Windows,
+ Chia sẻ thời gian Chia CPU theo lát
+                                     có cảm giác lịch hiệu Linux
+ (time- sharing)   thời gian nhỏ
+                                     đồng thời   quả       desktop
+
+1.3.2. Phân loại theo yêu cầu thời gian đáp ứng
+     Hệ điều hành thời gian thực (real- time OS) yêu cầu phản hồi trong thời gian xác
+định - kết quả đúng nhưng trả về trễ cũng được xem là sai.[6]
+   ̶    Thời gian thực cứng (hard real- time): deadline nghiêm ngặt. Ví dụ: hệ thống điều
+        khiển phanh ô tô, robot công nghiệp, thiết bị y tế.
+   ̶    Thời gian thực mềm (soft real- time): cho phép trễ ở mức nhất định nhưng chất
+        lượng dịch vụ giảm. Ví dụ: ứng dụng phát video trực tuyến (nếu trễ sẽ giật, lag,
+        nhưng không gây nguy hiểm).
+1.3.3. Phân loại theo số người dùng và số nhiệm vụ
+                     Bảng 1. 8. Phân loại theo người dùng và nhiệm vụ
+
+ Loại                 Đặc điểm                    Ví dụ                   Sử dụng
+
+ Đơn người dùng, Một người dùng, một                                      Chủ yếu mang
+                                     MS- DOS
+ đơn nhiệm       chương trình                                             tính lịch sử
+
+                                                          Rất phổ biến
+ Đơn người dùng, Một người dùng, nhiều Windows 11, macOS,
+                                                          trên máy cá
+ đa nhiệm        chương trình đồng thời Ubuntu Desktop
+                                                          nhân
+
+                      Nhiều người dùng cùng Linux Server, Unix, Phổ biến trên
+ Đa người dùng
+                      khai thác             Windows Server      máy chủ
+
+     Ví dụ: Một máy chủ Linux của khoa cho nhiều sinh viên đăng nhập qua SSH để
+thực hành lệnh, nộp bài. Mỗi sinh viên có thư mục home riêng, không được tự ý truy
+cập dữ liệu người khác.
+1.3.4. Phân loại theo môi trường sử dụng
+                          Bảng 1. 9. Phân loại theo môi trường sử dụng
+
+        Loại             Mục đích                               Ví dụ
+
+ Máy tính      cá                                         Windows        11,   macOS,
+                    Học tập, văn phòng, lập trình
+ nhân                                                     Ubuntu
+
+      Loại                Mục đích                               Ví dụ
+
+                                                            Linux    Server,   Windows
+Máy chủ              Cung cấp dịch vụ mạng
+                                                            Server
+
+Di động              Điện thoại, máy tính bảng              Android, iOS
+
+                     Thiết bị chuyên dụng (router,
+Nhúng                                              Embedded Linux, FreeRTOS
+                     camera, IoT)
+
+                     Chia sẻ tài nguyên, phối hợp nhiều Cluster, cloud, distributed
+Mạng, phân tán
+                     máy                                systems
+
+1.4. Thành phần và cấu trúc của hệ điều hành
+1.4.1. Thành phần của hệ điều hành
+     Hệ điều hành là một hệ thống phần mềm lớn, thường được chia thành nhiều thành
+phần, mỗi thành phần đảm nhận một nhóm chức năng riêng nhưng phối hợp với nhau.
+                      Bảng 1. 10. Các thành phần chính của hệ điều hành
+
+Thành phần               Nhiệm vụ chính                         Ví dụ
+
+                         Tạo, hủy, điều phối, đồng bộ tiến Task Manager,           lệnh
+Quản lý tiến trình
+                         trình                             ps/top
+
+Quản lý bộ nhớ
+               Cấp phát, thu hồi, bảo vệ RAM                    Bộ nhớ ảo, phân trang
+chính
+
+Quản lý thiết bị vào Điều khiển thiết bị, driver, ngắt, bộ
+                                                           USB, máy in, bàn phím
+ra                   đệm
+
+                                                                Block, sector, lịch đọc
+Quản lý bộ nhớ phụ       Quản lý không gian lưu trữ trên đĩa
+                                                                ghi
+
+                         Tạo, xóa, đọc, ghi, phân quyền tập
+Quản lý tập tin                                             NTFS, ext4, APFS
+                         tin
+
+                         Nhận và xử lý lệnh người dùng (=
+Thông dịch lệnh                                           Bash, PowerShell
+                         shell)
+
+                         Kiểm soát truy cập và bảo vệ tài
+Bảo vệ hệ thống                                           User, group, permission
+                         nguyên
+
+   ̶   Khi một ứng dụng không phản hồi, thành phần quản lý tiến trình cho phép kết
+       thúc tiến trình, thu hồi bộ nhớ, đóng file.
+   ̶   Khi cắm USB, thành phần quản lý I/O nhận biết thiết bị, nạp driver phù hợp,
+       gắn vào hệ thống tập tin.
+      Các thành phần trên được tổ chức thành các dịch vụ hệ điều hành cơ bản mà
+chương trình và người dùng khai thác: thi hành chương trình, thao tác vào ra, thao tác
+trên hệ thống tập tin, trao đổi thông tin liên tiến trình, phát hiện/xử lý lỗi, cấp phát tài
+nguyên, bảo vệ và an toàn hệ thống.
+1.4.2. Cấu trúc của hệ điều hành
+Bốn mô hình cấu trúc kernel phổ biến [4], [6]:
+                          Bảng 1. 11. Các mô hình cấu trúc kernel
+
+ Cấu trúc        Ý tưởng chính             Ưu điểm      Hạn chế              Ví dụ
+
+               Phần lớn chức năng                       Kernel lớn, lỗi 1
+ Đơn      khối nằm trong kernel, các Hiệu năng          phần có thể ảnh Linux, Unix
+ (monolithic) thành phần gọi trực cao                   hưởng toàn hệ truyền thống
+               tiếp lẫn nhau                            thống
+
+               Chia thành các lớp, lớp Rõ         ràng, Có thể giảm hiệu Mô hình lý
+ Phân      lớp
+               trên dùng dịch vụ lớp dễ           kiểm năng do gọi qua thuyết kinh
+ (layered)
+               dưới                    tra              nhiều lớp        điển
+
+               Kernel chỉ giữ chức An toàn,
+ Vi      nhân                                    Chi phí giao tiếp
+               năng tối thiểu, dịch vụ dễ cô lập                     Minix, QNX
+ (microkernel)                                   liên tiến trình cao
+               khác chạy ở user mode lỗi
+
+                                     Linh hoạt,                              Linux
+                                                Cần kiểm soát
+ Mô-       đun Kernel lõi + mô - đun hỗ     trợ                              Loadable
+                                                phụ thuộc, bảo
+ (modular)     nạp/gỡ khi cần        phần cứng                               Kernel
+                                                mật mô- đun
+                                     đa dạng                                 Modules
+
+     Lưu ý: Trong thực tế, nhiều hệ điều hành hiện đại (Windows NT, macOS/XNU)
+kết hợp nhiều tư tưởng thiết kế thay vì thuần túy một mô hình - gọi là cấu trúc lai
+(hybrid).
+
+1.5. Giới thiệu một số hệ điều hành phổ biến
+                          Bảng 1. 12. Một số hệ điều hành phổ biến
+
+ Hệ    điều Môi trường Đặc điểm nổi bật          Gợi ý cho sinh viên
+ hành       sử dụng                              CNTT
+            Máy tính cá Thân thiện, phổ biến, hỗ
+ Windows 11                                      Lập trình, học CSDL
+            nhân        trợ WSL/Docker
+
+ Windows        Máy       chủ Dịch vụ mạng, Active Học quản trị hệ thống
+ Server         doanh nghiệp Directory             Microsoft
+
+ Ubuntu      / Desktop,           Mã nguồn mở, cộng đồng Học Linux, web server,
+ Debian        server             lớn                    DevOps
+
+                                                                Lập trình di động, hiểu
+ Android        Di động           Dựa trên nhân Linux
+                                                                phân quyền ứng dụng
+
+                                  Nền tảng Unix, tối ưu Lập trình iOS, thiết kế, đa
+ macOS/ iOS Mac, iPhone
+                                  phần cứng Apple       nền tảng
+
+     Ví dụ: Một sinh viên dùng Windows 11 có thể mở VS Code để lập trình, dùng
+WSL để chạy lệnh Linux, dùng Docker để chạy database, dùng trình duyệt để kiểm thử
+ứng dụng web - tất cả trên cùng một máy.
+
+                         Hình 1. 6. Kiến trúc tổng quát của Android
+Tóm tắt chương 1: Chương 1 giới thiệu tổng quan về hệ điều hành: vị trí trung gian
+giữa người dùng, ứng dụng và phần cứng; hai chức năng tổng quát (máy tính mở rộng
+và quản lý tài nguyên); các giai đoạn phát triển lịch sử; các khái niệm cơ bản (tài nguyên,
+tiến trình, luồng, shell, kernel, chế độ người dùng/nhân, lời gọi hệ thống, interrupt, trap,
+API); hai trục phân loại độc lập (theo cách quản lý CPU và theo yêu cầu thời gian đáp
+ứng); các thành phần chức năng và mô hình cấu trúc phổ biến của hệ điều hành; và một
+số hệ điều hành đang được sử dụng rộng rãi hiện nay.
+
+Bài tập chương 1:
+     1. Trình bày khái niệm hệ điều hành. Vì sao nói hệ điều hành là thành phần trung
+gian giữa người dùng và phần cứng?
+       2. Phân tích hai chức năng tổng quát của hệ điều hành: máy tính mở rộng và quản
+lý tài nguyên.
+     3. Phân biệt chương trình, tiến trình và luồng.
+     4. Kernel là gì? Vì sao kernel được xem là thành phần lõi của hệ điều hành?
+     5. Shell là gì? Phân biệt shell và kernel.
+      6. Lời gọi hệ thống là gì? Vì sao có thể nói lời gọi hệ thống là một dạng trap? Cho
+ví dụ.
+     7. Phân biệt interrupt và trap theo nguồn phát sinh và thời điểm xảy ra.
+     8. Vì sao “phân loại theo cách quản lý CPU” và “phân loại theo yêu cầu thời gian
+đáp ứng” là hai tiêu chí độc lập, không loại trừ nhau? Cho ví dụ minh họa.</baihoc>
+<baitap bai="1" loai="goc" de="1. Trình bày khái niệm hệ điều hành. Vì sao nói hệ điều hành là thành phần trung gian giữa người dùng và phần cứng?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 6-19."/>
+<baitap bai="1" loai="goc" de="2. Phân tích hai chức năng tổng quát của hệ điều hành: máy tính mở rộng và quản lý tài nguyên." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 6-19."/>
+<baitap bai="1" loai="goc" de="3. Phân biệt chương trình, tiến trình và luồng." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 6-19."/>
+<baitap bai="1" loai="goc" de="4. Kernel là gì? Vì sao kernel được xem là thành phần lõi của hệ điều hành?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 6-19."/>
+<baitap bai="1" loai="goc" de="5. Shell là gì? Phân biệt shell và kernel." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 6-19."/>
+<baitap bai="1" loai="goc" de="6. Lời gọi hệ thống là gì? Vì sao có thể nói lời gọi hệ thống là một dạng trap? Cho ví dụ." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 6-19."/>
+<baitap bai="1" loai="goc" de="7. Phân biệt interrupt và trap theo nguồn phát sinh và thời điểm xảy ra." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 6-19."/>
+<baitap bai="1" loai="goc" de="8. Vì sao “phân loại theo cách quản lý CPU” và “phân loại theo yêu cầu thời gian đáp ứng” là hai tiêu chí độc lập, không loại trừ nhau? Cho ví dụ minh họa." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 6-19."/>
+<baihoc stt="2" tieude="Chương 2. Quản lý tiến trình">Chương 2. QUẢN LÝ TIẾN TRÌNH
+        Mục tiêu của chương 2:
+Kết thúc chương này, sinh viên có thể: trình bày khái niệm tiến trình, phân biệt chương
+trình – tiến trình – luồng, mô tả PCB, giải thích các trạng thái và chuyển trạng thái của
+tiến trình [CLO1, CLO2]; giải thích tài nguyên găng, đoạn găng, race condition, tắc
+nghẽn; vận dụng các thuật toán đồng bộ hóa và điều phối CPU (FCFS, SJF, SRTF,
+Priority, Round Robin) để giải bài tập [CLO3].
+2.1. Tổng quan về tiến trình
+2.1.1. Khái niệm tiến trình
+      Trong học lập trình, các em thường viết chương trình dưới dạng mã nguồn, sau đó
+biên dịch hoặc thông dịch để chạy. Tuy nhiên, đối với hệ điều hành, một file chương
+trình nằm trên ổ đĩa chưa phải là một hoạt động đang diễn ra. Nó chỉ là một thực thể
+tĩnh. Khi chương trình được nạp vào bộ nhớ, được cấp tài nguyên và được CPU thực
+hiện, khi đó ta có một tiến trình.
+      Chương trình là tập lệnh được lưu trữ trên thiết bị lưu trữ. Tiến trình là chương
+trình đang được thực hiện.
+       Một chương trình có thể tạo ra nhiều tiến trình khác nhau. Ví dụ, khi các em mở
+hai cửa sổ Command Prompt hoặc chạy hai phiên Python khác nhau, hệ điều hành có
+thể tạo hai tiến trình riêng biệt dù chúng cùng xuất phát từ một chương trình. Tương tự,
+khi mở trình duyệt hiện đại, hệ điều hành có thể tạo nhiều tiến trình để xử lý giao diện,
+tab, tiện ích mở rộng, âm thanh và cơ chế bảo mật.
+     Ví dụ: file chrome.exe nằm trên ổ đĩa là chương trình; khi mở Google Chrome, hệ
+điều hành tạo một hoặc nhiều tiến trình Chrome; khi mở nhiều tab, mỗi tab có thể được
+xử lý bởi tiến trình hoặc luồng riêng; khi chạy một file Python nhiều lần, mỗi lần chạy
+có thể tạo một tiến trình Python riêng.
+                       Bảng 2. 1. Phân biệt chương trình và tiến trình
+Tiêu chí        Chương trình                           Tiến trình
+Bản chất        Tập lệnh lưu trên ổ đĩa                Chương trình đang được thực hiện
+Trạng thái      Tĩnh                                   Động
+Tài nguyên      Chưa được cấp tài nguyên thực thi Có bộ nhớ, CPU, tập tin, thiết bị liên
+                                                  quan
+
+Số lượng        Một file chương trình                  Có thể tạo nhiều tiến trình
+
+Ví dụ           python.exe, chrome.exe                 Một phiên Python hoặc Chrome
+                                                       đang chạy
+                  Hình 2. 1. Sơ đồ quan hệ giữa chương trình và tiến trình
+      Tiến trình là một thực thể đang thực hiện trong hệ thống, bao gồm mã lệnh chương
+trình, dữ liệu, vùng nhớ, trạng thái CPU, tài nguyên được cấp phát và các thông tin quản
+lý cần thiết để hệ điều hành có thể điều khiển tiến trình.
+       Một tiến trình không chỉ là “mã lệnh đang chạy”. Nó là toàn bộ môi trường thực
+thi của chương trình. Khi hệ điều hành tạm dừng một tiến trình và sau đó cho chạy lại,
+hệ điều hành phải biết tiến trình đang dừng ở lệnh nào, các thanh ghi CPU đang có giá
+trị gì, tiến trình đang dùng vùng nhớ nào, đang mở tập tin nào, có độ ưu tiên bao nhiêu
+và đang ở trạng thái nào.
+      Có thể hình dung tiến trình giống như một sinh viên đang làm bài thi. Đề thi là
+chương trình; quá trình sinh viên đang làm bài là tiến trình. Nếu tạm dừng sinh viên lại,
+muốn cho làm tiếp thì phải biết đang làm câu nào, đã viết gì, còn bao nhiêu thời gian và
+được dùng tài liệu nào. Hệ điều hành cũng cần lưu những thông tin tương tự để quản lý
+tiến trình.
+      Các loại tiến trình:
+     Trong hệ thống, có thể phân loại tiến trình theo nhiều tiêu chí. Việc phân loại giúp
+hệ điều hành có chính sách quản lý, lập lịch và cấp phát tài nguyên phù hợp.
+     ̶ Theo nguồn gốc: tiến trình hệ thống (do hệ điều hành tạo ra để phục vụ hoạt động
+nội bộ như quản lý dịch vụ, đăng nhập, cập nhật, ghi log) và tiến trình người dùng (do
+người dùng hoặc ứng dụng tạo ra như trình duyệt, IDE, chương trình Python, Java, C++).
+      ̶ Theo quan hệ hoạt động: tiến trình độc lập (ít trao đổi dữ liệu) và tiến trình hợp
+tác (cần trao đổi dữ liệu, tín hiệu hoặc phối hợp).
+      ̶ Theo đặc điểm sử dụng tài nguyên: tiến trình thiên CPU (nén video, render, huấn
+luyện mô hình, tính toán khoa học) và tiến trình thiên I/O (đọc ghi file, tải dữ liệu mạng,
+truy vấn cơ sở dữ liệu).
+
+      Không gian địa chỉ của tiến trình: Mỗi tiến trình thường có một không gian địa
+chỉ riêng. Không gian địa chỉ là vùng địa chỉ logic mà tiến trình nhìn thấy và sử dụng
+trong quá trình thực thi. Việc tách không gian địa chỉ giúp bảo vệ tiến trình này khỏi
+tiến trình khác. Không gian địa chỉ thường gồm các vùng chính:
+     ̶   Vùng mã lệnh: chứa các lệnh chương trình.
+     ̶   Vùng dữ liệu: chứa biến toàn cục, biến tĩnh.
+     ̶   Heap: vùng cấp phát động trong quá trình chạy.
+     ̶   Stack: vùng phục vụ lời gọi hàm, biến cục bộ, địa chỉ trả về.
+     ̶   Vùng ánh xạ thư viện: chứa các thư viện động được nạp khi chương trình chạy.
+      Ví dụ: khi chương trình C gọi malloc, thư viện runtime và hệ điều hành phối hợp
+cấp thêm vùng nhớ trong heap. Khi chương trình gọi một hàm, stack được dùng để lưu
+tham số, biến cục bộ và địa chỉ quay về. Nếu chương trình đệ quy quá sâu, stack có thể
+bị tràn và sinh lỗi.
+     Một chi tiết quan trọng để hiểu lỗi tràn stack: trong bố trí bộ nhớ điển hình,
+heap phát triển từ dưới lên (về phía địa chỉ cao) còn stack phát triển từ trên xuống (về
+phía địa chỉ thấp), giữa hai vùng là khoảng trống dự phòng. Mỗi lần gọi hàm, stack “ăn”
+thêm một khung (stack frame); nếu đệ quy quá sâu, stack vượt quá giới hạn được cấp và
+chương trình bị lỗi tràn stack.
+
+                  Hình 2. 2. Sơ đồ không gian địa chỉ của một tiến trình
+     Khối điều khiển tiến trình (PCB)
+      Để quản lý tiến trình, hệ điều hành cần lưu thông tin về mỗi tiến trình trong một
+cấu trúc dữ liệu đặc biệt gọi là khối điều khiển tiến trình, thường viết tắt là PCB. PCB
+có thể xem là “hồ sơ quản lý” của tiến trình: khi tiến trình đang chạy, PCB chứa thông
+tin để hệ điều hành theo dõi và điều khiển; khi tiến trình bị tạm dừng, PCB giúp khôi
+phục lại tiến trình đúng tại vị trí đã dừng [4].
+
+                          Bảng 2. 2. Một số thành phần trong PCB
+
+      Thành phần                      Ý nghĩa
+PID                             Mã định danh duy nhất của tiến trình
+Process state                   Trạng thái hiện tại: ready, running, blocked…
+Program counter                 Địa chỉ lệnh tiếp theo sẽ thực hiện
+CPU registers                   Giá trị các thanh ghi tại thời điểm lưu ngữ cảnh
+Scheduling information          Độ ưu tiên, hàng đợi, thông tin lập lịch
+Memory information              Bảng trang, vùng nhớ, giới hạn bộ nhớ
+Open files                      Danh sách tập tin đang mở
+Accounting information          Thời gian CPU, thời điểm bắt đầu, thống kê sử dụng
+      Tạo và kết thúc tiến trình
+      Một tiến trình có thể được tạo khi người dùng mở chương trình, khi một chương
+trình tạo tiến trình con, khi hệ điều hành khởi động dịch vụ nền hoặc khi một yêu cầu từ
+mạng làm server sinh tiến trình hoặc luồng xử lý. Khi tạo tiến trình, hệ điều hành thường:
+gán PID; tạo PCB; cấp phát không gian địa chỉ; nạp hoặc ánh xạ chương trình vào bộ
+nhớ; khởi tạo ngữ cảnh CPU; cấp phát tài nguyên ban đầu; đưa tiến trình vào hàng đợi
+thích hợp.
+       Khi tiến trình kết thúc, hệ điều hành phải: thu hồi bộ nhớ; đóng hoặc cập nhật tập
+tin liên quan; giải phóng thiết bị và tài nguyên; cập nhật bảng tiến trình; thông báo cho
+tiến trình cha hoặc hệ thống nếu cần.
+      Ví dụ trên Linux, các tiến trình thường có quan hệ cha – con. Khi một shell chạy
+lệnh, shell có thể tạo tiến trình con để thực hiện lệnh đó. Hai lời gọi hệ thống nền tảng
+cho việc này là fork () (nhân bản tiến trình hiện tại thành tiến trình con) và exec () (thay
+nội dung tiến trình con bằng chương trình mới); các em sẽ dùng trực tiếp chúng trong
+lập trình hệ thống và lập trình mạng. Trên Windows, mô hình đối tượng và handle được
+dùng mạnh trong quản lý tiến trình, luồng và tài nguyên.
+      Quan sát tiến trình trong thực tế:
+     Trên Windows: mở Task Manager, quan sát tab Processes; xem CPU, Memory,
+Disk, Network; phân biệt tiến trình hệ thống và tiến trình ứng dụng.
+     Trên Linux hoặc WSL: ps aux (liệt kê tiến trình); top hoặc htop (quan sát tiến trình
+động); kill (gửi tín hiệu kết thúc); nice, renice (thay đổi độ ưu tiên tương đối).
+2.1.2. Trạng thái và chuyển trạng thái của tiến trình
+      Trạng thái của tiến trình:
+
+      Một tiến trình không phải lúc nào cũng được CPU thực hiện. Trong hệ thống đa
+nhiệm, có nhiều tiến trình cùng tồn tại nhưng số lõi CPU là hữu hạn: có tiến trình đang
+chạy, có tiến trình sẵn sàng chờ CPU, có tiến trình đang chờ đọc dữ liệu từ ổ đĩa, có tiến
+trình chờ người dùng nhập, có tiến trình đã kết thúc. Vì vậy, hệ điều hành phải gán trạng
+thái cho từng tiến trình để biết nó đang ở đâu trong vòng đời và cần xử lý thế nào.
+     Ví dụ: một tiến trình đang chờ dữ liệu mạng không nên nằm trong hàng đợi CPU,
+vì dù có cấp CPU thì nó cũng chưa thể chạy tiếp. Ngược lại, một tiến trình đã đủ điều
+kiện chạy cần được đưa vào hàng đợi sẵn sàng để bộ lập lịch xem xét cấp CPU.
+      Các trạng thái của tiến trình:
+  ➢    Mô hình hai trạng thái
+      Mô hình đơn giản nhất chỉ chia tiến trình thành hai trạng thái: Running (đang chạy)
+và Not Running (không chạy). Mô hình này dễ hiểu nhưng quá đơn giản: nó không phân
+biệt được tiến trình không chạy vì đang sẵn sàng chờ CPU hay vì đang chờ I/O. Trong
+thực tế, hai tình huống này rất khác nhau - tiến trình sẵn sàng cần được lập lịch CPU,
+còn tiến trình chờ I/O cần đợi sự kiện hoàn tất [4], [5].
+
+                          Hình 2. 3. Sơ đồ mô hình hai trạng thái
+         ➢ Mô hình năm trạng thái cơ bản
+     Mô hình năm trạng thái được dùng rất phổ biến vì vừa đơn giản vừa phản ánh đúng
+bản chất thực thi của tiến trình. Các trạng thái gồm New (mới được tạo), Ready (đã sẵn
+sàng, chỉ còn chờ CPU), Running (đang được CPU thực hiện), Waiting/Blocked (đang
+chờ sự kiện hoặc tài nguyên), Terminated (đã kết thúc).
+                       Bảng 2. 3. Các trạng thái cơ bản của tiến trình
+
+       Trạng thái         Ý nghĩa                               Ví dụ
+ New                Tiến trình mới được tạo               Người dùng vừa mở ứng dụng
+ Ready              Đã đủ điều kiện chạy, chờ CPU Chương trình chờ đến lượt chạy
+
+ Running            Đang được CPU thực hiện               Tiến trình đang xử lý lệnh
+
+ Waiting/Blocked Đang chờ I/O hoặc sự kiện                Chờ đọc file, chờ dữ liệu mạng
+
+ Terminated         Đã kết thúc                         Chương trình đóng xong
+
+                  Hình 2. 4. Sơ đồ mô hình năm trạng thái của tiến trình
+        ➢ Các chuyển trạng thái chính thường gặp gồm:
+          New → Ready: tiến trình được chấp nhận, cấp tài nguyên ban đầu và đưa vào
+    hàng đợi sẵn sàng.
+          Ready → Running: bộ lập lịch chọn tiến trình trong hàng đợi ready và cấp
+    CPU.
+          Running → Ready: tiến trình bị thu hồi CPU, thường do hết quantum hoặc có
+    tiến trình ưu tiên cao hơn.
+          Running → Waiting: tiến trình cần chờ một sự kiện (chờ ổ đĩa, chờ bàn phím,
+    chờ khóa đồng bộ).
+          Waiting → Ready: sự kiện đã xảy ra, tiến trình được đưa trở lại hàng đợi
+    ready.
+          Running → Terminated: tiến trình hoàn thành hoặc bị kết thúc.
+       Ví dụ: khi một chương trình đọc file lớn, nó chuyển từ Running sang Waiting để
+chờ ổ đĩa. Trong thời gian đó, CPU được cấp cho tiến trình khác. Khi ổ đĩa đọc xong,
+thiết bị phát sinh ngắt, hệ điều hành xử lý ngắt và đưa tiến trình trở lại Ready.
+        ➢ Hàng đợi tiến trình
+      Hệ điều hành thường tổ chức các tiến trình thành các hàng đợi: job queue (các công
+việc trong hệ thống), ready queue (tiến trình sẵn sàng chờ CPU), waiting queue (tiến
+trình đang chờ sự kiện hoặc tài nguyên), device queue (tiến trình đang chờ một thiết bị
+cụ thể). Mỗi thiết bị hoặc tài nguyên có thể có hàng đợi riêng: hàng đợi cho ổ đĩa, máy
+in, socket mạng, semaphore.
+
+             Hình 2. 5. Sơ đồ dòng di chuyển của tiến trình giữa các hàng đợi
+      Trạng thái tạm dừng (suspend): Trong hệ thống đa nhiệm, nếu có quá nhiều tiến
+trình nằm trong bộ nhớ chính, hệ điều hành có thể thiếu RAM để nạp tiến trình mới. Khi
+đó, một số tiến trình có thể bị tạm đưa ra bộ nhớ phụ. Trạng thái này gọi là suspend,
+phân biệt: Ready Suspend (sẵn sàng chạy nhưng đang ở bộ nhớ phụ) và Blocked
+Suspend (đang chờ sự kiện và cũng bị chuyển ra bộ nhớ phụ).
+                     Bảng 2. 4. So sánh Ready, Blocked và Suspend
+
+      Trạng thái            Vị trí               Chạy ngay nếu có          Ghi chú
+                                                 CPU?
+ Ready                 Bộ nhớ chính              Có                  Đang chờ CPU
+
+ Blocked               Bộ nhớ chính              Không               Đang chờ sự kiện
+ Ready Suspend         Bộ nhớ phụ                Chưa, cần nạp lại Sẵn sàng nhưng bị
+                                                 RAM               swap out
+ Blocked Suspend       Bộ nhớ phụ                Không               Chờ sự kiện và
+                                                                     chưa ở RAM
+      Trạng thái suspend giúp hệ điều hành chủ động hơn trong quản lý bộ nhớ và nâng
+cao mức độ đa chương. Tuy nhiên, chuyển tiến trình ra vào bộ nhớ phụ (swap) có chi
+phí lớn hơn nhiều so với chuyển trạng thái thông thường.
+      Ngoài các chuyển trạng thái cơ bản, mô hình có suspend bổ sung các cung chuyển
+sau [1]:
+         Blocked → Blocked- suspend: bộ nhớ chính thiếu chỗ, hệ điều hành chọn một
+   tiến trình đang chờ sự kiện (dù có cấp CPU cũng chưa chạy được) để đưa ra bộ nhớ
+   phụ - đây là ứng viên bị suspend ít thiệt hại nhất.
+         Blocked- suspend → Ready- suspend: sự kiện mà tiến trình chờ đã xảy ra
+   trong lúc nó còn nằm ở bộ nhớ phụ. Tiến trình đã đủ điều kiện chạy nhưng chưa có
+   mặt trong RAM.
+        Ready- suspend → Ready: bộ nhớ chính có chỗ trống trở lại (hoặc tiến trình
+   này ưu tiên cao hơn các tiến trình đang ở RAM), hệ điều hành nạp nó vào bộ nhớ
+   chính.
+        Ready → Ready- suspend: ít gặp hơn - khi buộc phải giải phóng RAM mà
+   không còn tiến trình blocked nào để đưa ra, hệ điều hành có thể tạm đưa cả tiến trình
+   đang sẵn sàng ra bộ nhớ phụ.
+
+                      Hình 2. 6. Sơ đồ trạng thái mở rộng có suspend.
+         ➢ Điều phối và chuyển trạng thái
+      Mỗi lần tiến trình chuyển trạng thái, hệ điều hành phải cập nhật PCB và các hàng
+đợi liên quan. Khi chuyển từ Running sang Ready, hệ điều hành lưu ngữ cảnh CPU; khi
+chuyển từ Waiting sang Ready, đưa tiến trình vào hàng đợi ready; khi chuyển sang
+Terminated, thu hồi tài nguyên.
+     Chú ý: bản thân tiến trình không tự quyết định mọi chuyển trạng thái. Nhiều
+chuyển trạng thái do hệ điều hành quyết định dựa trên ngắt đồng hồ, sự kiện I/O, yêu
+cầu tài nguyên, chính sách lập lịch hoặc lỗi chương trình. Ví dụ, một tiến trình đang
+chạy có thể bị dừng không phải vì nó muốn, mà vì quantum đã hết - đây là cơ sở của
+điều phối không độc quyền trong hệ chia sẻ thời gian.
+     Ví dụ mô phỏng chuyển trạng thái
+      Giả sử tiến trình P thực hiện: bắt đầu chạy; tính toán 3 ms; đọc file 5 ms; tính toán
+tiếp 2 ms; kết thúc. Quá trình trạng thái:
+     New → Ready → Running → Waiting → Ready → Running → Terminated
+      Biểu diễn bằng hai dòng thời gian (khoảng 3–8 không phải hoạt động của CPU mà
+là thời gian P chờ I/O):
+     Dòng thời gian của P: 0 [chạy CPU] 3 [chờ I/O] 8 [chạy CPU] 10 kết thúc
+     Dòng thời gian CPU:      0 [ P] 3 [tiến trình khác] 8 [ P] 10
+
+     Sơ đồ hai dòng cho thấy ngay điều quan trọng: trong lúc P chờ I/O, CPU không
+rỗi mà được cấp cho tiến trình khác - đây chính là lợi ích của đa chương trình.
+2.1.3. Luồng (Thread) và đa luồng
+         ➢ Khái niệm luồng
+     Luồng là đơn vị thực thi nhỏ hơn tiến trình. Một tiến trình có thể có một hoặc nhiều
+luồng. Nếu tiến trình là môi trường sở hữu tài nguyên, thì luồng là dòng thực thi bên
+trong môi trường đó [4], [6].
+      Một tiến trình thường có: không gian địa chỉ, tập tin đang mở, quyền truy cập,
+tài nguyên hệ thống, và một hoặc nhiều luồng. Mỗi luồng thường có: bộ đếm chương
+trình, tập thanh ghi, stack riêng, trạng thái thực thi và thông tin lập lịch.
+      Các luồng trong cùng tiến trình chia sẻ mã lệnh, dữ liệu, heap và tài nguyên của
+tiến trình. Vì vậy, việc trao đổi dữ liệu giữa các luồng thường nhanh hơn giữa các tiến
+trình khác nhau. Tuy nhiên, chia sẻ dữ liệu cũng làm tăng nguy cơ lỗi đồng bộ.
+
+                   Hình 2. 7. Sơ đồ một tiến trình chứa nhiều luồng.
+       Nếu chỉ dùng tiến trình, mỗi hoạt động song song cần một tiến trình riêng, tốn
+nhiều chi phí tạo, hủy, chuyển ngữ cảnh và trao đổi dữ liệu. Luồng giúp tổ chức nhiều
+dòng thực thi trong cùng một tiến trình nhẹ hơn và linh hoạt hơn. Ví dụ: trình duyệt có
+luồng giao diện, luồng tải dữ liệu, luồng xử lý JavaScript, luồng phát âm thanh; web
+server tạo nhiều luồng xử lý nhiều yêu cầu client; ứng dụng soạn thảo có luồng nhập
+liệu, luồng kiểm tra chính tả, luồng tự động lưu.
+      Trong lập trình hiện đại, các em sẽ gặp luồng trong Java, C#, Python, C++,
+JavaScript runtime, Android, .NET, Node.js worker, thread pool, coroutine và async
+task. Dù cách cài đặt khác nhau, nguyên lý nền tảng vẫn liên quan đến hệ điều hành.
+         ➢ Đơn luồng và đa luồng
+     Một tiến trình đơn luồng chỉ có một dòng thực thi. Nếu luồng này bị chặn do I/O
+hoặc tính toán quá lâu, toàn bộ tiến trình có thể không phản hồi. Một tiến trình đa luồng
+có nhiều dòng thực thi: khi một luồng chờ I/O, các luồng khác vẫn có thể tiếp tục; trên
+hệ đa lõi, nhiều luồng có thể thực sự chạy song song.
+                         Bảng 2. 5. So sánh đơn luồng và đa luồng
+      Tiêu chí                        Đơn luồng                     Đa luồng
+ Số dòng thực thi               Một                          Nhiều
+ Độ phức tạp lập trình          Thấp hơn                     Cao hơn
+ Khả năng phản hồi              Có thể kém nếu bị chặn       Tốt hơn
+ Khai thác đa lõi               Hạn chế                      Tốt hơn
+ Nguy cơ lỗi đồng bộ            Ít hơn                       Cao hơn
+         ➢ Lợi ích và rủi ro của đa luồng
+      Đa luồng có nhiều lợi ích: (1) tăng khả năng đáp ứng - giao diện không bị đứng
+khi tác vụ nền chạy; (2) chia sẻ tài nguyên thuận tiện - các luồng cùng tiến trình chia sẻ
+vùng nhớ nên trao đổi dữ liệu nhanh; (3) tiết kiệm chi phí - tạo luồng nhẹ hơn tạo tiến
+trình; (4) khai thác tốt hệ thống đa lõi - các luồng chạy song song thật; (5) phù hợp mô
+hình server hiện đại - web server, database server, proxy server thường dùng đa luồng,
+đa tiến trình hoặc mô hình sự kiện.
+      Đa luồng làm chương trình khó thiết kế và kiểm thử hơn. Các lỗi đa luồng thường
+không xảy ra ổn định: chạy đúng nhiều lần nhưng sai ở một thời điểm nào đó do thứ tự
+lập lịch thay đổi. Một số rủi ro thường gặp: race condition (kết quả phụ thuộc thứ tự
+thực thi không kiểm soát), tắc nghẽn (các luồng chờ nhau vô hạn), starvation (một luồng
+chờ quá lâu không được tài nguyên), livelock (các luồng vẫn hoạt động nhưng không
+tiến triển), lỗi chia sẻ dữ liệu (biến dùng chung bị cập nhật sai).
+      Ví dụ: hai luồng cùng tăng biến count, mỗi luồng thực hiện count = count + 1. Nếu
+thao tác đọc – tăng – ghi bị xen kẽ không đúng, kết quả cuối cùng có thể nhỏ hơn mong
+muốn. Đây là ví dụ các em sẽ gặp lại trong phần đồng bộ tiến trình (mục 2.5).
+         ➢ Luồng mức người dùng và luồng mức nhân
+      Có hai cách tổ chức luồng cơ bản. Luồng mức người dùng được quản lý bởi thư
+viện ở user mode; hệ điều hành có thể không biết từng luồng - ưu điểm là tạo và chuyển
+luồng nhanh, hạn chế là nếu một luồng bị chặn bởi system call có thể ảnh hưởng cả tiến
+trình. Luồng mức nhân được hệ điều hành quản lý trực tiếp; hệ điều hành biết từng luồng
+và lập lịch chúng trên các CPU khác nhau - ưu điểm là khai thác tốt đa lõi và xử lý chặn
+tốt, hạn chế là chi phí tạo/hủy/chuyển cao hơn.
+
+             Bảng 2. 6. So sánh luồng mức người dùng và luồng mức nhân
+      Tiêu chí                 Luồng mức người dùng          Luồng mức nhân
+ Quản lý bởi                   Thư viện người dùng           Hệ điều hành
+ Chi phí tạo/chuyển            Thấp                          Cao hơn
+ HĐH có biết từng luồng?       Không hoặc biết hạn chế       Có
+ Khai thác đa lõi              Phụ thuộc mô hình             Tốt
+ Khi một luồng bị chặn         Có thể ảnh hưởng tiến trình Luồng khác vẫn chạy
+         ➢ Luồng trong hệ thống hiện đại
+      Trong Windows, mỗi tiến trình có thể chứa nhiều luồng và bộ lập lịch chủ yếu lập
+lịch theo luồng. Trong Linux, khái niệm task được dùng linh hoạt, tiến trình và luồng có
+quan hệ gần nhau trong cài đặt kernel. Trong Android, luồng giao diện chính (main
+thread) rất quan trọng; nếu thực hiện tác vụ nặng trên luồng giao diện, ứng dụng có thể
+bị lỗi ANR.
+     Ví dụ Android: nếu các em tải dữ liệu mạng trực tiếp trên main thread, giao diện
+có thể bị treo. Vì vậy, cần đưa tác vụ mạng sang luồng nền hoặc dùng cơ chế bất đồng
+bộ. Đây là ví dụ rất thực tế về vai trò của luồng trong trải nghiệm người dùng.
+      Kết luận về tiến trình và luồng: tiến trình là đơn vị sở hữu tài nguyên; luồng là đơn
+vị thực thi; nhiều luồng trong cùng tiến trình chia sẻ tài nguyên; đa luồng giúp tăng phản
+hồi và hiệu năng nhưng làm tăng rủi ro đồng bộ; lập lịch hiện đại thường gắn chặt với
+luồng hơn là chỉ với tiến trình.
+2.2. Tài nguyên găng và đoạn găng
+2.2.1. Đồng bộ tiến trình
+      Trong hệ thống đa nhiệm, nhiều tiến trình hoặc luồng có thể hoạt động đồng thời.
+Khi chúng hoàn toàn độc lập, hệ điều hành chủ yếu cần cấp phát tài nguyên hợp lý.
+Nhưng khi chúng cùng truy cập dữ liệu hoặc tài nguyên dùng chung - cùng đọc ghi một
+biến, cùng cập nhật một file, cùng thao tác hàng đợi, cơ sở dữ liệu hoặc thiết bị - kết quả
+có thể sai nếu không có cơ chế đồng bộ.
+     Ví dụ đơn giản: giả sử count = 0, hai luồng cùng thực hiện count = count + 1. Về
+mặt mong muốn, kết quả cuối là 2. Nhưng thao tác count = count + 1 thực chất gồm ba
+bước: đọc count từ bộ nhớ; tăng lên 1; ghi kết quả trở lại. Nếu hai luồng xen kẽ không
+đúng, cả hai cùng đọc count = 0, cùng tính thành 1, rồi cùng ghi 1 - kết quả cuối là 1,
+không phải 2.
+     Đây gọi là race condition: kết quả phụ thuộc vào thứ tự thực thi của các tiến trình
+hoặc luồng. Điểm nguy hiểm là lỗi không phải lúc nào cũng xảy ra - có lúc chạy đúng,
+có lúc chạy sai, làm cho việc kiểm thử và sửa lỗi rất khó khăn.
+2.2.2. Tài nguyên găng và đoạn găng
+      Tài nguyên găng là tài nguyên dùng chung mà nếu nhiều tiến trình truy cập đồng
+thời không kiểm soát thì có thể gây sai lệch dữ liệu hoặc trạng thái hệ thống. Ví dụ: biến
+toàn cục dùng chung, file ghi chung, bảng dữ liệu trong bộ nhớ, hàng đợi in, tài khoản
+ngân hàng trong CSDL, buffer dùng chung giữa producer và consumer, danh sách đơn
+hàng trong web server.
+      Đoạn găng là đoạn mã truy cập tài nguyên găng. Vấn đề đồng bộ là tổ chức sao
+cho tại một thời điểm chỉ có số tiến trình phù hợp được vào đoạn găng, tùy yêu cầu của
+bài toán. Ví dụ, trong lock(mutex); count = count + 1; unlock(mutex); thì count = count
++ 1 là đoạn găng nếu count là biến dùng chung; lock và unlock bảo vệ đoạn găng đó.
+
+                    Hình 2. 8. Sơ đồ tài nguyên găng và đoạn găng.
+2.2.3. Yêu cầu của bài toán đoạn găng
+     Một giải pháp cho bài toán đoạn găng cần thỏa mãn bốn yêu cầu cơ bản:
+     ̶ Mutual exclusion (loại trừ lẫn nhau): tại một thời điểm, không có hai tiến trình
+cùng vào đoạn găng nếu tài nguyên chỉ cho phép một tiến trình.
+       ̶ Progress (tiến triển): nếu không có tiến trình nào đang ở trong đoạn găng và có
+tiến trình muốn vào, thì chỉ những tiến trình đang muốn vào đoạn găng (không phải các
+tiến trình đang bận việc khác ở phần còn lại của chương trình) mới được tham gia quyết
+định ai vào, và quyết định này không được trì hoãn vô hạn. Nói cách khác: một tiến trình
+không liên quan không được quyền “giữ chỗ” hay cản trở việc vào đoạn găng của tiến
+trình khác.
+     ̶ Bounded waiting (chờ hữu hạn): một tiến trình muốn vào đoạn găng chỉ phải chờ
+hữu hạn lần trước khi được vào.
+     ̶ Không phụ thuộc tốc độ CPU: giải pháp không được giả định tiến trình này luôn
+chạy nhanh hơn tiến trình kia.
+
+                        Bảng 2. 7. Yêu cầu của bài toán đoạn găng
+     Yêu cầu               Ý nghĩa                             Nếu vi phạm sẽ xảy ra
+Loại trừ lẫn nhau     Không nhiều tiến trình cùng vào đoạn Sai dữ liệu, hỏng trạng thái
+                      găng trái phép
+
+Tiến triển            Nếu đoạn găng rỗi, phải có tiến trình Hệ thống chờ không cần
+                      được chọn vào                         thiết
+
+Chờ hữu hạn           Không tiến trình nào chờ vô hạn          Starvation
+
+Độc lập tốc độ        Không phụ thuộc tiến trình nhanh hay Lỗi khó đoán trên hệ đa
+                      chậm                                 nhiệm
+
+      ̶ Chờ đợi tích cực và chờ bị động: Chờ đợi tích cực (busy waiting) là tình huống
+tiến trình liên tục kiểm tra điều kiện để vào đoạn găng nhưng không làm công việc hữu
+ích, ví dụ while lock= 1: pass. Cách này đơn giản nhưng lãng phí CPU. Trong một số
+trường hợp đặc biệt, spinlock vẫn hữu ích nếu thời gian chờ rất ngắn và trên hệ đa xử
+lý. Với thời gian chờ dài, nên để tiến trình ngủ và đánh thức khi tài nguyên sẵn sàng
+(chờ bị động).
+                          Bảng 2. 8. Chờ tích cực và chờ bị động
+   Tiêu chí         Chờ tích cực                   Chờ bị động
+   Cách chờ         Liên tục kiểm tra điều kiện    Bị đưa vào trạng thái blocked
+   CPU              Vẫn tiêu tốn CPU               Nhường CPU cho tiến trình khác
+   Phù hợp          Chờ rất ngắn, kernel, đa xử lý Chờ dài, ứng dụng thông thường
+   Ví dụ            Spinlock                       Semaphore     blocking,   condition
+                                                   variable
+2.3 Điều độ tiến trình qua đoạn găng
+2.3.1 Giải pháp phần cứng
+           ➢ Giải pháp cấm ngắt (cặp chỉ thị CLI và STI)
+      Ở mục trên race condition xảy ra vì tiến trình đang thao tác dở trên tài nguyên găng
+thì bị ngắt và tiến trình khác chen vào. Vậy cách chặn thô sơ nhất là đừng cho ngắt xảy
+ra. Một số bộ xử lý cung cấp cặp chỉ thị CLI (cấm ngắt) và STI (mở ngắt). Tiến trình
+thực hiện CLI ngay trước khi vào đoạn găng: ngắt đồng hồ không phát sinh được, bộ lập
+lịch không thể thu hồi CPU, nên không tiến trình nào chen vào giữa. Ra khỏi đoạn găng,
+tiến trình thực hiện STI để hệ thống hoạt động bình thường trở lại.
+      Sơ đồ của tiến trình P (viết theo giáo trình [1]):
+      Repeat
+     CLI;             { cấm ngắt trước khi vào đoạn găng }
+     &lt;Đoạn găng của P&gt;;
+     STI;             { mở ngắt khi ra khỏi đoạn găng }
+     &lt;Đoạn không găng&gt;;
+     Until false;
+     Ưu điểm: cực kỳ đơn giản, bảo đảm loại trừ lẫn nhau tuyệt đối trên máy một bộ xử
+lý. Nhưng giải pháp này có ba hạn chế nghiêm trọng:
+        Nguy cơ treo toàn hệ thống: nếu tiến trình gặp lỗi trong đoạn găng và không
+   bao giờ thực hiện được STI, ngắt bị cấm vĩnh viễn - cả hệ thống đứng im.
+        Không dùng được cho chương trình người dùng: trao quyền cấm ngắt cho
+   ứng dụng nghĩa là trao cho nó quyền “tắt” hệ điều hành. Vì vậy kỹ thuật này chỉ
+   được dùng bên trong nhân hệ điều hành, cho các đoạn găng rất ngắn.
+        Vô hiệu trên hệ đa xử lý: CLI chỉ cấm ngắt trên bộ xử lý hiện tại. Tiến trình
+   chạy trên lõi CPU khác vẫn truy cập tài nguyên găng bình thường - loại trừ lẫn nhau
+   bị phá vỡ. Với CPU nhiều lõi phổ biến hiện nay, đây là lý do quyết định khiến cấm
+   ngắt không thể là giải pháp tổng quát.
+        ➢ Giải pháp phần cứng Test- and- Set
+     Một số bộ xử lý cung cấp lệnh nguyên tử (atomic) - lệnh mà toàn bộ các bước bên
+trong được thực hiện trọn vẹn, không thể bị ngắt xen giữa - như Test- and- Set (TSL)
+hoặc Compare- and- Swap. Lệnh Test- and- Set đọc giá trị cũ của biến khóa và đồng
+thời đặt biến khóa thành “đã chiếm”, tất cả trong một thao tác không thể chia cắt:
+     function TestAndSet (var lock: boolean): boolean
+     begin                   { toàn bộ hàm là MỘT thao tác nguyên tử }
+     old := lock;           { đọc giá trị cũ }
+     lock := true;          { đặt khóa thành "đã chiếm" }
+     return old;            { trả về giá trị TRƯỚC KHI đặt }
+     end;
+     Tiến trình P dùng TestAndSet để vào đoạn găng (biến chia sẻ lock khởi gán false):
+     Repeat
+     While TestAndSet(lock) = true Do ; { lock đang bị giữ: chờ }
+     &lt;Đoạn găng của P&gt;;
+     lock := false;                { trả khóa }
+     &lt;Đoạn không găng&gt;;
+
+     Until false;
+      Cách đọc vòng While: nếu TestAndSet trả về false nghĩa là trước đó khóa đang rỗi
+và tiến trình này vừa chiếm được - thoát vòng lặp, vào đoạn găng. Nếu trả về true nghĩa
+là khóa đang bị tiến trình khác giữ - lặp lại. Dù nhiều tiến trình gọi TestAndSet “cùng
+lúc”, phần cứng bảo đảm các lời gọi được thực hiện tuần tự, nên chỉ đúng một tiến trình
+nhận được false. Lỗi “cả hai cùng vào” không thể xảy ra nữa.
+     Ưu điểm: đơn giản, dùng được cho số lượng tiến trình bất kỳ, hoạt động cả trên hệ
+đa xử lý (khác với cấm ngắt), là viên gạch để xây mutex và spinlock. Hạn chế:
+          Chờ đợi tích cực: tiến trình chờ vẫn quay vòng tiêu tốn CPU (spinlock). Phù
+   hợp khi thời gian giữ khóa rất ngắn.
+          Không bảo đảm chờ hữu hạn: sơ đồ trên không có hàng đợi - khi khóa được
+   trả, tiến trình nào “chộp” được đúng thời điểm thì vào; một tiến trình kém may có
+   thể thua mãi, tức bị đói.
+          Nguy cơ nghịch lý ưu tiên trên máy một CPU: nếu P1 giữ khóa rồi bị tiến
+   trình ưu tiên cao hơn P2 chiếm CPU, mà P2 lại quay vòng chờ chính khóa đó, thì P2
+   chờ mãi (P1 không được cấp CPU để trả khóa). Vì vậy spinlock chủ yếu dùng trong
+   nhân hệ điều hành và trên hệ đa xử lý.
+2.3.2. Giải pháp dùng biến khóa
+        ➢ Biến khóa chung
+      Dùng một biến chung Lock, khởi gán 0 (đoạn găng rỗi). Tiến trình muốn vào đoạn
+găng phải chờ đến khi Lock = 0, sau đó đặt Lock = 1 rồi vào; ra khỏi đoạn găng thì đặt
+lại Lock = 0:
+     Repeat
+     While Lock = 1 Do ;    { chờ cho đến khi Lock = 0 }
+     Lock := 1;        { thiết lập quyền vào đoạn găng }
+     &lt;Đoạn găng của P&gt;;
+     Lock := 0;        { thông báo đã rời đoạn găng }
+     &lt;Đoạn không găng&gt;;
+     Until false;
+      Vì sao thất bại? Bước kiểm tra (While Lock = 1) và bước đặt khóa (Lock := 1) là
+hai lệnh tách rời, và tiến trình có thể bị thu hồi CPU ở giữa hai bước. Xét kịch bản:
+        t1: P1 kiểm tra, thấy Lock = 0, chuẩn bị đặt Lock = 1 thì hết quantum, bị thu
+   hồi CPU.
+        t2: P2 được cấp CPU, kiểm tra: Lock vẫn = 0 (P1 chưa kịp đặt) → P2 đặt Lock
+   = 1 và vào đoạn găng.
+          t3: P1 được cấp CPU trở lại. P1 không kiểm tra lại (đã qua vòng While) mà đặt
+    Lock = 1 và cũng vào đoạn găng.
+      Kết quả: hai tiến trình cùng ở trong đoạn găng - vi phạm chính yêu cầu loại trừ lẫn
+nhau mà giải pháp sinh ra để bảo đảm. Ngoài ra sơ đồ còn chờ đợi tích cực, và nếu tiến
+trình trong đoạn găng gặp lỗi không đặt lại Lock = 0 thì các tiến trình khác chờ vô hạn.
+         ➢ Biến khóa riêng (mỗi tiến trình một biến)
+     Cải tiến: mỗi tiến trình dùng một biến khóa riêng (Lock1 cho P1, Lock2 cho P2,
+đều khởi gán 0). Tiến trình chỉ vào đoạn găng khi biến khóa của tiến trình kia bằng 0:
+     P1: Repeat                      P2: Repeat
+     While Lock2 = 1 Do ;                 While Lock1 = 1 Do ;
+     Lock1 := 1;                     Lock2 := 1;
+     &lt;Đoạn găng của P1&gt;;                  &lt;Đoạn găng của P2&gt;;
+     Lock1 := 0;                     Lock2 := 0;
+     &lt;Đoạn không găng&gt;;                   &lt;Đoạn không găng&gt;;
+     Until false;                   Until false;
+     Phương án này khắc phục được một điểm (tiến trình bị blocked ở ngoài đoạn găng
+không cản tiến trình khác), nhưng vẫn mắc đúng lỗi cũ: kiểm tra và đặt khóa vẫn tách
+rời.
+     Vì vậy mọi giải pháp phần mềm theo kiểu “kiểm tra rồi mới đặt” đều có thể bị
+chen ngang giữa hai bước. Muốn an toàn, thao tác kiểm- tra- và- đặt phải là một khối
+không thể chia cắt - đó chính xác là điều mà lệnh phần cứng Test- and- Set ở mục tiếp
+theo cung cấp.
+         ➢ Giải pháp dùng Semaphore
+     Semaphore là một biến nguyên S đi kèm hai thao tác nguyên tử wait và signal
+(giáo trình [1] gọi là Down và Up; tài liệu gốc của Dijkstra gọi là P và V). Định nghĩa
+chính xác theo quy ước cài đặt có hàng đợi:
+     wait(S): S := S − 1;
+     if S &lt; 0 then
+     block();        { đưa tiến trình vào hàng đợi của S }
+     signal(S): S := S + 1;
+     if S &lt;= 0 then
+     wakeup();        { đánh thức một tiến trình trong hàng đợi của S }
+
+      Với quy ước này, giá trị S có thể âm: khi S &lt; 0, trị tuyệt đối |S| chính là số tiến
+trình đang chờ trên S. Ví dụ chạy tay với S khởi tạo = 1 và ba tiến trình lần lượt xin vào
+đoạn găng:
+   Bước      Thao tác           sau thao tác Kết quả
+
+   1         P1 wait(S)         0                S ≥ 0: P1 vào đoạn găng
+   2         P2 wait(S)         −1               S &lt; 0: P2 bị chặn, vào hàng đợi
+   3         P3 wait(S)         −2               S &lt; 0: P3 bị chặn (│S│ = 2 đang chờ)
+
+   4         P1 signal(S)       −1               S ≤ 0: đánh thức P2 → P2 vào đoạn
+                                                 găng
+   5         P2 signal(S)       0                S ≤ 0: đánh thức P3 → P3 vào đoạn
+                                                 găng
+   6         P3 signal(S)       1                Hàng đợi rỗng, đoạn găng rỗi
+     Dạng bài “cho dãy thao tác Down/Up, xác định giá trị S và tiến trình nào bị chặn”
+chính là chạy tay theo bảng trên. Vì các tiến trình chờ được đưa vào hàng đợi và ngủ
+(chờ bị động), semaphore không lãng phí CPU như spinlock; nếu hàng đợi phục vụ theo
+FIFO thì bảo đảm luôn yêu cầu chờ hữu hạn.
+       Hai loại semaphore và mẫu dùng:
+         Binary semaphore (S chỉ nhận 0/1, khởi tạo 1): bảo vệ đoạn găng, vai trò
+   tương tự mutex.
+         Counting semaphore (S khởi tạo N): quản lý N đơn vị tài nguyên giống nhau
+   - ví dụ phòng máy có 20 máy, S = 20; mỗi sinh viên vào wait(S), rời máy signal(S);
+   người thứ 21 phải chờ.
+     { Bảo vệ đoạn găng }         { Quản lý N tài nguyên }
+       semaphore mutex := 1;           semaphore mayTinh := 20;
+       wait(mutex);              wait(mayTinh);
+       &lt;đoạn găng&gt;;                 &lt;dùng một máy tính&gt;;
+       signal(mutex);            signal(mayTinh);
+          ➢ Giải pháp dùng Monitor
+     Semaphore mạnh nhưng “mong manh”: chỉ cần đặt sai chỗ một lời wait/signal là
+chương trình sai mà trình biên dịch không phát hiện được. Monitor là cấu trúc cấp cao
+hơn: gom dữ liệu dùng chung và các thủ tục thao tác trên dữ liệu đó vào một đơn vị, và
+ngôn ngữ/hệ thống tự bảo đảm tại mỗi thời điểm chỉ một tiến trình được hoạt động bên
+trong monitor - người lập trình không phải tự lock/unlock.
+
+      Để tiến trình có thể chờ một điều kiện (ví dụ “buffer chưa đầy”), monitor cung cấp
+biến điều kiện (condition variable) với hai thao tác wait và signal. Chú ý: wait/signal
+của biến điều kiện khác wait/signal của semaphore - signal trên biến điều kiện mà không
+có ai chờ thì mất tác dụng (không được “tích lũy” như semaphore).
+        Giả mã monitor cho buffer hữu hạn (bounded buffer), đã khai báo rõ biến điều
+kiện:
+        monitor BoundedBuffer
+        buffer: mảng N phần tử;
+        count: integer := 0;
+        condition notFull, notEmpty;     { hai biến điều kiện }
+        procedure put(item)
+        while count = N do wait(notFull);   { dùng WHILE, không dùng IF }
+        thêm item vào buffer; count := count + 1;
+        signal(notEmpty);
+        procedure get(): item
+        while count = 0 do wait(notEmpty); { dùng WHILE, không dùng IF }
+        lấy item khỏi buffer; count := count − 1;
+        signal(notFull);
+        return item;
+     Ví dụ: trong Java, khối synchronized cùng wait/notify hiện thực hóa tư tưởng
+monitor; trong C#, lock và lớp Monitor phục vụ cùng mục tiêu. Khi các em viết wait
+trong Java, hãy luôn đặt nó trong vòng while kiểm tra điều kiện, đúng như giả mã trên.
+           ➢ Giải pháp dùng Message passing
+      Message passing là cơ chế các tiến trình trao đổi thông tin bằng thông điệp thay vì
+chia sẻ trực tiếp vùng nhớ, với hai thao tác cơ bản send (destination, message) và receive
+(source, message). Cách này phù hợp với hệ phân tán, microservices, tiến trình độc lập
+hoặc actor model. Có hai cặp phân loại cần nắm:
+         Trực tiếp (direct): tiến trình gửi/nhận nêu đích danh đối tác – send (P, msg),
+   receive (Q, msg). Đơn giản nhưng hai bên phải “biết tên” nhau.
+         Gián tiếp (indirect): gửi/nhận qua một hộp thư (mailbox) hoặc cổng – send
+   (hopThu, msg). Nhiều bên gửi, nhiều bên nhận có thể dùng chung hộp thư; các hàng
+   đợi thông điệp như RabbitMQ, Kafka chính là dạng gián tiếp ở quy mô hệ phân tán.
+
+        Blocking send / blocking receive: bên gửi chờ đến khi thông điệp được nhận;
+   bên nhận chờ đến khi có thông điệp. Khi cả hai đều blocking, hai tiến trình “gặp
+   nhau” tại điểm trao đổi - gọi là rendezvous.
+        Non- blocking: gửi xong đi tiếp (thông điệp nằm trong hàng đợi), hoặc nhận
+   kiểu “có thì lấy, không có thì thôi”. Linh hoạt hơn nhưng cần xử lý hàng đợi đầy và
+   thông điệp thất lạc.
+     Chính khả năng blocking receive làm cho message passing trở thành một cơ chế
+đồng bộ: tiến trình nhận tự động dừng chờ dữ liệu, không cần semaphore riêng.
+     Ưu điểm: giảm chia sẻ bộ nhớ trực tiếp, phù hợp hệ phân tán, dễ mở rộng qua
+mạng, giảm nguy cơ race condition trên dữ liệu dùng chung cục bộ. Hạn chế: cần thiết
+kế giao thức thông điệp, có chi phí truyền thông, có thể bị chặn nếu gửi/nhận không
+đúng cách, khó debug nếu nhiều message bất đồng bộ.
+2.3.3. Bài toán điều phối
+         ➢ Bài toán Producer–Consumer
+     Bài toán mô tả hai loại tiến trình: Producer tạo dữ liệu và đưa vào buffer; Consumer
+lấy dữ liệu từ buffer để xử lý. Ràng buộc: không ghi vào buffer khi buffer đầy; không
+đọc từ buffer khi buffer rỗng; không truy cập buffer đồng thời nếu buffer là tài nguyên
+găng [4].
+     Lời giải dùng ba semaphore (buffer có N ô):
+     semaphore mutex := 1;       { bảo vệ truy cập buffer }
+     semaphore empty := N;       { số ô trống }
+     semaphore full := 0;      { số ô đã có dữ liệu }
+     Producer:                   Consumer:
+     Repeat                     Repeat
+     tạo dữ liệu;                wait(full);
+     wait(empty);                  wait(mutex);
+     wait(mutex);                  lấy dữ liệu khỏi buffer;
+     đưa dữ liệu vào buffer;          signal(mutex);
+     signal(mutex);                signal(empty);
+     signal(full);               xử lý dữ liệu;
+     Until false;                Until false;
+     Câu hỏi quan trọng nhất của bài toán này: vì sao wait(empty) phải đứng TRƯỚC
+wait(mutex)? Thử đảo thứ tự ở Producer thành wait(mutex) rồi mới wait(empty), và xét
+lúc buffer đang đầy:
+         Producer chiếm được mutex, rồi thực hiện wait(empty). Vì buffer đầy (empty
+   = 0), Producer bị chặn và ngủ - trong khi vẫn đang giữ mutex.
+         Consumer muốn lấy dữ liệu ra (việc duy nhất có thể làm empty tăng) phải
+   wait(mutex) - nhưng mutex đang bị Producer giữ → Consumer cũng bị chặn.
+         Producer chờ Consumer giải phóng ô trống; Consumer chờ Producer trả mutex.
+   Hai bên chờ nhau vô hạn - tắc nghẽn. Đây chính là điều kiện “giữ và đợi” (hold and
+   wait) Producer giữ mutex và đợi empty.
+     Quy tắc: xin “tấm vé tài nguyên” (empty/full) trước, xin “chìa khóa vào buffer”
+(mutex) sau; và trả theo thứ tự ngược lại. Không bao giờ ngủ trong khi đang cầm chìa
+khóa mà người khác cần để đánh thức mình.
+     Ví dụ: trong một hệ thống ghi log, nhiều tiến trình producer tạo log và đưa vào
+hàng đợi; một tiến trình consumer lấy log ra ghi xuống file. Nếu hàng đợi đầy, producer
+phải chờ; nếu hàng đợi rỗng, consumer phải chờ.
+         ➢ Bài toán Readers–Writers
+     Bài toán mô tả nhiều tiến trình cùng truy cập một cơ sở dữ liệu hoặc file dùng
+chung. Ràng buộc: nhiều reader có thể đọc đồng thời; writer cần độc quyền khi ghi; khi
+writer đang ghi, không reader nào được đọc; cần tránh writer hoặc reader bị đói tùy
+chính sách [4].
+    Ví dụ: một hệ thống quản lý điểm cho phép nhiều sinh viên xem điểm cùng lúc,
+nhưng khi cán bộ cập nhật điểm cần kiểm soát để không ai đọc dữ liệu đang cập nhật
+dở.
+      Có nhiều biến thể: ưu tiên reader (reader đọc thuận lợi nhưng writer có thể chờ
+lâu); ưu tiên writer (writer không bị đói nhưng reader có thể chờ); công bằng (xử lý theo
+thứ tự yêu cầu). Giả mã semaphore cho hướng ưu tiên reader:
+     semaphore mutex := 1;     { bảo vệ biến đếm readCount }
+     semaphore db := 1;      { quyền truy cập cơ sở dữ liệu }
+     readCount := 0;       { số reader đang đọc }
+     Reader:                     Writer:
+     wait(mutex);                  wait(db);
+     readCount := readCount + 1;             &lt;ghi dữ liệu&gt;;
+     if readCount = 1 then wait(db);       signal(db);
+     signal(mutex);
+     &lt;đọc dữ liệu&gt;;
+     wait(mutex);
+     readCount:= readCount − 1;
+     if readCount = 0 then signal(db);
+     signal(mutex);
+      Giải thích: reader đầu tiên khóa db để chặn writer; các reader tiếp theo chỉ tăng
+readCount và đọc song song; reader cuối cùng rời đi mới trả db cho writer. Nhận xét:
+với lời giải này, chừng nào còn reader đến liên tục thì readCount không bao giờ về 0 -
+writer có thể bị đói. Đó là cái giá của biến thể “ưu tiên reader”; các biến thể ưu tiên
+writer hoặc công bằng đổi cấu trúc khóa để tránh điều này. Trong thực tế CSDL, các cơ
+chế khóa, transaction isolation, MVCC được dùng để giải quyết vấn đề tương tự ở mức
+phức tạp hơn.
+Những lỗi thường gặp khi đồng bộ:
+     Trong lập trình thực tế, các lỗi đồng bộ rất khó phát hiện. Một số lỗi thường gặp:
+       ̶   Quên unlock khi xảy ra exception.
+       ̶   Lock nhiều tài nguyên nhưng không thống nhất thứ tự.
+       ̶   Dùng semaphore sai giá trị khởi tạo.
+       ̶   Gọi signal trước khi cập nhật xong dữ liệu.
+       ̶   Giữ khóa quá lâu làm giảm hiệu năng.
+       ̶   Khóa vùng quá rộng khiến chương trình gần như mất song song.
+       ̶   Khóa vùng quá hẹp khiến dữ liệu vẫn bị race condition.
+       ̶   Dùng biến dùng chung mà không xác định rõ ai được đọc, ai được ghi.
+    Khi viết chương trình đa luồng, hãy bắt đầu bằng thiết kế dữ liệu dùng chung. Dữ
+liệu nào dùng chung phải có cơ chế bảo vệ rõ ràng. Không nên “thêm lock sau khi lỗi
+xảy ra” một cách tùy tiện, vì dễ tạo ra tắc nghẽn mới.
+2.4. Tắc nghẽn
+2.4.1. Khái niệm tắc nghẽn
+      Tắc nghẽn là tình trạng trong hệ thống có một tập tiến trình, trong đó mỗi tiến trình
+đang chờ một tài nguyên hoặc sự kiện mà chỉ tiến trình khác trong cùng tập đó mới có
+thể giải phóng. Nếu không có tác động từ bên ngoài, các tiến trình này có thể chờ vô
+hạn.
+      Ví dụ: P1 đang giữ R1 và chờ R2; P2 đang giữ R2 và chờ R1. P1 không thể tiếp
+tục vì thiếu R2; P2 không thể tiếp tục vì thiếu R1; không tiến trình nào chịu giải phóng
+tài nguyên đang giữ. Hệ thống bị tắc nghẽn.
+Thực tế về tắc nghẽn
+     Trong đời sống: hai xe đi vào một đoạn đường hẹp từ hai đầu, mỗi xe chiếm một
+phần đường và chờ xe kia lùi; nếu không ai lùi, cả hai đứng yên.
+     Trong cơ sở dữ liệu: Transaction T1 khóa dòng A rồi yêu cầu khóa dòng B; T2
+khóa dòng B rồi yêu cầu khóa dòng A; cả hai cùng chờ nhau.
+      Trong lập trình đa luồng: Thread 1 thực hiện lock(A) rồi lock(B); Thread 2 thực
+hiện lock(B) rồi lock(A). Nếu Thread 1 giữ A và Thread 2 giữ B, cả hai có thể chờ vô
+hạn.
+     Trong hệ điều hành: một tiến trình giữ máy in và chờ file; tiến trình khác giữ file
+và chờ máy in. Nếu tài nguyên không bị thu hồi, tắc nghẽn có thể xảy ra.
+2.4.2 Điều kiện hình thành tắc nghẽn
+     Tắc nghẽn chỉ có thể xảy ra khi đồng thời tồn tại bốn điều kiện sau [4], [5]:
+         1.   Mutual exclusion: ít nhất một tài nguyên phải được sử dụng độc quyền.
+         2.   Hold and wait: tiến trình đang giữ tài nguyên và tiếp tục chờ tài nguyên
+              khác.
+         3.   No preemption: tài nguyên không bị thu hồi cưỡng bức; tiến trình tự giải
+              phóng khi xong.
+         4.   Circular wait: tồn tại vòng chờ giữa các tiến trình.
+                    Bảng 2. 9. Bốn điều kiện hình thành tắc nghẽn
+      Điều kiện             Ý nghĩa                          Ví dụ
+ Mutual exclusion      Tài nguyên dùng độc quyền        Máy in, mutex
+ Hold and wait         Giữ tài nguyên này, chờ tài Giữ file A, chờ file B
+                       nguyên khác
+ No preemption         Không thu hồi cưỡng bức          Không lấy lại máy in giữa
+                                                        chừng
+ Circular wait              Tạo vòng chờ                P1 chờ P2, P2 chờ P1
+      Nếu phá vỡ ít nhất một trong bốn điều kiện, tắc nghẽn sẽ không xảy ra - đây
+là cơ sở của chiến lược ngăn chặn tắc nghẽn.
+   ➢ Đồ thị cấp phát tài nguyên
+      Đồ thị cấp phát tài nguyên (Resource Allocation Graph) mô tả quan hệ giữa tiến
+trình và tài nguyên: nút tiến trình (P1, P2, P3…); nút tài nguyên (R1, R2…); cạnh yêu
+cầu (từ tiến trình đến tài nguyên); cạnh cấp phát (từ tài nguyên đến tiến trình).
+      Cách đọc đồ thị: nếu đồ thị có chu trình, hệ thống có nguy cơ tắc nghẽn. Nếu mỗi
+loại tài nguyên chỉ có một thể hiện, chu trình là dấu hiệu chắc chắn của tắc nghẽn. Nếu
+tài nguyên có nhiều thể hiện, chu trình là điều kiện cần chứ chưa đủ - có chu trình
+nhưng chưa chắc tắc nghẽn, cần phân tích thêm.
+
+              Hình 2. 9. Đồ thị cấp phát tài nguyên (RAG) có chu trình.
+2.4.3. Ngăn chặn tắc nghẽn
+      Ngăn chặn tắc nghẽn là thiết kế hệ thống sao cho ít nhất một trong bốn điều kiện
+hình thành tắc nghẽn không thể xảy ra.
+         Phá mutual exclusion: biến tài nguyên độc quyền thành chia sẻ nếu có thể, ví
+   dụ dùng spooling cho máy in để nhiều tiến trình gửi lệnh in vào hàng đợi thay vì giữ
+   máy in trực tiếp. Tuy nhiên, nhiều tài nguyên vẫn bắt buộc phải độc quyền.
+         Phá hold and wait: yêu cầu tiến trình xin tất cả tài nguyên ngay từ đầu, hoặc
+   chỉ được xin tài nguyên mới khi không giữ tài nguyên nào. Cách này giảm tắc nghẽn
+   nhưng có thể lãng phí tài nguyên.
+         Phá no preemption: nếu tiến trình không lấy được tài nguyên mới, hệ điều
+   hành thu hồi tài nguyên nó đang giữ. Không phải lúc nào cũng áp dụng được vì có
+   tài nguyên không thể thu hồi an toàn giữa chừng.
+         Phá circular wait: đánh số thứ tự tài nguyên và yêu cầu tiến trình xin theo thứ
+   tự tăng dần. Cách này khá thực tế: nếu mọi luồng đều khóa A trước rồi mới khóa B,
+   tắc nghẽn do khóa ngược thứ tự sẽ giảm.
+                              Bảng 2. 10. Ngăn chặn tắc nghẽn
+      Điều kiện cần phá            Cách xử lý                    Hạn chế
+      Mutual exclusion        Chia sẻ hoặc spooling        Không phải tài nguyên nào
+                                                           cũng chia sẻ được
+      Hold and wait           Xin tất cả tài nguyên từ đầu Lãng phí, giảm song song
+      No preemption           Thu hồi tài nguyên           Không luôn an toàn
+      Circular wait           Quy định thứ tự xin tài Cần thiết kế thống nhất
+                              nguyên
+
+   ➢ Tránh tắc nghẽn
+     Tránh tắc nghẽn không cấm tuyệt đối các điều kiện, mà kiểm tra trước mỗi yêu cầu
+cấp phát để bảo đảm hệ thống vẫn ở trạng thái an toàn.
+      Trạng thái an toàn: hệ thống ở trạng thái an toàn nếu tồn tại ít nhất một thứ tự
+thực hiện các tiến trình sao cho tất cả tiến trình đều có thể hoàn thành. Thuật toán Banker
+là thuật toán kinh điển minh họa tránh tắc nghẽn: hệ điều hành chỉ cấp tài nguyên nếu
+sau khi cấp, hệ thống vẫn còn một chuỗi an toàn; nếu không, yêu cầu bị trì hoãn.
+     Các dữ liệu thường dùng: Available (số tài nguyên còn sẵn), Max (nhu cầu tối đa
+của mỗi tiến trình), Allocation (số tài nguyên đã cấp), Need = Max − Allocation (số tài
+nguyên còn cần thêm).
+     Ví dụ: Hệ thống có một loại tài nguyên R, tổng cộng 10 đơn vị:
+      Tiến trình             Max                   Allocation              Need
+      P1                     7                     3                       4
+      P2                     5                     2                       3
+      P3                     3                     2                       1
+      Available = 10 − (3 + 2 + 2) = 3. Xét chuỗi an toàn: P3 cần 1, Available = 3 → P3
+hoàn thành, trả lại 2, Available = 5; P2 cần 3, Available = 5 → P2 hoàn thành, trả lại 2,
+Available = 7; P1 cần 4, Available = 7 → P1 hoàn thành. Vậy hệ thống có chuỗi an toàn:
+P3 → P2 → P1. Nếu một yêu cầu cấp phát mới làm cho không còn chuỗi an toàn nào,
+hệ điều hành sẽ chưa cấp phát ngay, dù tại thời điểm đó tài nguyên có thể còn đủ để cấp.
+      Ưu điểm của tránh tắc nghẽn: chủ động tránh trạng thái nguy hiểm, có cơ sở lý
+thuyết rõ, phù hợp hệ thống biết trước nhu cầu tài nguyên. Hạn chế: cần biết trước nhu
+cầu tối đa, chi phí kiểm tra có thể cao, ít phù hợp hệ thống động phức tạp.
+   ➢ Phát hiện và phục hồi tắc nghẽn
+     Một hướng khác là cho hệ thống cấp phát tài nguyên tự do hơn, sau đó định kỳ
+kiểm tra tắc nghẽn; nếu phát hiện thì thực hiện phục hồi. Cách phát hiện: dùng đồ thị
+chờ; dùng thuật toán phát hiện chu trình; kiểm tra theo chu kỳ hoặc khi tài nguyên khan
+hiếm; theo dõi tiến trình chờ tài nguyên quá lâu. Cách phục hồi: kết thúc tất cả tiến trình
+trong tắc nghẽn; kết thúc từng tiến trình cho đến khi phá được tắc nghẽn; thu hồi tài
+nguyên từ một số tiến trình; rollback tiến trình về checkpoint trước đó.
+     Tiêu chí chọn tiến trình để kết thúc hoặc thu hồi tài nguyên: độ ưu tiên thấp; thời
+gian đã chạy ít; tài nguyên đang giữ ít hoặc dễ thu hồi; chi phí khởi động lại thấp; ít ảnh
+hưởng đến người dùng; không làm hỏng dữ liệu quan trọng.
+
+                      Bảng 2. 11. Các chiến lược xử lý tắc nghẽn
+   Chiến lược     Ý tưởng                   Ưu điểm               Hạn chế
+   Bỏ qua         Giả sử tắc nghẽn hiếm Đơn giản                  Khi xảy ra có thể
+                  xảy ra                                          treo
+   Ngăn chặn      Phá một điều kiện Chủ động                      Có thể giảm hiệu
+                  Hình thành tắc nghẽn                            năng
+   Tránh          Chỉ cấp nếu trạng thái Lý thuyết chặt chẽ       Cần biết nhu cầu tối
+                  an toàn                                         đa
+   Phát hiện &amp; Cho xảy ra rồi xử lý         Linh hoạt             Cần chi phí phát
+   phục hồi                                                       hiện và phục hồi
+   ➢ Kinh nghiệm phòng tránh tắc nghẽn trong lập trình
+      Trong lập trình thực tế, để giảm tắc nghẽn, các em nên: khóa tài nguyên theo thứ
+tự thống nhất; giữ lock trong thời gian ngắn nhất có thể; không gọi hàm phức tạp hoặc
+I/O lâu khi đang giữ lock; dùng timeout khi chờ lock nếu phù hợp; dùng cấu trúc cấp
+cao như concurrent collection, transaction, monitor; ghi log khi chương trình bị treo để
+phân tích; thiết kế rõ tài nguyên nào do ai sở hữu; tránh khóa lồng nhau nếu không thật
+sự cần thiết; kiểm thử các tình huống tải cao, nhiều luồng, nhiều request đồng thời.
+     Tắc nghẽn không chỉ là bài toán lý thuyết trong hệ điều hành. Nó là vấn đề thiết
+kế hệ thống. Người lập trình, quản trị hệ thống và kiến trúc sư phần mềm đều cần hiểu.
+2.5. Điều phối tiến trình
+2.5.1 Mục tiêu điều phối tiến trình
+       Các cơ chế điều phối tiến trình: Trong công tác điều phối tiến trình bộ điều
+phối sử dụng hai cơ chế điều phối: Điều phối độc quyền và điều phối không độc quyền.
+         ̶ Điều phối độc quyền: Khi có được processor tiến trình toàn quyền sử dụng
+processor cho đến khi tiến trình kết thúc xử lý hoặc tiến trình tự động trả lại processor
+cho hệ thống. Các quyết định điều phối xảy ra khi: Tiến trình chuyển trạng thái từ
+Running sang Blocked hoặc khi tiến trình kết thúc.
+          ̶ Điều phối không độc quyền: Bộ phận điều phối tiến trình có thể tạm dừng
+tiến trình đang xử lý để thu hồi processor của nó, để cấp cho tiến trình khác, sao cho phù
+hợp với công tác điều phối hiện tại. Các quyết định điều phối xảy ra khi: Tiến trình
+chuyển trạng thái hoặc khi tiến trình kết thúc.
+        Các đặc điểm của tiến trình: Khi tổ chức điều phối tiến trình, bộ phần điều phối
+tiến trình của hệ điều hành thường dựa vào các đặc điểm của tiến trình. Sau đây là một
+số đặc điểm của tiến trình:
+
+         ̶ Tiến trình thiên hướng Vào/Ra: Là các tiến trình cần nhiều thời gian hơn cho
+việc thực hiện các thao tác xuất/nhập dữ liệu, so với thời gian mà tiến trình cần để thực
+hiện các chỉ thị trong nó, được gọi là các tiến trình thiên hướng Vào/Ra [2].
+          ̶ Tiến trình thiên hướng xử lý: Ngược lại với trên, đây là các tiến trình cần
+nhiều thời gian hơn cho việc thực hiện các chỉ thị trong nó, so với thời gian mà tiến trình
+để thực hiện các thao tác Vào/Ra.
+           ̶ Tiến trình tương tác hay xử lý theo lô: Tiến trình cần phải trả lại kết quả tức
+thời (như trong hệ điều hành tương tác) hay kết thúc xử lý mới trả về kết quả (như trong
+hệ điều hành xử lý theo lô) [2].
+            ̶ Độ ưu tiên của tiến trình: Mỗi tiến trình được gán một độ ưu tiên nhất định,
+độ ưu tiên của tiến trình có thể được phát sinh tự động bởi hệ thống hoặc được gán tường
+minh trong chương trình của người sử dụng. Độ ưu tiên của tiến trình có hai loại: Thứ
+nhất, độ ưu tiên tĩnh: là độ ưu tiên gán trước cho tiến trình và không thay đổi trong suốt
+thời gian sống của tiến trình. Thứ hai, độ ưu tiên động: là độ ưu tiên được gán cho tiến
+trình trong quá trình hoạt động của nó, hệ điều hành sẽ gán lại độ ưu tiên cho tiến trình
+khi môi trường xử lý của tiến trình bị thay đổi. Khi môi trường xử lý của tiến trình bị
+thay đổi hệ điều hành phải thay đổi độ ưu tiên của tiến trình cho phù hợp với tình trạng
+hiện tại của hệ thống và công tác điều phối tiến trình của hệ điều hành.
+             ̶ Thời gian sử dụng processor của tiến trình: Tiến trình cần bao nhiêu khoảng
+thời gian của processor để hoàn thành xử lý.
+              ̶ Thời gian còn lại tiến trình cần processor: Tiến trình còn cần bao nhiêu
+khoảng thời gian của processor nữa để hoàn thành xử lý.
+      Bộ phận điều phối tiến trình thường dựa vào đặc điểm của tiến trình để thực hiện
+điều phối ở mức tác tụ, hay điều phối tác vụ. Điều phối tác vụ được phải thực hiện trước
+điều phối tiến trình. Ở mức này hệ điều hành thực hiện việc chọn tác vụ để đưa vào hệ
+thống. Khi có một tiến trình được tạo lập hoặc khi có một tiến trình kết thúc xử lý thì bộ
+phận điều phối tác vụ được kích hoạt. Điều phối tác vụ quyết định sự đa chương của hệ
+thống và hiệu quả cũng như mục tiêu của điều phối của bộ phận điều phối tiến trình. Ví
+dụ, để khi thác tối đa thời gian xử lý của processor thì bộ phận điều phối tác vụ phải đưa
+vào hệ thống số lượng các tiến trình tính hướng Vào/Ra cân đối với số lượng các tiến
+trình tính hướng xử lý, các tiến trình này thuộc những tác vụ nào. Nếu trong hệ thống
+có quá nhiều tiến trình tính hướng Vào/Ra thì sẽ lãng phí thời gian xử lý của processor.
+Nếu trong hệ thống có quá nhiều tiến trình tính hướng xử lý thì processor không thể đáp
+ứng và có thể các tiến trình phải đợi lâu trong hệ thống, dẫn đến hiệu quả tương tác sẽ
+thấp.
+      Mục tiêu điều phối: bộ phận điều phối tiến trình của hệ điều hành phải đạt được
+các mục tiêu sau đây trong công tác điều phối của nó.
+
+         ̶ Sự công bằng (Fairness): Các tiến trình đều công bằng với nhau trong việc
+chia sẻ thời gian xử lý của processor, không có tiến trình nào phải chờ đợi vô hạn để
+được cấp processor.
+          ̶ Tính hiệu quả (Efficiency): Tận dụng được 100% thời gian xử lý của
+processor. Trong công tác điều phối, khi processor rỗi bộ phận điều phối sẽ chuyển ngay
+nó cho tiến trình khác, nếu trong hệ thống có tiến trình đang ở trạng thái chờ processor,
+nên mục tiêu này dễ đạt được. Tuy nhiên, nếu hệ điều hành đưa vào hệ thống quá nhiều
+tiến trình thiên hướng vào/ra, thì nguy cơ processor bị rỗi là có thể. Do đó, để đạt được
+mục tiêu này hệ điều hành phải tính toán và quyết định nên đưa vào hệ thống bao nhiêu
+tiến trình thiên hướng vào/ra, bao nhiêu tiến trình thiên hướng xử lý, là thích hợp.
+           ̶ Thời gian đáp ứng hợp lý (Response time): Đối với các tiến trình tương tác,
+đây là khoảng thời gian từ khi tiến trình đưa ra yêu cầu cho đến khi nhận được sự hồi
+đáp. Một tiến trình đáp ứng yêu cầu của người sử dụng, phải nhận được thông tin hồi
+đáp từ yêu cầu của nó thì nó mới có thể trả lời người sử dụng. Do đó, theo người sử
+dụng thì bộ phận điều phối phải cực tiểu hoá thời gian hồi đáp của các tiến trình, có như
+vậy thì tính tương tác của tiến trình mới tăng lên.
+            ̶ Thời gian lưu lại trong hệ thống (Turnaround time): Đây là khoảng thời gian
+từ khi tiến trình được đưa ra đến khi được hoàn thành. Bao gồm thời gian thực hiện thực
+tế cộng với thời gian đợi tài nguyên (bao gồm cả đợi processor). Đại lượng này dùng
+trong các hệ điều hành xử lý theo lô. Do đó, bộ phận điều phối phải cực tiểu thời gian
+hoàn thành (lưu lại trong hệ thống) của các tác vụ xử lý theo lô.
+             ̶ Thông lượng tối đa (Throunghtput): Chính sách điều phối phải cố gắng để
+cực đại được số lượng tiến trình hoàn thành trên một đơn vị thời gian. Mục tiêu này ít
+phụ thuộc vào chính sách điều phối mà phụ thuộc nhiều vào thời gian thực hiện trung
+bình của các tiến trình.
+      Công tác điều phối của hệ điều hành khó có thể thỏa mãn đồng thời tất cả các mục
+tiêu trên vì bản thân các mục tiêu này đã có sự mâu thuẫn với nhau. Các hệ điều hành
+chỉ có thể dung hòa các mục tiêu này ở một mức độ nào đó.
+      Ví dụ: Giả sử trong hệ thống có bốn tiến trình P1, P2, P3, P4, thời gian (t) mà các
+tiến trình này cần processor để xử lý lần lượt là 1, 12, 2, 1. Nếu ban đầu có 2 tiến trình
+P1 và P2 ở trạng thái ready thì chắc chắn bộ phận điều phối sẽ cấp processor cho P1. Sau
+khi P1 kết thúc thì processor sẽ được cấp cho P2 để P2 hoạt động (running), khi P2 thực
+hiện được 2t thì P3 được đưa vào trạng thái ready. Nếu để P2 tiếp tục thì P3 phải chờ lâu
+(chờ 8t), như vậy sẽ vi phạm mục tiêu thời gian hồi đáp và thông lượng tối đa (đối với
+P3). Nếu cho P2 dừng để cấp processor cho P3 hoạt động đến khi kết thúc, khi đó thì P4
+vào trạng thái ready, bộ điều phối sẽ cấp processor cho P4, và cứ như thế, thì P2 phải chờ
+lâu, như vậy sẽ đạt được mục tiêu: thời gian hồi đáp và thông lượng tối đa nhưng vi
+phạm mục tiêu: công bằng và thời gian lưu lại trong hệ thống (đối với P2).
+
+2.5.2. Tổ chức điều phối tiến trình
+      Để tổ chức điều phối tiến trình hệ điều hành sử dụng hai danh sách: Danh sách sẵn
+sàng (Ready list) dùng để chứa các tiến trình ở trạng thái sẵn sàng. Danh sách đợi
+(Waiting list) dùng để chứa các tiến trình đang đợi để được bổ sung vào danh sách sẵn
+sàng.
+      Chỉ có những tiến trình trong ready list mới được chọn để cấp processor. Các tiến
+trình bị chuyển về trạng thái blocked sẽ được bổ sung vào waiting list. Hệ thống chỉ có
+duy nhất một ready list, nhưng có thể tồn tại nhiều waiting list. Thông thường hệ điều
+hành thiết kế nhiều waitting list, mỗi waitting list dùng để chứa các tiến trình đang đợi
+được cấp phát một tài nguyên hay một sự kiện riêng biệt nào đó. Hình sau đây minh hoạ
+cho việc chuyển tiến trình giữa các danh sách:
+
+                Hình 2. 10. Sơ đồ chuyển tiến trình vào các danh sách
+Trong đó:
+           1. Tiến trình trong hệ thống được cấp đầy đủ tài nguyên chỉ thiếu
+      processor.
+            2. Tiến trình được bộ điều phối chọn ra để cấp processor để bắt đầu xử lý.
+            3. Tiến trình kết thúc xử lý và trả lại processor cho hệ điều hành.
+           4. Tiến trình hết thời gian được quyền sử dụng processor (time- out), bị
+      bộ điều phối tiến trình thu hồi lại processor.
+            5. Tiến trình bị khóa (blocked) do yêu cầu tài nguyên nhưng chưa được hệ
+      điều hành cấp phát. Khi đó tiến trình được đưa vào danh sách các tiến trình đợi
+      tài nguyên (waiting list 1).
+            6. Tiến trình bị khóa (blocked) do đang đợi một sự kiện nào đó xảy ra. Khi
+      đó tiến trình được bộ điều phối đưa vào danh sách các tiến trình đợi tài nguyên
+      (waiting list 2).
+            7. Tài nguyên mà tiến trình yêu cầu đã được hệ điều hành cấp phát. Khi
+      đó tiến trình được bộ điều phối chuyển sang danh sách các tiến trình ở trạng thái
+
+      sẵn sang (ready list) để chờ được cấp processor để được hoạt động.
+           8. Sự kiện mà tiến trình chờ đã xảy ra. Khi đó tiến trình được bộ điều phối
+      chuyển sang danh sách các tiến trình ở trạng thái sẵn sang (ready list) để chờ
+      được cấp processor.
+2.5.3 Các chiến lược điều phối
+➢     Thuật toán FCFS
+      FCFS là thuật toán đến trước phục vụ trước: tiến trình nào vào ready queue trước
+thì được cấp CPU trước. Đây là thuật toán đơn giản nhất và thuộc loại độc quyền. Ưu
+điểm: dễ hiểu, dễ cài đặt, công bằng theo thứ tự đến, chi phí quản lý thấp. Hạn chế: thời
+gian chờ trung bình có thể lớn; dễ xảy ra hiệu ứng đoàn xe (tiến trình ngắn phải chờ sau
+tiến trình dài); không phù hợp hệ thống tương tác [4], [5].
+     Ví dụ 1: Có ba tiến trình:
+      Tiến trình                      Arrival time                 Burst time
+      P1                              0                            24
+      P2                              1                            3
+      P3                              2                            3
+     Theo FCFS, thứ tự chạy là P1 → P2 → P3.
+     Gantt chart: 0 | P1 | 24 | P2 | 27 | P3 | 30
+      Tiến trình             Completion              Turnaround          Waiting
+      P1                     24                      24 − 0 = 24         24 − 24 = 0
+      P2                     27                      27 − 1 = 26         26 − 3 = 23
+      P3                     30                      30 − 2 = 28         28 − 3 = 25
+     Waiting time trung bình = (0 + 23 + 25)/3 = 16.
+     Nhận xét: P2 và P3 rất ngắn nhưng phải chờ P1 quá lâu - nhược điểm điển hình
+của FCFS.
+➢     Thuật toán SJF độc quyền
+      SJF (Shortest Job First) chọn tiến trình có CPU burst ngắn nhất trong số các tiến
+trình đang sẵn sàng. Nếu độc quyền, khi một tiến trình đã chạy thì chạy đến khi kết thúc
+hoặc chờ I/O.
+     Ưu điểm: tối ưu có điều kiện - SJF độc quyền cho thời gian chờ trung bình nhỏ
+nhất khi tất cả tiến trình có mặt cùng lúc; khi các tiến trình đến ở thời điểm khác nhau,
+phiên bản không độc quyền SRTF mới là thuật toán tối ưu về thời gian chờ trung bình.
+
+Phù hợp với hệ thống batch nếu biết trước thời gian xử lý. Hạn chế: khó biết chính xác
+burst time trước khi chạy; tiến trình dài có thể bị đói nếu liên tục có tiến trình ngắn đến.
+     Ví dụ 2: Có bốn tiến trình:
+      Tiến trình                       Arrival time                 Burst time
+      P1                               0                            7
+      P2                               2                            4
+      P3                               4                            1
+      P4                               5                            4
+     Tại thời điểm 0 chỉ có P1 nên P1 chạy từ 0 đến 7. Khi P1 kết thúc, P2, P3, P4 đều
+đã đến; chọn P3 (burst nhỏ nhất), sau đó P2 và P4.
+     Gantt chart: 0 | P1 | 7 | P3 | 8 | P2 | 12 | P4 | 16
+      Tiến trình              Completion               Turnaround           Waiting
+      P1                      7                        7                    0
+      P2                      12                       10                   6
+      P3                      8                        4                    3
+      P4                      16                       11                   7
+     Waiting trung bình = (0 + 6 + 3 + 7)/4 = 4.
+➢     Thuật toán SRTF
+      SRTF (Shortest Remaining Time First) là phiên bản không độc quyền của SJF: hệ
+điều hành luôn chọn tiến trình có thời gian xử lý còn lại ngắn nhất. Nếu một tiến trình
+mới đến có thời gian còn lại ngắn hơn tiến trình đang chạy, hệ điều hành có thể thu hồi
+CPU. Ưu điểm: thời gian chờ trung bình thường rất tốt, phản ứng nhanh với tiến trình
+ngắn mới đến. Hạn chế: cần biết hoặc ước lượng thời gian còn lại; có thể gây đói cho
+tiến trình dài;
+     Ví dụ 3: Có bốn tiến trình:
+      Tiến trình                       Arrival time                 Burst time
+      P1                               0                            8
+      P2                               1                            4
+      P3                               2                            2
+      P4                               3                            1
+     Diễn biến:
+         t = 0: P1 chạy.
+         t = 1: P2 đến, P1 còn 7, P2 có 4 → chuyển sang P2.
+         t = 2: P3 đến, P2 còn 3, P3 có 2 → chuyển sang P3.
+         t = 3: P4 đến, P3 còn 1, P4 có 1 → khi bằng nhau, ưu tiên tiến trình đang chạy
+    nên P3 tiếp tục.
+         P3 kết thúc tại t = 4, sau đó P4, P2, P1.
+      Gantt chart: 0 | P1 | 1 | P2 | 2 | P3 | 4 | P4 | 5 | P2 | 8 | P1 | 15
+       Tiến trình             Completion               Turnaround         Waiting
+       P1                     15                       15 − 0 = 15        15 − 8 = 7
+       P2                     8                        8−1=7              7−4=3
+       P3                     4                        4−2=2              2−2=0
+       P4                     5                        5−3=2              2−1=1
+     Waiting trung bình = (7 + 3 + 0 + 1)/4 = 2,75.
+➢     Thuật toán ưu tiên
+      Trong lập lịch theo độ ưu tiên, mỗi tiến trình được gán một độ ưu tiên; bộ lập lịch
+chọn tiến trình có độ ưu tiên cao nhất trong hàng đợi sẵn sàng. Có hai dạng: ưu tiên độc
+quyền (tiến trình đang chạy tiếp tục cho đến khi kết thúc hoặc chờ I/O) và ưu tiên không
+độc quyền (nếu tiến trình mới đến có độ ưu tiên cao hơn, hệ điều hành có thể thu hồi
+CPU). Ưu điểm: linh hoạt, phù hợp hệ thống cần ưu tiên tác vụ quan trọng. Hạn chế:
+tiến trình ưu tiên thấp có thể bị đói; cần cơ chế aging để tăng dần ưu tiên của tiến trình
+chờ lâu.
+     Ví dụ 4: Ưu tiên độc quyền
+     Quy ước số nhỏ hơn là ưu tiên cao hơn.
+       Tiến trình             Arrival                  Burst              Priority
+       P1                     0                        10                 3
+       P2                     0                        1                  1
+       P3                     0                        2                  4
+       P4                     0                        1                  5
+       P5                     0                        5                  2
+     Thứ tự chạy: P2 → P5 → P1 → P3 → P4.
+     Gantt chart: 0 | P2 | 1 | P5 | 6 | P1 | 16 | P3 | 18 | P4 | 19
+     Waiting time: P2 = 0, P5 = 1, P1 = 6, P3 = 16, P4 = 18. Waiting trung bình = (0 +
+1 + 6 + 16 + 18)/5 = 8,2.
+     Ví dụ 5: Ưu tiên không độc quyền (preemptive)
+     Quy ước số nhỏ hơn là ưu tiên cao hơn. Xét ba tiến trình:
+       Tiến trình           Arrival               Burst                Priority
+       P1                   0                     6                    3
+       P2                   1                     4                    1
+       P3                   3                     2                    2
+     Diễn biến:
+          t = 0: chỉ có P1 → P1 chạy.
+          t = 1: P2 đến (ưu tiên 1) cao hơn P1 (ưu tiên 3) → thu hồi CPU của P1 (P1 còn
+    5), cấp cho P2.
+          t = 3: P3 đến (ưu tiên 2) thấp hơn P2 đang chạy (ưu tiên 1) → P2 tiếp tục, P3
+    vào hàng đợi.
+          t = 5: P2 hoàn thành. Hàng đợi có P3 (ưu tiên 2) và P1 (ưu tiên 3) → chọn P3.
+          t = 7: P3 hoàn thành → P1 chạy nốt 5 đơn vị, kết thúc tại t = 12.
+      Gantt chart: 0 | P1 | 1 | P2 | 5 | P3 | 7 | P1 | 12
+       Tiến trình          Completion             Turnaround            Waiting
+       P1                  12                     12 − 0 = 12           12 − 6 = 6
+       P2                  5                      5−1=4                 4−4=0
+       P3                  7                      7−3=4                 4−2=2
+     Waiting time trung bình = (6 + 0 + 2)/3 = 8/3 ≈ 2,67.
+➢     Thuật toán Round Robin
+      Round Robin là thuật toán lập lịch có ngắt, rất phù hợp với hệ thống chia sẻ thời
+gian. Mỗi tiến trình được cấp CPU trong một khoảng tối đa gọi là quantum. Nếu tiến
+trình chưa kết thúc khi hết quantum, nó bị đưa về cuối hàng đợi ready.
+     Quy ước xếp hàng: nếu đúng thời điểm một tiến trình hết quantum lại có tiến trình
+mới đến (hoặc tiến trình khác vừa xong I/O quay lại), ta quy ước tiến trình mới đến
+được xếp vào hàng đợi trước, tiến trình vừa hết quantum xếp sau. Khi làm bài thi, nếu
+đề không nói khác, các em dùng quy ước này và ghi rõ một dòng “quy ước: tiến trình
+mới đến xếp trước tiến trình vừa hết quantum” để người chấm biết căn cứ.
+     Ưu điểm: công bằng, thời gian phản hồi tốt, dễ cài đặt, phù hợp hệ tương tác. Hạn
+chế: quantum quá nhỏ gây nhiều chuyển ngữ cảnh; quantum quá lớn làm thuật toán gần
+giống FCFS; không tối ưu thời gian chờ trung bình như SJF.
+     Ví dụ 6: Có ba tiến trình:
+       Tiến trình                  Arrival time                  Burst time
+
+      P1                               0                                24
+      P2                               1                                3
+      P3                               2                                3
+     Quantum = 4. Diễn biến: P1 chạy 0–4 (còn 20); P2 chạy 4–7 (xong); P3 chạy 7–
+10 (xong); P1 tiếp tục 10–14, 14–18, 18–22, 22–26, 26–30.
+     Gantt chart: 0 | P1 | 4 | P2 | 7 | P3 | 10 | P1 | 14 | P1 | 18 | P1 | 22 | P1 | 26 | P1 | 30
+      Tiến trình              Completion               Turnaround                Waiting
+      P1                      30                       30 − 0 = 30               30 − 24 = 6
+      P2                      7                        7−1=6                     6−3=3
+      P3                      10                       10 − 2 = 8                8−3=5
+      Waiting trung bình = (6 + 3 + 5)/3 = 14/3 ≈ 4,67. Nhận xét: so với FCFS ở Ví dụ
+trên, Round Robin giúp P2 và P3 phản hồi sớm hơn rất nhiều.
+     Quantum là yếu tố quan trọng. Nếu quá nhỏ, hệ thống chuyển ngữ cảnh liên tục,
+tốn chi phí; nếu quá lớn, tiến trình ngắn phải chờ lâu và hệ thống kém tương tác.
+                             Bảng 2. 12. Ảnh hưởng của quantum
+
+      Quantum                Ưu điểm                                Hạn chế
+      Quá nhỏ          Phản hồi nhanh                         Chuyển ngữ cảnh nhiều, giảm
+                                                              hiệu năng
+      Vừa phải         Cân bằng phản hồi và hiệu năng Cần lựa chọn phù hợp hệ thống
+      Quá lớn          Ít chuyển ngữ cảnh                     Gần giống FCFS, tương tác
+                                                              kém
+
+                       Bảng 2. 13. So sánh các thuật toán lập lịch CPU
+
+   Thuật toán      Ưu điểm                   Hạn chế                   Phù hợp
+   FCFS            Đơn giản, công bằng Chờ trung bình lớn, Batch đơn giản
+                   theo thứ tự đến     hiệu ứng đoàn xe
+   SJF             Chờ trung bình thấp       Khó biết burst, có Batch biết trước thời
+                                             thể gây đói        gian
+   SRTF            Phản hồi tốt cho tiến Nhiều ngắt, cần ước Hệ thống cần tối ưu
+                   trình ngắn            lượng               chờ
+   Priority        Linh hoạt, ưu tiên tác Có thể gây đói               Hệ thống phân cấp
+                   vụ quan trọng                                       ưu tiên
+
+   Round            Công bằng, phản hồi Phụ thuộc quantum        Hệ chia sẻ thời gian
+   Robin            tốt
+
+      Thực tế: Trong Windows, Linux, Android hay macOS, bộ lập lịch thực tế phức
+tạp hơn nhiều so với các thuật toán cơ bản. Tuy nhiên, FCFS, SJF, Priority, Round Robin
+vẫn là nền tảng để hiểu cách hệ điều hành cân bằng giữa công bằng, hiệu năng, phản hồi
+và độ ưu tiên. Khi các em thấy một ứng dụng bị chậm nhưng hệ thống vẫn phản hồi, khi
+một tiến trình nền không làm đứng giao diện, khi một tác vụ ưu tiên cao như âm thanh,
+chuột, bàn phím được phản hồi nhanh hơn tác vụ nền - đó đều là biểu hiện của lập lịch.
+       Tóm tắt chương 2: Chương 2 trình bày các nội dung nền tảng về quản lý tiến trình.
+Tiến trình là chương trình đang thực thi, là đối tượng quản lý trung tâm của hệ điều
+hành. Mỗi tiến trình có không gian địa chỉ, tài nguyên, trạng thái và khối điều khiển tiến
+trình (PCB). Tiến trình chuyển qua các trạng thái New, Ready, Running, Waiting,
+Terminated và có thêm trạng thái suspend trong hệ thống phức tạp. Luồng là đơn vị thực
+thi trong tiến trình. Đa luồng tăng khả năng đáp ứng, chia sẻ tài nguyên và tận dụng hệ
+thống đa lõi, nhưng phát sinh vấn đề đồng bộ. Lập lịch CPU là nội dung trọng tâm với
+các thuật toán: FCFS, SJF, SRTF, Priority (có/ngắt), Round Robin, hàng đợi nhiều mức
+và MLFQ, mỗi thuật toán có ưu điểm, hạn chế và phạm vi áp dụng riêng. Đồng bộ tiến
+trình giải quyết tranh chấp tài nguyên dùng chung thông qua các cơ chế từ thấp (cấm
+ngắt, biến khóa, Test- and- Set) đến cao (mutex, semaphore, monitor, message passing).
+Các bài toán Producer–Consumer, Readers–Writers, Dining Philosophers minh họa yêu
+cầu đồng bộ và nguy cơ deadlock. Tắc nghẽn xảy ra khi tiến trình chờ nhau vô hạn. Bốn
+điều kiện Coffman gồm loại trừ lẫn nhau, giữ và đợi, không thu hồi, chờ vòng tròn. Các
+hướng xử lý bao gồm bỏ qua, ngăn chặn, tránh (thuật toán Banker), phát hiện và phục
+hồi. Cần phân biệt trạng thái không an toàn với deadlock chắc chắn.
+
+Bài tập chương 2:
+   1. Trình bày khái niệm tiến trình. Phân biệt chương trình và tiến trình.
+   2. Trình bày mô hình năm trạng thái của tiến trình. Phân biệt Ready, Running,
+      Waiting và Terminated.
+   3. Trạng thái suspend dùng để làm gì? Vẽ sơ đồ trạng thái có suspend và giải thích
+      các cung chuyển.
+   4. So sánh lập lịch độc quyền và lập lịch không độc quyền.
+   5. So sánh FCFS, SJF, SRTF, Priority và Round Robin.
+   6. Tài nguyên găng và đoạn găng là gì? Deadlock là gì? Trình bày bốn điều kiện
+      Coffman.
+   7. So sánh ngăn chặn, tránh, phát hiện và phục hồi deadlock. Trạng thái không an
+      toàn có phải là deadlock không?
+  8. Trên Windows, mở Task Manager, ghi lại 5 tiến trình dùng nhiều CPU hoặc
+      RAM nhất. Cho biết tiến trình nào là tiến trình hệ thống, tiến trình nào là tiến
+      trình người dùng.
+  9. Viết chương trình nhỏ tạo nhiều luồng cùng tăng một biến dùng chung. Chạy thử
+      khi không có khóa và khi có mutex. So sánh kết quả.
+  10. Cho tập tiến trình sau, hãy lập lịch theo FCFS, SJF, SRTF, Round Robin với
+      quantum = 2 và tính waiting time trung bình.
+Tiến trình                   Arrival time                  Burst time
+P1                           0                             6
+P2                           1                             4
+P3                           2                             2
+P4                           3                             5
+  11. Cho tập tiến trình sau, lập lịch theo Priority (làm cả hai dạng: độc quyền và không
+      độc quyền). Quy ước số nhỏ hơn là ưu tiên cao hơn. Yêu cầu: vẽ Gantt chart, tính
+      completion time, turnaround time, waiting time.
+Tiến trình            Arrival                  Burst               Priority
+P1                    0                        8                   3
+P2                    1                        4                   1
+P3                    2                        9                   4
+P4                    3                        5                   2
+  12. Cho tập tiến trình sau, lập lịch theo MLFQ với ba hàng đợi: Queue 0 (RR
+      quantum 4), Queue 1 (RR quantum 8), Queue 2 (FCFS). Tính waiting time trung
+      bình.
+Tiến trình                   Arrival time                  Burst time
+P1                           0                             18
+P2                           0                             7
+P3                           0                             4</baihoc>
+<baitap bai="2" loai="goc" de="1. Trình bày khái niệm tiến trình. Phân biệt chương trình và tiến trình." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 20-54."/>
+<baitap bai="2" loai="goc" de="2. Trình bày mô hình năm trạng thái của tiến trình. Phân biệt Ready, Running, Waiting và Terminated." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 20-54."/>
+<baitap bai="2" loai="goc" de="3. Trạng thái suspend dùng để làm gì? Vẽ sơ đồ trạng thái có suspend và giải thích các cung chuyển." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 20-54."/>
+<baitap bai="2" loai="goc" de="4. So sánh lập lịch độc quyền và lập lịch không độc quyền." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 20-54."/>
+<baitap bai="2" loai="goc" de="5. So sánh FCFS, SJF, SRTF, Priority và Round Robin." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 20-54."/>
+<baitap bai="2" loai="goc" de="6. Tài nguyên găng và đoạn găng là gì? Deadlock là gì? Trình bày bốn điều kiện Coffman." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 20-54."/>
+<baitap bai="2" loai="goc" de="7. So sánh ngăn chặn, tránh, phát hiện và phục hồi deadlock. Trạng thái không an toàn có phải là deadlock không?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 20-54."/>
+<baitap bai="2" loai="goc" de="8. Trên Windows, mở Task Manager, ghi lại 5 tiến trình dùng nhiều CPU hoặc RAM nhất. Cho biết tiến trình nào là tiến trình hệ thống, tiến trình nào là tiến trình người dùng." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 20-54."/>
+<baitap bai="2" loai="goc" de="9. Viết chương trình nhỏ tạo nhiều luồng cùng tăng một biến dùng chung. Chạy thử khi không có khóa và khi có mutex. So sánh kết quả." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 20-54."/>
+<baitap bai="2" loai="goc" de="10. Cho tập tiến trình sau, hãy lập lịch theo FCFS, SJF, SRTF, Round Robin với quantum = 2 và tính waiting time trung bình. Tiến trình Arrival time Burst time P1 0 6 P2 1 4 P3 2 2 P4 3 5" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 20-54."/>
+<baitap bai="2" loai="goc" de="11. Cho tập tiến trình sau, lập lịch theo Priority (làm cả hai dạng: độc quyền và không độc quyền). Quy ước số nhỏ hơn là ưu tiên cao hơn. Yêu cầu: vẽ Gantt chart, tính completion time, turnaround time, waiting time. Tiến trình Arrival Burst Priority P1 0 8 3 P2 1 4 1 P3 2 9 4 P4 3 5 2" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 20-54."/>
+<baitap bai="2" loai="goc" de="12. Cho tập tiến trình sau, lập lịch theo MLFQ với ba hàng đợi: Queue 0 (RR quantum 4), Queue 1 (RR quantum 8), Queue 2 (FCFS). Tính waiting time trung bình. Tiến trình Arrival time Burst time P1 0 18 P2 0 7 P3 0 4" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 20-54."/>
+<baihoc stt="3" tieude="Chương 3. Quản lý bộ nhớ">Chương 3. QUẢN LÝ BỘ NHỚ
+         Mục tiêu chương 3:
+Kết thúc chương này, sinh viên có thể: trình bày vai trò, nhiệm vụ của quản lý bộ nhớ,
+phân biệt địa chỉ logic/ảo/vật lý [CLO2]; vận dụng các kỹ thuật phân vùng cố định/động,
+phân trang, phân đoạn và các thuật toán First-fit/Best-fit/Next-fit,
+FIFO/Optimal/LRU/Clock để giải bài tập [CLO3]; giải thích nguyên lý bộ nhớ ảo và
+cơ chế quản lý truy xuất bộ nhớ [CLO4].
+3.1. Nhiệm vụ của quản lý bộ nhớ
+3.1.1. Quản lý bộ nhớ
+        Bộ phận quản lý bộ nhớ của hệ điều hành thường thực hiện các nhiệm vụ sau:
+    ̶    Theo dõi vùng nhớ nào đang trống, vùng nhớ nào đã được cấp phát.
+    ̶    Cấp phát bộ nhớ cho tiến trình khi tiến trình được tạo hoặc khi tiến trình yêu cầu
+         thêm bộ nhớ.
+    ̶    Thu hồi bộ nhớ khi tiến trình kết thúc.
+    ̶    Bảo vệ vùng nhớ của tiến trình này khỏi sự truy cập trái phép của tiến trình khác.
+    ̶    Hỗ trợ chia sẻ bộ nhớ khi cần thiết.
+    ̶    Chuyển đổi địa chỉ logic hoặc địa chỉ ảo sang địa chỉ vật lý.
+    ̶    Hỗ trợ swap, bộ nhớ ảo và xử lý lỗi trang.
+    ̶    Tối ưu hiệu năng sử dụng RAM, hạn chế phân mảnh và thrashing.
+                       Bảng 3. 1. Nhiệm vụ cơ bản của quản lý bộ nhớ
+
+ Nhiệm vụ              Ý nghĩa                             Ví dụ thực tế
+ Cấp phát bộ Cấp vùng nhớ cho tiến trình              Mở trình duyệt, hệ điều hành cấp
+ nhớ                                                  RAM cho trình duyệt
+ Thu hồi bộ Lấy lại vùng nhớ khi tiến trình Đóng ứng dụng, RAM được giải
+ nhớ        kết thúc                        phóng
+ Bảo vệ bộ Ngăn truy cập trái phép                    Tiến trình A không được ghi vào
+ nhớ                                                  vùng nhớ của tiến trình B
+ Chia sẻ bộ Cho phép nhiều tiến trình dùng Shared library, shared memory
+ nhớ        chung vùng nhớ hợp lệ
+ Tái định vị     Cho phép chương trình chạy ở vị Chương trình được nạp vào vùng
+                 trí nhớ khác nhau               RAM còn trống bất kỳ
+ Bộ nhớ ảo       Mở rộng không gian địa chỉ logic Chương trình dùng không gian ảo
+                                                  lớn hơn RAM vật lý
+    ̶    Tái định vị (Relocation) - chương trình có thể được nạp/swap- in vào vị trí bất
+         kỳ.
+    ̶    Bảo vệ (Protection) - ngăn truy cập trái phép giữa các tiến trình và vào vùng của
+         hệ điều hành.
+    ̶    Chia sẻ (Sharing) - cho phép nhiều tiến trình dùng chung vùng nhớ hợp lệ.
+    ̶    Tổ chức logic (Logical organization) - hỗ trợ cách nhìn chương trình theo module
+         (nền tảng của phân đoạn).
+    ̶    Tổ chức vật lý (Physical organization) - quản lý luồng dữ liệu giữa bộ nhớ chính
+         và bộ nhớ phụ (nền tảng của swap và bộ nhớ ảo).
+3.1.2. Địa chỉ logic, địa chỉ ảo và địa chỉ vật lý
+      Khi lập trình, các em thường làm việc với biến, mảng, con trỏ hoặc đối tượng. Tuy
+nhiên, địa chỉ mà chương trình nhìn thấy thường không phải là vị trí vật lý thật trong
+RAM. Hệ điều hành và phần cứng quản lý bộ nhớ sẽ chuyển đổi địa chỉ này trước khi
+truy xuất bộ nhớ.
+        Có ba khái niệm cần phân biệt:
+    ̶    Địa chỉ logic là địa chỉ do chương trình sinh ra trong quá trình biên dịch hoặc
+         thực thi, được hiểu trong phạm vi không gian địa chỉ của chương trình.
+    ̶    Địa chỉ ảo là địa chỉ trong không gian bộ nhớ ảo của tiến trình.
+    ̶    Địa chỉ vật lý là địa chỉ thực trong RAM, được phần cứng dùng để truy xuất ô
+         nhớ vật lý.
+      Ví dụ: một chương trình có thể truy cập địa chỉ ảo 0x00403004. Địa chỉ này không
+nhất thiết là vị trí thật trong RAM. MMU (Memory Management Unit - đơn vị quản lý
+bộ nhớ trong phần cứng) sẽ phối hợp với bảng trang hoặc bảng đoạn để ánh xạ nó sang
+địa chỉ vật lý tương ứng.
+                             Bảng 3. 2. Phân biệt các loại địa chỉ
+ Loại địa chỉ       Ai nhìn thấy?                    Ý nghĩa
+ Địa chỉ logic      Chương trình, trình biên Địa chỉ trong không gian chương trình
+                    dịch
+ Địa chỉ ảo         Tiến trình khi chạy              Địa chỉ trong không gian ảo của tiến
+                                                     trình
+ Địa chỉ vật lý     Phần cứng bộ nhớ                 Địa chỉ thực trong RAM
+3.1.3. Tái định vị, bảo vệ, chia sẻ và phân mảnh bộ nhớ
+    ➢ Tái định vị là khả năng chuyển đổi địa chỉ trong chương trình thành địa chỉ vật
+lý phù hợp với vị trí thật mà chương trình được nạp vào bộ nhớ [4], [5].
+      Trong hệ thống đa chương trình, một tiến trình không nhất thiết luôn nằm ở cùng
+một vị trí trong RAM. Tiến trình có thể được nạp vào vùng trống bất kỳ, có thể bị đưa
+ra bộ nhớ phụ (swap-out), sau đó được nạp trở lại (swap- in) tại một vị trí khác. Vì người
+lập trình không thể biết trước chương trình sẽ nằm ở đâu trong RAM, hệ điều hành cần
+cơ chế tái định vị.
+      Một cơ chế đơn giản là dùng thanh ghi cơ sở và thanh ghi giới hạn:
+  ̶    Thanh ghi cơ sở (base register) chứa địa chỉ vật lý bắt đầu vùng nhớ của tiến
+       trình.
+  ̶    Thanh ghi giới hạn (limit register) chứa kích thước vùng nhớ của tiến trình.
+  ̶    Với mỗi truy cập, phần cứng kiểm tra: nếu 0 ≤ địa chỉ tương đối &lt; limit thì địa
+       chỉ vật lý = base + địa chỉ tương đối; ngược lại phát sinh bẫy (trap) lỗi truy cập
+       bộ nhớ.
+      Ví dụ: tiến trình được nạp tại base = 1000, limit = 500 (vùng hợp lệ là các địa chỉ
+vật lý 1000–1499). Truy cập địa chỉ tương đối 200: hợp lệ vì 200 &lt; 500, địa chỉ vật lý =
+1200. Truy cập địa chỉ tương đối 500: không hợp lệ, vì điều kiện là nhỏ hơn limit - địa
+chỉ tương đối hợp lệ chạy từ 0 đến 499. Đây là lỗi “lệch một đơn vị” (off- by- one) mà
+các em rất hay mắc khi làm bài.
+    ➢ Bảo vệ bộ nhớ là yêu cầu bắt buộc trong hệ điều hành hiện đại. Nếu một tiến trình
+có thể tùy ý đọc hoặc ghi vào vùng nhớ của tiến trình khác, hệ thống sẽ rất dễ mất ổn
+định, sai dữ liệu hoặc bị tấn công.
+      Ví dụ: một chương trình do sinh viên viết bị lỗi con trỏ. Nếu không có bảo vệ bộ
+nhớ, chương trình đó có thể ghi đè lên vùng nhớ của hệ điều hành hoặc của tiến trình
+khác. Nhờ cơ chế bảo vệ bộ nhớ, hệ điều hành có thể phát hiện truy cập bất hợp lệ và
+kết thúc riêng chương trình bị lỗi, thay vì để toàn hệ thống bị ảnh hưởng.
+      Bảo vệ bộ nhớ thường dựa vào:
+  ̶    Không gian địa chỉ riêng cho từng tiến trình.
+  ̶    Thanh ghi base/limit.
+  ̶    Bảng trang hoặc bảng đoạn có bit quyền truy cập.
+  ̶    Chế độ user mode và kernel mode.
+  ̶    Cơ chế trap hoặc exception khi vi phạm.
+     Trên Linux, lỗi truy cập bộ nhớ thường được biểu hiện bằng segmentation fault.
+Trên Windows, lỗi tương tự có thể xuất hiện dưới dạng access violation. Các lỗi này
+cho thấy chương trình đã truy cập vùng nhớ không hợp lệ hoặc không có quyền truy
+cập.
+
+   ➢ Bảo vệ bộ nhớ không có nghĩa là mọi vùng nhớ đều phải tách biệt tuyệt đối.
+Trong nhiều trường hợp, chia sẻ bộ nhớ là cần thiết và có lợi.
+      Ví dụ:
+  ̶      Nhiều tiến trình cùng dùng chung thư viện hệ thống.
+  ̶      Hai tiến trình cần trao đổi dữ liệu tốc độ cao qua shared memory.
+  ̶      Nhiều tiến trình cùng ánh xạ một file vào bộ nhớ.
+  ̶      Tiến trình cha và tiến trình con chia sẻ trang nhớ theo cơ chế copy- on- write.
+     Chia sẻ bộ nhớ giúp tiết kiệm RAM và tăng tốc trao đổi dữ liệu. Tuy nhiên, vùng
+nhớ chia sẻ phải được kiểm soát quyền truy cập rõ ràng. Nếu nhiều tiến trình cùng ghi
+vào vùng nhớ chia sẻ, bài toán đồng bộ ở Chương 2 lại xuất hiện.
+   ➢ Phân mảnh bộ nhớ là hiện tượng bộ nhớ bị lãng phí do cách cấp phát và thu hồi
+không gian nhớ.
+  ̶      Phân mảnh nội vi (internal fragmentation) xảy ra khi vùng nhớ được cấp phát
+         lớn hơn nhu cầu thực tế của tiến trình. Phần dư nằm bên trong vùng đã cấp phát
+         nhưng không dùng được cho tiến trình khác.
+  ̶      Phân mảnh ngoại vi (external fragmentation) xảy ra khi tổng bộ nhớ trống vẫn
+         đủ lớn, nhưng bị chia thành nhiều mảnh nhỏ rời rạc, không có mảnh liên tục nào
+         đủ lớn để cấp cho tiến trình.
+                    Bảng 3. 3. So sánh phân mảnh nội vi và phân mảnh ngoại vi
+
+ Tiêu chí                 Phân mảnh nội vi                Phân mảnh ngoại vi
+ Vị trí lãng phí     Bên trong vùng đã cấp phát      Giữa các vùng đã cấp phát
+ Nguyên nhân         Cấp phát theo khối cố định Cấp phát/thu hồi động tạo lỗ trống rời
+                     lớn hơn nhu cầu            rạc
+ Ví dụ               Tiến trình cần 18 KB nhưng Có 3 lỗ trống 10 KB, 12 KB, 8 KB
+                     được cấp partition 20 KB   nhưng không nạp được tiến trình 25
+                                                KB
+ Kỹ thuật liên Phân vùng cố định, phân Phân vùng động, phân đoạn
+ quan          trang
+ Cách hạn chế        Chọn kích thước khối hợp lý     Gom bộ nhớ hoặc dùng phân trang
+3.2. Kỹ thuật cấp phát bộ nhớ
+      Trong hệ thống đa chương trình, câu hỏi đầu tiên của quản lý bộ nhớ là: chia phần
+bộ nhớ dành cho người dùng như thế nào để nạp được nhiều tiến trình? Cách trả
+lời đơn giản nhất là chia bộ nhớ thành các vùng (partition), mỗi vùng chứa trọn một
+tiến trình. Có hai chiến lược: chia sẵn từ trước (phân vùng cố định) hoặc chia theo nhu
+cầu lúc chạy (phân vùng động). Đây là các kỹ thuật cấp phát liên tục: toàn bộ tiến trình
+phải nằm trong một vùng nhớ liền mạch - hạn chế mà phân trang sẽ khắc phục.
+3.2.1. Phân vùng cố định (Fixed Partitioning)
+      Bộ nhớ dành cho người dùng được chia sẵn thành một số vùng có kích thước xác
+định từ khi khởi động. Có hai biến thể:
+  ̶   Các vùng bằng nhau: đơn giản nhất, nhưng tiến trình lớn hơn kích thước vùng
+      thì không nạp được (trừ khi người lập trình tự dùng kỹ thuật phủ - overlay), còn
+      tiến trình nhỏ gây lãng phí lớn.
+  ̶   Các vùng không bằng nhau: ví dụ chia RAM người dùng thành bốn vùng 100
+      KB, 200 KB, 300 KB và 400 KB. Tiến trình 180 KB có thể nạp vào vùng 200,
+      300 hoặc 400 KB; hợp lý nhất là vùng 200 KB, khi đó phần dư 20 KB nằm bên
+      trong vùng và không dùng được cho ai khác - đây chính là phân mảnh nội vi.
+      Ưu điểm và hạn chế của phân vùng cố định:
+  ̶   Ưu điểm: cực kỳ đơn giản; hệ điều hành chỉ cần biết vùng nào trống, vùng nào
+      bận; chi phí quản lý gần như bằng không.
+  ̶   Hạn chế: số tiến trình đồng thời bị chặn trên bởi số vùng; phân mảnh nội vi lớn;
+      tiến trình lớn hơn vùng lớn nhất không thể chạy; kích thước vùng phải “đoán”
+      trước nhu cầu thực tế.
+Cách tổ chức hàng đợi nạp tiến trình: Khi các vùng không bằng nhau, tiến trình chờ
+được nạp theo một trong hai cách:
+               Bảng 3. 4. Hai cách tổ chức hàng đợi trong phân vùng cố định
+
+ Tiêu chí      Mỗi vùng một hàng đợi riêng Một hàng đợi chung
+ Nguyên tắc    Tiến trình xếp vào hàng đợi của Tiến trình lấy ra khỏi hàng đợi chung
+               vùng nhỏ nhất đủ chứa nó        và nạp vào vùng trống phù hợp tại
+                                               thời điểm đó
+ Phân mảnh Ít nhất có thể                         Có thể lớn hơn (tiến trình nhỏ có thể
+ nội vi                                           vào vùng lớn)
+ Nhược điểm Vùng lớn có thể rảnh trong khi Cần chính sách chọn vùng; khó tối ưu
+ chính      hàng đợi vùng nhỏ xếp dài
+
+                Hình 3. 1. Sơ đồ cách tổ chức hàng đợi trong phân vùng cố định
+3.2.2. Phân vùng động (Dynamic Partitioning)
+     Phân vùng động không chia bộ nhớ từ trước. Khi một tiến trình cần nạp, hệ điều
+hành cấp cho nó một vùng đúng bằng kích thước yêu cầu, cắt ra từ vùng trống. Nhờ
+đó không còn phân mảnh nội vi, nhưng một vấn đề mới xuất hiện.
+        Ví dụ. Phần bộ nhớ dành cho người dùng có 1000 KB. Hệ điều hành lần lượt nạp:
+              • P1 = 300 KB (chiếm vị trí 0–299),
+              • P2 = 200 KB (chiếm 300–499),
+              • P3 = 250 KB (chiếm 500–749),
+              • P4 = 250 KB (chiếm 750–999).
+      Lúc này bộ nhớ đầy. Sau đó P2 và P4 kết thúc, để lại hai lỗ trống: 200 KB (vị trí
+300–499) và 250 KB (vị trí 750–999). Hai lỗ này không liền kề vì bị P3 chắn giữa.
+Tổng bộ nhớ trống là 450 KB, nhưng nếu có tiến trình mới P5 = 300 KB thì không nạp
+được, vì không có lỗ liên tục nào đủ 300 KB. Đó chính là phân mảnh ngoại vi: tổng
+thì đủ, nhưng từng mảnh thì không.
+     Nếu hệ điều hành gom bộ nhớ (dồn P1 và P3 sát nhau), hai lỗ 200 KB và 250 KB
+sẽ hợp thành một vùng trống 450 KB liên tục và P5 nạp được - nhưng phải trả chi phí
+di chuyển tiến trình và tái định vị.
+   ➢ Quản lý vùng trống: bản đồ bit và danh sách liên kết
+        Để cấp phát động, hệ điều hành phải biết chỗ nào trống. Hai cấu trúc dữ liệu phổ
+biến:
+
+  ̶      Bản đồ bit (bitmap): chia bộ nhớ thành các đơn vị cấp phát bằng nhau; mỗi đơn
+         vị ứng với 1 bit - 0 là trống, 1 là đã cấp.
+  ̶      Danh sách liên kết: mỗi nút mô tả một đoạn bộ nhớ, dạng (loại H/P, vị trí bắt
+         đầu, độ dài), với H là lỗ trống (hole) và P là tiến trình (process).
+      Ví dụ: bộ nhớ gồm 8 đơn vị cấp phát, trong đó các đơn vị 2 – 4 đã cấp cho một
+tiến trình. Bitmap là 00111000; danh sách tương ứng: H (0,2) → P (2,3) → H (5,3).
+                      Bảng 3. 5. So sánh bản đồ bit và danh sách liên kết
+
+         Tiêu chí               Bản đồ bit                       Danh sách liên kết
+ Bộ nhớ quản lý         Cố định, tỉ lệ nghịch với kích Tỉ lệ với số đoạn đang tồn tại
+                        thước đơn vị cấp phát
+ Tìm vùng trống k Phải quét tìm dãy k bit 0 liên Duyệt các nút H - nhanh hơn
+ đơn vị           tiếp - chậm                    khi có sắp xếp
+ Thu hồi và gộp lỗ Chỉ việc xóa bit                        Phải xét 4 trường hợp gộp với
+ kề nhau                                                   hàng xóm trước/sau
+
+                       Hình 3. 2. Sơ đồ bản đồ bit và danh sách liên kết
+      ➢ Thuật toán First- fit
+      First- fit duyệt danh sách vùng trống từ đầu và chọn vùng đầu tiên đủ lớn. Ưu
+điểm: nhanh - dừng ngay khi gặp vùng phù hợp; thực nghiệm cho thấy chất lượng tổng
+thể tốt. Nhược điểm: các vùng đầu danh sách bị “băm” nhỏ dần theo thời gian.
+      ➢ Thuật toán Best- fit
+     Best- fit duyệt toàn bộ danh sách và chọn vùng trống nhỏ nhất nhưng vẫn đủ
+lớn. Ưu điểm: phần dư tại mỗi lần cấp là nhỏ nhất. Nhược điểm: phải duyệt hết danh
+sách (chậm hơn), và chính vì luôn để lại phần dư nhỏ, bộ nhớ dần đầy những mảnh vụn
+vài KB gần như vô dụng.
+
+   ➢ Thuật toán Next- fit
+     Next- fit hoạt động như First- fit nhưng không quay về đầu danh sách: lần tìm
+kiếm sau bắt đầu từ vị trí ngay sau vùng vừa được cấp phát lần trước, hết danh sách thì
+quay vòng. Ưu điểm: trải đều việc cấp phát trên toàn bộ nhớ, không dồn vào phần đầu.
+Nhược điểm: có xu hướng “ăn dần” các vùng lớn ở cuối bộ nhớ; thực nghiệm cho kết
+quả kém hơn First- fit một chút (Tanenbaum [5]).
+      Ví dụ: trên bộ nhớ có các vùng trống theo thứ tự địa chỉ:
+      8 KB → 12 KB → 22 KB → 18 KB → 8 KB → 6 KB → 14 KB → 36 KB
+     Giả sử lần cấp phát gần nhất kết thúc ngay trước vùng 18 KB (con trỏ Next- fit
+đang đứng sau vùng 22 KB). Một tiến trình cần 16 KB:
+                    Bảng 3. 6. Kết quả cấp phát 16 KB theo ba thuật toán
+
+ Thuật                                                                         Phần dư
+ toán         Cách duyệt                 Vùng được chọn                        để lại
+ First- fit   Từ đầu danh sách, dừng ở            22 KB                        6 KB
+              vùng đầu tiên ≥ 16 KB
+ Best- fit    Duyệt toàn bộ, chọn vùng            18 KB                        2 KB
+              nhỏ nhất ≥ 16 KB
+ Next- fit Từ sau vùng vừa cấp 18 KB; nếu 18 KB đã bị chiếm thì 2 KB hoặc
+           phát: 18 → 8 → 6 → 14 tiếp tục và chọn 36 KB (dư 20 20 KB
+           → 36                  KB)
+     Nhận xét: Best- fit dư ít nhất tại thời điểm cấp phát nhưng để lại các mảnh rất nhỏ
+(2 KB) gần như vô dụng về sau và phải duyệt hết danh sách. First- fit nhanh nhất và
+trong thực nghiệm thường tốt nhất về tổng thể. Next- fit trải đều việc cấp phát nhưng có
+xu hướng tiêu hao các vùng lớn.
+                       Bảng 3. 7. So sánh nhanh ba thuật toán cấp phát
+
+       Tiêu chí          First- fit            Best- fit                   Next- fit
+ Tốc độ       tìm Nhanh                  Chậm (duyệt hết)            Nhanh
+ kiếm
+ Phần dư mỗi Trung bình                  Nhỏ nhất                    Trung bình
+ lần cấp
+ Hệ quả lâu dài     Băm nhỏ phần đầu Nhiều mảnh vụn vô Tiêu hao vùng lớn
+                    bộ nhớ           dụng              cuối bộ nhớ
+ Khuyến       nghị Tốt nhất về tổng Dùng khi kích thước yêu Ít dùng
+ thực tế           thể              cầu đa dạng ít
+
+3.2.3. Kỹ thuật phân trang đơn (Paging)
+   ➢ Ý tưởng phân trang
+     Mọi rắc rối của phân vùng đều bắt nguồn từ một giả định: tiến trình phải nằm trong
+một vùng nhớ liên tục. Phân trang từ bỏ giả định đó:
+    ̶   Chia không gian địa chỉ logic của tiến trình thành các khối bằng nhau gọi là trang
+        (page).
+    ̶   Chia bộ nhớ vật lý thành các khối cùng kích thước gọi là khung trang (frame).
+    ̶   Mỗi trang có thể nạp vào bất kỳ khung trống nào - các trang của một tiến trình
+        không cần nằm cạnh nhau trong RAM.
+      Kích thước trang luôn là lũy thừa của 2 (phổ biến nhất là 4 KB = 2¹² byte); lý do
+sẽ rõ ở mục sau.
+
+                         Hình 3. 3. Sơ đồ cấp phát trong phân trang
+   ➢ Trang và khung trang: Phân biệt trang và khung trang
+                            Bảng 3. 8. Phân biệt trang và khung trang
+
+        Tiêu chí          Trang (page)                     Khung trang (frame)
+ Thuộc      không Địa chỉ logic/ảo của tiến trình Bộ nhớ vật lý (RAM)
+ gian
+ Kích thước         Bằng nhau, lũy thừa của 2        Bằng đúng kích thước trang
+ Số lượng           Theo kích thước không gian Theo dung lượng RAM
+                    địa chỉ
+
+        Tiêu chí          Trang (page)                     Khung trang (frame)
+ Ai “sở hữu”         Mỗi tiến trình có tập trang Toàn hệ thống dùng chung, HĐH
+                     riêng                       phân phối
+     Ghi nhớ: trang là hàng, khung là kệ - hàng (dữ liệu của tiến trình) được đặt lên
+kệ (RAM) nào là do hệ điều hành quyết định.
+   ̶    Bảng trang: Vì trang nằm rải rác trong RAM, mỗi tiến trình cần một “bản đồ”
+        cho biết trang nào đang ở khung nào: đó là bảng trang (page table). Mỗi tiến
+        trình có bảng trang riêng; thanh ghi PTBR (Page Table Base Register) của CPU
+        trỏ tới bảng trang của tiến trình đang chạy và được nạp lại mỗi lần chuyển ngữ
+        cảnh.
+   ̶    Cấu trúc một mục bảng trang (PTE): Mỗi mục bảng trang (Page Table Entry)
+        không chỉ chứa số hiệu khung mà còn kèm các bit điều khiển:
+                        Bảng 3. 9. Các trường tiêu biểu trong một PTE
+
+        Trường/Bit                Ý nghĩa                        Dùng cho
+ Số hiệu khung (frame Trang đang nằm ở khung Chuyển đổi địa chỉ
+ number)              nào
+ Present/Valid              1: trang đang trong RAM; Bộ nhớ ảo, phát hiện lỗi trang
+                            0: chưa nạp hoặc đang ở
+                            đĩa
+ Read/Write                 Cho phép ghi hay chỉ đọc      Bảo vệ (trang mã lệnh chỉ đọc)
+ User/Supervisor            Trang thuộc chế độ người Bảo vệ kernel
+                            dùng hay nhân
+ Accessed (Referenced) Phần cứng bật lên 1 khi Thuật toán thay trang
+                       trang được truy cập
+ Dirty (Modified)           Bật lên 1 khi trang bị ghi    Quyết định có phải ghi trang ra
+                                                          đĩa khi thay thế
+ NX (No- eXecute)           Cấm thực thi mã trong Chống khai thác lỗ hổng (dữ
+                            trang                 liệu không được chạy như mã)
+   ➢ Chuyển đổi địa chỉ trong phân trang
+       Với kích thước trang S, một địa chỉ logic A được tách làm hai phần:
+       ̶ Số hiệu trang: p = A div S (chia lấy phần nguyên)
+       ̶ Độ dời (offset): d = A mod S (chia lấy phần dư)
+       ̶ Tra bảng trang để biết trang p nằm ở khung f, khi đó:
+       ̶ Địa chỉ vật lý = f × S + d
+     Ví dụ 1. Trang 1 KB (S = 1024). Địa chỉ logic 1502: p = 1502 div 1024 = 1; d =
+1502 mod 1024 = 478. Nếu bảng trang cho biết trang 1 ở khung 6: địa chỉ vật lý = 6 ×
+1024 + 478 = 6622.
+      Ví dụ 2. Cùng hệ thống, địa chỉ logic 2500: p = 2, d = 452. Nếu trang 2 ở khung
+1: địa chỉ vật lý = 1 × 1024 + 452 = 1476. Lưu ý địa chỉ vật lý nhỏ hơn địa chỉ logic -
+hoàn toàn bình thường, vì trang và khung được ánh xạ tự do.
+
+                         Hình 3. 4. Sơ đồ chuyển đổi địa chỉ logic
+Ví dụ với địa chỉ thập lục phân
+      Mỗi chữ số thập lục phân (hex) ứng với đúng 4 bit. Vì vậy với trang 4 KB = 2¹²
+byte, offset chiếm 12 bit = 3 chữ số hex cuối của địa chỉ, phần còn lại là số hiệu trang.
+Ví dụ 0x1234 = 0001 0010 0011 0100 (nhị phân). Nắm chắc điều này thì mọi bài tách
+địa chỉ với trang 4 KB đều làm nhẩm được.
+     Xét hệ thống 32 bit, trang 4 KB. Địa chỉ ảo 0x00403004 tách thành: offset = 0x004
+(3 chữ số cuối), số hiệu trang = 0x00403 (phần còn lại).
+      Nếu bảng trang cho biết page 0x00403 nằm tại frame 0x00125, địa chỉ vật lý được
+tạo bằng cách ghép (concatenate) số hiệu frame với offset - thay 20 bit cao, giữ nguyên
+12 bit thấp:
+    Địa chỉ ảo: 0x00403 | 004 (page = 0x00403, offset = 0x004) Địa chỉ vật lý:
+0x00125 | 004 = 0x00125004
+      Chú ý: đây là phép ghép bit, không phải phép cộng 0x125 + 0x4. Nếu muốn kiểm
+tra bằng số học: địa chỉ vật lý = 0x125 × 4096 + 0x004 = 0x00125004. Hai cách cho
+cùng kết quả vì kích thước trang là lũy thừa của 2 - và đó chính là lý do người ta luôn
+chọn kích thước trang là lũy thừa của 2.
+      Ví dụ này giúp các em hiểu vì sao trong hệ thống dùng trang 4 KB, ba chữ số hex
+cuối của địa chỉ được giữ nguyên khi chuyển từ địa chỉ ảo sang địa chỉ vật lý; phần thay
+đổi duy nhất là số hiệu trang được thay bằng số hiệu frame.
+Ví dụ tổng hợp với bảng trang cụ thể
+
+    Hệ thống có địa chỉ logic 16 bit, trang 1 KB → offset 10 bit, số hiệu trang 6 bit.
+Bảng trang của một tiến trình:
+                                   Trang          Khung
+                                   0              5
+                                   1              9
+                                   2              1
+                                   3              12
+     Lưu ý: với 6bit số hiệu trang, không gian địa chỉ cho phép tối đa 2⁶ = 64 trang.
+Tiến trình trong ví dụ này chỉ có 4 trang (0–3), vì vậy bảng trang chỉ có 4 mục hợp lệ;
+nếu chương trình truy cập địa chỉ thuộc trang 4 trở lên, hệ điều hành phát sinh lỗi truy
+cập bộ nhớ. Chuyển đổi địa chỉ logic 2500: p = 2500 div 1024 = 2; d = 452; trang 2 →
+khung 1; địa chỉ vật lý = 1 × 1024 + 452 = 1476.
+   ➢ Phân mảnh trong phân trang
+     Phân trang loại bỏ hoàn toàn phân mảnh ngoại vi: mọi khung đều dùng được
+cho bất kỳ trang nào, không tồn tại “lỗ trống quá nhỏ”.
+      Đổi lại, phân trang vẫn còn phân mảnh nội vi ở trang cuối cùng của mỗi tiến trình:
+nếu tiến trình cần 10500byte với trang 4 KB, nó chiếm 3 trang = 12.288 byte, lãng phí
+1.788byte trong trang cuối. Trường hợp xấu nhất lãng phí gần trọn một trang; trung
+bình khoảng nửa trang cho mỗi tiến trình [3]. Đây là lý do của sự đánh đổi kích thước
+trang: trang nhỏ → ít nội vi nhưng bảng trang dài; trang lớn → ngược lại. Mức 4 KB là
+điểm cân bằng phổ biến, bên cạnh “huge page” 2 MB cho ứng dụng đặc thù.
+                     Bảng 3. 10. Ưu điểm và hạn chế của phân trang
+
+      Ưu điểm                          Hạn chế
+ Loại bỏ hoàn toàn phân mảnh Vẫn còn phân mảnh nội vi (trung bình nửa trang/tiến
+ ngoại vi                    trình)
+ Cấp phát đơn giản: khung nào Tốn bộ nhớ cho bảng trang (giải quyết bằng nhiều
+ trống cũng dùng được         cấp)
+ Nền tảng trực tiếp của bộ nhớ Mỗi truy cập cần tra bảng trang (giải quyết bằng TLB)
+ ảo
+ Bảo vệ và chia sẻ ở mức từng Ranh giới trang không trùng ranh giới logic của
+ trang qua các bit PTE        chương trình (khắc phục một phần bằng phân đoạn)
+3.2.4. Kỹ thuật phân đoạn đơn(Segmentation)
+   ➢ Ý tưởng phân đoạn
+
+      Phân trang chia chương trình thành các khối bằng nhau một cách “máy móc” -
+ranh giới trang không liên quan gì đến cấu trúc logic của chương trình. Nhưng người lập
+trình không nghĩ về chương trình theo trang; họ nghĩ theo các khối logic: đoạn mã lệnh
+(code), dữ liệu toàn cục (data), ngăn xếp (stack), vùng cấp phát động (heap), các thư
+viện. Phân đoạn phản ánh đúng cách nhìn đó: không gian địa chỉ của tiến trình gồm
+nhiều đoạn (segment), mỗi đoạn có kích thước riêng, và một địa chỉ logic là cặp (số
+hiệu đoạn s, độ dời d).
+     Về phía bộ nhớ vật lý, mỗi đoạn được cấp một vùng liên tục đúng bằng kích
+thước của nó - giống hệt phân vùng động, chỉ khác là đơn vị cấp phát bây giờ là từng
+đoạn thay vì cả tiến trình.
+   ➢ Bảng đoạn và quy trình truy cập
+       Mỗi tiến trình có một bảng đoạn (segment table); mục thứ s chứa cặp:
+   ̶    Base: địa chỉ vật lý bắt đầu của đoạn s;
+   ̶    Limit: kích thước (độ dài) của đoạn s.
+   ̶    Quy trình truy cập địa chỉ logic (s, d) gồm 5 bước:
+   ̶    Tách địa chỉ logic thành số hiệu đoạn s và độ dời d.
+   ̶    Tra bảng đoạn, lấy (base, limit) của đoạn s. Nếu s vượt quá số đoạn của tiến trình
+        → lỗi truy cập.
+   ̶    Kiểm tra điều kiện 0 ≤ d &lt; limit. Chú ý dấu “nhỏ hơn” chặt: nếu limit = 200 thì
+        các độ dời hợp lệ là 0 đến 199; d = 200 đã không hợp lệ.
+   ̶    Nếu hợp lệ, tính địa chỉ vật lý = base + d.
+   ̶    Truy cập ô nhớ; nếu bước 3 thất bại, phần cứng phát trap báo hệ điều hành
+        (segmentation fault).
+Ví dụ chuyển đổi địa chỉ phân đoạn: Bảng đoạn của một tiến trình:
+                                Đoạn          Base        Limit
+                                0             1400        1000
+                                1             3000        800
+                                2             4300        200
+             • (1, 250): 0 ≤ 250 &lt; 800 → hợp lệ; địa chỉ vật lý = 3000 + 250 = 3250.
+             • (2, 300): 300 ≥ 200 → không hợp lệ, trap lỗi truy cập.
+             • (0, 999): 999 &lt; 1000 → hợp lệ; địa chỉ vật lý = 1400 + 999 = 2399.
+              • (0, 1000): 1000 = limit → không hợp lệ - byte hợp lệ cuối cùng của đoạn
+        0 là độ dời 999.
+
+      Với phân đoạn, luôn kiểm tra độ dời trước khi cộng base; điều kiện hợp lệ là 0 ≤
+d &lt; limit. Hai lỗi hay gặp: (1) quên kiểm tra và cứ cộng base + d - mất trọn điểm câu
+“không hợp lệ”; (2) cho rằng d = limit là hợp lệ - sai, vì đoạn có limit = 200 chỉ gồm các
+byte 0–199.
+      Đây cũng là khác biệt bản chất giữa phân đoạn và phân trang: trong phân trang,
+mọi offset trong phạm vi một trang đều hợp lệ về mặt địa chỉ (việc kiểm tra dồn vào bit
+Present và bit quyền), còn trong phân đoạn, chính offset phải được so với limit ở mỗi
+lần truy cập - vì thế người ta nói phân đoạn bảo vệ “tự nhiên” theo ranh giới logic của
+chương trình.
+
+                      Hình 3. 5. Sơ đồ chuyển đổi địa chỉ phân đoạn
+   ➢ Phân mảnh trong phân đoạn
+      Vì các đoạn có kích thước khác nhau và được cấp phát/thu hồi động, phân đoạn kế
+thừa nguyên vẹn vấn đề của phân vùng động: phân mảnh ngoại vi (và cũng có thể
+dùng gom bộ nhớ để xử lý). Bù lại, không có phân mảnh nội vi vì đoạn được cấp đúng
+kích thước.
+                         Bảng 3. 11. Phân mảnh của bốn kỹ thuật
+
+      Kỹ thuật              Phân mảnh nội vi                  Phân mảnh ngoại vi
+ Phân vùng cố định Lớn                                  Ít hoặc không đáng kể
+ Phân vùng động       Không                             Lớn
+ Phân trang           Trung bình nửa trang/tiến trình Không
+ Phân đoạn            Không                             Có (như phân vùng động)
+
+                       Bảng 3. 12. So sánh phân trang và phân đoạn
+
+      Tiêu chí                 Phân trang                            Phân đoạn
+ Kích thước đơn vị       Cố định, lũy thừa của 2              Thay đổi, theo cấu trúc
+                                                              logic
+ Người lập trình có Không - hoàn toàn trong suốt              Có - địa chỉ là cặp (s, d)
+ “nhìn thấy” không
+ Kiểm tra hợp lệ         Offset luôn hợp lệ trong trang; Phải so d với limit ở mỗi
+                         kiểm tra bằng bit Present/quyền truy cập
+ Phân mảnh               Nội vi                               Ngoại vi
+ Chia sẻ/bảo vệ          Theo trang (ranh giới máy móc)       Theo đơn vị logic (tự
+                                                              nhiên hơn)
+ Vai trò hiện nay        Chủ đạo trong mọi HĐH                Tinh thần còn lại trong
+                                                              cách tổ chức vùng nhớ
+   ➢ Kết hợp phân đoạn với phân trang
+
+                     Hình 3. 6. Sơ đồ kết hợp phân đoạn và phân trang
+      Hai kỹ thuật có thể ghép: chương trình chia thành các đoạn (giữ cách nhìn logic),
+rồi mỗi đoạn lại được phân trang (loại bỏ phân mảnh ngoại vi và yêu cầu cấp phát liên
+tục cho đoạn lớn). Địa chỉ đi qua hai tầng: (s, d) → địa chỉ tuyến tính → (p, offset) →
+địa chỉ vật lý.
+   ➢ Phân đoạn kết hợp phân trang trên x86
+      Kiến trúc Intel x86 32 bit hiện thực đúng mô hình trên: địa chỉ logic gồm
+selector:offset; selector tra vào bảng mô tả (GDT/LDT) cho ra đoạn với base, limit và
+quyền; base + offset tạo địa chỉ tuyến tính; địa chỉ tuyến tính đi tiếp qua bảng trang hai
+cấp 10- 10- 12 (mục 3.3.11) để ra địa chỉ vật lý ( [1] [5]). Trên x86- 64, chế độ 64 bit
+
+đặt base = 0 và bỏ kiểm tra limit cho hầu hết các đoạn - mô hình “phẳng”, phân trang
+đảm nhiệm gần như toàn bộ; phân đoạn chỉ còn vai trò phụ trợ.
+
+                   Hình 3. 7. Sơ đồ phân đoạn kết hợp phân trang trên x86
+Vì sao phân trang trở thành chủ đạo: Phân trang thắng thế vì ba lý do: khung đồng
+nhất khiến cấp phát và thay thế cực kỳ đơn giản; không phân mảnh ngoại vi; và quan
+trọng nhất, nó là nền tảng tự nhiên của bộ nhớ ảo - chủ đề của mục tiếp theo. “Tinh
+thần” của phân đoạn không biến mất: nó sống trong cách hệ điều hành tổ chức không
+gian địa chỉ thành các vùng (code, data, heap, stack, thư viện) với quyền khác nhau, đặt
+trên hạ tầng phân trang.
+3.3. Kỹ thuật bộ nhớ ảo
+    Mọi kỹ thuật ở các mục trước đều chung một giả định: toàn bộ tiến trình phải
+nằm trong RAM mới chạy được. Giả định này vừa lãng phí vừa gò bó, vì:
+   ̶   Nhiều phần của chương trình hiếm khi được dùng: mã xử lý lỗi, các tính năng
+       ít gọi, bảng dữ liệu dự phòng.
+   ̶   Theo tính cục bộ, tại mỗi khoảng thời gian chương trình chỉ “quanh quẩn” trong
+       một nhóm nhỏ các trang.
+   ̶   Nếu chỉ giữ trong RAM phần đang thực sự dùng, ta có thể chạy chương trình lớn
+       hơn RAM và tăng mạnh số tiến trình đồng thời.
+3.3.1. Bộ nhớ ảo
+     Bộ nhớ ảo cho mỗi tiến trình một không gian địa chỉ ảo riêng, có thể lớn hơn nhiều
+so với RAM vật lý. Chỉ những trang đang cần mới nằm trong khung RAM; phần còn lại
+nằm trên đĩa (file chương trình hoặc vùng swap). Lợi ích:
+   ̶   Chạy được chương trình lớn hơn bộ nhớ vật lý.
+
+   ̶   Tăng mức độ đa chương trình vì mỗi tiến trình chỉ chiếm phần RAM nó thực sự
+       dùng.
+   ̶   Đơn giản hóa lập trình. Trước khi có bộ nhớ ảo, để chạy chương trình lớn hơn bộ
+       nhớ, người lập trình phải tự dùng kỹ thuật phủ (overlay): chia chương trình
+       thành các module thay phiên nhau dùng chung một vùng nhớ, và tự viết mã nạp
+       module này đè lên module kia đúng thời điểm [1]. Overlay tiết kiệm bộ nhớ
+       nhưng cực kỳ dễ sai và đặt gánh nặng lên người lập trình. Bộ nhớ ảo làm chính
+       xác việc đó nhưng tự động và trong suốt: hệ điều hành quyết định phần nào của
+       chương trình ở RAM, phần nào ở đĩa.
+   ̶   Mỗi tiến trình có không gian riêng → cách ly và bảo vệ tự nhiên.
+
+                           Hình 3. 8. Bộ nhớ ảo (Virtual Memory)
+3.3.2 Kỹ thuật bộ nhớ ảo
+   ➢ Phân trang theo yêu cầu (demand paging)
+      Cách hiện thực phổ biến nhất của bộ nhớ ảo là phân trang theo yêu cầu: một
+trang chỉ được nạp vào RAM khi lần đầu bị truy cập, không nạp trước. Công cụ then
+chốt là bit Present trong PTE (Bảng 3.10): Present = 1 nghĩa là trang đang ở một khung
+nào đó; Present = 0 nghĩa là trang chưa có trong RAM - truy cập vào nó sẽ gây ra một
+sự kiện đặc biệt: lỗi trang.
+   ➢ Lỗi trang và quy trình xử lý
+Lỗi trang (page fault) là bẫy phần cứng phát sinh khi tiến trình truy cập một trang có
+Present = 0. Đây không phải lỗi lập trình - nó là cơ chế vận hành bình thường của
+demand paging. Quy trình xử lý gồm 11 bước [2]:
+  1.   Tiến trình truy cập một địa chỉ ảo; MMU tra bảng trang.
+  2.   PTE có Present = 0 → phần cứng phát trap lỗi trang, chuyển điều khiển vào nhân.
+  3.   Hệ điều hành lưu trạng thái tiến trình (các thanh ghi, bộ đếm chương trình).
+  4.      Kiểm tra truy cập có hợp lệ không (địa chỉ thuộc không gian của tiến trình? đúng
+          quyền?). Nếu không hợp lệ → kết thúc tiến trình (segmentation fault). Nếu hợp
+          lệ → tiếp bước 5.
+  5.      Tìm một khung trống. Nếu không còn khung trống → chạy thuật toán thay thế
+          trang (mục 3.5.10 trở đi) để chọn trang nạn nhân.
+  6.      Nếu trang nạn nhân có Dirty = 1, phải ghi nó ra đĩa trước; cập nhật PTE của nó
+          (Present = 0).
+  7.      Đọc trang cần thiết từ đĩa (file chương trình hoặc vùng swap) vào khung.
+  8.      Trong lúc chờ thao tác đĩa, CPU có thể được lập lịch cho tiến trình khác.
+  9.      Đĩa đọc xong: cập nhật bảng trang (số khung mới, Present = 1); cập nhật TLB
+          nếu cần.
+  10. Khôi phục trạng thái tiến trình.
+  11. Thực hiện lại đúng lệnh đã gây lỗi trang; lần này truy cập thành công.
+      ➢ Chọn trang thay thế: tiêu chí chung
+  ̶       Ưu tiên thay trang ít có khả năng được dùng lại sớm (tôn trọng tính cục bộ).
+  ̶       Ưu tiên trang sạch hơn trang bẩn (tiết kiệm một lần ghi đĩa).
+  ̶       Không chọn các trang đã bị neo (pinned/locked) trong bộ nhớ.
+
+📌 Trang neo là gì? Một số trang phải nằm cố định trong RAM và bị loại khỏi mọi
+thuật toán thay thế: trang chứa mã và cấu trúc dữ liệu cốt lõi của nhân, trang đang là bộ
+đệm cho thao tác vào/ra trực tiếp DMA (nếu bị thay giữa chừng, thiết bị sẽ ghi dữ liệu
+vào khung nay đã thuộc tiến trình khác - hậu quả nghiêm trọng), hoặc trang mà ứng
+dụng chủ động khóa (ví dụ mlock() trên Linux để giữ khóa mật mã không bao giờ bị ghi
+ra đĩa). Hệ điều hành đánh dấu các trang này bằng một bit riêng, và thuật toán thay thế
+đơn giản là bỏ qua chúng. [1]
+Ví dụ: Để so sánh các thuật toán, ta dùng chuỗi tham chiếu trang: dãy số hiệu trang
+mà tiến trình truy cập theo thời gian. Xuyên suốt các mục sau, ta dùng chuỗi:
+
+ 2, 3, 2, 1, 5, 2, 4, 5, 3, 2, 5, 2   với 3 khung trang, ban đầu rỗng
+
+      ➢ Các thuật toán thay thế trang
+      ̶   Thuật toán FIFO (First- In First- Out)
+     Nguyên tắc: thay trang vào RAM sớm nhất (đầu hàng đợi), bất kể trang đó đang
+được dùng nhiều hay ít.
+     Ưu điểm: cực kỳ đơn giản - chỉ cần một hàng đợi. Nhược điểm: “vào sớm” không
+có nghĩa là “hết cần”; FIFO có thể thay đúng trang đang dùng thường xuyên, và mắc
+một nghịch lý riêng.
+   ̶   Nghịch lý Belady
+      Trực giác nói: nhiều khung hơn → ít lỗi trang hơn. Với FIFO, điều đó không phải
+lúc nào cũng đúng. Với chuỗi 1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5 : 3 khung cho 9 lỗi, nhưng
+4 khung cho 10 lỗi - thêm RAM mà chậm hơn! Hiện tượng này gọi là nghịch lý Belady,
+chỉ xảy ra ở FIFO và các thuật toán “không xếp chồng”; LRU và Optimal được chứng
+minh miễn nhiễm (chúng thuộc lớp stack algorithms - tập trang trong k khung luôn là
+tập con của tập trang trong k+1 khung).
+   ̶   Thuật toán Optimal (OPT)
+      Nguyên tắc: thay trang sẽ không được dùng lại trong tương lai lâu nhất. Đây
+là thuật toán tối ưu về lý thuyết (ít lỗi trang nhất có thể) nhưng không hiện thực được
+vì đòi hỏi biết trước tương lai; giá trị của nó là làm chuẩn so sánh cho các thuật toán
+khác.
+   ̶   Thuật toán LRU (Least Recently Used)
+      Nguyên tắc: thay trang lâu nhất chưa được dùng. LRU dùng quá khứ để dự đoán
+tương lai - chính là khai thác tính cục bộ - nên trong thực tế cho kết quả gần Optimal
+nhất trong các thuật toán khả thi.
+      Để biết trang nào “lâu nhất chưa dùng”, phần cứng phải ghi nhận thời điểm ở mỗi
+truy cập (đóng dấu thời gian hoặc duy trì ngăn xếp) - quá đắt để làm chính xác. Vì vậy
+hệ điều hành thực dùng các xấp xỉ LRU, tiêu biểu là Clock.
+   ̶   Thuật toán Clock (đồng hồ)
+     Nguyên tắc: xếp các khung thành vòng tròn với một kim quay; dùng bit
+Referenced (R) làm “cơ hội thứ hai”:
+             • Kim chỉ vào một khung. Nếu R = 0 → chọn trang đó làm nạn nhân, nạp
+       trang mới vào, đặt R = 1, kim tiến một bước.
+             • Nếu R = 1 → xóa R về 0 (“mất một cơ hội”) và kim tiến sang khung kế;
+       lặp lại.
+      Trang được dùng thường xuyên sẽ liên tục được phần cứng bật R = 1 nên hiếm khi
+bị thay - hiệu ứng gần giống LRU với chi phí gần bằng FIFO. Clock cải tiến (Enhanced
+Clock) xét cặp (R, D - Dirty) và ưu tiên nạn nhân theo thứ tự (0,0) → (0,1) → (1,0) →
+(1,1): vừa “nguội” vừa “sạch” thì bị thay trước, tiết kiệm cả lần ghi đĩa.
+   ➢ So sánh các thuật toán thay thế trang
+
+                     Bảng 3. 13. So sánh các thuật toán thay thế trang
+
+ Thuật                             Chi phí hiện Nghịch lý
+ toán        Nguyên tắc            thực         Belady    Vai trò
+ FIFO        Thay trang vào sớm Rất thấp (hàng Có                   Cơ sở, ít dùng
+             nhất               đợi)                                đơn lẻ
+ Optimal     Thay trang dùng lại Không     hiện Không               Chuẩn so sánh
+             xa nhất trong tương thực được
+             lai
+ LRU         Thay trang lâu nhất Cao (theo dõi Không                Chuẩn thực hành
+             chưa dùng           mọi truy cập)
+ Clock       Xấp xỉ LRU bằng Thấp                     Không         Dùng phổ biến
+             bit R                                    (thực tế)     trong HĐH thật
+
+  ➢     Bộ nhớ ảo trong hệ thống thực tế
+  ̶     Windows 10/11: bộ nhớ ảo hậu thuẫn bởi pagefile.sys; Task Manager hiển thị
+        Working set, Commit size; Resource Monitor hiển thị Hard faults/s - chính là
+        số lỗi trang phải đọc đĩa mỗi giây.
+  ̶     Linux: vùng swap (phân vùng hoặc file); tham số swappiness điều chỉnh mức
+        độ "sẵn sàng swap"; lệnh free - h, vmstat 1 cho thấy swap in/out theo thời gian
+        thực.
+Tóm tắt chương 3: Chương 3 trình bày quản lý bộ nhớ với năm yêu cầu cơ bản: tái định
+vị, bảo vệ, chia sẻ, tổ chức logic và tổ chức vật lý. Địa chỉ được ràng buộc tại biên dịch,
+nạp hoặc thực thi; hệ thống hiện đại dùng ràng buộc lúc thực thi qua MMU, khi đó địa
+chỉ logic ≡ địa chỉ ảo. Phân vùng cố định gây phân mảnh nội vi; phân vùng động loại bỏ
+phân mảnh nội vi nhưng sinh phân mảnh ngoại vi, quản lý bằng bitmap/danh sách liên
+kết với các thuật toán First- fit, Best- fit, Next- fit. Phân trang ánh xạ trang logic sang
+khung vật lý qua bảng trang. Bảng trang nhiều cấp giúp tiết kiệm bộ nhớ. Phân đoạn
+dùng địa chỉ (s, d), kiểm tra giới hạn trước khi cộng base, bảo vệ theo đơn vị logic nhưng
+vẫn có phân mảnh ngoại vi. x86 kết hợp đoạn + trang, x86- 64 chủ yếu dùng phân trang.
+Bộ nhớ ảo (demand paging) dùng bit Present, xử lý lỗi trang qua 11 bước. Phân biệt các
+thuật toán thay trang: FIFO (nghịch lý Belady), Optimal, LRU, Clock (xấp xỉ LRU).
+
+Bài tập chương 3:
+1. Phân biệt địa chỉ logic, địa chỉ ảo và địa chỉ vật lý. Khi nào địa chỉ logic và địa chỉ
+   ảo là một?
+
+2. Phân biệt phân mảnh nội vi và phân mảnh ngoại vi. Kỹ thuật nào gây loại nào?
+3. So sánh hai cách tổ chức hàng đợi trong phân vùng cố định. So sánh bitmap và danh
+   sách liên kết trong quản lý vùng trống.
+4. Phân biệt trang và khung trang. Bảng trang dùng để làm gì và của ai?
+5. Bộ nhớ ảo là gì? Nêu ba lợi ích. Overlay là gì và vì sao bộ nhớ ảo thay được overlay?
+6. Hệ thống dùng trang 1 KB. Tách các địa chỉ logic sau thành (số hiệu trang, offset):
+   1502; 2500; 4097; 8191.
+7. Hệ thống 32 bit, trang 4 KB. Tách các địa chỉ ảo sau thành (trang, offset) dạng hex:
+   0x00001234; 0x00403004; 0x0000FFFF.
+8. Trang 1024 byte; bảng trang: trang 0 → khung 3, trang 1 → khung 7, trang 2 →
+   khung 4, trang 3 → khung 9. Tính địa chỉ vật lý của các địa chỉ logic: 100; 1200;
+   2500; 3500.
+9. Bảng đoạn: đoạn 0 (base 1000, limit 400); đoạn 1 (base 3000, limit 800); đoạn 2
+   (base 5000, limit 300). Với mỗi địa chỉ logic sau, cho biết hợp lệ hay không và tính
+   địa chỉ vật lý nếu hợp lệ: (0, 200); (1, 900); (2, 250); (2, 400).
+10. Các vùng trống theo thứ tự: 100 KB, 500 KB, 200 KB, 300 KB, 600 KB. Bốn tiến
+    trình lần lượt yêu cầu 212 KB, 417 KB, 112 KB, 426 KB. Xác định kết quả cấp phát
+    theo First- fit, Best- fit và Next- fit. Thuật toán nào phục vụ được cả bốn yêu cầu?
+11. Chuỗi tham chiếu 7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2 với 3 khung ban đầu rỗng. Mô
+    phỏng FIFO và đếm lỗi trang.
+12. Chuỗi 1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5 với FIFO. Đếm lỗi trang khi có 3 khung và khi
+    có 4 khung. Kết quả minh họa hiện tượng gì?</baihoc>
+<baitap bai="3" loai="goc" de="1. Phân biệt địa chỉ logic, địa chỉ ảo và địa chỉ vật lý. Khi nào địa chỉ logic và địa chỉ ảo là một?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 55-75."/>
+<baitap bai="3" loai="goc" de="2. Phân biệt phân mảnh nội vi và phân mảnh ngoại vi. Kỹ thuật nào gây loại nào?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 55-75."/>
+<baitap bai="3" loai="goc" de="3. So sánh hai cách tổ chức hàng đợi trong phân vùng cố định. So sánh bitmap và danh sách liên kết trong quản lý vùng trống." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 55-75."/>
+<baitap bai="3" loai="goc" de="4. Phân biệt trang và khung trang. Bảng trang dùng để làm gì và của ai?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 55-75."/>
+<baitap bai="3" loai="goc" de="5. Bộ nhớ ảo là gì? Nêu ba lợi ích. Overlay là gì và vì sao bộ nhớ ảo thay được overlay?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 55-75."/>
+<baitap bai="3" loai="goc" de="6. Hệ thống dùng trang 1 KB. Tách các địa chỉ logic sau thành (số hiệu trang, offset): 1502; 2500; 4097; 8191." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 55-75."/>
+<baitap bai="3" loai="goc" de="7. Hệ thống 32 bit, trang 4 KB. Tách các địa chỉ ảo sau thành (trang, offset) dạng hex: 0x00001234; 0x00403004; 0x0000FFFF." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 55-75."/>
+<baitap bai="3" loai="goc" de="8. Trang 1024 byte; bảng trang: trang 0 → khung 3, trang 1 → khung 7, trang 2 → khung 4, trang 3 → khung 9. Tính địa chỉ vật lý của các địa chỉ logic: 100; 1200; 2500; 3500." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 55-75."/>
+<baitap bai="3" loai="goc" de="9. Bảng đoạn: đoạn 0 (base 1000, limit 400); đoạn 1 (base 3000, limit 800); đoạn 2 (base 5000, limit 300). Với mỗi địa chỉ logic sau, cho biết hợp lệ hay không và tính địa chỉ vật lý nếu hợp lệ: (0, 200); (1, 900); (2, 250); (2, 400)." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 55-75."/>
+<baitap bai="3" loai="goc" de="10. Các vùng trống theo thứ tự: 100 KB, 500 KB, 200 KB, 300 KB, 600 KB. Bốn tiến trình lần lượt yêu cầu 212 KB, 417 KB, 112 KB, 426 KB. Xác định kết quả cấp phát theo First- fit, Best- fit và Next- fit. Thuật toán nào phục vụ được cả bốn yêu cầu?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 55-75."/>
+<baitap bai="3" loai="goc" de="11. Chuỗi tham chiếu 7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2 với 3 khung ban đầu rỗng. Mô phỏng FIFO và đếm lỗi trang." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 55-75."/>
+<baitap bai="3" loai="goc" de="12. Chuỗi 1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5 với FIFO. Đếm lỗi trang khi có 3 khung và khi có 4 khung. Kết quả minh họa hiện tượng gì?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 55-75."/>
+<baihoc stt="4" tieude="Chương 4. Quản lý file và đĩa">Chương 4. QUẢN LÝ FILE VÀ ĐĨA
+        Mục tiêu chương 4:
+Kết thúc chương này, sinh viên có thể: trình bày khái niệm tập tin, thư mục, hệ thống
+quản lý tập tin; giải thích vai trò của metadata, cấu trúc thư mục [CLO1]; nắm được
+cơ chế quản lý không gian đĩa, cấp phát block, an toàn và hiệu suất hệ thống file; so
+sánh các hệ thống file phổ biến FAT32, NTFS, APFS [CLO4].
+4.1. Tổng quan về quản lý tập tin và đĩa
+4.1.1. Tập tin và hệ thống quản lý tập tin
+      Tập tin là đơn vị lưu trữ logic do hệ điều hành cung cấp để người dùng và chương
+trình lưu trữ dữ liệu trên thiết bị lưu trữ ngoài như HDD, SSD, USB, thẻ nhớ, ổ đĩa mạng
+hoặc vùng lưu trữ đám mây [4], [5]. Dưới góc nhìn của người dùng, file có tên, biểu
+tượng, phần mở rộng và vị trí trong thư mục. Dưới góc nhìn của hệ điều hành, file là
+một đối tượng có metadata, quyền truy cập, kích thước, thời gian tạo, thời gian sửa đổi
+và danh sách các block hoặc extent chứa dữ liệu.
+      Điểm quan trọng cần nhớ là hệ điều hành dùng tập tin để che giấu sự phức tạp của
+thiết bị lưu trữ. Người dùng không cần biết dữ liệu nằm ở sector nào, block nào hoặc vị
+trí vật lý nào trên đĩa. Người dùng chỉ cần biết tên tập tin và đường dẫn. Việc ánh xạ từ
+tên tập tin đến vị trí dữ liệu trên thiết bị lưu trữ là nhiệm vụ của hệ thống tập tin.
+      Hệ thống quản lý tập tin là tập hợp các cấu trúc dữ liệu, thuật toán và dịch vụ mà
+hệ điều hành cung cấp để tạo, lưu trữ, tìm kiếm, đọc, ghi, bảo vệ, chia sẻ và phục hồi
+tập tin.
+       Một hệ thống tập tin tốt cần đạt các yêu cầu cơ bản:
+   ̶    Lưu trữ dữ liệu bền vững.
+   ̶    Cho phép truy cập tập tin thông qua tên và đường dẫn.
+   ̶    Quản lý hiệu quả không gian lưu trữ.
+   ̶    Bảo vệ dữ liệu khỏi truy cập trái phép.
+   ̶    Hỗ trợ chia sẻ tập tin giữa nhiều tiến trình, người dùng hoặc máy tính.
+   ̶    Hạn chế mất dữ liệu khi mất điện, treo máy hoặc lỗi phần mềm.
+   ̶    Cung cấp hiệu suất tốt khi đọc, ghi và tìm kiếm tập tin.
+                        Bảng 4. 1. Một số thao tác cơ bản trên tập tin
+
+        Thao tác          Ý nghĩa                            Ví dụ thực tế
+        Create            Tạo file mới                       Tạo baitap.txt
+        Open              Mở file để đọc/ghi                 Mở file Word để chỉnh sửa
+
+      Read                Đọc dữ liệu từ file                 Đọc file cấu hình
+      Write               Ghi dữ liệu vào file                Lưu bài lập trình
+      Seek                Di chuyển vị trí đọc/ghi            Đọc byte thứ 1000 trong file
+      Close               Đóng file                           Đóng file sau khi xử lý
+      Delete              Xóa file                            Xóa file tạm
+      Rename              Đổi tên file                        Đổi a.txt thành b.txt
+ Get/Set attribute Đọc hoặc thay đổi thuộc tính               Đặt file chỉ đọc
+      Lock                Khóa file hoặc vùng file            Ngăn ghi đồng thời
+
+     Hình 4. 1. Quan hệ giữa ứng dụng, lời gọi hệ thống, hệ thống file và thiết bị lưu trữ
+4.1.2. Bảng danh mục và tập tin chia sẻ
+     Bảng danh mục, hay directory, là cấu trúc dữ liệu dùng để quản lý tên tập tin và
+ánh xạ tên đó đến thông tin quản lý tương ứng. Khi người dùng mở tập tin theo đường
+dẫn, hệ điều hành phải lần theo các thư mục để tìm ra file cần truy cập.
+     Ví dụ, với đường dẫn C:.docx, hệ điều hành cần lần lượt xác định ổ C:, thư mục
+Users, thư mục SinhVien, thư mục Documents, sau đó tìm mục baitap.docx. Trên Linux,
+với đường dẫn /home/student/os/chapter4.txt, hệ điều hành bắt đầu từ thư mục gốc /, sau
+đó tìm home, student, os, rồi đến chapter4.txt.
+      Một mục trong thư mục thường chứa tên tập tin, kiểu tập tin, con trỏ đến metadata
+của file và một số thuộc tính cơ bản. Trong các hệ thống hiện đại, thư mục thường không
+trực tiếp chứa toàn bộ danh sách block dữ liệu của tập tin. Thư mục chủ yếu ánh xạ tên
+tập tin đến một đối tượng metadata như inode trong Unix/Linux hoặc file record trong
+NTFS.
+
+                            Bảng 4. 2. So sánh các cấu trúc thư mục
+
+ Cấu trúc          Đặc điểm                       Ưu điểm             Hạn chế
+ Một cấp           Tất cả file trong một thư Rất đơn giản             Dễ trùng tên, khó quản lý
+                   mục
+ Hai cấp           Mỗi người dùng có thư Giảm trùng tên               Chưa linh hoạt
+                   mục riêng
+ Cây               Thư mục lồng nhau              Dễ tổ chức, phổ Cần phân giải đường dẫn
+                                                  biến
+ Đồ thị            Có liên kết chia sẻ            Linh hoạt, hỗ trợ Cần xử lý vòng lặp, quyền
+                                                  chia sẻ           truy cập
+      Tập tin chia sẻ là tập tin có thể được nhiều người dùng, nhiều tiến trình hoặc nhiều
+đường dẫn cùng truy cập. Việc chia sẻ tập tin mang lại lợi ích lớn nhưng cũng tạo ra yêu
+cầu về đồng bộ, bảo vệ và nhất quán dữ liệu. Ví dụ: một tập tin tài liệu trong thư mục
+dùng chung của lớp; một thư viện hệ thống được nhiều chương trình cùng sử dụng; một
+tập tin log được nhiều tiến trình ghi; một Docker volume được container và host cùng
+truy cập; một thư mục được chia sẻ qua mạng nội bộ bằng SMB hoặc NFS.
+       Có hai cách chia sẻ thường gặp là hard link và symbolic link.
+                         Bảng 4. 3. So sánh hard link và symbolic link
+
+        Tiêu chí                         Hard link                       Symbolic link
+ Bản chất                        Tên khác của cùng một File đặc biệt chứa đường
+                                 file/inode            dẫn
+ Nếu file gốc bị xóa             Dữ liệu còn nếu vẫn còn Link có thể bị hỏng
+                                 hard link
+ Có thể trỏ qua hệ thống file Thường không                       Có thể
+ khác
+ Có thể trỏ đến thư mục          Thường bị hạn chế               Có thể tùy hệ điều hành
+        Ví dụ                            ln a.txt b.txt                  ln – s a.txt link.txt
+     Khi nhiều tiến trình cùng truy cập một tập tin chia sẻ, hệ điều hành phải kiểm soát
+chế độ mở tập tin. Nhiều tiến trình có thể cùng đọc tập tin, nhưng nhiều tiến trình cùng
+ghi hoặc một tiến trình ghi trong khi tiến trình khác đọc cần được kiểm soát.
+     Khi chương trình mở tập tin, hệ điều hành thường trả về file handle hoặc file
+descriptor. Đây là định danh để chương trình tiếp tục đọc, ghi, seek hoặc đóng file. Hệ
+điều hành thường duy trì bảng tập tin đang mở toàn cục và bảng tập tin đang mở riêng
+cho từng tiến trình, trong đó lưu vị trí đọc/ghi hiện tại, chế độ mở tập tin, số tiến trình
+đang tham chiếu và thông tin khóa tập tin nếu có.
+
+                           Hình 4. 2. Bảng tập tin của tiến trình
+4.1.3. Quản lý không gian đĩa
+      Thiết bị lưu trữ được chia thành các đơn vị nhỏ để quản lý. Ở mức phần cứng có
+track, cylinder và sector; ở mức hệ thống file thường có block hoặc cluster. Hệ điều hành
+cấp phát các block/cluster này cho file khi cần và thu hồi khi file bị xóa hoặc giảm kích
+thước.
+                       Bảng 4. 4. Một số khái niệm trong quản lý đĩa
+
+ Khái               Ý nghĩa                                         Ví dụ
+ niệm
+ Track        Vòng tròn đồng tâm trên mặt đĩa, nơi dữ Một đĩa có            ang nghìn track
+              liệu được ghi
+ Cylinder     Tập hợp các track cùng số hiệu trên nhiều Đầu đọc di chuyển giữa các
+              mặt đĩa                                   cylinder
+ Sector       Đơn vị lưu trữ mức thấp                        512byte, 409byte
+ Block        Đơn vị hệ thống file xử lý                     4 KB
+ Cluster      Nhóm sector/block cấp phát                     FAT32 cluster 32 KB
+ Partition    Phân vùng trên đĩa                             C:, D:, /dev/sda1
+ Volume       Đơn vị lưu trữ logic có hệ thống file          NTFS volume, ext4 volume
+ Metadata     Dữ liệu quản lý file                           inode, MFT, bitmap
+
+     Lưu ý: Track và Cylinder là khái niệm hình học đĩa từ (HDD). Khi đầu đọc/ghi
+phải di chuyển từ track này sang track khác để tìm dữ liệu, thời gian này gọi là seek time
+– đây chính là lý do phân mảnh file làm HDD chậm đi rõ rệt, vì file phân mảnh buộc
+đầu đọc phải nhảy qua nhiều track khác nhau thay vì đọc liên tục trên cùng một track.
+Trên SSD không có khái niệm này vì không có bộ phận cơ học.
+     Kích thước block ảnh hưởng lớn đến hiệu suất và mức độ lãng phí không gian.
+Nếu block quá nhỏ, hệ thống giảm lãng phí với file nhỏ nhưng phải quản lý nhiều block
+hơn. Nếu block quá lớn, metadata ít hơn và đọc file lớn có thể hiệu quả hơn, nhưng file
+nhỏ dễ gây lãng phí. Ví dụ, nếu block là 4 KB, một file văn bản 1 KB vẫn chiếm ít nhất
+4 KB trên đĩa.
+                           Bảng 4. 5. Ảnh hưởng của kích thước block
+
+ Kích        thước Ưu điểm                                Hạn chế
+ block
+ Nhỏ                 Ít lãng phí với file nhỏ             Metadata lớn, quản lý nhiều
+                                                          block
+ Lớn                 Tốt hơn với file lớn, ít metadata Lãng phí với file nhỏ
+ Vừa phải            Cân bằng hiệu suất và dung Cần chọn theo mục đích sử
+                     lượng                      dụng
+       Để biết block nào còn trống, hệ thống file thường dùng bitmap hoặc danh sách liên
+kết.
+             Bảng 4. 6. So sánh bitmap và danh sách liên kết trong quản lý block trống
+
+ Tiêu chí           Bitmap                                      Danh sách liên kết
+ Ý tưởng            Mỗi block ứng với một bit                   Các block trống nối thành
+                                                                danh sách
+ Tìm vùng trống Tốt nếu bitmap được quét hiệu quả               Khó hơn
+ liên tục
+ Dung     lượng Phụ thuộc số block                              Phụ thuộc số block trống
+ metadata
+ Cài đặt            Đơn giản, phổ biến                          Linh hoạt nhưng khó tối
+                                                                ưu
+ Phù hợp            Hệ thống file hiện đại (ví dụ ext4 dùng Hệ thống đơn giản hoặc
+                    bitmap theo từng block group)           biến thể nhóm block
+
+             Hình 4. 3. Quản lý block tự do bằng bitmap và danh sách liên kết
+     Disk quota là cơ chế giới hạn dung lượng hoặc số lượng file mà người dùng, nhóm
+người dùng hoặc dự án được phép sử dụng. Cơ chế này rất quan trọng trong hệ thống
+nhiều người dùng như máy chủ, phòng máy, hệ thống lưu trữ dùng chung.
+                           Bảng 4. 7. Soft quota và hard quota
+
+      Tiêu chí           Soft limit                              Hard limit
+ Tính chất         Cảnh báo, có thể vượt tạm thời        Không được vượt
+ Mục đích          Nhắc nhở, cho thời gian xử lý         Bảo vệ tài nguyên hệ thống
+ Ví dụ             Vượt 5 GB trong 7 ngày                Không được vượt 6 GB
+ Khi vượt          Cảnh báo hoặc grace period            Ghi file thất bại
+4.1.4. Quản lý các block chứa file trên đĩa
+     Khi file được lưu trên đĩa, hệ điều hành phải biết file gồm những block nào và các
+block đó nằm ở đâu. Có nhiều phương pháp cấp phát block cho file. Mỗi phương pháp
+có ưu điểm, hạn chế và phạm vi áp dụng riêng [4].
+     Cấp phát liên tục lưu file trong một dãy block liên tiếp trên đĩa. Thông tin cần lưu
+thường chỉ gồm block bắt đầu và số lượng block. Cách này đọc tuần tự và truy cập ngẫu
+nhiên rất nhanh nhưng khó mở rộng file, dễ phân mảnh ngoài và cần biết trước kích
+thước file.
+
+                      Hình 4. 4. Cấp phát liên tục các block cho file
+      Cấp phát liên kết cho phép các block của file nằm rải rác. Mỗi block trỏ đến block
+kế tiếp. Cách này dễ mở rộng và không cần vùng trống liên tục, nhưng truy cập ngẫu
+nhiên chậm và nếu con trỏ bị hỏng thì phần sau của file có thể bị mất.
+
+                 Hình 4. 5. Cấp phát file bằng danh sách liên kết các block
+      FAT là biến thể của cấp phát liên kết. Thay vì đặt con trỏ trong từng block, các
+con trỏ được lưu trong bảng File Allocation Table. FAT đơn giản, dễ triển khai, phù hợp
+thiết bị lưu trữ di động nhưng truy cập file lớn kém hiệu quả hơn các hệ thống file hiện
+đại.
+
+                  Hình 4. 6. Bảng FAT ánh xạ chuỗi cluster của một file
+
+       Cấp phát theo chỉ mục dùng một block chỉ mục chứa danh sách block dữ liệu của
+file. Cách này hỗ trợ truy cập ngẫu nhiên tốt hơn danh sách liên kết nhưng cần block chỉ
+mục và cơ chế nhiều cấp nếu file lớn.
+     Inode là cấu trúc metadata quan trọng trong hệ thống file kiểu Unix/Linux. Inode
+chứa loại file, quyền truy cập, chủ sở hữu, kích thước, thời gian, số liên kết cứng và các
+con trỏ đến block dữ liệu. Với file nhỏ, con trỏ trực tiếp có thể đủ; với file lớn, inode
+dùng con trỏ gián tiếp.
+     Extent là một dải block liên tiếp được mô tả bằng vị trí bắt đầu và độ dài. Thay vì
+lưu từng block, hệ thống file lưu danh sách các extent. Cách này giảm kích thước
+metadata, ang tốc truy cập file lớn và được dùng trong nhiều hệ thống file hiện đại [4],
+[5].
+      Lưu ý quan trọng: Inode và Extent không phải là hai phương pháp cấp phát độc
+lập, loại trừ nhau, mà là hai thế hệ của cùng một cơ chế. Inode kiểu cổ điển (Unix truyền
+thống, ext2) dùng con trỏ trực tiếp và gián tiếp đơn/đôi/ba, mỗi con trỏ chỉ trỏ đến một
+block. Inode kiểu hiện đại (ext4, XFS, NTFS, APFS, Btrfs) vẫn dùng inode để chứa
+metadata, nhưng bên trong inode, danh sách con trỏ được thay bằng danh sách extent –
+mỗi mục trỏ đến một dải block liên tiếp thay vì một block đơn. Vì vậy, ext4 dùng cả
+inode lẫn extent không phải là mâu thuẫn: extent là kỹ thuật tổ chức bên trong inode.
+
+             Hình 4. 7. Cấu trúc inode với con trỏ trực tiếp và các tầng gián tiếp
+      Mỗi block gián tiếp đơn thường chứa khoảng 100 con trỏ (với block 512byte, con
+trỏ 4–5 byte). Do đó: 12 con trỏ trực tiếp + 1 gián tiếp đơn (~100 block) + 1 gián tiếp
+đôi (~100×100 = 10.000 block) + 1 gián tiếp ba (~100×100×100 = 1.000.000 block) cho
+phép một file có kích thước rất lớn dù mỗi con trỏ chỉ trỏ tới 1 block.
+
+                Bảng 4. 8. So sánh các phương pháp cấp phát block cho file
+
+ Phương pháp       Ưu điểm                   Hạn chế                 Phù hợp
+ Liên tục          Nhanh, đơn giản, truy Khó mở rộng, phân File cố định, media
+                   cập ngẫu nhiên tốt    mảnh ngoài        liên tục
+ Liên kết          Dễ mở rộng, không Truy cập ngẫu nhiên Hệ thống đơn giản
+                   cần liên tục      chậm, dễ lỗi chuỗi
+ FAT               Dễ triển khai, phổ biến FAT lớn, phân mảnh, Thiết bị di động,
+                   trên USB                truy cập file lớn kém tương thích
+ Chỉ mục           Truy cập ngẫu nhiên Tốn block chỉ mục, File kích thước
+                   tốt hơn             cần nhiều cấp      vừa
+ Inode (cổ điển) Linh hoạt, tốt cho file Cấu trúc phức tạp, Unix/Linux thế hệ
+                 nhỏ và lớn              nhiều tầng gián tiếp cũ (ext2)
+ Inode + Extent Giảm metadata, nhanh Cần xử lý khi file ext4,      NTFS,
+ (hiện đại)     với file lớn         phân mảnh          APFS, Btrfs
+4.1.5. An toàn trong quản lý tập tin
+      An toàn trong quản lý tập tin gồm hai nhóm vấn đề lớn: bảo vệ dữ liệu khỏi truy
+cập trái phép và bảo toàn dữ liệu khi có sự cố.
+      Hệ điều hành cần kiểm soát ai được phép đọc, ghi, thực thi, xóa hoặc thay đổi
+quyền của file. Trên Linux, quyền cơ bản gồm read, write, execute và được áp dụng cho
+owner, group, others. Ví dụ chuỗi quyền - rwxr- xr– có thể hiểu: chủ sở hữu được đọc,
+ghi, thực thi; nhóm được đọc và thực thi; người khác chỉ được đọc.
+     Trên Windows NTFS, quyền được quản lý chi tiết hơn qua Access Control List
+(ACL). Mỗi file hoặc thư mục có danh sách các ACE quy định quyền của user hoặc
+group.
+     Dữ liệu trên đĩa có thể mất do lỗi phần cứng, lỗi phần mềm, người dùng xóa nhầm,
+ransomware, mất điện hoặc lỗi hệ thống file. Vì vậy, cần có cơ chế sao lưu và phục hồi.
+Một số hình thức phổ biến gồm full backup, incremental backup, differential backup và
+snapshot.
+                       Bảng 4. 9. So sánh các phương pháp sao lưu
+
+ Phương pháp               Ưu điểm                            Hạn chế
+ Full backup          Dễ phục hồi, đầy đủ               Tốn dung lượng và thời gian
+ Incremental          Tiết kiệm dung lượng              Phục hồi cần nhiều bản backup
+ Differential         Phục hồi dễ hơn incremental       Dung lượng tăng theo thời gian
+
+ Snapshot              Nhanh, tiện cho khôi phục Không thay thế backup ngoài hệ
+                       nhanh                     thống
+     Journaling là cơ chế ghi nhật ký các thay đổi metadata hoặc dữ liệu trước khi thực
+hiện chính thức. Nếu hệ thống mất điện hoặc treo, hệ thống file có thể dùng journal để
+phục hồi trạng thái nhất quán. Ví dụ, khi tạo file mới, hệ thống cần cập nhật thư mục,
+inode/MFT, bitmap block trống. Nếu mất điện giữa chừng, metadata có thể không nhất
+quán. Journal giúp hoàn tất hoặc hủy bỏ thay đổi dở dang.
+      Mã hóa file hoặc volume giúp bảo vệ dữ liệu khi thiết bị bị mất hoặc bị truy cập
+trái phép. Cần phân biệt: phân quyền kiểm soát truy cập khi hệ điều hành đang vận hành
+bình thường; mã hóa bảo vệ dữ liệu ngay cả khi ổ đĩa bị tháo ra hoặc bị truy cập ngoài
+hệ điều hành hợp lệ.
+      Phân biệt EFS và BitLocker: Trên Windows, có hai mức mã hóa cần phân biệt:
+EFS (Encrypting File System) mã hóa từng file/thư mục riêng lẻ và gắn với tài khoản
+người dùng; BitLocker mã hóa toàn bộ volume, hoạt động độc lập với việc ai đăng nhập.
+BitLocker là ví dụ điển hình cho nguyên tắc “mã hóa bảo vệ dữ liệu ngay cả khi ổ đĩa
+bị tháo ra” vì toàn bộ nội dung ổ đều ở dạng mã hóa, không riêng file nào.
+4.1.6. Hiệu suất hệ thống file
+      Thiết bị lưu trữ chậm hơn RAM rất nhiều, vì vậy hệ điều hành phải dùng nhiều kỹ
+thuật để giảm số lần truy cập đĩa và tăng tốc đọc/ghi file.
+      Cache trong hệ thống file là vùng bộ nhớ dùng để lưu tạm các block dữ liệu hoặc
+metadata vừa được đọc từ đĩa hoặc sắp ghi ra đĩa. Khi chương trình đọc file, nếu dữ liệu
+đã có trong cache, hệ điều hành trả về dữ liệu từ RAM. Nếu chưa có, hệ điều hành đọc
+từ đĩa vào cache rồi trả cho chương trình.
+        Khi chương trình ghi file, hệ điều hành có thể dùng write- through hoặc write-
+back.
+     Read- ahead là kỹ thuật đọc trước dữ liệu mà hệ điều hành dự đoán sắp được dùng.
+Nếu chương trình đang đọc file tuần tự, hệ điều hành có thể đọc trước các block tiếp
+theo vào cache.
+     Delayed allocation trì hoãn việc chọn block vật lý cho dữ liệu mới ghi. Cách này
+giúp hệ thống file có thêm thông tin để cấp phát các block liên tục hơn, giảm phân mảnh
+và cải thiện hiệu suất.
+      Phân mảnh file xảy ra khi dữ liệu của một file nằm rải rác ở nhiều vị trí không liên
+tục. Trên HDD, phân mảnh làm tăng thời gian di chuyển đầu đọc. Trên SSD, ảnh hưởng
+của phân mảnh ít rõ hơn nhưng metadata rời rạc vẫn có thể làm giảm hiệu quả trong một
+số tình huống.
+
+                        Bảng 4. 10. Phân mảnh trên HDD và SSD
+
+      Tiêu chí                 HDD                       SSD
+ Ảnh hưởng của phân Rõ do đầu đọc cơ học            Ít hơn do truy cập điện tử
+ mảnh
+ Chống phân mảnh          Có thể cải thiện hiệu Thường không cần, có thể tăng ghi
+                          suất                  mòn
+ Vấn đề chính             Seek time, rotational Wear leveling, write amplification
+                          latency
+ Khuyến nghị              Có thể defrag định kỳ     Ưu tiên TRIM, không defrag
+                                                    thường xuyên
+     Kinh nghiệm thực tế: Khi rút USB, các em nên dùng thao tác “Safely Remove”
+hoặc umount trên Linux. Nếu rút trực tiếp khi dữ liệu vẫn còn trong cache, file có thể bị
+hỏng hoặc mất dữ liệu.
+4.2. Các điều khiển hệ thống tập tin
+4.2.1. File System Driver và kiến trúc nhiều lớp
+      File System Driver, viết tắt FSD, là thành phần phần mềm trong hệ điều hành chịu
+trách nhiệm cài đặt một hệ thống file cụ thể hoặc giao thức truy cập file cụ thể. Khi ứng
+dụng gọi open, read, write, close, hệ điều hành không trực tiếp đọc đĩa theo cùng một
+cách cho mọi hệ thống file. Yêu cầu sẽ đi qua các lớp I/O, cache, bảo mật và đến driver
+hệ thống file phù hợp.
+       Lưu ý: “File System Driver” (FSD) là thuật ngữ chính thức trong kiến trúc I/O
+Manager của Windows. Trong bài giảng này, thuật ngữ FSD được mở rộng khái quát
+sang Linux/VFS để tiện so sánh - trên thực tế, Linux kernel gọi thành phần tương ứng
+là filesystem module (đăng ký qua register_filesystem()), không dùng từ “FSD” trong
+tài liệu chính thức. Sinh viên cần hiểu đây là cách dùng thuật ngữ để dễ so sánh hai hệ
+điều hành, không phải thuật ngữ Linux chuẩn.
+     FSD giúp hệ điều hành mở rộng khả năng hỗ trợ nhiều hệ thống file mà không cần
+thay đổi giao diện lập trình ứng dụng. Ứng dụng vẫn gọi API quen thuộc, còn hệ điều
+hành lựa chọn driver phù hợp dựa trên volume, đường dẫn hoặc điểm mount.
+
+         Hình 4. 8. Vị trí của File System Driver trong kiến trúc I/O của hệ điều hành
+     Một hệ thống file thường được tổ chức theo nhiều lớp. Cách tổ chức theo lớp giúp
+hệ điều hành dễ bảo trì, dễ mở rộng, đồng thời tách biệt rõ trách nhiệm giữa ứng dụng,
+hệ thống file và thiết bị lưu trữ.
+
+            Hình 4. 9. Cấu trúc File System stack từ ứng dụng đến thiết bị lưu trữ
+                            Bảng 4. 11. Các lớp trong File System stack
+
+      Lớp                   Nhiệm vụ                            Ví dụ
+ Ứng dụng             Yêu cầu đọc/ghi file                 Word, VS Code, Python
+ System call/API      Cung cấp giao diện chuẩn             open, read, write, CreateFile
+ VFS/I/O              Định tuyến yêu cầu, trừu tượng Linux VFS,             Windows        I/O
+ Manager              hóa file system                Manager
+ File system cụ thể Xử lý metadata, thư mục, ext4, NTFS, Btrfs
+                    block/extent
+ Cache                Tăng tốc đọc/ghi                     Page cache, buffer cache
+
+ Block/storage      Quản lý yêu cầu đọc/ghi block     Block I/O, volume manager
+ layer
+ Device driver      Giao tiếp thiết bị                NVMe, SATA, USB driver
+ Hardware           Lưu trữ vật lý                    SSD, HDD, USB
+      Điểm các em cần nắm là: khi chương trình gọi read (), không phải dữ liệu lúc nào
+cũng được đọc ngay từ ổ đĩa. Hệ điều hành có thể trả dữ liệu từ cache, kiểm tra quyền
+truy cập, phân giải đường dẫn, tra metadata, ánh xạ file offset sang block, rồi mới gửi
+yêu cầu xuống thiết bị nếu cần.
+4.2.2. Local và Network/Remote File System Driver
+  ➢ Local FSD quản lý các volume được gắn trực tiếp hoặc được hệ điều hành xem
+như thiết bị cục bộ. Ví dụ: ổ SSD trong máy, ổ USB, phân vùng NTFS trên Windows.
+     Khi người dùng mở một file trên ổ C: của Windows, luồng xử lý có thể khái quát
+như sau:
+        ̶   Ứng dụng gọi API mở file.
+        ̶   I/O Manager nhận yêu cầu.
+        ̶   Thành phần bảo mật kiểm tra quyền truy cập.
+        ̶   Cache Manager kiểm tra dữ liệu hoặc metadata đã có trong cache chưa.
+        ̶   NTFS driver xử lý cấu trúc NTFS.
+        ̶   Storage driver gửi yêu cầu đến thiết bị lưu trữ nếu cần.
+        ̶   Dữ liệu hoặc handle được trả về ứng dụng.
+     Vai trò của Local FSD:
+        ̶   Nhận diện volume khi mount.
+        ̶   Đọc boot sector, superblock hoặc metadata gốc.
+        ̶   Xử lý đường dẫn và thư mục.
+        ̶   Quản lý metadata như inode, MFT, extent, bitmap.
+        ̶   Kiểm tra quyền truy cập.
+        ̶   Phối hợp với cache.
+        ̶   Cấp phát và thu hồi block.
+        ̶   Ghi journal hoặc metadata phục hồi lỗi.
+        ̶   Giao tiếp với lớp lưu trữ bên dưới.
+
+     Local FSD thường có độ trễ thấp hơn Remote FSD vì dữ liệu nằm trên thiết bị cục
+bộ. Tuy nhiên, hiệu năng vẫn phụ thuộc vào loại thiết bị lưu trữ, cache, mức độ phân
+mảnh, tải I/O và cách hệ thống file tổ chức metadata.
+   ➢ Network hoặc Remote FSD cho phép ứng dụng truy cập file nằm trên máy khác
+thông qua mạng nhưng vẫn có cảm giác giống file cục bộ. Đây là cơ chế quan trọng
+trong môi trường doanh nghiệp, phòng máy, máy chủ, hệ thống NAS và các nền tảng ảo
+hóa.
+        ̶   Windows truy cập thư mục chia sẻ qua SMB: \server.
+        ̶   Linux mount thư mục NFS: /mnt/nfs.
+        ̶   macOS truy cập file server qua SMB.
+        ̶   Docker container dùng volume gắn từ host hoặc network storage.
+        ̶   Kubernetes dùng PersistentVolume từ NFS, CephFS hoặc cloud disk.
+     Trong mô hình file từ xa, thường có hai phía: Client FSD nhận yêu cầu từ ứng
+dụng cục bộ, chuyển thành gói lệnh qua giao thức mạng; Server FSD hoặc file server
+nhận yêu cầu, thực hiện thao tác trên hệ thống file cục bộ của máy chủ, rồi trả kết quả.
+
+        Hình 4. 10. Mô hình Client FSD và Server FSD trong truy cập file qua mạng
+     Điểm khác biệt quan trọng là Remote FSD phải xử lý thêm các vấn đề như độ trễ
+mạng, mất kết nối, xác thực, phân quyền qua mạng, cache nhất quán và xung đột khi
+nhiều client cùng truy cập. Vì vậy, truy cập file qua mạng không chỉ là “đọc file ở xa”
+mà là một bài toán hệ thống phức tạp.
+4.3. Các hệ thống file trên hệ điều hành hiện nay
+4.3.1. FAT32, NTFS, APFS
+
+   ➢ FAT32 là hệ thống file thuộc họ FAT, được dùng rộng rãi trên USB, thẻ nhớ và
+thiết bị nhúng vì đơn giản, nhẹ và tương thích cao.
+     Đặc điểm chính:
+      ̶   Cấu trúc đơn giản.
+      ̶   Tương thích với nhiều hệ điều hành và thiết bị.
+      ̶   Không hỗ trợ quyền truy cập phức tạp.
+      ̶   Không có journaling.
+      ̶   Kích thước file tối đa là 4 GB trừ 1 byte (4.294.967.295 byte), do FAT32 dùng
+          trường 32bit để lưu kích thước file.
+      ̶   Dễ bị phân mảnh khi sử dụng lâu dài.
+      FAT32 phù hợp với USB dùng để trao đổi file nhỏ giữa nhiều thiết bị. Tuy nhiên,
+nó không phù hợp để lưu file lớn hơn 4 GB như file ISO, video dung lượng cao hoặc
+file backup máy ảo.
+      Ví dụ thực tế: Một file video 4 GB tròn (4.294.967.296 byte) có thể không copy
+được vào USB định dạng FAT32, dù dung lượng ổ còn trống nhiều - cần phân biệt rõ
+giới hạn dung lượng ổ đĩa và giới hạn kích thước một file.
+                          Bảng 4. 12. Ưu điểm và hạn chế của FAT32
+
+            Ưu điểm                               Hạn chế
+            Tương thích rất rộng                  Giới hạn file 4 GB − 1 byte
+            Đơn giản, nhẹ                         Không có journaling
+            Phù hợp USB, thẻ nhớ                  Bảo mật yếu
+            Dễ đọc trên nhiều thiết bị            Không phù hợp ổ hệ thống hiện đại
+   ➢ NTFS là hệ thống file chính của Windows hiện đại. NTFS được thiết kế cho độ
+tin cậy, bảo mật, khả năng mở rộng và quản lý dữ liệu tốt hơn FAT.
+     Đặc điểm nổi bật:
+      ̶   Sử dụng Master File Table để quản lý metadata.
+      ̶   Hỗ trợ ACL và quyền truy cập chi tiết.
+      ̶   Hỗ trợ journaling để phục hồi metadata.
+      ̶   Hỗ trợ quota.
+      ̶   Hỗ trợ nén file.
+      ̶   Hỗ trợ mã hóa file qua EFS và mã hóa toàn bộ volume qua BitLocker.
+      ̶   Hỗ trợ hard link, symbolic link, junction, reparse point.
+      ̶   Hỗ trợ sparse file.
+      ̶   Phù hợp ổ hệ thống Windows, máy trạm và máy chủ.
+     Master File Table, viết tắt MFT, là cấu trúc trung tâm của NTFS. Mỗi file và thư
+mục đều có ít nhất một bản ghi trong MFT. Với file nhỏ, dữ liệu có thể nằm ngay trong
+MFT record. Với file lớn, MFT record chứa thông tin mô tả các extent hoặc run dữ liệu
+nằm trên volume.
+
+                    Hình 4. 11. NTFS Master File Table và các bản ghi
+                          Bảng 4. 13. Một số tính năng của NTFS
+
+      Tính năng                 Ý nghĩa
+      MFT                       Quản lý metadata tập trung
+      ACL                       Phân quyền chi tiết theo user/group
+      Journaling                Phục hồi metadata sau sự cố
+      Compression               Nén file/thư mục
+      EFS                       Mã hóa từng file/thư mục
+      BitLocker                 Mã hóa toàn bộ volume, độc lập tài khoản đăng nhập
+      Quota                     Giới hạn dung lượng người dùng
+      Sparse file               Tiết kiệm dung lượng cho file có vùng rỗng
+      Reparse point             Hỗ trợ symlink, junction, mount point
+      Ví dụ thực tế: Khi các em vào Properties của một file trên Windows, tab Security
+cho phép xem và chỉnh quyền NTFS (ACL). Vào Control Panel &gt; BitLocker Drive
+Encryption để bật mã hóa toàn bộ ổ đĩa. Đây là hai biểu hiện trực tiếp nhưng khác cấp
+độ (file vs. volume) của cơ chế an toàn trong NTFS.
+
+  ➢ APFS là hệ thống file của Apple, được thiết kế cho macOS, iOS, iPadOS,
+watchOS, tvOS và các thiết bị Apple hiện đại. APFS phù hợp với SSD và thiết bị flash,
+đồng thời hỗ trợ nhiều tính năng hiện đại.
+      ̶   Thiết kế chú trọng mã hóa.
+      ̶   Hỗ trợ snapshot.
+      ̶   Hỗ trợ clone file/thư mục.
+      ̶   Hỗ trợ copy- on- write cho metadata.
+      ̶   Hỗ trợ chia sẻ không gian trống giữa các volume trong cùng container.
+      ̶   Phù hợp hệ sinh thái Apple.
+      Ví dụ: Trên macOS, APFS cho phép tạo snapshot hệ thống để phục hồi khi cập
+nhật lỗi hoặc khi dùng Time Machine. Khi copy một file lớn trong cùng volume, APFS
+có thể tạo clone nhanh thay vì sao chép toàn bộ dữ liệu ngay lập tức.
+4.3.2. Hệ thống file mạng, đám mây và lưu trữ hiện đại
+      Ngoài các hệ thống file cục bộ, ngày nay sinh viên và kỹ sư CNTT thường làm
+việc với hệ thống file mạng hoặc lưu trữ đám mây: SMB thường dùng trong môi trường
+Windows để chia sẻ thư mục qua mạng; NFS phổ biến trong Linux/Unix và các hệ thống
+máy chủ; CephFS, GlusterFS, Lustre được dùng trong hệ phân tán hoặc tính toán hiệu
+năng cao; cloud storage như OneDrive, Google Drive, Dropbox không hoàn toàn giống
+hệ thống file truyền thống nhưng cung cấp trải nghiệm đồng bộ file giữa nhiều thiết bị;
+Docker volume, Kubernetes PersistentVolume và object storage như S3 cũng làm thay
+đổi cách ứng dụng lưu trữ dữ liệu.
+                             Bảng 4. 14. Một số dạng lưu trữ hiện đại
+
+ Dạng lưu trữ            Ví dụ                     Đặc điểm
+ File cục bộ       NTFS, ext4, APFS                Nhanh, phụ thuộc máy
+ File mạng         SMB, NFS                        Chia sẻ qua mạng
+ File phân tán     CephFS, GlusterFS               Mở rộng nhiều node
+ Cloud sync        OneDrive,        Google         Đồng bộ nhiều thiết bị
+                   Drive
+ Container         Docker volume              Dữ liệu bền vững cho container
+ volume
+ Object storage    S3- compatible             Lưu object, không phải file system POSIX
+                                              đầy đủ
+
+Tóm tắt chương 4: Chương 4 trình bày các nội dung nền tảng về quản lý file và đĩa.
+File là đơn vị lưu trữ logic giúp lưu dữ liệu bền vững. Hệ thống file quản lý tên file, thư
+mục, metadata, block dữ liệu, quyền truy cập, chia sẻ và phục hồi dữ liệu. Bảng danh
+mục và cây thư mục thực hiện ánh xạ tên file đến thông tin quản lý. Chia sẻ file cho
+phép nhiều người dùng hoặc tiến trình cùng truy cập nhưng đòi hỏi cơ chế kiểm soát
+đồng thời và phân quyền chặt chẽ. Quản lý không gian đĩa bao gồm track, cylinder,
+sector, block, cluster, partition, volume, bitmap, danh sách block tự do và quota. Các
+phương pháp cấp phát block gồm liên tục, liên kết, FAT, chỉ mục và inode (có thể kết
+hợp extent ở hệ thống hiện đại), mỗi cách có ưu nhược điểm riêng. An toàn hệ thống
+file bao gồm quyền truy cập, ACL, backup, journaling, snapshot, mã hóa (EFS,
+BitLocker) và đồng bộ dữ liệu. Hiệu suất phụ thuộc vào cache, read- ahead, delayed
+allocation, write- back/write- through và mức độ phân mảnh.
+Bài tập chương 4:
+  1.   Trình bày khái niệm tập tin và hệ thống quản lý tập tin.
+  2.   Vì sao hệ điều hành cần quản lý file thay vì để ứng dụng tự quản lý trực tiếp
+       sector trên đĩa?
+  3.   Trình bày sự khác nhau giữa truy cập tuần tự và truy cập ngẫu nhiên.
+  4.   Tập tin chia sẻ là gì? Nêu các vấn đề phát sinh khi nhiều tiến trình cùng truy cập
+       file.
+  5.   Phân biệt hard link và symbolic link. So sánh bitmap và danh sách liên kết trong
+       quản lý block trống.
+  6.   Disk quota là gì? Phân biệt soft limit và hard limit.
+  7.   Trình bày các phương pháp cấp phát block cho file. FAT quản lý cluster của file
+       như thế nào?
+  8.   Giả sử block có kích thước 4 KB. Hãy tính dung lượng thực tế trên đĩa của các
+       file có kích thước: 1 KB, 4 KB, 5 KB, 9 KB, 16 KB.
+  9.   Một đĩa có 1000 block. Bitmap quản lý block trống dùng 1 bit cho mỗi block.
+       Hỏi bitmap cần bao nhiêu byte?
+  10. Một file có 10 block dữ liệu được cấp phát liên tục từ block 500. Hãy xác định
+      block vật lý chứa block logic thứ 0, 5 và 9 của file.
+  11. Một file trong hệ thống FAT có cluster đầu tiên là 4. Bảng FAT cho biết: FAT
+      [4] = 10, FAT [10] = 7, FAT [7] = 14, FAT [14] = EOF. Hãy liệt kê chuỗi cluster
+      của file.
+
+                              TÀI LIỆU THAM KHẢO
+[1]. Phạm Thanh Bình (2006), Hệ điều hành, Nhà xuất bản Hà Nội, Hà Nội.
+[2]. Trần Hạnh Nhi, Lê Khắc Nhiên Ân (2010), Hệ điều hành, Nhà xuất bản Đại học
+Quốc gia Thành phố Hồ Chí Minh, Thành phố Hồ Chí Minh.
+[3]. Trần Đức Quang (2003), Tổng quan hệ điều hành, Nhà xuất bản Đại học Quốc gia
+Thành phố Hồ Chí Minh, Thành phố Hồ Chí Minh.
+[4]. Silberschatz, A., Galvin, P. B., Gagne, G. (2018), Operating System Concepts, 10th
+edition, Wiley.
+[5]. Stallings, W. (2018), Operating Systems: Internals and Design Principles, 9th
+edition, Pearson.
+[6]. Tanenbaum, A. S., Bos, H. (2015), Modern Operating Systems, 4th edition, Pearson.</baihoc>
+<baitap bai="4" loai="goc" de="1. Trình bày khái niệm tập tin và hệ thống quản lý tập tin." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 76-94."/>
+<baitap bai="4" loai="goc" de="2. Vì sao hệ điều hành cần quản lý file thay vì để ứng dụng tự quản lý trực tiếp sector trên đĩa?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 76-94."/>
+<baitap bai="4" loai="goc" de="3. Trình bày sự khác nhau giữa truy cập tuần tự và truy cập ngẫu nhiên." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 76-94."/>
+<baitap bai="4" loai="goc" de="4. Tập tin chia sẻ là gì? Nêu các vấn đề phát sinh khi nhiều tiến trình cùng truy cập file." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 76-94."/>
+<baitap bai="4" loai="goc" de="5. Phân biệt hard link và symbolic link. So sánh bitmap và danh sách liên kết trong quản lý block trống." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 76-94."/>
+<baitap bai="4" loai="goc" de="6. Disk quota là gì? Phân biệt soft limit và hard limit." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 76-94."/>
+<baitap bai="4" loai="goc" de="7. Trình bày các phương pháp cấp phát block cho file. FAT quản lý cluster của file như thế nào?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 76-94."/>
+<baitap bai="4" loai="goc" de="8. Giả sử block có kích thước 4 KB. Hãy tính dung lượng thực tế trên đĩa của các file có kích thước: 1 KB, 4 KB, 5 KB, 9 KB, 16 KB." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 76-94."/>
+<baitap bai="4" loai="goc" de="9. Một đĩa có 1000 block. Bitmap quản lý block trống dùng 1 bit cho mỗi block. Hỏi bitmap cần bao nhiêu byte?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 76-94."/>
+<baitap bai="4" loai="goc" de="10. Một file có 10 block dữ liệu được cấp phát liên tục từ block 500. Hãy xác định block vật lý chứa block logic thứ 0, 5 và 9 của file." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 76-94."/>
+<baitap bai="4" loai="goc" de="11. Một file trong hệ thống FAT có cluster đầu tiên là 4. Bảng FAT cho biết: FAT [4] = 10, FAT [10] = 7, FAT [7] = 14, FAT [14] = EOF. Hãy liệt kê chuỗi cluster của file. TÀI LIỆU THAM KHẢO [1]. Phạm Thanh Bình (2006), Hệ điều hành, Nhà xuất bản Hà Nội, Hà Nội. [2]. Trần Hạnh Nhi, Lê Khắc Nhiên Ân (2010), Hệ điều hành, Nhà xuất bản Đại học Quốc gia Thành phố Hồ Chí Minh, Thành phố Hồ Chí Minh. [3]. Trần Đức Quang (2003), Tổng quan hệ điều hành, Nhà xuất bản Đại học Quốc gia Thành phố Hồ Chí Minh, Thành phố Hồ Chí Minh. [4]. Silberschatz, A., Galvin, P. B., Gagne, G. (2018), Operating System Concepts, 10th edition, Wiley. [5]. Stallings, W. (2018), Operating Systems: Internals and Design Principles, 9th edition, Pearson. [6]. Tanenbaum, A. S., Bos, H. (2015), Modern Operating Systems, 4th edition, Pearson." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_NguyenLyHeDieuHanh_CNTT_2TC_Trang.pdf, trang 76-94."/>
+</mon>

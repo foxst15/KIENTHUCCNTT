@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mon id="ktmt" ten="Cấu trúc máy tính và hợp ngữ" nhom="Nền tảng &amp; toán" drive="10Fpr4uNrjKkypfr5R8tnougpb6y5kSxJ" nguon="BG_ASM_DH_tinchi.pdf">
+<mota>Kiến trúc máy tính, bộ nhớ, thanh ghi, lập trình Assembly.</mota>
+<baihoc stt="1" tieude="Chương 1. Tổng quan về máy tính điện tử" pdf="pdf/BG_ASM_DH_tinchi.pdf" trang="1" den="11"></baihoc>
+<baitap bai="1" loai="tuluyen" de="Trình bày các nội dung chính của Chương 1. Tổng quan về máy tính điện tử." dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 1-11."/>
+<baitap bai="1" loai="tuluyen" de='Nêu các khái niệm quan trọng nhất và cho ví dụ minh họa trong "Tổng quan về máy tính điện tử".' dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 1-11."/>
+<baitap bai="1" loai="tuluyen" de='Tóm tắt "Tổng quan về máy tính điện tử" trong 5 ý chính và nêu ứng dụng thực tế.' dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 1-11."/>
+<baihoc stt="2" tieude="Chương 2. Cơ sở số và Logic" pdf="pdf/BG_ASM_DH_tinchi.pdf" trang="12" den="33"></baihoc>
+<baitap bai="2" loai="tuluyen" de="Trình bày các nội dung chính của Chương 2. Cơ sở số và Logic." dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 12-33."/>
+<baitap bai="2" loai="tuluyen" de='Nêu các khái niệm quan trọng nhất và cho ví dụ minh họa trong "Cơ sở số và Logic".' dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 12-33."/>
+<baitap bai="2" loai="tuluyen" de='Tóm tắt "Cơ sở số và Logic" trong 5 ý chính và nêu ứng dụng thực tế.' dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 12-33."/>
+<baihoc stt="3" tieude="Chương 3. Tổ chức bộ xử lý trung tâm" pdf="pdf/BG_ASM_DH_tinchi.pdf" trang="34" den="70"></baihoc>
+<baitap bai="3" loai="tuluyen" de="Trình bày các nội dung chính của Chương 3. Tổ chức bộ xử lý trung tâm." dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 34-70."/>
+<baitap bai="3" loai="tuluyen" de='Nêu các khái niệm quan trọng nhất và cho ví dụ minh họa trong "Tổ chức bộ xử lý trung tâm".' dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 34-70."/>
+<baitap bai="3" loai="tuluyen" de='Tóm tắt "Tổ chức bộ xử lý trung tâm" trong 5 ý chính và nêu ứng dụng thực tế.' dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 34-70."/>
+<baihoc stt="4" tieude="Chương 4. Bộ nhớ chính" pdf="pdf/BG_ASM_DH_tinchi.pdf" trang="71" den="84"></baihoc>
+<baitap bai="4" loai="tuluyen" de="Trình bày các nội dung chính của Chương 4. Bộ nhớ chính." dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 71-84."/>
+<baitap bai="4" loai="tuluyen" de='Nêu các khái niệm quan trọng nhất và cho ví dụ minh họa trong "Bộ nhớ chính".' dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 71-84."/>
+<baitap bai="4" loai="tuluyen" de='Tóm tắt "Bộ nhớ chính" trong 5 ý chính và nêu ứng dụng thực tế.' dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 71-84."/>
+<baihoc stt="5" tieude="Chương 5. Quá trình vào ra và thiết bị ngoại vi" pdf="pdf/BG_ASM_DH_tinchi.pdf" trang="85" den="107"></baihoc>
+<baitap bai="5" loai="tuluyen" de="Trình bày các nội dung chính của Chương 5. Quá trình vào ra và thiết bị ngoại vi." dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 85-107."/>
+<baitap bai="5" loai="tuluyen" de='Nêu các khái niệm quan trọng nhất và cho ví dụ minh họa trong "Quá trình vào ra và thiết bị ngoại vi".' dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 85-107."/>
+<baitap bai="5" loai="tuluyen" de='Tóm tắt "Quá trình vào ra và thiết bị ngoại vi" trong 5 ý chính và nêu ứng dụng thực tế.' dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 85-107."/>
+<baihoc stt="6" tieude="Chương 6. Hợp ngữ" pdf="pdf/BG_ASM_DH_tinchi.pdf" trang="108" den="165"></baihoc>
+<baitap bai="6" loai="tuluyen" de="Trình bày các nội dung chính của Chương 6. Hợp ngữ." dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 108-165."/>
+<baitap bai="6" loai="tuluyen" de='Nêu các khái niệm quan trọng nhất và cho ví dụ minh họa trong "Hợp ngữ".' dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 108-165."/>
+<baitap bai="6" loai="tuluyen" de='Tóm tắt "Hợp ngữ" trong 5 ý chính và nêu ứng dụng thực tế.' dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình. Xem bản PDF gốc ở trang 108-165."/>
+</mon>

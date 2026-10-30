@@ -1,0 +1,2802 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mon id="ptttkht" ten="Phân tích và thiết kế hệ thống thông tin" nhom="Phần mềm &amp; hệ thống" drive="1d_5cuiBoSpgPjJNGq6E8uULHWKshzzqy" nguon="BaiGiangPTTKHTTT.pdf">
+<mota>Khảo sát, DFD, ERD, thiết kế CSDL.</mota>
+<baihoc stt="1" tieude="Chương 1. Tổng quan về phân tích thiết kế hệ thống thông tin">Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       Chương 1. TỔNG QUAN VỀ PHÂN TÍCH THIẾT KẾ
+                          HỆ THỐNG THÔNG TIN
+
+Thời lượng: 05 tiết
+Kết thúc chương này, sinh viên có thể:
+   - Biết các bước để tin học hóa một hệ thống thông tin
+   - Biết các phương pháp phân tích, thiết kế hệ thống thông tin và những sai sót khi
+       thực hiện
+   - Hiểu được các mức bất biến và các thành phần cơ bản của một hệ thống thông
+       tin
+
+1.1.   KHÁI NIỆM VỀ HỆ THỐNG THÔNG TIN
+1.1.1. Hệ thống
+       Hệ thống là một khái niệm được xuất phát từ rất lâu trong tự nhiên, sinh học, vật
+lý, …. Một cách tổng quát, hệ thống là một tập hợp các thành phần liên kết với nhau,
+thể hiện qua một phạm vi (boundary) xác định, hoạt động kết hợp với nhau nhằm đạt
+đến những mục đích xác định. Một hệ thống gồm có 9 đặc điểm:
+
+             Hình 1. 1: Minh họa về hệ thống và các thành phần của hệ thống
+
+       a. Thành phần (components)
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       Một hệ thống được hình thành từ một tập hợp các thành phần. Một thành phần
+là một phần đơn giản nhất hoặc là một sự kết hợp của những phần khác nhau còn được
+gọi là hệ thống con (subsystem). Việc xem một hệ thống như một tập hợp các thành
+phần giúp chúng ta có thể sửa đổi hoặc nâng cấp hệ thống bằng cách thay đổi các thành
+phần riêng lẽ mà không cần phải thay đổi hoặc làm ảnh hưởng đến toàn bộ hệ thống.
+       b. Liên kết giữa các thành phần (inter-related components)
+       Một chức năng hay hoạt động của một thành phần liên kết một cách nào đó với
+các chức năng hay hoạt động của những thành phần khác. Nói cách khác, đây chính là
+sự phụ thuộc của một hệ thống con vào một hệ thống con khác.
+       c. Ranh giới (boundary)
+       Hệ thống luôn có một ranh giới xác định phạm vi hệ thống. Bên trong ranh giới
+chứa đựng tất cả các thành phần. Ranh giới giới hạn phạm vi của hệ thống, tách biệt hệ
+thống này với những hệ thống khác. Các thành phần bên trong phạm vi có thể bị thay
+đổi trong khi đó các sự vật bên ngoài hệ thống đó không thể bị thay đổi.
+       d. Mục đích (purpose)
+       Tất cả các thành phần trong hệ thống hoạt động với nhau để đạt được những mục
+đích toàn cục của hệ thống. Mục đích này chính là lý do để tồn tại hệ thống.
+       e. Môi trường (environment)
+       Hệ thống luôn tồn tại bên trong môi trường của nó. Mọi thứ bên ngoài ranh giới
+tác động lên hệ thống, trao đổi với hệ thống, tạo đầu vào cho hệ thống cũng như tiếp
+nhận đầu ra của hệ thống.
+       f. Giao diện (interfaces)
+       Là nơi mà hệ thống trao đổi với môi trường
+       g. Đầu vào (input)
+       Tất cả các sự vật cung cấp cho hệ thống từ môi trường.
+       h. Đầu ra (output)
+       Tất cả các sự vật mà hệ thống gởi tới môi trường, đây chính là kết quả vận hành
+của hệ thống. Một đầu ra của hệ thống luôn xác định các đối tượng môi trường mà hệ
+thống gởi tới.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+      i. Ràng buộc (constraints)
+      Là các quy định giới hạn ảnh hưởng tới xử lý và mục đích của hệ thống. Những
+ràng buộc này có thể xuất phát từ bên trong (ví dụ: số lượng nhân viên bị hạn chế) hoặc
+bên ngoài hệ thống (ví dụ: đúng ngày, điều lệ,…).
+      Ví dụ: Hoạt động của một cửa hàng kinh doanh mua bán nước giải khát.
+      Cửa hàng bán sỉ và lẽ các loại nước ngọt, nước suối, rượu, bia,…Đối tượng mà
+cửa hàng giao tiếp là khách hàng mua các loại nước giải khát, nhà cung cấp cung (các
+công ty sản xuất nước giải khát) cấp các loại nước giải khát cho cửa hàng và ngân hàng
+giao tiếp với cửa hàng thông qua việc gửi, rút và thành toán tiền mặt cho nhà cung cấp.
+      Cửa hàng có 3 bộ phận được xắp xếp để thực hiện các công việc khác nhau: kho
+dùng để cất giữ hàng, nhập kho từ nước giải khát được giao từ các nhà cung cấp, xuất
+kho lên quầy bán hàng cho nhân viên bán hàng để bán cho khách hàng và quản lý thông
+tin về tồn kho hàng ngày của tất cả các loại nước giải khát. Phòng bán hàng thực hiện
+các công việc bán và nhận đặt nước giải khát của khách hàng cũng như lập hóa đơn và
+xử lý thanh toán. Văn phòng dùng để quản lý và theo dõi thông tin về nhập xuất, kế
+toán, đơn hàng và đặt mua nước giải khát.
+      Xem xét cửa hàng dưới quan điểm là một hệ thống, chúng ta phân chia mỗi bộ
+phận là một thành phần của hệ thống, các đặc điểm của hệ thống này được minh hoạ ở
+mô hình
+
+          Hình 1. 2: Xem xét cửa hàng quản lý nước giải khát như là một hệ thống
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+1.1.2. Hệ thống quản lý
+      Là bộ phận đảm nhận hoạt động quản lý của tổ chức bao gồm con người, phương
+tiện, phương pháp và biện pháp để kiểm tra nhằm đưa hoạt động của tổ chức đi đúng
+mục tiêu.
+      Hệ thống quản lý được phân chia theo hình tháp dưới đây, việc phân chia này
+không có một ranh giới rõ ràng.
+
+                    Hình 1. 3: Các thành phần của hệ thống quản lý
+
+Hệ thống quyết định: là trung tâm thần kinh của tổ chức, tập trung các con người làm
+nhiệm vụ định nghĩa và xác định mục tiêu của tổ chức vươn tới, tác động lên hệ thống
+tác vụ để thực hiện hoàn thành mục tiêu đó. Những người thuộc hệ thống này thường là
+các lãnh đạo (Tổng giám đốc, giám đốc điều hành, giám đốc bộ phận, trưởng phòng
+ban,…). Hệ thống này chiếm một phần nhỏ trong tổ chức nên biểu diễn nó là phần đỉnh
+của hình tháp
+Hệ thống tác nghiệp: bao gồm các con người thực hiện vật lý hoạt động của tổ chức
+(trực tiếp sản xuất, thực hiện dịch vụ) dựa trên mục tiêu và phương hướng được đề ra
+bởi hệ thống quyết định. Những người thuộc hệ thống này bao gồm công nhân, kỹ sư,
+bác sĩ, giáo viên,… Hệ thống này chiếm phần lớn nhất trong tổ chức nên biểu diễn nó
+ở phần đáy của hình tháp.
+Hệ thống thông tin: bao gồm các công việc thu thập dữ liệu, thông tin; xử lý và sản
+xuất thông tin; truyền tin. Đây là hệ thống trung gian nhằm đáp ứng nhu cầu thông tin
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+của 2 hệ thống trên. những người thuộc hệ thống này là những nhân viên xử lý thông
+tin của tổ chức (các nhân viên văn phòng)
+       Ví dụ: quản lý đơn hàng của cửa hàng nước giải khát
+
+       Hình 1. 4: Mô hình hoạt động quản lý đơn hàng của cửa hàng nước giải khát
+
+       Các dòng hàng hóa và thông tin được mô tả dưới đây:
+(1):   Đơn đặt mua nước giải khát của khách hàng gởi đến bộ phận bán hàng
+(2):   Đơn đặt mua nước giải khát đã được kiểm tra hợp lệ gởi cho văn phòng để theo
+    dõi và kho để chuẩn bị giao hàng
+(3):   Thông tin tồn kho và số lượng cần đặt để đáp ứng đơn hàng
+(4):   Đơn đặt hàng được lập và gởi cho đơn vị cung cứng
+(5):   Nước giải khát giao từ đơn vị cung ứng vào kho
+(6):   Phiếu nhập hàng gởi cho văn phòng để theo dõi
+(7):   Thông báo cho phòng bán hàng tình trạng tồn kho hiện hành
+(8):   Nước giải khát giao cho khách hàng
+       Hệ thống tác vụ: thực hiện việc bán hàng của nhân viên bán hàng, thực hiện giao
+hàng, kiểm tra kho, theo dõi công việc và chấm công, thực hiện phỏng vấn tuyển dụng,
+…
+       Hệ thống quyết định: mua thêm máy móc thiết bị, tuyển dụng thêm nhân viên
+mới, điều chỉnh chế độ lương,…
+       Hệ thống thông tin: ghi nhận các số liệu nước giải khát được bán ra hàng ngày;
+xử lý các báo cáo về doanh thu, tồn kho; theo dõi kế hoạch tuyển dụng nhân viên của
+hệ thống quyết định,…
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+1.1.3. Hệ thống thông tin
+       Một hệ thống quản lý là sự phối hợp hoạt động giữa hệ thống công việc (bao
+gồm hệ thống quyết định và hệ thống tác nghiệp) và hệ thống thông tin. Hệ thống công
+việc liên quan đến con người và công việc được thực hiện. Hệ thống thông tin là một
+hệ thống tồn tại trong một hệ thống quản lý nhằm thu thập dữ liệu, thông tin; quản lý
+chúng và tạo ra sản phẩm là thông tin phục vụ cho những đối tượng cần chúng.
+       Quy trình hoạt động của hệ thống thông tin được mô tả như sau:
+
+                        Hình 1. 5: Sơ đồ hoạt động xử lý thông tin
+
+       Xác định dữ liệu: dựa vào yêu cầu thông tin từ đối tượng yêu cầu, xác định dữ
+liệu nào cần thiết cho việc xử lý thông tin (tập tin, cơ sở dữ liệu, chứng từ sổ sách).
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       Tham khảo và thu thập dữ liệu: tham khảo dữ liệu đã được xác định ở bước trước,
+nếu các dữ liệu đó nằm ở ngoài môi trường thì thực hiện việc thu thập. Kết quả của giai
+đoạn này thu thập được tất cả nội dung dữ liệu cần thiết để định dạng thông tin.
+       Tổ chức xử lý dữ liệu: tính toán, điều chỉnh dạng thông tin, tạo kết xuất.
+       Chuyển thông tin: chuyển thông tin đến các đối tượng yêu cầu thông qua các
+phương tiện truyền thông nếu có (fax, mail, thư tín,…).
+       Truyền đạt thông tin: nếu cần thiết phải tổ chức truyền đạt thông tin cho các đối
+tượng yêu cầu để làm rõ kết quả xử lý thông tin so với yêu cầu.
+1.2.   PHÂN LOẠI HỆ THỐNG THÔNG TIN
+       Trong môi trường hoạt động của hệ thống tổ chức, có nhiều loại người khác nhau
+có thể tham gia vào việc phát triển HTTT. Tuỳ theo mức độ, trình độ và nhu cầu thông
+tin. Do đó, HTTT được phân thành nhiều loại khác nhau để chuẩn hoá việc xử lý thông
+tin đáp ứng tốt nhất cho các đối tượng sử dụng nó. Việc phân cấp này dựa trên tính năng
+của hệ thống hoặc công nghệ được sử dụng để xây dựng hệ thống. Các phân loại hệ
+thống khác nhau đòi hỏi sử dụng các phương pháp, kỹ thuật và công cụ khác nhau để
+phát triển. Người ta có thể chia HTTT thành ít nhất 4 cấp như sau:
+
+                        Hình 1. 6: Mô hình tháp các mức độ HTTT
+
+1.2.1. Hệ thống thông tin tác vụ (Transaction Processing Systems – TPS)
+       Đặc điểm: thông tin ở cấp này là cơ sở để xử lý và hình thành thông tin ở cấp
+cao hơn. Các thông tin ở cấp này liên quan trực tiếp đến các hoạt động tác nghiệp của
+các nhân viên trong tổ chức (VD: thông tin về sản phẩm, khách hàng, thông tin về hóa
+đơn bán hàng cho khách hàng hàng ngày của công ty,…). Việc xử lý thông tin ở mức
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+này chủ yếu là ghi nhận, tìm kiếm, phân loại thông tin để sắp xếp và tổ chức lưu trữ
+thông tin. Do đó, việc xử lý thông tin ở mức này không phức tạp và đòi hỏi không cao,
+nhưng khối lượng thông tin hàng ngày có thể rất lớn và chiếm một tỉ lệ cao trong toàn
+bộ HTTT.
+      Mục đích của việc phát triển TPS: tăng tốc độ xử lý giao tác, sử dụng ít nhân lực
+hơn, cải tiến tính hiệu quả và độ chính xác, tích hợp với các HTTT khác.
+      Đối tượng: phục vụ cho nhân viên thực thi tác vụ của hệ thống
+1.2.2. Hệ thống thông tin quản lý (Management Information System – MIS)
+      Đặc điểm: đây là hệ thống các báo biểu báo cáo được tổng kết từ HTTT tác vụ
+nhằm đáp ứng cho việc theo dõi, quản lý, đánh giá về tình hình và hoạt động của hệ
+thống hiện hành của các cấp lãnh đạo bậc trung như các trưởng, phó phòng, lãnh đạo
+của những chi nhánh.
+      Hoạt động của MIS là thu thập thông tin đến từ môi trường và đọc dữ liệu từ hệ
+thống TPS, mô tả tình trạng hiện tại hoạt động kinh doanh của doanh nghiệp rồi chuyển
+đổi nó thành các kết xuất dạng tổng hợp có ý nghĩa. (VD: báo cáo doanh thu của từng
+mặt hàng trong từng tháng, báo cáo tình hình công nợ của từng khác hàng, thống kê tình
+hình mua nguyên vật liệu,…). Thông thường các báo cáo này được sử dụng để theo dõi
+trong một thời gian ngắn: ngày, tuần, tháng, quý, năm. Đôi lúc các nhà quản lý không
+biết chính xác những gì họ cần hoặc họ phải sử dụng thông tin như thế nào. Do đó, các
+phân tích viên cũng phải có một hiểu biết nhất định về công việc quản lý và TPS, đề
+xuất các dạng thức tổng hợp và khai thác thông tin.
+      Đối tượng: các nhà quản lý bậc trung như các trưởng, phó phòng và các lãnh đạo
+của các
+1.2.3. Hệ hỗ trợ ra quyết định (Decision Support System – DSS)
+      Đặc điểm: DSS được thiết kế để giúp đỡ các nhà quản lý có cơ sở để quyết định
+các hoạt động của hệ thống tổ chức. Thay vì tổng hợp dữ liệu như MIS, DSS cung cấp
+một môi trường tương tác giúp cho các nhà ra quyết định có thể thao tác một cách nhanh
+chóng dữ liệu và mô hình của các hoạt động quản lý. DSS bao gồm một CSDL (có thể
+trích ra từ TPS hoặc MIS), các mô hình toán học hoặc đồ họa của những tiến trình quản
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+lý, và một giao diện người dùng. DSS có thể sử dụng dữ liệu quá khứ để đánh giá về
+các tình huống thay thế hoặc tình huống chọn lựa trong tương lai.
+       EIS (Executive Information Systems): là một dạng thức của DSS. Thông tin được
+tổ chức ở cấp cao nhất, nhấn mạnh khả năng không cấu trúc cho các nhà lãnh đạo cấp
+cao như ban giám đốc có thể bắt đầu việc khai thác dữ liệu ở mức độ tổng hợp cao rồi
+đi xuống các vùng dữ liệu chi tiết xác định để theo dõi hoạt động của từng chi nhánh và
+của toàn bộ công ty theo từng yêu cầu riêng biệt. Từ đó, họ có một cái nhìn tổng thể và
+có đầy đủ cơ sở thông tin để hoạch định chiến lược phát triển của công ty.
+       Đối tượng: các nhà quản lý cấp cao, các nhà phân tích kinh doanh của công ty
+1.2.4. Hệ chuyên gia (Expert Systems – ES)
+       Đặc điểm: là hệ thống cố gắng hệ thống hóa và thao tác tri thức hơn là thông tin.
+Luật if-then-else hoặc các dạng thức trình bày tri thức khác mô tả cách mà các chuyên
+gia sẽ tiếp cận các tình huống trong một lĩnh vực cụ thể của bài toán. Hoạt động của ES
+là người dùng làm việc thông qua một hộp thoại tương tác. ES đặt ra câu hỏi và người
+dùng trả lời, dựa vào kết quả trả lời, ES sẽ cung cấp các đề nghị dựa vào các luật.
+       Đối tượng: các lãnh đạo, chuyên gia, các nhà hoạch định chiến lược
+1.3.   CÁC THÀNH PHẦN CƠ BẢN CỦA MỘT HỆ THỐNG THÔNG TIN
+       HTTT được mô tả qua 5 thành phần.
+1.3.1. Dữ liệu
+       Phản ánh khía cạnh tĩnh của HTTT bao gồm các dữ liệu, thông tin được lưu trữ
+và khai thác nhằm phản ánh tình trạng quá khứ, hiện tại và tương lai của doanh nghiệp.
+Có thể phân chia dữ liệu thành 2 loại:
+       Dữ liệu tĩnh: là dữ liệu ít biến động, ít thay đổi và có một chu trình sống dài trong
+hệ thống, nó phản ánh các đối tượng cấu trúc, tài sản, nhân viên, hàng hoá,… của doanh
+nghiệp mà chúng ta thường gọi là danh mục.
+       Dữ liệu biến động: là các dữ liệu phản ánh các giao dịch xảy ra trong hoạt động
+kinh doanh, dịch vụ. Các dữ liệu này thường biến đổi và có tần suất cập nhật cao, chu
+trình sống được xác định từ khi tạo mới cho đến khi hết báo cáo cuối cùng khai thác dữ
+liệu. Ví dụ: đơn đặt hàng, hóa đơn, giao hàng, thu chi, sản xuất,…
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+1.3.2. Xử lý
+       Phản ánh khía cạnh động của HTTT, mô tả quá trình thông tin được tạo ra, biến
+đổi và bị loại bỏ khỏi HTTT với các mục đích: sản xuất các sản phẩm thông tin mới,
+cập nhật, vận chuyển thông tin từ vị trí này sang vị trí khác.
+
+                      Hình 1. 7: Mối tương tác giữa dữ liệu và xử lý
+
+1.3.3. Bộ xử lý
+       Máy móc thiết bị dùng để tự động hóa xử lý thông tin, bao gồm các thiết bị phần
+cứng: Server, PC,…
+1.3.4. Con người
+       Là những người có vai trò trong việc điều hành và sử dụng HTTT, được chia
+thành hai nhóm:
+       Nhóm người dùng: là những người sẽ sử dụng và khai thác HTTT, bao gồm luôn
+việc sử dụng phần mềm tin học và xử lý thủ công.
+       Nhóm điều hành và phát triển HTTT: bao gồm các phân tích viên, thiết kế viên,
+lập trình viên,…có vai trò trong việc xây dựng và bảo trì hệ thống
+1.3.5. Truyền thông
+       Các phương tiện và cách thức trao đổi thông tin giữa các bộ xử lý. Tuỳ theo đặc
+điểm và quy mô của HTTT mà việc tổ chức truyền thông sẽ khác nhau.
+1.4.   CÁC TÍNH NĂNG CỦA MỘT HỆ THỐNG THÔNG TIN
+   -   Thời gian trả lời: Khoảng thời gian từ khi thông tin được hệ thống tiếp nhận đến
+       khi hệ thống tác nghiệp nhận được quyết định.
+   -   Bản chất của quyết định thuộc loại tự động hóa được hay không.
+   -   Kiểu sản phẩm của hệ thống tác nghiệp.
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+   -   Khối lượng thông tin được xử lý.
+   -   Độ phức tạp của dữ liệu.
+   -   Độ phức tạp của xử lý.
+   -   Độ phức tạp về cấu trúc của hệ thống.
+   -   Độ tin cậy của hệ thống.
+1.5.   MỤC ĐÍCH, YÊU CẦU PHƯƠNG PHÁP PHÂN TÍCH THIẾT KẾ HỆ
+THỐNG THÔNG TIN
+1.5.1. Mục đích
+   -   Hệ thống thông tin có vòng đời dài hơn
+   -   Chương trình cài đặt dễ sửa chửa, bảo trì
+   -   Hệ thống dễ sử dụng và có độ chính xác, tin cậy cao
+1.5.2. Yêu cầu
+   -   Nhận dạng được các mức trừu tượng và bất biến của hệ thống ứng với chu trình
+       phát triển hệ thống
+   -   Nhận dạng được các thành phần dữ liệu và xử lý của hệ thống.
+   -   Định ra được các kết quả cần đạt được cho từng giai đoạn phát triển hệ thống và
+       các thủ tục cần thiết trong mỗi giai đoạn.
+1.6.   XÂY DỰNG THÀNH CÔNG MỘT HỆ THỐNG THÔNG TIN
+1.6.1. Khái niệm
+       Hiện nay vẫn chưa có một tiêu chuẩn cụ thể nào để xác định được một hệ thống
+thông tin được xem là thành công. Tuy nhiên, có thể xem một hệ thống thông tin là có
+hiệu lực nếu nó góp phần nâng cao chất lượng hoạt động và quản lý tổng thể của một
+tổ chức, nó thể hiện cụ thể trên các mặt:
+   -   Phù hợp với chiến lược hoạt động của tổ chức.
+   -   Đạt được mục tiêu thiết kế đề ra của tổ chức.
+   -   Chi phí vận hành là chấp nhận được.
+   -   Có độ tin cậy cao, đáp ứng được các chuẩn mực của một hệ thống thông tin hiện
+       hành.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+   -   Sản phẩm có giá trị xác đáng: thông tin đưa ra là đúng đắn, kịp thời, có ý nghĩa
+       thiết thực đối với hoạt động chức năng và quản lý, nâng cao chất lượng sản phẩm
+       và dịch vụ của tổ chức, các sai sót có thể cho phép.
+   -   Dễ học, dễ nhớ và dễ sử dụng.
+   -   Mềm dẽo, hướng mở, dễ bảo trì.
+1.6.2. Quản lý dự án
+       Quản lý dự án là “ứng dụng kiến thức, kỹ năng, công cụ và kỹ thuật vào các hoạt
+động dự án để thỏa mãn các yêu cầu của dự án.” (PMI2, Project Management Body of
+Knowledge (PMBOK® Guide), 2000, p.6).
+       Xét theo khía cạnh khác, quản lý dự án là một quá trình lập kế hoạch, điều phối
+thời gian, nguồn lực và giám sát quá trình phát triển của dự án nhằm đảm bảo cho dự
+án hoàn thành đúng thời hạn, trong phạm vi ngân sách được duyệt và đạt được các yêu
+cầu đã định về kỹ thuật, chất lượng của sản phẩm, dịch vụ, bằng các phương pháp và
+điều kiện tốt nhất cho phép.
+       a. Mục tiêu
+       Mục tiêu cơ bản của quản lý dự án nói chung là hoàn thành các công việc dự án
+theo đúng yêu cầu kỹ thuật và chất lượng, trong phạm vi ngân sách được duyệt và theo
+đúng tiến độ thời gian cho phép.
+
+                            Hình 1. 8: Ba ràng buộc của dự án
+
+       b. Các công việc chính
+       Theo đối tượng quản lý, quản lý dự án bao gồm 9 lĩnh vực chính cần được xem
+xét, nghiên cứu là:
+   -   Lập kế hoạch tổng thể: là quá trình tổ chức dự án theo một trình tự logic, chi tiết
+       hóa các mục tiêu của dự án thành những công việc cụ thể và hoạch địch theo một
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       chương trình thực hiện những công việc đó nhằm đảm bảo các lĩnh vực quản lý
+       nhau của dự án đã được kết hợp một cách chính xác và đầy đủ.
+   -   Quản lý phạm vi: là việc xác định phạm vi, giám sát việc thực hiện mục đích,
+       mục tiêu của dự án.
+   -   Quản lý thời gian: là việc lập kế hoạch, phân phối và giám sát tiến độ thời gian
+       thực hiện từng công việc nhằm đảm bảo thời hạn hoàn thành dự án.
+   -   Quản lý chi phí: là quá trình dự toán kinh phí, giám sát thực hiện chi phí theo
+       tiến độ cho từng công việc và toàn bộ dự án.
+   -   Quản lý chất lượng: là quá trình triển khai giám sát những tiêu chuẩn chất lượng
+       cho việc thực hiện dự án, đảm bảo chất lượng kết quả của dự án phải đáp ứng
+       mong muốn của nhà tài trợ (chủ đầu tư).
+   -   Quản lý nhân lực: là quá trình hướng dẫn, phối hợp những nỗ lực của mọi thành
+       viên tham gia dự án vào việc hoàn thành mục tiêu của dự án. Nó cho thấy việc
+       sử dụng lực lượng lao động của dự án hiệu quả đến đâu.
+   -   Quản lý thông tin (truyền thông): là quá trình bảo đảm các dòng thông tin thông
+       suốt, nhanh chóng và chính xác giữa các thành viên dự án và với các cấp quản
+       lý, giữa các tổ nhóm quản lý dự án.
+   -   Quản lý rủi ro: là việc nhận diện các nhân tố rủi ro trong dự án, sử dụng các
+       phương pháp định tính, định lượng để xác định tính chất, mức độ rủi ro và có kế
+       hoạch đối phó cũng như quản lý từng loại rủi ro.
+   -   Quản lý hợp đồng và các hoạt động mua sắm: là quá trình lựa chọn nhà cung cấp
+       hàng hóa và dịch vụ; thương lượng với họ, quản lý các hợp đồng và điều hành
+       việc mua bán nguyên vật liệu, trang thiết bị, dịch vụ.
+1.7.   CÁC PHƯƠNG PHÁP PHÂN TÍCH THIẾT KẾ HỆ THỐNG THÔNG TIN
+1.7.1. Phương pháp phân tích thiết kế có cấu trúc (SADT – Structured Analysis
+and Design Technique)
+       Phương pháp này xuất phát từ Mỹ, ý tưởng cơ bản của nó là phân rã một hệ thống
+lớn thành các hệ thống con đơn giản. SADT được xây dựng dựa trên 7 nguyên lý sau:
+   -   Sử dụng một mô hình
+   -   Phân tích kiểu Top-down.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+   -   Dùng một mô hình chức năng và một mô hình quan niệm (còn được gọi là “mô
+       hình thiết kế” để mô tả hệ thống.
+   -   Thể hiện tính đối ngẫu của hệ thống
+   -   Sử dụng các biểu diễn dưới dạng đồ hoạ
+   -   Phối hợp các hoạt động của nhóm
+   -   Ưu tiên tuyệt đối cho hồ sơ viết.
+       Phương pháp này sử dụng sơ đồ chức năng nghiệp vụ BFD (Business Function
+Diagram) và sơ đồ luồng dữ liệu DFD (Data Flow Diagram); mô hình dữ liệu (Data
+Modes); ngôn ngữ có cấu trúc SL (Structured Language); từ điển dữ liệu (Data
+Dictionary); bảng và cây quyết định; đặc tả các tiến trình (Process Specification).
+       Ưu điểm: dựa vào nguyên lý phân tích có cấu trúc, thiết kế theo lối phân cấp,
+bảo đảm từ một dữ liệu vào sản xuất nhiều dữ liệu ra.
+       Nhược điểm: không bao gồm toàn bộ các tiến trình phân tích do đó nếu không
+thận trọng có thể đưa đến tình trạng trùng lặp thông tin.
+1.7.2. Phương pháp phân tích thiết kế Merise
+       MERISE viết tắt từ cụm từ Methode pour Rassembler les Ideés Sans Effort
+(phương pháp tập hợp các ý tưởng không cần cố gắng). Phương pháp này ra đời tại Pháp
+vào những năm cuối của thập niên 70.
+       Ý tưởng cơ bản của phương pháp PTTK Merise dựa trên 3 mặt cơ bản sau:
+       Mặt thứ nhất: Quan tâm đến chu kỳ sống (life cycle) của hệ thống thông tin qua
+các giai đoạn: Thai nghén - Quan niệm/Ý niệm - Quản trị - Chết. Chu kỳ sống này có
+thể kéo dài từ 15 đến 20 năm đối với các hệ thống thông tin lớn.
+       Mặt thứ hai: Đề cập đến chu kỳ đặc trưng của hệ thống thông tin, còn được gọi
+là chu kỳ trừu tượng. Mỗi tầng được mô tả dưới dạng mô hình tập trung bao gồm tập
+hợp các thông số chính xác. Theo đó khi những thông số của tầng dưới tăng trưởng,
+tầng đang mô tả không biến đổi và nó chỉ thay đổi khi các thông số của mình thay đổi.
+Mỗi mô hình được mô tả thông qua một hình thức dựa trên các quy tắc, nguyên lý ngữ
+vựng và cú pháp quy định. Có những quy tắc cho phép chuyển từ mô hình này sang mô
+hình khác một cách tự động nhiều hoặc ít.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       Mặt thứ ba: Mặt này liên quan đến chu kỳ các quyết định cần phải đưa ra trong
+các chu kỳ sống của sản phẩm.
+       Đặc trưng của phương pháp Merise là tách rời dữ liệu và xử lý nhằm đảm bảo
+tính khách quan trong quá trình phân tích và cung cấp đầy đủ các mô hình để diễn đạt
+các bước cập nhật. Hệ thống bao gồm dữ liệu và xử lý được biểu diễn ở ba mức bất biến
+của hệ thống.
+       Ưu điểm: có cơ sở khoa học vững chắc. Hiện là một trong những phương pháp
+được dùng nhiều ở Pháp, Châu Âu khi phải phân tích các hệ thống lớn.
+       Nhược điểm: cồng kềnh. Do đó, phương pháp này thường kéo dài thời gian khi
+giải quyết các ứng dụng nhỏ.
+1.7.3. Phương pháp phân tích MCX (Méthode de xavier castellani)
+       Phương pháp phân tích MCX có nguồn gốc từ Pháp, do giáo sư của Học viện
+Tin học cho các xí nghiệp IIE (Institut Informatique d’Entrerise) sáng tạo. Phương pháp
+phân tích MCX dựa trên các nguyên lý và đặc trưng cơ bản sau:
+   -   Cho phép xây dựng được một mô hình tổng quát chính xác để biểu diễn hệ thống
+       thông tin hoặc các phân hệ của hệ thống thông tin.
+   -   Cho phép phân tích, nắm dữ liệu, quá trình xử lý và truyền thông của hệ thống
+       thông tin.
+   -   Cho phép lượng hoá các xử lý.
+       Ưu điểm: thích hợp với việc thực hành.
+       Nhược điểm: rườm rà.
+1.7.4. Phương pháp phân tích GLACSI (Groupe d’ Animation et de Liaison pour
+l’ Analyse et de conception de Système d’ Information)
+       Phương pháp này cũng có nguồn gôc từ Pháp, ra đời vào tháng 4 năm 1982. Tác
+giả của nó là một nhóm giáo sư của Học viện Công nghệ Pháp (IUT). Nội dung cơ bản
+của phương pháp là trình bày một tập hợp các công cụ và nguyên liệu để tiến hành các
+giai đoạn cơ bản sau đây của tiến trình phân tích:
+   -   Nghiên cứu hệ thống
+   -   Nghiên cứu hiện trạng
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+   -   Nghiên cứu khả thi
+   -   Phân tích chức năng
+   -   Mô hình dữ liệu
+   -   Mô hình xử lý
+   -   Phân tích cấu trúc
+   -   Tổ chức dữ liệu: ở mức logic và mức vật lý
+   -   Tổ chức xử lý: xử lý theo lô, xử lý theo thời gian thực
+   -   Môi trường tiếp nhận: máy tính, mạng máy tính, ngôn ngữ, các phần mềm chuyên
+       dụng
+   -   Giao diện người-máy.
+       Nhược điểm của phương pháp là chưa thử nghiệm nhiều trong thực tế. Ưu điểm
+của phương pháp là một công cụ tốt để giảng dạy.
+1.8.   NHỮNG SAI SÓT KHI PHÂN TÍCH THIẾT KẾ THIẾU PHƯƠNG PHÁP
+       Những phương pháp phân tích hiện đại mong muốn và hướng tới giải quyết toàn
+bộ hoặc từng phần các tồn tại và khiếm khuyết trong quá trình phân tích như:
+   -   Thiếu sự tiếp cận tổng thể trong phát triển hệ thống.
+   -   Người phân tích bị ảnh hưởng đến nhu cầu trực tiếp của chủ đầu tư và NSD.
+   -   Thu thập nhiều lần cùng một thông tin.
+   -   Dùng các thuật ngữ khác nhau đối với cùng một quan niệm.
+   -   Sự phiến diện, không đầy đủ của hồ sơ.
+   -   Sự bất hợp tác của người sử dụng.
+   -   Thiếu một chuẩn thống nhất để mô tả, cài đặt các ứng dụng trong hệ thống.
+1.9.   CÁC BƯỚC ĐỂ TIN HỌC HÓA MỘT HỆ THỐNG THÔNG TIN
+       Để tự động hóa hoạt động xử lý thông tin các tổ chức phải trải qua một quá trình
+gồm nhiều bước được gọi là phương pháp luận phát triển hệ thống. Cũng giống như
+nhiều tiến trình khác, phát triển HTTT tự động cũng theo chu trình được gọi là vòng
+đời. Khái niệm vòng đời là một khái niệm rộng nó bắt đầu từ sự khởi đầu xây dựng cho
+đến kết thúc việc khai thác hệ thống, còn nếu chúng ta chỉ chú trọng đến giai đoạn xây
+dựng và triển khai thì gọi là phát triển hệ thống. Vòng đời phát triển hệ thống - SDLC
+(Systems development life cycle) là một phương pháp luận chung để phát triển hệ thống
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+trong nhiều doanh nghiệp, tuy nhiên, các giai đoạn trong quá trình này cũng thay đổi
+khác nhau khoảng từ 3 cho đến 20 tùy theo từng loại hình doanh nghiệp.
+       Hai khái niệm quan trọng trong việc phát triển hệ thống là tiến trình phát triển
+và mô hình, ngôn ngữ mô hình.
+       Tiến trình phát triển được biết như là các giai đoạn, trình tự giai đoạn để phát
+triển hệ thống.
+       Mô hình (hoặc ngôn ngữ mô hình) được biết như là các phương tiện để biểu diễn
+nội dung của hệ thống thông qua các giai đoạn của tiến trình.
+1.9.1. Các quy trình phát triển hệ thống
+       Một số quy trình/mô hình tiêu biểu sau:
+       a. Mô hình thác nước
+       Mô hình thác nước (mô hình vòng đời cổ điển) là một trong những mô hình đầu
+tiên và phổ biến được áp dụng trong quá trình phát triển phần mềm. Mô hình này chia
+quá trình phát triển phần mềm thành những giai đoạn tuần tự nối tiếp nhau. Mỗi giai
+đoạn sẽ có một mục đích nhất định. Kết quả của giai đoạn trước sẽ là thông tin đầu vào
+cho giai đoạn tiếp theo sau. Tùy theo quy mô của phần mềm cần phát triển mà mô hình
+thác nước sẽ có những biến thể khác nhau như các quy trình nêu trên
+
+                              Hình 1. 9: Mô hình thác nước
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       b. Mô hình mẫu thử
+       Tương tự như mô hình thác nước với bổ sung vào các giai đoạn thực hiện phần
+mềm mẫu ngay khi xác định yêu cầu nhằm mục tiêu phát hiện nhanh các sai sót về yêu
+cầu. Các giai đoạn trong mô hình mẫu thử có thể tiến hành lặp đi lặp lại chứ không nhất
+thiết phải theo trình tự nhất định.
+
+                               Hình 1. 10: Mô hình mẫu thử
+
+       c. Mô hình xoắn ốc
+       Mô hình xoắn ốc được Boehm đưa ra năm 1988. Mô hình này đưa thêm vào việc
+phân tích yếu tố rủi ro. Quá trình phát triển được chia thành nhiều bước lặp lại, ở lần
+lặp tiếp theo hệ thống sẽ được tìm hiểu và xây dựng hoàn thiện hơn ở lần lặp trước đó.
+       Nội dung một bước gồm bốn hoạt động chính:
+   -   Lập kế hoạch: xác định mục tiêu, các giải pháp và ràng buộc
+   -   Phân tích rủi ro: phân tích các phương án và xác định/giải quyết rủi ro
+   -   Kỹ nghệ: phát triển sản phẩm
+   -   Đánh giá: đánh giá của khách hàng về kết quả của kỹ nghệ
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+                              Hình 1. 11: Mô hình xoắn ốc
+
+1.9.2. Các bước phát triển HTTT tự động hóa
+      Quy trình phát triển được sử dụng trong bài giảng này là quy trình 6 giai đoạn:
+
+              Hình 1. 12: Các giai đoạn trong chu trình phát triển hệ thống
+
+      Các chu trình xác định này có các đặc tính sau:
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+   -   Tính tuần tự: thứ tự giai đoạn được thực hiện từ trên xuống, kết quả của giai đoạn
+       trước sẽ là đầu vào cho giai đoạn sau.
+   -   Tính lặp: mỗi giai đoạn có thể quay trở lui tới các giai đoạn trước đó nếu cần
+       thiết cho đến khi kết quả của nó được chấp nhận.
+   -   Tính song song: nhiều hoạt động trong một giai đoạn có thể được thực hiện song
+       song với các hoạt động của giai đoạn khác.
+       Có thể phát triển thành qui trình phát triển nhanh (RAD) bao gồm 4 giai đoạn:
+xác lập yêu cầu, thiết kế, xây dựng và chuyển giao.
+       a. Xác định và chọn lựa dự án
+       Giai đoạn này nhằm xác định nhu cầu cho một hệ thống mới hoặc nâng cấp.
+       Các bước thực hiện bao gồm:
+   -   Xác định các dự án phát triển có tiềm năng
+   -   Phân loại và xếp hạng dự án
+       b. Lập kế hoạch và khởi tạo dự án
+   -   Thành lập đội ngũ ban đầu
+   -   Khảo sát tổng thể hệ thống
+   -   Lập kế hoạch
+   -   Xác định phạm vi, nguồn lực, các nguyên tắc làm việc
+   -   Đánh giá khả thi
+   -   Xây dựng tài liệu mô tả hệ thống
+       c. Phân tích hệ thống
+       Giai đoạn phân tích gồm các bước sau:
+   -   Thu thập yêu cầu hệ thống
+   -   Nghiên cứu các yêu cầu và mô hình hóa
+   -   Phát sinh các phương án thiết kế, đánh giá và lựa chọn phương án phù hợp.
+       d. Thiết kế
+       Giai đoạn thiết kế gồm 2 bước sau:
+       Thiết kế luận lý: Đặc tả HTTT ở mức trừu tượng hóa dựa trên kết quả của giải
+pháp được lựa chọn từ giai đoạn phân tích.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       Thiết kế vật lý: Chuyển đổi kết quả thiết kế luận lý sang đặc tả trên phần cứng,
+phần mềm và kỹ thuật đã chọn để cài đặt hệ thống.
+       e. Lập trình cài đặt
+       Giai đoạn này bao gồm : lập trình dựa trên các đặc tả hệ thống, kiểm tra thử
+nghiệm và cài đặt hệ thống. Giai đoạn này cũng bao gồm chuẩn bị tài liệu hướng dẫn
+sử dụng, các chương trình huấn luyện sử dụng.
+       f. Bảo trì
+       Sửa chữa và điều chỉnh hệ thống cho phù hợp với nhu cầu sử dụng.
+       Không nên xem giai đoạn bảo trì là một giai đoạn tách rời mà nên xem như là
+một sự lặp lại chu trình của những giai đoạn trước; đòi hỏi phải được nghiên cứu, đánh
+giá và cài đặt. Tuy nhiên, nếu một HTTT không còn hoạt động như mong muốn thì yêu
+cầu về hệ thống mới được xác lập để thay thế hệ thống hiện tại và một qui trình lại bắt
+đầu.
+1.9.3. Mô hình, mô hình hóa
+       Mô hình (model) là một dạng thức trừu tượng về một hệ thống, được hình thành
+để hiểu hệ thống trước khi xây dựng hoặc thay đổi hệ thống đó. Theo Efraim Turban,
+mô hình là một dạng trình bày đơn giản hoá của thế giới thực. Bởi vì, hệ thống thực tế
+thì rất phức tạp và rộng lớn và có những mức độ phức tạp không cần thiết phải được mô
+tả và giải quyết. Mô hình cung cấp một phương tiện để quan niệm hoá vấn đề và giúp
+chúng ta có thể trao đổi các ý tưởng trong một hình thức cụ thể, không mơ hồ.
+       Hầu hết các kỹ thuật mô hình hóa sử dụng trong phân tích thiết kế là các ngôn
+ngữ đồ họa (đa số là biểu đồ - diagram), các ngôn ngữ này bao gồm một tập hợp các ký
+hiệu. Các ký hiệu này được dùng đi kèm theo các qui tắc của phương pháp luận giúp
+cho việc trao đổi các quan hệ thông tin phức tạp được rõ ràng hơn việc mô tả bằng văn
+bản.
+       Phương pháp mô hình hoá hệ thống (còn gọi là phương pháp phân tích thiết kế)
+được định nghĩa như là một tập hợp các khái niệm, qui tắc và thứ tự dùng để biểu diễn
+hệ thống khi thực hiện việc chuyển đổi HTTT thành HTTT tự động hóa.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+1.10. CÁC MỨC NHẬN THỨC HỆ THỐNG THÔNG TIN
+1.10.1.Quan niệm
+       HTTT được biểu diễn ở mức độ luận lý, trừu tượng hóa, mức độ này HTTT chỉ
+thể hiện được là có những gì? Mà không mô tả nó thực hiện ở gốc độ vật lý, ngôn ngữ
+lập tình nào?...
+1.10.2.Tổ chức
+       Mục đích của mức tổ chức là xác định các phương tiện, nhân lực, máy móc, cách
+tổ chức để cung cấp các thông tin cho người sử dụng đúng thời hạn và đủ độ tin cậy.
+Tại mức này, cần trả lời các câu hỏi: Ai làm? Làm ở đâu? Làm khi nào?
+       Thông tin ở mức tổ chức được mô tả theo giải pháp cơ sở dữ liệu, thực chất là
+quan hệ logic của chúng. Do đó, đối với dữ liệu mức tổ chức còn gọi là mức logic.
+1.10.3.Vật lý
+       Đây là mức ít trừu tượng nhất vì nó chính là hệ thống có thể họat động và vận
+hành. Tại mức này, cần trả lời các câu hỏi hệ thống hoạt động như thế nào?
+       Mục tiêu của mức vật lý là xác định cách thực hiện của hệ thống thông tin trong
+một môi trường được chọn lựa.
+1.11. BÀI TẬP, THẢO LUẬN
+1.     Tại sao khi xây dựng một hệ thống thông tin cần phải có phân tích và thiết kế hệ
+       thống?
+2.     Theo anh/chị, các yêu cầu kỹ năng của một phân tích viên hệ thống là gì?</baihoc>
+<baitap bai="1" loai="tuluyen" de="Trình bày nội dung chính của mục: 1.1. KHÁI NIỆM VỀ HỆ THỐNG THÔNG TIN" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="1" loai="tuluyen" de="Trình bày nội dung chính của mục: 1.1.1. Hệ thống" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="1" loai="tuluyen" de="Trình bày nội dung chính của mục: 1.1.2. Hệ thống quản lý" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="1" loai="tuluyen" de="Trình bày nội dung chính của mục: 1.1.3. Hệ thống thông tin" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="1" loai="tuluyen" de="Trình bày nội dung chính của mục: 1.2. PHÂN LOẠI HỆ THỐNG THÔNG TIN" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="1" loai="tuluyen" de="Trình bày nội dung chính của mục: 1.2.1. Hệ thống thông tin tác vụ (Transaction Processing Systems – TPS)" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="1" loai="tuluyen" de="Trình bày nội dung chính của mục: 1.2.2. Hệ thống thông tin quản lý (Management Information System – MIS)" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="1" loai="tuluyen" de="Trình bày nội dung chính của mục: 1.2.3. Hệ hỗ trợ ra quyết định (Decision Support System – DSS)" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baihoc stt="2" tieude="Chương 2. Nghiên cứu hiện trạng và mô hình tiến trình nghiệp vụ">Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+              Chương 2. NGHIÊN CỨU HIỆN TRẠNG VÀ
+                 MÔ HÌNH TIẾN TRÌNH NGHIỆP VỤ
+                      CỦA HỆ THỐNG THÔNG TIN
+
+Thời lượng: 13 tiết
+Kết thúc chương này, sinh viên có thể:
+   - Hiểu được tại sao phải nghiên cứu hiện trạng của hệ thống thông tin
+   - Biết các phương pháp nghiên cứu hiện trạng của hệ thống thông tin
+   - Hiểu và xây dựng được các biểu đồ chức năng nghiệp vụ (BFD), sơ đồ ngữ cảnh,
+       ma trận cân đối thực thể-chức năng (E-F), biểu đồ luồng dữ liệu (DFD).
+
+2.1.   MỘT SỐ VẤN ĐỀ CHUNG KHI NGHIÊN CỨU HỆ THỐNG
+       Cùng với sự phát triển của khoa học và công nghệ, các hệ thống thông tin hiện
+có dần trở nên hoạt động kém hiệu quả. Những yếu kém này thường rơi vào các vấn đề
+cơ bản sau:
+   -   Sai lầm về thiết kế: Thiết kế không đủ, phức tạp.
+   -   Sai lầm về dữ liệu: Dữ liệu không thống nhất, không đầy đủ, phức tạp.
+   -   Hệ thống hoạt động không hiệu quả.
+   -   Chi phí hoạt động cao, tốn kém nhiều nhân lực.
+       Cách giải quyết các vấn đề trên tập trung vào 3 mặt:
+   -   Nâng cao kỹ năng của các nhà phát triển hệ thống
+   -   Không ngừng hoàn thiện và phát triển công nghệ, tăng cường sử dụng các công
+       cụ tiện ích để tự động hóa ngày càng nhiều các hoạt động phát triển,… làm cho
+       hệ thống có tính mở cao
+   -   Hoàn thiện quá trình quản lý các dự án phát triển phần mềm
+2.2.   YÊU CẦU ĐẶT RA ĐỐI VỚI HỆ THỐNG THÔNG TIN TIN HỌC HÓA
+       Mỗi tập thể, cá nhân tham gia vào việc phát triển hệ thống đều có những yêu cầu
+nhất định với những người phát triển hệ thống, cụ thể:
+2.2.1. Chủ đầu tư/Nhà lãnh đạo
+   -   Phải phù hợp với chiến lược hoạt động của tổ chức
+   -   Phải có chức năng hỗ trợ ra quyết định và giảm thời gian ra quyết định
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+   -   Phải cho sản phẩm hoặc dịch vụ mới tốt hơn
+   -   Phải có khả năng hoàn vốn đầu tư
+2.2.2. Người sử dụng
+   -   Phải có nhiều khả năng
+   -   Phải dễ sử dụng và có ích thực sự cho người sử dụng
+   -   Phải có độ tin cậy cao
+2.3.   QUY MÔ TIN HỌC HÓA
+       Quy mô tin học hoá của một tổ chức cho biết trình độ quản lý và mức độ tin học
+hoá của tổ chức đó, nó phụ thuộc vào các yếu tố sau:
+   -   Tổ chức có nhu cầu tin học hoá nhiều hay ít.
+   -   Trình độ quản lý của tổ chức cao hay thấp.
+   -   Quy mô hoạt động của tổ chức.
+       Trong thực tế việc tin học hoá một HTTT xảy ra một trong hai dạng: tin học hoá
+toàn thể và tin học hoá từng bộ phận.
+       Tin học hoá toàn thể: thường đòi hỏi một tập thể người phân tích đồng thời tham
+gia và phải có một đầu tư lớn ban đầu, thời gian xây dựng dài hơn.
+   -   Ưu điểm: hệ thống hoạt động đồng bộ, không chắp vá.
+   -   Nhược điểm: vấn đề tâm lý, bởi vì nó thay đổi hầu như toàn bộ các hoạt động cơ
+       bản của tổ chức và thói quen của người sử dụng.
+       Tin học hoá từng bộ phận: thường xảy ra đối với tổ chức lớn.
+   -   Ưu điểm: Không gây xáo trộn hoạt động của tổ chức, đầu tư dần dần.
+   -   Nhược điểm: không nhất quán giữa các phân hệ thông tin trong hệ thống.
+2.4.   VAI TRÒ CỦA NHỮNG NGƯỜI THAM GIA PHÁT TRIỂN HỆ THỐNG
+THÔNG TIN
+2.4.1. Người quản lý hệ thống thông tin
+       Đó là những người được lãnh đạo của tổ chức giao trách nhiệm đưa ra các yêu
+cầu chi tiết cho phân tích viên và triển khai tổ chức thực hiện khi hệ thống hoạt động.
+Đối với các HTTT vừa và nhỏ thì người quản lý HTTT thường là các trưởng phòng ban
+chức năng có nhiệm vụ cung cấp tình hình, số liệu, phương thức xử lý, công thức tính
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+toán,... trong hoạt động nội bộ của phòng mình và mối quan hệ thông tin giữa phòng
+mình với các bộ phận khác.
+2.4.2. Phân tích viên hệ thống
+       Trong các HTTT vừa và nhỏ một phân tích viên có thể là là người lập trình cho
+hệ thống. Tuy nhiên đối với các HTTT lớn thì bộ phận phân tích viên phải là một tập
+thể, vì như thế mới có đủ khả năng nắm bắt các lĩnh vực và hoạt động của tổ chức. Một
+phân tích viên được gọi là có năng lực nếu họ có các kỹ năng sau:
+   -   Kỹ năng phân tích: Có thể hiểu được tổ chức và sự hoạt động của nó. Có thể xác
+       định được các vấn đề đặt ra và giải quyết chúng. Có khả năng suy nghĩ mang
+       tính chiến lược và hệ thống.
+   -   Kỹ năng kỹ thuật: Hiểu biết về thiết bị và phần mềm. Biết chọn lựa các giải pháp
+       phần cứng và mềm cho các ứng dụng đặc biệt nơi cần tin học hoá. Hiểu biết công
+       việc của người lập trình và người sử dụng đầu cuối.
+   -   Kỹ năng quản lý: Có khả năng quản lý nhóm làm việc, biết được điểm mạnh,
+       điểm yếu của những người làm việc trong nhóm. Biết lắng nghe, đề xuất và giải
+       quyết vấn đề. Có khả năng lập kế hoạch, điều phối các nguồn lực.
+   -   Kỹ năng giao tiếp: Phân tích viên phải đóng vai trò chính trong việc liên kết giữa
+       các đối tượng: chủ đầu tư, người sử dụng, người lập trình và các thành phần khác
+       trong hệ thống. Kỹ năng giao tiếp của phân tích viên thể hiện ở chổ: năng lực
+       diễn đạt và thuyết phục, khả năng hoà hợp với mọi người trong nhóm làm việc.
+       Có khả năng tổ chức và điều hành các cuộc họp.
+2.4.3. Người lập trình
+       Là tập thể hoặc cá nhân có nhiệm vụ mã hoá các đặc tả được thiết kế bởi phân
+tích viên thành các cấu trúc mà máy tính có thể hiểu và vận hành được. Người lập trình
+cũng phải viết các tài liệu chương trình và các chương trình thử nghiệm hệ thống, chuẩn
+bị các số liệu giả để kiểm định độ chính xác của hệ thống.
+2.4.4. Người sử dụng
+       Trong quá trình phân tích thiết kế phân tích viên phải làm việc với người sử dụng
+để biết được chi tiết các thông tin của từng bộ phận, từng mảng công việc trong hệ
+thống. Người sử dụng sẽ cho phân tích viên biết ưu điểm và nhược điểm của hệ thống
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+thông tin cũ, cho nên những ý kiến của họ có ý nghĩa quan trọng đến việc sử dụng hệ
+thống một cách có hiệu quả.
+2.4.5. Kỹ thuật viên
+       Là bộ phận phụ trách về mảng kỹ thuật của hệ thống như: bảo đảm sự hoạt động
+của phần cứng máy tính, đường truyền dữ liệu từ bộ phận này đến bộ phận khác trong
+hệ thống và từ hệ thống đến môi trường ngoài.
+2.4.6. Chủ đầu tư
+       Thường là thành phần quyết định của tổ chức, là người cung cấp cho phân tích
+viên những thông tin chung của tổ chức. Hệ thống thông tin tin học hóa bao giờ cũng
+có chức năng hỗ trợ ra quyết định, chức năng này giúp cho lãnh đạo của tổ chức những
+thông tin cần thiết trong quá trình ra quyết định.
+2.5.   NGHIÊN CỨU HIỆN TRẠNG
+2.5.1. Mục đích
+       Việc xây dựng một HTTT mới là nhằm để thay thế HTTT cũ đã bộc lộ nhiều yếu
+kém. Việc tìm hiểu nhu cầu đối với hệ thống mới thường bắt đầu từ việc khảo sát và
+đánh giá hệ thống hiện có, do đó chúng ta gọi là nghiên cứu hiện trạng. Nghiên cứu hiện
+trạng một HTTT là nhằm mục đích trả lời được các câu hỏi:
+   -   Hệ thống đang quản lý cái gì? Bao gồm những công việc gì?
+   -   Những công việc trong hệ thống do ai làm? Làm ở đâu? Khi nào làm?
+   -   Cách thức thực hiện công việc? Mỗi công việc liên quan đến dữ liệu nào?
+   -   Chu kỳ, tần suất, khối lượng công việc?
+   -   Đánh giá các công việc hiện tại: tầm quan trọng như thế nào? Các thuận lợi, khó
+       khăn? Nguyên nhân dẫn đến khó khăn?
+2.5.2. Nội dung khảo sát
+       Để nghiên cứu hiện trạng một HTTT, phân tích viên phải khảo sát các nội dung
+sau:
+   -   Các mục tiêu hoạt động của đơn vị, các công việc và cách thức hoạt động để đạt
+       những mục tiêu đó.
+   -   Những thông tin cần để thực hiện công việc từng loại công việc.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+   -   Các nguồn dữ liệu (định nghĩa, cấu trúc, dung lượng, kích thước,…) bên trong
+       và bên ngoài đơn vị.Có thể bao gồm:
+          • Các hồ sơ, sổ sách, tập tin
+          • Biểu mẫu, báo cáo, qui tắc, quy định, công thức.
+          • Các qui tắc, qui định ràng buộc lên dữ liệu
+          • Các sự kiện tác động lên dữ liệu
+   -   Tìm hiểu khi nào, như thế nào, và bởi ai các dữ liệu đó được tạo ra, di chuyển,
+       biến đổi và được lưu trữ. Ứng với mỗi xử lý thực hiện tìm hiểu:
+          • Phương pháp: cách thức thực hiện
+          • Tần suất: số lần thực hiện trong một đơn vị thời gian
+          • Khối lượng: độ lớn thông tin thực hiện
+          • Độ phức tạp: xử lý là một là một quá trình phức tạp liên quan đến nhiều
+               loại dữ liệu hay chỉ là một tính toán đơn giản với một vài loại dữ liệu
+          • Độ chính xác: độ chính xác của kết quả thực hiện
+   -   Thứ tự và các phụ thuộc khác giữa các hoạt động truy xuất dữ liệu khác nhau
+   -   Các chính sách, hướng dẫn mô tả hoạt động quản lý, thị trường và môi trường
+       hệ thống
+   -   Các phương tiện, tài nguyên có thể sử dụng
+   -   Trình độ chuyên môn sử dụng vi tính của các đối tượng xử lý thông tin hệ thống
+   -   Môi trường hệ thống (kinh tế, xã hội, cơ quan chủ quản)
+   -   Các đánh giá, phàn nàn về hệ thống hiện tại; các đề xuất giải quyết.
+2.5.3. Đối tượng khảo sát
+       a. Người dùng
+   -   Các cán bộ lãnh đạo, cán bộ quản lý: các đối tượng này sẽ giúp cho phân tích
+       viên nắm bắt được tổng quan cấu trúc hệ thống, mục tiêu chung mà hệ thống mới
+       mong muốn mang lại. Các thông tin mà đối tượng này mang lại thường là chiều
+       rộng, mang tính tổng thể, chiến lược không mô tả chi tiết cách thức phải thực
+       hiện.
+   -   Người sử dụng, nhân viên nghiệp vụ: các đối tượng này sẽ cung cấp thông tin chi
+       tiết cách thức mà họ đang thực hiện công việc gồm các bước cụ thể, các giấy tờ
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       biểu mẫu liên quan. Các thông tin mà đối tượng mang lại thường là chiều sâu,
+       chi tiết, cục bộ bỏ qua ý tưởng chiến lược mang tính tổng thể.
+   -   Nhân viên kỹ thuật: các đối tượng này sẽ cung cấp thông tin về tình trạng công
+       nghệ, trang thiết bị, phần mềm hiện hành đang sử dụng và khả năng, trình độ về
+       kỹ thuật của họ. Các đối tượng này thường trợ giúp rất lớn trong việc huấn luyện,
+       triển khai và bảo trì hệ thống mới.
+       b. Tài liệu
+   -   Tài liệu về sổ sách, biễu mẫu, tập tin: nguồn cung cấp các thông tin về dữ liệu,
+       luồng dữ liệu, giao dịch và xử lý giao dịch. Đặc biệt là các biểu mẫu đây chính
+       là kết quả đầu ra của hệ thống.
+   -   Tài liệu về qui trình, thủ tục: nguồn cung cấp thông tin về qui trình xử lý, vai trò
+       xử lý của các nhân viên, chi tiết mô tả công việc của nhân viên, các qui định thủ
+       tục.
+   -   Các thông báo: các mẫu thông báo của hệ thống đối với môi trường ngoài, giữa
+       các bộ phận trong hệ thống (ví dụ: thông báo họp mặt khách hàng, thông bao
+       mời thầu, thông báo từ chối đơn hàng, … hoặc các thông báo nội bộ như là thông
+       báo bổ nhiệm, thông báo nâng lương,…)
+       c. Chương trình máy tính
+       Các chương trình phần mềm hệ thống đang sử dụng, các chương trình này giúp
+xác định được cấu trúc dữ liệu hệ thống, thói quen của người sử dụng, chức năng mà hệ
+thống mới chưa đáp ứng được, số liệu thử nghiệm hệ thống.
+2.5.4. Một số phương pháp xác định yêu cầu
+       a. Phỏng vấn
+       Phỏng vấn là một cách thức đối thoại trực tiếp trong đó, phân tích viên sẽ ra câu
+hỏi và đối tượng phỏng vấn sẽ trả lời câu hỏi. Mỗi đối tượng sẽ có những hiểu biết nhất
+định về một phần công việc của mình trong hệ thống hiện tại và mong muốn hệ thống
+mới về những gì sẽ phục vụ và trợ giúp cho công việc của họ. Quy trình phỏng vấn như
+sau:
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+                     Hình 2. 1: Sơ đồ mô phỏng quá trình phỏng vấn
+
+Loại câu hỏi phỏng vấn
+   -   Câu hỏi mở: là câu hỏi giúp cho việc trả lời được tự do trong phạm vi hệ thống.
+       Kết quả trả lời không tuân theo một vài tình huống cố định. Mục đích của câu
+       hỏi mở là khuyến khích người trả lời đưa ra được tất cả ý kiến có thể trong khuôn
+       khổ câu hỏi. Do đó, câu hỏi mở dùng để thăm dò, gợi mở vấn đề và người trả lời
+       phải có một kiến thức tương đối.
+   -   Câu hỏi đóng: là câu hỏi mà sự trả lời là việc chọn lựa một hoặc nhiều trong
+       những tình huống xác định trước. Do đó, câu hỏi đóng được dùng xác định một
+       tình huống cụ thể. Câu hỏi đóng thường được thiết kế theo một trong những dạng
+       sau:
+          • Đúng – sai
+          • Nhiều chọn lựa (có thể một trả lời hoặc trả lời tất cả chọn lựa)
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+          • Tỉ lệ trả lời: từ xấu đến tốt, từ rất đồng ý đến hoàn toàn không đồng ý.
+             Mỗi điểm trên tỉ lệ nên có một nghĩa rõ ràng và nhất quán và thường có
+             một điểm trung lập ở giữa
+          • Xếp hạng các chọn lựa theo thứ tự mức độ quan trọng
+   -   Xắp xếp câu hỏi: thứ tự câu hỏi phải hợp lý, phù hợp với mục tiêu khảo sát và
+       khả năng của người trả lời. Các thứ tự có thể là:
+          • Thu hẹp dần: ban đầu là những câu hỏi rộng, khái quát và càng về sau thì
+             thu hẹp đến một mục tiêu.
+          • Mở rộng dần: ban đầu đề cập đến một điểm nào đó rồi mở rộng dần phạm
+             vi đề cập
+       b. Phỏng vấn nhóm
+       Phỏng vấn nhóm là một phương pháp tốt có thể giúp giải quyết được những yêu
+cầu trái ngược nhau. Các đặc điểm của phỏng vấn nhóm bao gồm:
+   -   Nhiều phân tích viên phụ trách nhiều lãnh vực khác nhau
+   -   Nhiều đối tượng phỏng vấn khác nhau mỗi đối tượng phụ trách một lãnh vực, có
+       thể phân cấp từ quản lý đến nhân viên trực tiếp liên quan.
+   -   Tổ chức một buổi phỏng vấn chung gồm các phân tích viên và các đối tượng
+       phỏng vấn.
+   -   Mỗi phân tích viên có thể đặt câu hỏi và các đối tượng đều có thể trả lời. Phân
+       tích viên có thể ghi nhận lại chỉ những ý kiến liên quan đến lãnh vực của mình.
+       Ưu điểm:
+   -   Giảm thời gian phỏng vấn
+   -   Cho phép các đối tượng phỏng vấn nghe được ý kiến chủ đạo của lãnh đạo trên
+       những ý kiến bất đồng liên quan đến một vấn đề đặt ra. Đây là cơ hội làm cho
+       các đối tượng thông suốt được ý kiến chủ đạo liên quan đến hệ thống mới.
+       Nhược điểm:
+   -   Khó để tổ chức một buổi phỏng vấn nhóm
+       c. Quan sát trực tiếp
+       Quan sát trực tiếp tại nơi làm việc, hiện trường nhằm thu thập chính xác cách
+thức và qui trình làm việc thực tế của hệ thống.
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       Ưu điểm:
+   -   Đảm bảo tính trung thực của thông tin.
+   -   Thu thập tốt về thông tin mô tả tổng quan về hệ thống.
+       Nhược điểm:
+   -   Thời gian có thể kéo dài.
+   -   Làm cho người dùng khó chịu khi thực hiện công việc, vì có cảm giác như bị
+       theo dõi. Do đó, họ thường thay đổi cách thức làm việc không đúng với hiện
+       trạng.
+       Thông thường, người ta kết hợp các phương pháp phỏng vấn với phương pháp
+quan sát để tiến hành khảo sát.
+       d. Phân tích tài liệu và thủ tục
+       Phương pháp quan sát hệ thống hoạt động là phương pháp trực tiếp thì phương
+pháp nghiên cứu tài liệu và tủ tục là phương pháp quan sát gián tiếp, bởi vì nó không
+nghiên cứu trực tiếp ở hiện trường hệ thống mà thông qua các văn bản, giấy tờ, tài liệu,
+tập tin máy tính,… mô tả hệ thống. Phương pháp này giúp xác định chi tiết về hệ thống
+hiện hành.
+       Có rất nhiều tài liệu mô tả hoạt động hệ thống, các yêu cầu của hệ thống trong
+tương lai: tài liệu mô tả nhiệm vụ, các kế hoạch kinh doanh, cấu trúc tổ chức, các tra
+cứu về chính sách, bản mô tả công việc, các thư tín bên trong và bên ngoài, các báo cáo
+nghiên cứu,… Chúng ta có thể thu thập được nhiều loại thông tin từ các hoạt động chung
+của đơn vị đến các dữ liệu cơ bản, dữ liệu cấu trúc. Thông thường phương pháp này kết
+hợp với phương pháp phỏng vấn ở mức thấp.
+       Tuy nhiên, việc phân tích tài liệu thủ tục cũng có một số nhược điểm sau:
+   -   Các thủ tục cũng là nguồn thông tin không đúng, trùng lắp
+   -   Thiếu tài liệu
+   -   Tài liệu hết hạn
+       e. Khảo sát dùng bảng câu hỏi (questionaire)
+       Phỏng vấn là một phương pháp hiệu quả để trao đổi và thu thập được những
+thông tin quan trọng từ phía người dùng. Tuy nhiên, thực hiện phỏng vấn cũng rất tốn
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+kém về thời gian và nguồn lực. Phương phướng khảo sát dùng bảng câu hỏi ít tốn kém
+hơn, thời gian trả lời lại nhanh hơn, kết quả xác định hơn và thu thập được thông tin từ
+nhiều đối tượng hơn trong cùng một thời gian ngắn. Tuy nhiên, phương pháp này lại
+thụ động và ít mang lại chiều sâu hơn phương pháp phỏng vấn.
+2.6.    CÁC CÔNG VIỆC SAU KHẢO SÁT HIỆN TRẠNG
+2.6.1. Xử lý sơ bộ kết quả khảo sát
+        Dữ liệu thu thập được trong quá trình khảo sát hiện trạng là những dữ liệu thô,
+phân tích viên phải xem lại và hoàn thiện tài liệu thu được. Các công việc xử lý sơ bộ
+gồm: phân loại, sắp xếp, bổ sung,… làm cho nó trở nên đầy đủ, chính xác, cân đối, gọn
+gàng, dễ kiểm tra và dễ theo dõi. Qua xử lý sơ bộ, phải hoàn thành các công việc:
+   -    Làm rõ chức năng của hệ thống
+   -    Rà soát lại dữ liệu
+2.6.2. Tổng hợp kết quả khảo sát
+        Phân tích viên cần tổng hợp lại kết quả khảo sát để có được bức tranh tổng thể
+của hệ thống. Việc tổng hợp được tiến hành theo hai loại: tổng hợp các xử lý và tổng
+hợp theo dữ liệu.
+2.6.3. Hợp thức hóa kết quả khảo sát
+        Mục đích của việc hợp thức hóa kết quả khảo sát là nhằm xác định tính đúng đắn
+của thông tin và dữ liệu phản ánh yêu cầu thông tin của hệ thống và bảo đảm tính pháp
+lý của nó cho việc sử dụng sau này. Hợp thức hóa kết quả khảo sát bao gồm các công
+việc:
+   -    Hoàn chỉnh và trình bày các dữ liệu thu được để người sử dụng xem xét và cho
+        ý kiến.
+   -    Tổng hợp các tài liệu để các nhà quản lý, nhà lãnh đạo đánh giá và bổ sung.
+   -    Để đạt thêm một số quy tắc mới, như các quy tắc về an toàn hệ thống, các yêu
+        cầu về nhân sự,… Do đó, hợp thức hóa còn mang ý nghĩa là sự thỏa thuận các
+        quy tắc mới.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+2.7.   GIỚI THIỆU NGHIÊN CỨU HIỆN TRẠNG CỦA MỘT SỐ HỆ THỐNG
+THÔNG TIN
+2.7.1. Hệ thống thông tin “Quản lý kho hàng”
+       Một công ty sản xuất bánh kẹo, có nhiều kho để chứa vật tư và hàng hoá:
+   -   Kho nguyên liệu: Chứa đường, bột, hương liệu, bao bì,...
+   -   Kho nhiên liệu: Chứa xăng, dầu, than.
+   -   Kho phụ tùng: Chứa các thiết bị thay thế.
+   -   Kho thành phẩm: Chứa bánh kẹo đã sản xuất được.
+       Mỗi kho đều có thủ kho chuyên trách. Nhiệm vụ của thủ kho là xuất nhập vật tư
+hàng hoá theo phiếu xuất hoặc phiếu nhập do người quản lý kho viết ra. Ví dụ: phiếu
+xuất hoặc phiếu nhập kho thành phẩm do bộ phận kinh doanh viết, phiếu xuất hoặc
+phiếu nhập kho nguyên liệu do phòng cung ứng viết theo công việc thực tế. Ngoài ra
+định kỳ, người thủ kho phải kiểm kê và báo cáo tồn kho từng loại mặt hàng trong kho.
+Báo cáo tồn kho được dùng với mục đích sau:
+   -   Để làm kế hoạch sản xuất, ví dụ: xem xét khả năng có thể đáp ứng một hợp đồng
+       hay không.
+   -   Đối chiếu với các chứng từ xuất nhập xem tồn kho trên thực tế có phù hợp với
+       tồn kho theo chứng từ hay không. Công việc này nhằm mục đích xem có thất
+       thoát về vật tư hoặc có nhầm lẫn về chứng từ không.
+   -   Để bảo đảm sản xuất ổn định, một số mặt hàng và vật tư phải đạt được một độ
+       dự trữ lớn hơn một mức nào đó được gọi là dự trữ tối thiểu, nếu mức dự trữ này
+       thấp hơn thì quản lý kho phải làm đơn đặt hàng bổ sung. Môt số mặt hàng nào
+       đó cũng quy định một mức gọi là dự trữ tối đa, nếu tồn kho vượt quá mức này
+       thì phải có biện pháp khắc phục để tránh đọng vốn trên nguyên vật liệu hoặc
+       hàng hoá không tiêu thụ được.
+       Nếu không có sự phù hợp giữa thực tế và theo chứng từ thì hoặc có sự thất thoát
+về vật tư hàng hoá hoặc có sự nhầm lẫn về chứng từ, cần kiểm tra. Để tiện theo dõi xuất
+nhập theo chứng từ, thủ kho lập cho mỗi mặt hàng một thẻ kho. Mỗi lần xuất hoặc nhập
+hàng đều ghi vào thẻ kho đó số lượng xuất, số lượng nhập, số lượng tồn kho tương ứng.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+Bảng báo cáo tồn kho có dạng như trong tài liệu A và thẻ kho có dạng như trong tài liệu
+B.
+       Người quản lý kho không trực tiếp xuất nhập hàng hoá mà chỉ là nơi phát sinh
+các chứng từ xuất nhập. Các chứng từ chủ yếu là chứng từ xuất hoặc nhập. Khi có nhu
+cầu về vật tư, người quản lý kho tiếp xúc với Nhà cung cấp để làm đơn đặt hàng. Khi
+hàng về, sau khi giám định chất lượng, người quản lý kho viết phiếu nhập lưu lại một
+bản, một bản gửi cho kế toán để thanh toán, một bản gửi cho Nhà cung cấp và một bản
+cho thủ kho để làm thủ tục nhập kho. Đối với kho thành phẩm, việc nhập kho chỉ là thủ
+tục nội bộ theo thông báo của các phân xưởng dưới sự kiểm tra của nhà máy. Một phiếu
+nhập kho cũng có thể có nhiều mặt hàng nhưng chỉ từ một Nhà cung cấp hoặc từ một
+phân xưởng. Phiếu nhập kho có dạng như tài liệu C.
+       Đối với kho nguyên liệu hoặc kho nhiên liệu, phiếu xuất kho được thực hiện theo
+yêu cầu của sản xuất do Ban giám đốc ra lệnh.
+       Đối với kho thành phẩm, việc xuất kho chính là bán hàng, phiếu xuất kho được
+viết theo lệnh của Phòng kinh doanh. Một phiếu xuất cũng gồm bốn bản như phiếu
+nhập. Hoá đơn kiêm Phiếu xuất kho có dạng như tài liệu D.
+       Công ty không bán lẻ mà bán buôn cho một số đại lý có hợp đồng với công ty,
+vì vậy các phiếu xuất không nhất thiết phải thanh toán ngay. Tuy nhiên, nếu khách hàng
+thanh toán ngay sẽ được một khoản khấu trừ trên giá gọi là chiết khấu. Hồ sơ khách
+hàng (lập từ hợp đồng đại lý) cũng được lưu trữ để xác nhận khi họ đến lấy hàng. Hồ
+sơ có dạng như trong tài liệu E
+       Định kỳ (hàng ngày, hàng tuần, hàng tháng, hàng quý, hàng năm) người quản lý
+kho phải báo cáo với Ban lãnh đạo biến động của kho hàng bao gồm: tồn kho mỗi mặt
+hàng đầu kỳ, số lượng nhập, số lượng xuất trong kỳ và tồn kho cuối kỳ. Ban lãnh đạo
+căn cứ vào các số liệu này để nắm tình hình kinh doanh của công ty. Báo cáo tồn kho
+có dạng như trong tài liệu F.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+                       Một số tài liệu liên quan đến HTTT “Quản lý kho hàng"
+Tài liệu A
+
+ Công ty Hải Hà                BÁO CÁO TỒN KHO TÍNH ĐẾN NGÀY ..............
+
+ STT            Tên hàng             Mã hàng           Đơn vị         Đơn giá              Tồn kho            Ghi chú
+ 1       Bánh Chocola              A01                  Kg                                      356
+ 2       Kẹo chanh                 B07                  Kg                                      250
+ 3       Bánh quy bơ               A12                  Kg                                      57
+ 4       ....                      ....                 ....                ....                ....
+
+Tài liệu B
+
+  Công ty Hải Hà                               THẺ KHO SỐ .....
+
+  Tên kho: Kho Thành phẩm
+  Tên vật tư hàng hoá: Kẹo Chocola                               Mã hàng: A01
+  Dự trữ tối thiểu:        50Kg                                  Đơn giá: 2500đ
+  Dự trữ tối đa: 500Kg                                           Đơn vị tính: Kg
+                Ngày               Số chứng từ                 Nhập                      Xuất            Tồn
+
+                                          Tồn đầu kỳ                                                          25
+
+        12/01/2004                             8345                   200                                    225
+
+        16/01/2004                             5467                                         150               75
+
+        02/03/2004                             2345                                             20            55
+
+        ...                  ...                         ...                       ...                 ...
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+Tài liệu C
+
+   Công ty Hải Hà                           PHIẾU NHẬP KHO                            Ngày .....
+   Kho Nguyên liệu                                                                    Số phiếu: 015
+   Họ tên người giao: Trần Văn B                                                      Địa chỉ: 116 Quang Trung
+
+   Đơn vị: Công ty Nông sản thực phẩm Tỉnh Q.Ngãi
+   Theo Hợp đồng số: 1234/KT                                                          Ngày 12/10/2004
+
+      Stt           Tên hàng          Mã hàng         Đơn vị       Đơn giá        Số lượng           Thànhtiền
+
+      1       Đường RE                      C09              Kg         5000           12000             60000000
+
+      2       Bột mì Pháp                   B14              Kg         2500             5000            12500000
+
+      3       Sữa Hà lan                    B16              Lit        8000             1500            12000000
+
+              ...                   ...              ...                        ...                ...
+
+          Tổng cộng:                                                                          84500000
+          Người giao           Người kiểm tra                 Thủ kho                 Thủ trưởng
+
+Tài liệu D
+
+   Công ty Hải Hà                   HOÁ ĐƠN KIÊM PHIẾU XUẤT KHO
+   Kho Thành phẩm                   Ngày xuất.....                 Số phiếu: 215
+   Họ tên người nhận: Hoàng Dùi                            Địa chỉ: 18 Hùng vương
+   Đơn vị: Đại lý số 4
+   Theo Hợp đồng đại lý số : 124/HDDL                      ngày 12/02/2004
+
+      Stt           Tên hàng          Mã hàng         Đơn vị       Đơn giá        Số lượng           Thànhtiền
+
+      1       Kẹo Chôcôla                  A09               Kg         7000              120             840000
+
+      2       Bánh quy bơ                  A14               Kg         3000               50             150000
+
+      3       Kẹo sữa                       C16              Kg         8000               10               80000
+
+              ...                   ...              ...                        ...                ...
+
+            Tổng cộng:                                                                             1070000
+             Người nhận         Người viết phiếu                Kế toán        Thủ kho                    Thủ trưởng
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+Tài liệu E
+
+  Công ty Hải Hà                              DANH SÁCH ĐẠI LÝ
+   Mã           Tên đại lý          Địa chỉ           Số hợp           Ngày ký        Đại diện               Số
+                                                       đồng                                              CMND
+
+   D1     Cửa hàng 1-5              01-Lê Duẫn           1356               1/2/03     Bà Năm           1234567
+
+   D2     Bà Nọi                       12 Lê lợi         5678               4/6/02     Chị Tèo          9876544
+
+   D3
+
+          ...                ...                                      ...                              ...
+
+Tài liệu F
+
+  Công ty Hải Hà                              BẢNG CÂN ĐỐI KHO
+  Kho Thành phẩm                              Tính từ ngày ......... đến ngày ...........
+
+   Stt          Tên vật tư    Mã       Đơn      Tồn đầu kỳ            Lượng          Lượng       Tồn cuối kỳ
+                hàng hoá                vị                             xuất          nhập
+
+   1      Kẹo Chôcôla         A09        Kg             120                 200          150                      70
+
+   2      Bánh quy bơ         A14        Kg               80                  20             0                    60
+
+   3      Kẹo sữa             C16        Kg               40                250          300                      90
+
+          ...                ...                                ...                              ...
+
+2.7.2. Hệ thống thông tin “Quản lý đào tạo”
+         Một trường đại học dân lập cần tin học hoá việc quản lý đào tạo của trường, qua
+nghiên cứu hiện trạng, một phân tích viên đã nắm được các thông tin như sau:
+         Trường đại học dân lập này chỉ gồm một bộ máy quản lý, còn toàn bộ giáo viên
+phải thuê từ các trường đại học khác và các viện với danh nghĩa cộng tác viên. Trường
+đã lập sẵn một hồ sơ các cộng tác viên gồm tên, tuổi, giới tính, địa chỉ, trình độ chuyên
+môn (cử nhân, thạc sĩ, tiến sĩ). Tùy theo trình độ, cộng tác viên được trả một thù lao
+(tính theo tiết) khác nhau.
+         Trường có một số lớp, mỗi lớp có thể có số sinh viên khác nhau. Các môn học
+được tuân theo một chương trình đào tạo được Bộ GD &amp; ĐT phê duyệt về nội dung
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+chuyên môn và số tiết cần thiết. Trường phải thuê một số phòng học ở nhiều nơi nên
+phải có một hồ sơ về các phòng học bao gồm số phòng và địa chỉ. Việc xếp lịch học
+cho các lớp phải phù hợp với số chổ của mỗi phòng học.
+       Đầu năm học, hội đồng nhà trường lập một bảng phân công giảng dạy gồm tên
+thầy, tên lớp dạy, môn dạy. Phòng đào tạo phải xếp lịch học và phòng học. Một thầy có
+thể dạy nhiều môn và nhiều lớp khác nhau. Do thời gian của giáo viên phụ thuộc rất
+nhiều thời gian công tác của họ tại cơ quan, nên thời khóa biểu chỉ có thể lập và điều
+chỉnh theo từng tuần. Giáo viên phải đề đạt yêu cầu của họ vào thứ năm hàng tuần để
+kịp làm lịch học cho tuần sau. Trong thời khóa biểu sẽ chỉ ra thứ mấy, từ tiết nào đến
+tiết nào, ai dạy lớp nào, môn nào, ở phòng học nào. Trong thời khóa biểu phát cho các
+lớp, mỗi ô của thời khóa biểu đều có để một khoảng trống để giáo viên ký xác nhận
+giảng dạy và được gọi là phiếu giảng dạy. Cuối tuần các lớp phải nộp lại cho đào tạo
+phiếu giảng dạy này.
+       Hàng tháng căn cứ vào bảng xác nhận, nhà trường làm bảng thanh toán cho giáo
+viên trên cơ sở số giờ thực dạy. Đôi khi cũng phải lập bảng thanh toán theo yêu cầu của
+giáo viên hay hiệu trưởng trong những trường hợp đặc biệt, ví dụ như giáo viên chấm
+dứt hợp đồng giảng dạy giữa tháng.
+       Cuối mỗi học kỳ, đào tạo vụ căn cứ vào bảng xác nhận để xác định số giờ đã dạy
+của mỗi môn. Nếu môn nào của lớp nào dạy chưa đủ thời gian thì lập kế hoạch dạy bù.
+       Ngoài việc quản lý và thanh toán giảng dạy, hệ thống thông tin này còn phải đáp
+ứng được các thông tin về giáo viên, học sinh, môn học, các phòng học cơ hữu và các
+phòng học thuê mướn của trường.
+2.8.   PHÂN TÍCH HỆ THỐNG CHỨC NĂNG
+Để nâng cao tính thực hành, chúng ta sử dụng một ví dụ xuyên suốt trong bài giảng này.
+
+                       Bài toán kinh doanh bán buôn
+       Một công ty kinh doanh bán buôn một số mặt hàng. Công ty tiếp nhận các đơn
+hàng của khách và sau đó kiểm tra tính hợp lệ của đơn hàng. Nếu đơn hàng hợp lệ thì
+kiểm tra khách là cũ hay mới. Nếu khách cũ có nợ quá hạn (rà soát sổ công nợ) hay
+khách mới (đối chiếu với danh sách khách) thì chuyển đơn hàng sang bộ phận giải quyết
+khách, ngược lại chuyển đơn hàng cho bộ phận xử lý đơn hàng.
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+          Tại bộ phận giải quyết khách, nếu là khách mới người ta sẽ trao đổi với khách
+nhằm hiểu rõ thêm về khách, sau đó thực hiện ký một hợp đồng nếu thấy cần thiết. Còn
+đối với khách nợ quá hạn, người ta sẽ phải giải quyết nợ cũ và quyết định có cho phép
+khách tiếp tục mua hàng mới hay không.
+          Tại bộ phận xử lý đơn hàng, người ta đối chiếu đơn hàng với thẻ kho để biết
+được khả năng đáp ứng yêu cầu của khách. Trong trường hợp thiếu hàng hay có các
+yêu cầu mặt hàng mới, người ta sẽ thỏa thuận với khách, sau đó lập phiếu giao hàng
+và phiếu thu rồi chuyển chúng cho bộ phận gom và gửi hàng.
+          Bộ phận gom và gửi hàng sẽ tổ chức gom hàng theo phiếu giao hàng và gửi hàng
+cho khách. Trước khi gửi hàng, người ta thỏa thuận với khách về phương thức gửi và
+giao cho khách một phiếu giao hàng kèm theo một phiếu thu.
+2.8.1. Mô hình phân cấp chức năng (nghiệp vụ)
+          Mô hình phân cấp chức năng BFD (Business Function Diagram) hay sơ đồ cấu
+trúc tổ chức SCO (Structured Chart of Organization) xác định chức năng nghiệp vụ
+được tiến hành sau khi có sơ đồ tổ chức.
+          a. Định nghĩa:
+          Mô hình chức năng nghiệp vụ là một sơ đồ phân rã có thứ bậc một cách đơn giản
+các chức năng của tổ chức.
+          Bản chất của mô hình phân cấp chức năng là trả lời cho câu hỏi hệ thống làm
+gì?
+          b. Ký hiệu sử dụng
+          Hình chữ nhật có tến chỉ chức năng ở bên trong.
+          Đường thẳng gấp khúc để nối các chức năng ở mức trên và các chức năng ở
+mức trực tiếp thuộc nó.
+          c. Ý nghĩa của mô hình
+      -   Sơ đồ chức năng nghiệp vụ là công cụ mô hình phân tích đầu tiên.
+      -   Xác định phạm vi hệ thống được nghiên cứu.
+      -   Cung cấp các thành phần cho việc khảo sát và phân tích tiếp.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+   -   Mô hình được xây dựng dần cùng với tiến trình khảo sát chi tiết giúp cho việc
+       định hướng hoạt động khảo sát.
+   -   Cho phép xác định phạm vi các chức năng hay miền cần nghiên cứu của tổ chức.
+   -   Cho phép xác định vị trí của mỗi công việc trong toàn hệ thống, tránh trùng lắp,
+       giúp phát hiện các chức năng còn thiếu.
+   -   Là cơ sở để thiết kế cấu trúc hệ thống chương trình của hệ thống sau này.
+       Mô hình có thể có 2 dạng:
+   -   Dạng chuẩn: mô tả các chức năng cho một miền khảo sát (hay cả hệ thống nhỏ).
+   -   Dạng công ty: mô tả tổng thể toàn bộ chức năng của một tổ chức quy mô lớn.
+       d. Kỹ thuật phân mức trong mô hình
+       BFD được biểu diễn theo cách sử dụng kỹ thuật phân mức.
+Các tư tưởng:
+   -   Sử dụng cách tiếp cận top-down.
+   -   Triển khai theo hình cây.
+   -   Phân rã theo nhiều cấp (không lớn hơn 9).
+   -   Phân rã theo nguyên tắc:
+       • Một chức năng ở mức trên được phân rã thành các chức năng chi tiết ở mức
+          thấp hơn.
+       • Một chức năng được phân rã từ một chức năng ở mức trên phải là một bộ
+          phần đảm bảo thực hiện chức năng ở trên phân rã ra nó.
+       • Việc thực hiện tất cả các chức năng ở mức dưới trực tiếp phải đảm bảo thực
+          hiện được toàn bộ các chức năng ở mức trên phân rã ra chúng. Đảm bảo mối
+          quan hệ giữa 2 tầng liên tiếp là quan hệ bao hàm (Cha/con).
+       • Chức năng ở gốc thể hiện nhiệm vụ tổng quát của hệ thống.
+       • Chức năng được xem là ở mức thấp nhất (ngọn/lá) nếu không thể phân rã
+          tiếp. Ở mức thấp nhất, thường công việc chỉ do một cá nhân thực hiện.
+Các bước phân rã:
+   1. Triển khai cây phân cấp từ gốc đến ngọn, lần lượt qua các tầng (mỗi tầng là một
+       mức mô tả của hệ thống, bao gồm một tập hợp chức năng)
+   2. Sắp xếp các chức năng thuộc các mức
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+   -   Không nên phân rã quá 6 mức (hệ nhỏ thường gồm 3 mức)
+   -   Ở mỗi mức, các chức năng nên sắp xếp trên cùng một hàng.
+   -   Sơ đồ cần bố trí cân đối, rõ ràng để dễ kiểm tra.
+   -   Có yếu tố thẩm mỹ.
+   3. Đặt tên các chức năng
+   -   Mỗi chức năng có một tên duy nhất, các chức năng khác nhau, tên phải khác
+       nhau.
+   -   Tên dùng ở dạng động từ - bổ ngữ.
+   -   Tên chức năng phải phản ánh một cách ngắn gọn, sát thực nội dung của chức
+       năng đó và sát nội dung công việc thực tế mà tổ chức thực hiện.
+   4. Rà soát các chức năng và hoàn chỉnh sơ đồ
+
+            Hình 2. 2: Sơ đồ phân cấp chức năng của bài toán quản lý bán buôn
+
+2.8.2. Ma trận cân đối thực thể - chức năng (ma trận E-F)
+       Ma trận thực thể - chức năng là một công cụ để phân tích dữ liệu trong quá trình
+khảo sát.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+a.       Mô tả ma trận
+         Ma trận gồm các dòng và các cột:
+     -   Mỗi cột ứng với một thực thể. Các thực thể thu thập được trong quá trình khảo
+         sát.
+     -   Mỗi dòng ứng với một chức năng. Các chức năng này thường là chức năng ở
+         mức hai hoặc mức ba của sơ đồ phân cấp chức năng nghiệp vụ.
+     -   Không nên sử dụng các chức năng chi tiết vì quá phức tạp. Cũng không nên sử
+         dụng chức năng quá gộp sẽ làm cho sự phân tích ít ý nghĩa.
+     -   Ở mỗi ô giao giữa một chức năng và một thực thể, ta đánh dấu chéo nếu có mối
+         quan hệ giữa chức năng và thực thể này, bỏ trống nếu chúng không có quan hệ
+         với nhau.
+     -   Đôi khi, thay cho gạch chéo, người ta còn sử dụng các chữ sau để ghi vào các ô:
+         • Chữ R nếu quan hệ đó là “đọc (Read) dữ liệu của thực thể”.
+         • Chữ C nếu quan hệ là “tạo (Create) thực thể” bao gồm cả tạo, cập nhật và xóa
+                dữ liệu trong thực thể.
+         • Chữ U nếu quan hệ “cập nhật (Update) thực thể” bao gồm cả cập nhật, đọc
+                dữ liệu trong thực thể.
+b.       Ý nghĩa và vai trò của ma trận
+     -   Cho biết mối quan hệ giữa chức năng và các thực thể liên quan.
+     -   Cho phép phát hiện những thực thể hay chức năng cô lập:
+         • Nếu một dòng ứng với một chức năng không có ô nào được đánh dấu thì chức
+                năng đó hoặc không phải là một tiến trình thông tin (có tác động lên các đối
+                tượng thông tin), hoặc đánh dấu sót, hoặc khảo sát đã bỏ sót thực thể mang
+                dữ liệu.
+         • Nếu một cột nào không có một ô được đánh dâu thì hoặc là khảo sát thiếu
+                chức năng, hoặc đánh dấu sót, hoặc thực thể là không cần phải thu thập, có
+                thể bỏ đi.
+         Trong ma trận này, ta chỉ xét các chức năng liên quan đến các bộ phận mà được
+tổ chức cho là có ý nghĩa quyết định đến mục tiêu của tổ chức.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+                        Hình 2. 3: Ma trận thực thể - chức năng
+
+                  Hình 2. 4: Ma trận E-F bài toán kinh doanh bán buôn
+
+2.9.   MÔ HÌNH HÓA CÁC TIẾN TRÌNH CỦA HỆ THỐNG
+2.9.1. Sơ đồ luồng dữ liệu mức ngữ cảnh
+       Sơ đồ luồng dữ liệu mức ngữ cảnh là mô hình hệ thống ở mức tổng quát nhất.
+Ta xem cả hệ thống như một chức năng. Các tác nhân ngoài cùng các luồng dữ liệu vào
+ra từ tác nhân ngoài đến hệ thống được xác định.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+      Tác nhân ngoài (ngoài hệ thống) là một người, một nhóm người, một tổ chức hay
+một hệ thống khác có quan hệ về mặt thông tin với hệ thống. Chúng vừa là nguồn cung
+cấp thông tin cho hệ thống, vừa là nơi tiêu thụ sản phẩm thông tin của hệ thống.
+      Sự có mặt của tác nhân ngoài chỉ ra giới hạn của phạm vi nghiên cứu. “Tác nhân
+ngoài” không nhất thiết ở ngoài tổ chức, chẳng hạn, “Bộ phận kế toán” trong tổ chức
+đó là tác nhân ngoài của chức năng “quản lý kho”. Đôi khi có thể mở rộng tác nhân
+ngoài như môt chức năng hay một hệ thống con khác của hệ thống bao nó.
+      Người ta dùng hình vuông để biểu diễn tác nhân ngoài, tên của nó là một danh
+từ.
+      Hệ thống được xác định với một chức năng hệ thống, tác nhân ngoài là X, Y, và
+Z, các luồng dữ liệu từ hệ thống vào ra X, Y và Z như hình sau:
+
+                               Hình 2. 5: Sơ đồ ngữ cảnh
+
+      Tác nhân ngoài cũng như dòng thông tin được biểu diễn bằng các danh từ và
+được xác định từ nhật ký khảo sát.
+
+                 Hình 2. 6: Sơ đồ ngữ cảnh bài toán kinh doanh bán buôn
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+2.9.2. Mô hình luồng dữ liệu
+       Sơ đồ chức năng nghiệp vụ mới cho ta biết các phần tử cấu thành của hệ thống
+xét theo hoạt động chức năng, nhìn từ trên xuống theo các mức độ chi tiết khác nhau.
+Mô hình/sơ đồ luồng dữ liệu sẽ cho ta biết các chức năng đó liên kết với nhau như thế
+nào đúng như hoạt động thực tế đã diễn ra.
+       Sơ đồ luồng dữ liệu (Data Flow Diagram - DFD) là một công cụ mô tả dòng
+thông tin nghiệp vụ nối kết giữa các chức năng trong một phạm vi được xét.
+a.     Ký hiệu sử dụng
+
+                Hình 2. 7: Ký hiệu sử dụng biểu diễn mô hình luồng dữ liệu
+
+b.     Xử lý
+       Xử lý/Tiến trình có thể là một hay vài chức năng (chức năng gộp) thể hiện một
+chuỗi hoạt động nào đó của tổ chức. Thông thường một xử lý có thể tạo mới, sử dụng,
+cập nhật hay hủy bỏ thông tin. Trường hợp một xử lý không tạo mới hay hủy bỏ thông
+tin thì nó sẽ chuyển đổi dữ liệu từ dòng dữ liệu vào thành dữ liệu của dòng dữ liệu ra.
+       Tên của xử lý thường là động từ + bổ ngữ.
+
+                              Hình 2. 8: Ví dụ một số xử lý
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+c.    Dòng dữ liệu
+      Dòng dữ liệu biểu diễn sự di chuyển dữ liệu, thông tin từ thành phần này đến
+thành phần khác trong mô hình dòng dữ liệu.
+      Người ta mô tả dòng dữ liệu bằng một mũi tên một hay hai chiều, gắn với nó có
+thể là tên dữ liệu được truyền đi. Đầu mũi tên chỉ hướng đi của dòng dữ liệu.
+
+                          Hình 2. 9: Ví dụ một số luồng dữ liệu
+
+d.    Kho dữ liệu
+      Kho dữ liệu dùng để biểu diễn cùng chứa thông tin, dữ liệu bên trong hệ thống
+thông tin. Các vùng chứa thông tin này thường thể hiện dưới các hình thức khác nhau:
+sổ sách, hồ sơ, bảng tra cứu, tập phiếu bằng giấy, cơ sở dữ liệu,…
+      Tên của kho dữ liệu phải là danh từ (cụm danh từ).
+
+                          Hình 2. 10: Ví dụ một số kho dữ liệu
+
+e.    Đầu cuối/Tác nhân ngoài
+      Tác nhân ngoài là một người, một nhóm người hay một tổ chức ở bên ngoài hệ
+thống nhưng có quan hệ thông tin với hệ thống.
+      Tên tác nhân ngoài thường là danh từ (cụm danh từ).
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+                         Hình 2. 11: Ví dụ một mô hình luồng dữ liệu
+
+f.       Vai trò
+         Giữ một vai trò quan trọng trong việc phân tích hệ thống. Nó giúp các nhà phân
+tích:
+     -   Xác định nhu cầu thông tin của người dùng ở mỗi chức năng
+     -   Vạch kế hoạch và minh họa phương án thiết kế
+     -   Làm phương tiện giao tiếp giữa nhà phân tích và người sử dụng
+     -   Đặc tả yêu cầu hình thức và đặc tả thiết kế hệ thống
+     -   Cho thấy sự vận động và biến đổi thông tin từ một tiến trình này sang một tiến
+         trình khác, chỉ ra thông tin nào cần có sẵn trước khi thực hiện một chức năng,
+         cho biết chiều hướng của thông tin vận động, những thông tin có thể cung cấp
+         cho hệ thống.
+g.       Các quy định liên quan đến các khái niệm
+     -   Không vẽ hai tác nhân ngoài trao đổi trực tiếp với nhau
+     -   Không có trao đổi trực tiếp giữa 2 kho dữ liệu mà không qua chức năng xử lý
+     -   Nói chung kho đã có tên, cho nên luồng thông tin ra vào kho không cần tên.
+         Thường chỉ khi cập nhật/trích từ kho chỉ một phần thông tin ở kho, người ta mới
+         dùng tên cho luồng dữ liệu.
+     -   Vì lí do trình bày nên các tác nhân ngoài, kho dữ liệu có thể được vẽ ở nhiều nơi
+         cho dễ đọc, dễ hiểu
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+     -   Đối với kho dữ liệu phải có ít nhất 1 luồng thông tin vào và 1 luồng thông tin ra.
+         Kho chỉ có iuồng vào là “ kho vô tích sự” , kho chỉ có luổng ra là “ kho rỗng”
+         (trừ kho cung cấp từ ngoài vào)
+h.       Hạn chế
+     -   Không mô tả được sự đồng bộ trong xử lý
+     -   Không biểu diễn được các yếu tố thời gian, không gian: không có các ký hiệu để
+         chỉ ra mặt thời gian thực hiện xử lý, cũng như không gian là nơi xảy ra xử lý.
+     -   Không mô tả được biến cố trong hệ thống: cuối tháng tính lương, cuối ngày kiểm
+         kê tồn kho,…
+     -   Không biểu diễn được vai trò thực hiện xử lý, không biểu diễn được trách nhiệm
+         liên đới.
+2.9.3. Kỹ thuật phân mức mô hình luồng dữ liệu
+         Có 3 mức cơ bản:
+     -   Sơ đồ luồng dữ liệu mức ngữ cảnh
+     -   Sơ đồ luồng dữ liệu mức đỉnh (mức 0): được phân rã từ sơ đồ mức ngữ cảnh với
+         các chức năng phân rã tương ứng mức 2 của sơ đồ phân cấp chức năng.
+     -   Sơ đồ luồng dữ liệu mức dưới đỉnh
+a.       Các nguyên tắc phân rã
+     -   Các luồng dữ liệu được bảo toàn
+     -   Các tác nhân ngoài bảo toàn
+     -   Có thể xuất hiện các kho dữ liệu
+     -   Bổ sung thêm các luồng dữ liệu nội tại nếu cần thiết
+b.       Đầu vào
+     -   Sơ đồ phân cấp chức năng
+     -   Sơ đồ luồng dữ liệu mức ngữ cảnh
+     -   Nhật ký khảo sát
+c.       Các bước thực hiện
+         Bước 1: Xác định luồng dữ liệu giữa các chức năng bộ phận với các tác nhân
+ngoài.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       Bước 2: Xác định luồng dữ liệu nội bộ và kho (có thể có) giữa các chức năng bộ
+phận cấu thành.
+       Sơ đồ luồng dữ liệu mức dưới đỉnh phân rã từ sơ đồ mức đỉnh. Các chức năng
+được định nghĩa riêng từng sơ đồ hoặc ghép lại thành một sơ đồ trong trường hợp sơ đồ
+đơn giản.
+       Các thành phần của sơ đồ được phát triển như sau:
+   -   Về chức năng: phân rã chức năng cấp trên thành chức năng cấp dưới thấp hơn.
+   -   Luồng dữ liệu:
+   -   Kho dữ liệu: dần dần xuất hiện theo nhu cầu nội bộ
+   -   Tác nhân ngoài: xuất hiện trong giới hạn ở mức ngữ cảnh, ở dưới không thể thêm
+       gì.
+       Các thông tin vào và các bước thực hiện giống như khi vẽ sơ đồ mức đỉnh.
+       Xem xét ví dụ sau về phân mức sơ đồ luồng dữ liệu:
+
+                                Hình 2. 12: Ví dụ BFD
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+                    Hình 2. 13: Ví dụ về sơ đồ luồng dữ liệu mức đỉnh
+
+  Hình 2. 14: Ví dụ sơ đồ luồng dữ liệu mức dưới đỉnh (mức 1) của các chức năng A, B, C
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+Trình tự vẽ thường là:
+   1. Vẽ các tác nhân ngoài xung quanh biên
+   2. Xác định số lượng và tên các chức năng con
+   3. Xác định các luồng dữ liệu liên kết từng chức năng với các tác nhân ngoài
+   4. Xác định luồng dữ liệu liên kết nội bộ giữa các chức năng và chú ý đến sự xuất
+      hiện các kho nội bộ.
+   5. Kiểm soát sơ đồ (đủ dòng thông tin vào ra cho mỗi chức năng lớn/nhỏ, kho dữ
+      liệu, vết của tiến trình/chức năng,…)
+   6. Chỉnh lại sơ đồ (nếu cần thiết) để giảm bớt các đường cắt nhau (cho phép vẽ kho
+      dữ liệu/tác nhân ngoài ở nhiều nơi trong sơ đồ).
+
+         Hình 2. 15: Sơ đồ luồng dữ liệu mức 0 của bài toán kinh doanh bán buôn
+
+2.10. BÀI TẬP, THẢO LUẬN
+   1. So sánh giữa câu hỏi mở và câu hỏi đóng.
+   2. So sánh giữa 2 phương pháp khảo sát: phỏng vấn và bảng câu hỏi
+   3. Vẽ sơ đồ ngữ cảnh, sơ đồ phân cấp chức năng, ma trận thực thể - chức năng, sơ
+      đồ luồng dữ liệu cho các bài toán sau:
+Bài 1: Bài toán mô tả về hoạt động Quản lý đặt chỗ và làm thủ tục lên máy bay.
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+Hành khách sau khi đã mua vé và đến ngày đi thì trước tiên phải tiếp xúc với nhân viên
+hãng hàng không để xác nhận lại việc đi này của mình để nhân viên này làm công tác
+giữ chỗ cho chuyến bay. Sau đó, trước giờ lên máy bay thì hành khách tới sân bay để
+làm thủ tục lên máy bay. Các hoạt động này được mô tả cụ thể như sau:
+      -   Xử lý giữ chỗ: Hành khách yêu cầu giữ chỗ, nếu được chấp nhận, một hồ sơ giữ
+          chỗ được lập và hành khách sẽ được trao lại vé đã được xác nhận giữ chỗ.
+      -   Làm thủ tục lên máy bay: Hành khách tới làm thủ tục lên máy bay. Nếu vẫn còn
+          chỗ trống, hành khách sẽ được trao thẻ lên máy bay. Nếu không, hành khách sẽ
+          phải chờ chuyến bay kế tiếp.
+Bài 2: Bài toán mô tả về hoạt động của quỹ AB.
+Khách hàng muốn vay tiền ở quỹ AB, phải làm đơn vay. Đơn này được tiếp nhận bởi
+bộ phận cho vay của quỹ. Bộ phận này tiến hành duyệt đơn vay, và trả lời đơn được
+chấp nhận hay từ chối. Khi đơn được chấp nhận, quỹ thực hiện cho khách vay và tiến
+hành ghi thông tin vào sổ ghi nợ.
+          Khi khách hàng có yêu cầu trả, bộ phận thu nợ dựa vào thông tin trong sổ ghi nợ
+để tiến hành phân loại khách: khách trả đúng hạn hay không đúng hạn. Sau đó, bộ phận
+này sẽ tiến hành tính lãi suất tương ứng với từng loại khách và cập nhật lại vào sổ ghi
+nợ.
+Bài 3: Cho biết quá trình tính lương trong một tháng của một công ty được thực hiện
+như sau:
+Cuối từng tháng, để tính lương cho nhân viên, ngưởi ta phải kiểm tra ngày công của các
+nhân viên trong tháng đó. Việc kiểm tra ngày công được thực hiện nhờ bảng chấm công
+và được cập nhật vào tệp hồ sơ nhân viên. Tiếp theo, bộ phận kế toán sẽ thực hiện việc
+tính các khoản lương cho nhân viên theo quy định của công ty. Bảng lương của cơ quan
+được trình cho Ban giám đốc và sau đó được gởi đến cho nhân viên. Dữ liệu liên quan
+tới quá trình tính lương được cập nhật vào tệp Thu nhập.
+          Việc tính thuế thu nhập được thực hiện nhờ các dữ liệu đã có trong tệp Thu nhập
+và tệp Hồ sơ nhân viên. Sau khi tính xong, dữ liệu lại được cập nhật vào các tệp này;
+đồng thời bảng kê tiền thuế, tiền thuế sẽ được gởi lên Kho bạc nhà nước và hóa đơn thu
+thuế được gởi cho các nhân viên phải chịu thuế thu nhập.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+Bài 4: Hoạt động của một hệ thống xử lý bán hàng được mô tả như sau:
+Khi khách hành gởi một đơn đặt hàng cho bộ phận tiếp nhận đơn hàng, bộ phận này sẽ
+nhận đơn đặt hàng và trả một biên lai cho khách. Các dữ liệu liên quan tới quá trình
+nhận đơn hàng sẽ được lưu giữ trong tệp Giao dịch. Vào cuối từng ngày, người ta tiến
+hành xử lý các giao dịch bằng cách lấy các dữ liệu trong tệp Giao dịch kết hợp với việc
+tra cứu dữ liệu của tệp Kiểm soát bán hàng. Sau khi thực hiện xong quá trình này, các
+dữ liệu lại được cập nhật vào tệp Kiểm soát bán hàng, đồng thời một số dữ liệu được
+chọn lọc sẽ được lưu trữ vào tệp Phân tích bán hàng. Dữ liệu của tệp Phân tích bán hàng
+lại được sử dụng để chuẩn bị cho quá trình phân tích bán hàng. Kết quả được chọn của
+quá trình phân tích bán hàng sẽ được gởi cho những ngưởi quản lý có liên quan.
+Bài 5: Bài toán mô tả hoạt động quản lý bến xe khách.
+Khi khách hàng đến mua vé, bộ phận bán vé sẽ tìm kiếm những thông tin phù hợp với
+yêu cầu của khách. Sau đó, bộ phận này sẽ trả lời có vé hay không có vé để cho khách
+biết. Nếu có vé thì tiến hành bán vé theo lựa chọn của khách.
+       Các phương tiên chuyên chở phải được quản lý chặt chẽ từ khi mới nhập về đến
+khi thanh lý. Cụ thể, khi kiểm tra số lượng thấy số lượng phương tiện không đủ đáp ứng
+nhu cầu, bộ phận quản lý phương tiện sẽ liên hệ với nhà cung cấp để đặt mua xe mới.
+Phiếu giao hàng được giao kèm theo khi nhà cung cấp giao xe mới. Khi kiểm tra tình
+trạng xe và nhận thấy xe không đảm bảo chất lượng, bộ phận quản lý phương tiện sẽ
+tiến hành thanh lý xe. Công việc điều động xe được thực hiện khi có yêu cầu điều động
+xe từ nhà quản lý. Mọi thông tin điều động đều được quản lý lại thông qua sổ điều động.
+       Hàng tuần, các bộ phận phải báo cáo lại cho người quản lý về số lượng xe, số
+lượng vé bán được và số lần điều động từng xe.
+Bài 6: Cho biết hoạt động của một trung tâm cho thuê băng đĩa như sau:
+Để có thể thuê băng đĩa tại trung tâm, ban đầu khách hàng phải làm thủ tục để được cấp
+thẻ thuê. Bộ phận làm thẻ sẽ dựa trên thông tin do khách hàng cấp và cấp cho khách
+một thẻ thuê. Thông tin về việc cấp thẻ sẽ được lưu lại.
+       Mỗi lần đến thuê băng đĩa, khách hàng sẽ trình thẻ thuê và nêu yêu cầu thuê cụ
+thể. Bộ phận cho thuê sẽ xử lý và đáp ứng yêu cầu thuê của khách. Ngay khi thuê, khách
+hàng sẽ nhận được hóa đơn thuê và thanh toán tiền thuê luôn.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       Khi khách đến trả băng đĩa, bộ phận trả sẽ xử lý yêu cầu trả của khách hàng . Dữ
+liệu liên quan đến các hoạt động thuê và trả đều được lưu lại.
+       Định kỳ hàng tháng, các báo cáo về doanh thu sẽ được lập và gởi cho người quản
+lý trung tâm.</baihoc>
+<baitap bai="2" loai="goc" de="Bài 1: Bài toán mô tả về hoạt động Quản lý đặt chỗ và làm thủ tục lên máy bay. Bài giảng Phân tích và thiết kế Hệ thống thông tin Hành khách sau khi đã mua vé và đến ngày đi thì trước tiên phải tiếp xúc với nhân viên hãng hàng không để xác nhận lại việc đi này của mình để nhân viên này làm công tác giữ chỗ cho chuyến bay. Sau đó, trước giờ lên máy bay thì hành khách tới sân bay để làm thủ tục lên máy bay. Các hoạt động này được mô tả cụ thể như sau: - Xử lý giữ chỗ: Hành khách yêu cầu giữ chỗ, nếu được chấp nhận, một hồ sơ giữ chỗ được lập và hành khách sẽ được trao lại vé đã được xác nhận giữ chỗ. - Làm thủ tục lên máy bay: Hành khách tới làm thủ tục lên máy bay. Nếu vẫn còn chỗ trống, hành khách sẽ được trao thẻ lên máy bay. Nếu không, hành khách sẽ phải chờ chuyến bay kế tiếp." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BaiGiangPTTKHTTT.pdf, trang 31-62."/>
+<baitap bai="2" loai="goc" de="Bài 2: Bài toán mô tả về hoạt động của quỹ AB. Khách hàng muốn vay tiền ở quỹ AB, phải làm đơn vay. Đơn này được tiếp nhận bởi bộ phận cho vay của quỹ. Bộ phận này tiến hành duyệt đơn vay, và trả lời đơn được chấp nhận hay từ chối. Khi đơn được chấp nhận, quỹ thực hiện cho khách vay và tiến hành ghi thông tin vào sổ ghi nợ. Khi khách hàng có yêu cầu trả, bộ phận thu nợ dựa vào thông tin trong sổ ghi nợ để tiến hành phân loại khách: khách trả đúng hạn hay không đúng hạn. Sau đó, bộ phận này sẽ tiến hành tính lãi suất tương ứng với từng loại khách và cập nhật lại vào sổ ghi nợ." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BaiGiangPTTKHTTT.pdf, trang 31-62."/>
+<baitap bai="2" loai="goc" de="Bài 3: Cho biết quá trình tính lương trong một tháng của một công ty được thực hiện như sau: Cuối từng tháng, để tính lương cho nhân viên, ngưởi ta phải kiểm tra ngày công của các nhân viên trong tháng đó. Việc kiểm tra ngày công được thực hiện nhờ bảng chấm công và được cập nhật vào tệp hồ sơ nhân viên. Tiếp theo, bộ phận kế toán sẽ thực hiện việc tính các khoản lương cho nhân viên theo quy định của công ty. Bảng lương của cơ quan được trình cho Ban giám đốc và sau đó được gởi đến cho nhân viên. Dữ liệu liên quan tới quá trình tính lương được cập nhật vào tệp Thu nhập. Việc tính thuế thu nhập được thực hiện nhờ các dữ liệu đã có trong tệp Thu nhập và tệp Hồ sơ nhân viên. Sau khi tính xong, dữ liệu lại được cập nhật vào các tệp này; đồng thời bảng kê tiền thuế, tiền thuế sẽ được gởi lên Kho bạc nhà nước và hóa đơn thu thuế được gởi cho các nhân viên phải chịu thuế thu nhập. Bài giảng Phâ" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BaiGiangPTTKHTTT.pdf, trang 31-62."/>
+<baitap bai="2" loai="goc" de="Bài 4: Hoạt động của một hệ thống xử lý bán hàng được mô tả như sau: Khi khách hành gởi một đơn đặt hàng cho bộ phận tiếp nhận đơn hàng, bộ phận này sẽ nhận đơn đặt hàng và trả một biên lai cho khách. Các dữ liệu liên quan tới quá trình nhận đơn hàng sẽ được lưu giữ trong tệp Giao dịch. Vào cuối từng ngày, người ta tiến hành xử lý các giao dịch bằng cách lấy các dữ liệu trong tệp Giao dịch kết hợp với việc tra cứu dữ liệu của tệp Kiểm soát bán hàng. Sau khi thực hiện xong quá trình này, các dữ liệu lại được cập nhật vào tệp Kiểm soát bán hàng, đồng thời một số dữ liệu được chọn lọc sẽ được lưu trữ vào tệp Phân tích bán hàng. Dữ liệu của tệp Phân tích bán hàng lại được sử dụng để chuẩn bị cho quá trình phân tích bán hàng. Kết quả được chọn của quá trình phân tích bán hàng sẽ được gởi cho những ngưởi quản lý có liên quan." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BaiGiangPTTKHTTT.pdf, trang 31-62."/>
+<baitap bai="2" loai="goc" de="Bài 5: Bài toán mô tả hoạt động quản lý bến xe khách. Khi khách hàng đến mua vé, bộ phận bán vé sẽ tìm kiếm những thông tin phù hợp với yêu cầu của khách. Sau đó, bộ phận này sẽ trả lời có vé hay không có vé để cho khách biết. Nếu có vé thì tiến hành bán vé theo lựa chọn của khách. Các phương tiên chuyên chở phải được quản lý chặt chẽ từ khi mới nhập về đến khi thanh lý. Cụ thể, khi kiểm tra số lượng thấy số lượng phương tiện không đủ đáp ứng nhu cầu, bộ phận quản lý phương tiện sẽ liên hệ với nhà cung cấp để đặt mua xe mới. Phiếu giao hàng được giao kèm theo khi nhà cung cấp giao xe mới. Khi kiểm tra tình trạng xe và nhận thấy xe không đảm bảo chất lượng, bộ phận quản lý phương tiện sẽ tiến hành thanh lý xe. Công việc điều động xe được thực hiện khi có yêu cầu điều động xe từ nhà quản lý. Mọi thông tin điều động đều được quản lý lại thông qua sổ điều động. Hàng tuần, các bộ phận phải bá" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BaiGiangPTTKHTTT.pdf, trang 31-62."/>
+<baitap bai="2" loai="goc" de="Bài 6: Cho biết hoạt động của một trung tâm cho thuê băng đĩa như sau: Để có thể thuê băng đĩa tại trung tâm, ban đầu khách hàng phải làm thủ tục để được cấp thẻ thuê. Bộ phận làm thẻ sẽ dựa trên thông tin do khách hàng cấp và cấp cho khách một thẻ thuê. Thông tin về việc cấp thẻ sẽ được lưu lại. Mỗi lần đến thuê băng đĩa, khách hàng sẽ trình thẻ thuê và nêu yêu cầu thuê cụ thể. Bộ phận cho thuê sẽ xử lý và đáp ứng yêu cầu thuê của khách. Ngay khi thuê, khách hàng sẽ nhận được hóa đơn thuê và thanh toán tiền thuê luôn. Bài giảng Phân tích và thiết kế Hệ thống thông tin Khi khách đến trả băng đĩa, bộ phận trả sẽ xử lý yêu cầu trả của khách hàng . Dữ liệu liên quan đến các hoạt động thuê và trả đều được lưu lại. Định kỳ hàng tháng, các báo cáo về doanh thu sẽ được lập và gởi cho người quản lý trung tâm." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BaiGiangPTTKHTTT.pdf, trang 31-62."/>
+<baihoc stt="3" tieude="Chương 3. Mô hình quan niệm của hệ thống thông tin">Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+         Chương 3. MÔ HÌNH QUAN NIỆM CỦA HỆ THỐNG
+                                   THÔNG TIN
+
+Thời lượng: 11 tiết
+Kết thúc chương này, sinh viên có thể:
+   - Hiểu và xây dựng được mô hình quan niệm dữ liệu
+   - Hiểu và xây dựng được mô hình quan niệm xử lý
+
+3.1.     GIỚI THIỆU VỀ MÔ HÌNH QUAN NIỆM
+Mô hình quan niệm của một hệ thống thông tin được thiết lập từ hai mô hình liên quan
+đến nhau là mô hình quan niệm về dữ liệu và mô hình quan niệm về xử lý.
+         Mô hình quan niệm về dữ liệu: Là sự mô tả toàn bộ dữ liệu của hệ thống, những
+mô tả này độc lập với các lựa chọn môi trường cài đặt, là công cụ cho phép người phân
+tích thể hiện dữ liệu của hệ thống ở mức quan niệm. Mô hình có thể mô tả bằng ngôn
+ngữ tự nhiên hoặc bằng hình vẽ.
+         Mô hình quan niệm về xử lý: Mô tả toàn bộ các quy tắc xử lý được áp dụng cho
+dữ liệu của hệ thống.
+Mô hình quan niệm cũng là cơ sở để trao đổi giữa những người phân tích thiết kế hệ
+thống.
+3.2.     MÔ HÌNH THỰC THỂ - MỐI QUAN HỆ (Entity Relationship - ER)
+Mô hình ER được giới thiệu bởi CHEN vào năm 1976 và đã trở nên phổ biến ngày càng
+nhiều hơn. Đầu tiên, mô hình ER chỉ bao gồm các khái niệm thực thể, mối quan hệ và
+thuộc tính. Về sau, một số khái niệm khác như là thuộc tính kết hợp, cấu trúc cây tổng
+quát hóa được bổ sung vào mở rộng hơn cho mô hình ER.
+         Mô hình ER là một sự trình bày chi tiết, luận lý về dữ liệu cho một đơn vị tổ
+chức hoặc một phạm vi nghiệp vụ xác định. Mô hình ER được diễn đạt bằng các thuật
+ngữ thực thể trong mội trường nghiệp vụ, các mối quan hệ hoặc các liên kết giữa các
+thực thể này, và các thuộc tính hoặc các đặc trưng của tất cả thực thể và mối quan hệ.
+3.2.1. Các yếu tố cơ bản của mô hình thực thể - mối quan hệ
+         a. Thực thể
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       Thực thể biểu diễn lớp các đối tượng của thế giới thực. Mỗi thể hiện của thực
+thể gọi là một bản thể.
+       Tên của thực thể là danh từ hay cụm danh từ.
+       b. Mối quan hệ
+       Mối quan hệ biểu diễn sự kết hợp của hai hay nhiều thực thể.
+       Tên của mối quan hệ là động từ hay cụm danh từ
+       c. Thuộc tính
+       Thuộc tính biểu diễn các đặc trưng cơ bản của thực thể hay mối quan hệ. Tất cả
+thông tin mở rộng được biểu diễn bởi thuộc tính.
+
+                 Hình 3. 1: Thực thể SINH VIÊN và tập thuộc tính của nó
+
+3.2.2. Mô hình thực thể - mối quan hệ mở rộng (Extended Entity Relationship –
+EER)
+       a. Cấu trúc cây phân cấp
+       Trong mô hình EER, chúng ta có thể thiết lập cấu trúc cây phân cấp giữa các
+thực thể.
+       Một thực thể E là một tổng quát hóa của một nhóm các thực thể E1, E2,…,En
+nếu mối đối tượng của lớp E1, E2,…, En cũng là đối tượng của lớp E. Biểu diễn sơ đồ
+của tổng quát hóa được trình bày trong hình tiếp theo. Mũi tên của cung sẽ chỉ vào thực
+thể tổng quát hóa.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+                           Hình 3. 2: Biểu diễn tổng quát hóa
+
+      Mỗi thực thể có thể được bao gồm trong nhiều tổng quát hóa, có thể đồng thời
+đóng vai trò thực thể tổng quát của một quan hệ tổng quát hóa và là thực thể tập con
+của một quan hệ tổng quát hóa khác.
+      Tính chất quan trọng của cấu trúc phân cấp là tính thừa kế: tất cả các thực thể
+chuyên biệt sẽ thừa kế tất cả các đặc trưng của thực thể tổng quát: bao gồm thuộc tính
+và mối quan hệ. Sơ đồ dưới cho thấy thực thể E1 và E2 thừa hưởng từ E thuộc tính A
+và mối quan hệ R với thực thể E’.
+
+              Hình 3. 3: Ví dụ minh họa tính thừa kế của cấu trúc phân cấp
+
+      Sự tương quan giữa các thực thể chuyển biệt và thực thể tổng quát: phủ toàn
+bộ/toàn phần và không phủ toàn bộ/bán phần.
+      Sự tương quan giữa các thực thể chuyên biệt: riêng biệt và chồng lắp.
+
+                           Hình 3. 4: Ví dụ cấu trúc phân cấp
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+      b. Tập con
+      Tập con là một trường hợp đặc biệt của tổng quát hóa chỉ có một thực thể tập
+con. Tính bao phủ của tập con rõ ràng là bán phần và riêng biệt.
+
+                                Hình 3. 5: Ví dụ tập con
+
+      c. Thuộc tính phức hợp
+      Thuộc tính phức hợp (subset) là một nhóm các thuộc tính mà có liên hệ trong ý
+nghĩa khi sử dụng.
+
+                          Hình 3. 6: Ví dụ thuộc tính phức hợp
+
+      d. Mối quan hệ mở rộng
+      Là mối quan hệ được định nghĩa trên ít nhất một mối quan hệ khác. Trong thực
+tế, một số tình huống của mối quan hệ được tạo ra không phải do ngữ nghĩa liên kết
+giữa hai thực thể mà dựa trên ít nhất một mối quan hệ đã tồn tại trước. Trường hợp này
+mô hình ER truyền thống không cho phép biểu diễn, trong mô hình EER chúng ta biểu
+diễn điều này thông qua mối quan hệ mở rộng.
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+                          Hình 3. 7: Ví dụ mối quan hệ mở rộng
+
+       Trong mô hình trên, R2 là mối quan hệ mở rộng bởi vì nó được xác định dựa
+trên mối quan hệ R1 và E3. Do đó R1 phải tồn tại trước R2 và thể hiện của R2 sẽ được
+xác định dựa trên thể hiện của R1 và E3.
+3.2.3. Một số ký hiệu vẽ mô hình thực thể - mối quan hệ
+
+                   Hình 3. 8: Một số ký hiệu vẽ mô hình ER theo CHEN
+
+3.3.   MỐI QUAN HỆ GIỮA CÁC TẬP THỰC THỂ
+3.3.1. Phân loại mối quan hệ
+       Có các loại sau:
+   -   Mối quan hệ nhị phân/nhị nguyên: là mối quan hệ giữa hai thực thể
+   -   Mối quan hệ đa phân/đa nguyên: là mối quan hệ giữa 3 hay nhiều thực thể
+   -   Mối quan hệ phản thân/ đệ quy: là mối quan hệ giữa một thực thể với chính nó
+3.3.2. Vai trò
+       Biểu diễn ngữ nghĩa của một thực thể tham gia vào mối quan hệ. Mỗi vai trò có
+một tên và một bản số.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+   -   Tên vai trò: thể hiện bằng động từ. Thông thường tên của vai trò được che dấu
+       và không được hiển thị trong mô hình, thay vào đó tên của mối quan hệ có thể
+       lấy tên của một vai trò hoặc một tên ghép các tên thực thể.
+   -   Bản số: quy định ràng buộc về số lượng đối tượng của một thực thể có thể tham
+       gia vào mối quan hệ. Một bản số được thể hiện bởi một cặp giá trị (mincard,
+       maxcard) biểu diễn giá trị tối thiểu, giá trị tối đa cho phép một đối tượng của
+       thực thể có thể tham gia vào mối quan hệ.
+
+                     Hình 3. 9: Ví dụ mô tả vai trò của mối quan hệ
+
+       Tùy theo giá trị của bản số tối đa mà mối quan hệ giữa thực thể E1 và thực thể
+E2 có các trường hợp sau:
+   -   Nếu maxcard(E1,R) = 1 và maxcard(E2,R) = 1 thì ta gọi là mối quan hệ một –
+       một (one – to – one).
+   -   Nếu maxcard(E1,R) = 1 và maxcard(E2,R) = n thì ta gọi là mối quan hệ một –
+       nhiều (one – to – many).
+   -   Nếu maxcard(E1,R) = n và maxcard(E2,R) = 1 thì ta gọi là mối quan hệ nhiều –
+       một (many – to – one).
+   -   Nếu maxcard(E1,R) = n và maxcard(E2,R) = n thì ta gọi là mối quan hệ nhiều –
+       nhiều (many – to – many).
+3.3.3. Thể hiện
+       Một thể hiện của mối quan hệ là một tổ hợp không trùng lắp của các thực thể
+tham gia vào mối quan hệ.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+                  Hình 3. 10: Ví dụ minh họa thể hiện của mối quan hệ
+
+3.4.   MỘT VÀI NHẬN XÉT ĐỂ RÀ SOÁT LẠI MÔ HÌNH ER
+3.4.1. Đối tượng nào có thể làm tập thực thể?
+       Một đối tượng có thể làm thực thể nếu nó được tạo nên từ một lớp các cá thể
+tương ứng.
+       Trong một số trường hợp thì khái niệm cần biểu diễn có thể là một đối tượng của
+thế giới thực nhưng trong phạm vi ứng dụng thì số thể hiện chỉ là một. Nếu không có
+nhu cầu mở rộng ứng dụng về sau thì không nên xem là thực thể.
+       Ngoài ra, trong một số trường hợp khác, đối tượng quan tâm không có một cấu
+trúc đặc trưng (vd chỉ có một thuộc tính) thì cũng cẩn thận khi quyết định xem đó có là
+một thực thể không.
+3.4.2. Yếu tố thông tin gì có thể làm thuộc tính cho một tập thực thể ?
+       Các thông tin đặc trưng của một thực thể đều có thể là thuộc tính của thực thể
+đó.
+       Chọn là thực thể khi có thể xác định một số đặc trưng căn bản như các thuộc
+tính, mối quan hệ, tổng quát hóa hay tập con.
+       Chọn là thuộc tính khi đối tượng có cấu trúc nguyên tố đơn giản và không có các
+đặc trưng khác.
+3.4.3. Loại bỏ các thuộc tính vô nghĩa
+       Loại bỏ các thông tin không bao giờ được sử dụng đến.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+3.4.4. Tính độc lập của các thuộc tính
+          Thuộc tính của thực thể không được suy ra từ các thuộc tính khác của thực thể
+đó.
+3.4.5. Xác định thuộc tính khoá
+          Trong mỗi thực thể nên chọn khóa chỉ có một thuộc tính để tiện việc xử lý. Nếu
+trong thực thể không có thuộc tính nào làm khóa thì nên áp đặt một thuộc tính bên ngoài
+làm ngoài. Thông thường thuộc tính áp đặt này có dạng: Mã + &lt;Tên thực thể&gt;.
+3.4.6. Tách thuộc tính có dung lượng lớn
+          Nếu thuộc tính là thuộc tính phức hợp thì thay thuộc tính này bằng các thuộc tính
+tạo thành nó.
+3.4.7. Xử lý một thuộc tính lặp nằm trong một tập thực thể
+          Nếu trong một thực thể có một thuộc tính lặp thì tách nó thành một thực thể
+riêng.
+3.4.8. Xử lý một nhóm thuộc tính lặp nằm trong cùng một tập thực thể
+          Nếu trong một thực thể có một nhóm thuộc tính lặp thì tách chúng thành một
+thực thể riêng.
+3.4.9. Các tập thực thể có mối quan hệ ISA
+          Mối quan hệ ISA tương ứng cấu trúc phân cấp trong EER.
+          Tổng quát hóa được chọn khi chúng ta cho rằng một số đặc trưng sẽ được liên
+kết ở cấp thấp hơn (vd, thuộc tính hay mối quan hệ).
+3.5.      MÔ HÌNH QUAN NIỆM VỀ DỮ LIỆU
+          Mô hình quan niệm dữ liệu là một sự trình bày về dữ liệu được tổ chức. Mục
+đích của mô hình quan niệm dữ liệu là chỉ ra những quy tắc về ngữ nghĩa và mối quan
+hệ giữa các dữ liệu có thể được. Thực chất, mô hình quan niệm dữ liệu là mô hình thực
+thể - mối quan hệ.
+          Để mô tả mô hình quan niệm về dữ liệu của một hệ thống thông tin, chúng ta cần
+mô tả thông tin theo các bước sau:
+      -   Mô tả toàn bộ các thực thể và các thuộc tính tương ứng của chúng.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+   -   Mô tả toàn bộ các mối quan hệ: ý nghĩa của mỗi mối quan hệ, các thuộc tính
+       tương ứng của chúng (nếu có), bản số của mỗi thực thể trong mối quan hệ, loại
+       mối quan hệ.
+   -   Vẽ mô hình thực thể - mối quan hệ.
+
+       Hình 3. 11: Mô hình quan niệm về dữ liệu của bài toán kinh doanh bán buôn
+
+3.6.   MÔ HÌNH QUAN NIỆM VỀ XỬ LÝ
+Mục tiêu:
+   -   Biểu diễn xử lý ở mức nội dung, làm rõ bản chất của xử lý thông tin hệ thống.
+   -   Độc lập với các yếu tố vật lý nhằm đặt một mức độ trừu tượng hóa cao.
+3.6.1. Quy trình mô hình hóa xử lý
+       Mô tả yêu cầu có thể dùng văn bản hoặc dùng mô hình. Việc dùng mô hình là
+một cách biểu diễn trực quan mà qua đó người tiếp nhận có thể dễ dàng hiểu về hệ thống
+hơn so với những hình thức khác. Quy trình cấu trúc hóa yêu cầu là một quá trình cần
+phải làm rõ được hiện trạng hệ thống để hiểu, đánh giá và từ đó có thể đưa ra được một
+mô hình mô tả hệ thống mới, mô hình mới này chính là phần biểu diễn hệ thống mới.
+Tuy nhiên, trong giai đoạn phân tích chúng ta chỉ cần biểu diễn hệ thống có gì hơn là
+hệ thống như thế nào.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+                Hình 3. 12: Sơ đồ biểu diễn cấu trúc hóa yêu cầu hệ thống
+
+       Kèm theo việc mô hình hóa hệ thống hiện tại, người ta còn có một quá trình đánh
+giá, nhận xét hệ thống về những gì mà hệ thống đạt được cũng như là những yếu kém
+của hệ thống đồng thời các yêu cầu mới cũng được phát sinh.
+       Mô hình quan niệm của hệ thống mới có thay đổi hay không so với hệ thống
+đang tồn tại điều này phụ thuộc vào từng hệ thống.
+   -   Nếu hệ thống cũ là một hệ thống nâng cấp, quy trình hoạt động đã chuẩn hóa cao
+       và việc xây dựng hệ thống mới thực chất là sự tin học hóa, nâng cấp cải tạo về
+       các yếu tố vật lý như phương tiện, phương pháp, công nghệ, kỹ thuật,... Những
+       hệ thống như vậy sẽ có mô hình quan niệm mới rất ít thay đổi so với mô hình
+       quan niệm cũ.
+   -   Nếu hệ thống là một hệ thống làm mới thì mô hình quan niệm mới sẽ có nhiều
+       thay đổi so với hệ thống cũ và có khi phải làm mới hoàn toàn. Trong một số
+       trường hợp chúng ta không cần phải mô hình hóa hiện trạng của hệ thống cũ mà
+       chỉ cần đưa ra được mô hình quan niệm cho hệ thống mới, các hoạt động của hệ
+       thống cũ chỉ cần mô tả bằng văn bản kèm theo những nhận xét đánh giá.
+       Để mô hình hóa xử lý chúng ta có thể sử dụng các mô hình đã nêu trong Chương
+2. Bây giờ, chúng ta sẽ xem xét ví dụ “Quản lý tồn kho” như sau:
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+      a. Phát biểu bài toán ví dụ
+      Một đơn vị nhà hàng sản xuất các thức ăn phục vụ khách hàng. Nhà hàng có
+nhiều đơn vị phòng ban, mỗi đơn vị xử lý các nghiệp vụ khác nhau. Sau đây là mô tả
+nghiệp vụ quản lý tồn kho nguyên vật liệu (NVL) tại kho:
+      Kho có hai vai trò phân biệt: thủ kho và nhân viên quản lý nhập xuất. Chi tiết
+của quy trình nhập xuất tồn NVL chi tiết như sau:
+   1) Đầu ngày, nhân viên nhập xuất nhận NVL được giao từ nhà cung cấp (NCC),
+      đồng thời tiếp nhận hóa đơn giao hàng và lưu lại hóa đơn này, rồi cập nhật số
+      NVL tăng trong ngày vào sổ nhật ký nhập.
+   2) Sau đó, thủ kho sẽ tham khảo hóa đơn và ghi nhận số lượng NVL nhập trong
+      ngày vào sổ nhật ký tồn kho.
+   3) Cuối ngày, thủ kho sẽ nhận báo cáo sử dụng NVL sử dụng từ bộ phận sản xuất
+      (BPSX). Thủ kho sẽ thực hiện việc kiểm kê số tồn thực trong kho để đối chiếu
+      với số sử dụng. Sau đó, sẽ cập nhật số sử dụng và số tồn kiểm kê được vào sổ
+      nhật ký tồn.
+   4) Tiếp theo thủ kho sẽ xác định các NVL tồn dưới mức tối thiểu.
+   5) Dựa trên những NVL này, thủ kho sẽ lập đơn đặt mua NVL gởi cho NCC để
+      giao hàng ngày hôm sau.
+   6) Nhân viên nhập cũng kiểm tra các hóa đơn chưa thanh toán và lập thanh toán
+      cho NCC, và cập nhật lại vào sổ nhật ký nhập thông tin hóa đơn đã thanh toán.
+Sổ nhật ký nhập có mẫu:
+
+          Hình 3. 13: Biểu mẫu sổ nhật ký nhập của bài toán “Quản lý tồn kho”
+
+Nhật ký tồn kho có mẫu:
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+          Hình 3. 14: Biểu mẫu nhật ký tồn kho của bài toán “Quản lý tồn kho”
+
+      b. Sơ đồ ngữ cảnh
+
+               Hình 3. 15: Sơ đồ ngữ cảnh của bài toán “Quản lý tồn kho”
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+      c. Sơ đồ xử lý mức vật lý biểu diễn đầy đủ các yếu tố vật lý về vai trò, thời
+gian,…
+
+            Hình 3. 16: Sơ đồ xử lý mức vật lý của bài toán “Quản lý tồn kho”
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       d. Sơ đồ xử lý mức quan niệm của hệ thống hiện tại
+
+       Hình 3. 17: Sơ đồ xử lý mức quan niệm của hệ thống “Quản lý tồn kho” hiện tại
+
+       e. Sơ đồ xử lý mức quan niệm của hệ thống mới
+       Hệ thống “Quản lý tồn kho” có các yêu cầu mới như sau:
+   -   Hệ thống mới phải tự động tính tồn kho tại bất kỳ thời điểm nào trong ngày
+       (không còn kiểm kê nữa).
+   -   Hệ thống mới phải tổng kết được tỉ lệ hao hụt NVL hàng tháng.
+       Để giải quyết yêu cầu đầu tiên, chúng ta có thể đàm phán với người sử dụng để
+thống nhất về cách xử lý. Giả sử đã thống nhất về cách xử lý như sau: bởi vì để tính
+được tồn kho mà không phải kiểm kê thì cần phải có thông tin nhập, xuất và tồn đầu kỳ
+của NVL. Trong mô hình quan niệm xử lý của hệ thống cũ thiếu nội dung về quản lý
+xuất NVL mà NVL được BPSX lấy trong kho để sử dụng và gởi báo cáo sử dụng cuối
+ngày dựa trên sản phẩm sản xuất được nhân với định mức do đó số liệu này thông
+thường cũng không chính xác hoàn toàn. Do vậy, cách giải quyết của hệ thống mới:
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+   -   Hệ thống mới sẽ thiết lập một quy trình xử lý xuất nguyên vật liệu: BPSX khi có
+       nhu cầu NVL thì sẽ gởi yêu cầu đến thủ kho, thủ kho dựa vào thông tin yêu cầu
+       này để xử lý xuất NVL.
+   -   Loại bỏ công việc kiểm kê để tính tồn kho.
+       Đối với yêu cầu thứ hai chúng ta thêm vào mô hình xử lý thống kê tỉ lệ hao hụt.
+
+        Hình 3. 18: Sơ đồ xử lý mức quan niệm của hệ thống “Quản lý tồn kho” mới
+
+       Sơ đồ trên cho thấy chúng ta đã loại bỏ đầu cuối Kho vì hoạt động kiểm kê không
+còn nữa và thêm vào Thủ kho để tiếp nhận thông tin báo cáo hao hụt, thồng thời một
+kho dữ liệu mới Phiếu xuất được thêm vào để cho phép lưu trữ dữ liệu về xuất NVL
+cho BPSX.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+      f. Chuyển đổi từ sơ đồ vật lý qua sơ đồ quan niệm
+Loại bỏ các yếu tố tường minh xuất hiện trong mô hình theo ngôn ngữ, ký hiệu
+
+       Hình 3. 19: Ví dụ minh họa việc loại bỏ các yếu tố tường minh trong mô hình
+
+Loại bỏ các chức năng vật lý
+      Các chức năng gắn liền với một công cụ, dụng cụ, hay một biện pháp xử lý. Và
+khi các công cụ, dụng cụ hay biện pháp thay đổi thì chức năng này không còn lý do để
+tồn tại. Ví dụ: hoạt động ghi nhật ký bán hàng vào sổ được thực hiện khi phương pháp
+xử lý chứng từ thủ công, hoạt động này sẽ không còn cần thiết khi dùng phương pháp
+tự động trên máy tính.
+Loại bỏ các hoạt động công việc
+      Cần loại bỏ đi những hoạt động trong mô hình được xem là thuần công việc. Ví
+dụ: gởi đơn hàng NGK, giao hàng NGK,…
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+Gộp xử lý và kho dữ liệu trùng lắp
+
+                Hình 3. 20: Ví dụ minh họa gộp xử lý và kho dữ liệu trùng lắp
+
+Chú ý:
+   -     Có thể các ô xử lý hoặc kho dữ liệu có nội dung không hoàn toàn giồng nhau,
+         nhưng việc gộp này nhằm để tránh việc biểu diễn trùng lắp.
+   -     Quá trình gộp có thể dẫn đến các tình huống dòng dữ liệu không hợp lệ do không
+         tồn tại kho dữ liệu hoặc ô xử lý mà dòng dữ liệu đi ra hoặc đi vào nó. Do đó, đối
+         với những dòng dữ liệu này chúng ta thực hiện như sau:
+            o Chuyển dòng dữ liệu về vị trí đã gộp
+            o Hủy bỏ dòng dữ liệu
+            o Gộp dòng dữ liệu với một dòng dữ liệu đã tồn tại
+Loại bỏ các khái niệm tổ chức thực hiện
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+3.6.2. Mô hình tựa Merise
+      Ở trên là các minh họa về việc dùng DFD để biểu diễn xử lý thông tin. Tuy nhiên,
+các ký hiệu và khái niệm còn rất hạn chế do mô hình DFD không hỗ trợ nhiều các hệ
+thống ký hiệu cho phép biểu diễn đầy đủ ở mức vật lý. Do đó, chúng ta có thể sử dụng
+một số mô hình khác để biểu diễn tốt hơn về xử lý thông tin hệ thống: Flowchart,
+Merise,…Sau đây, bài giảng sẽ trình bày về mô hình tựa Merise.
+      a. Hệ thống ký hiệu
+                  Bảng 3. 1: Hệ thống ký hiệu trong mô hình tựa Merise
+
+      Ký hiệu                                     Tên gọi
+                      Biến cố.
+                      Mỗi biến cố có đặc tính là nó thuộc biến cố ngoài môi trường
+                      hay biến cố trong hệ thống, có đặc tính là biến cố vào hay biến
+                      cố ra. Đối với biến cố vào được phân ra làm hai dạng: loại
+                      biến cố phát động và biến cố điều kiện
+
+                      Tập các biến cố
+                      Tập biến cố gồm hai loại: tập biến cố vào và tập biến cố ra
+
+                      Điều kiện phát động biến cố
+
+                      Qui tắc quản lý (QTQL)
+
+                      Qui tắc quản lý có điều kiện ra
+
+  ĐK1 ĐK2 …
+
+                      Dữ liệu. Gồm có hai loại: dữ liệu vào và dữ liệu ra cho của
+                      qui tắc xử lý
+
+                      Phương tiện biểu diễn dữ liệu trên giấy
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       b. Một số lưu ý cho mô hình tựa Merise
+
+                        Hình 3. 21: Minh họa mô hình tựa Merise
+
+   -   Nếu không có gì thì dấu mũi tên đi vào có ý nghĩa “và”, nghĩa là tất cả các biến
+       cố sẵn sàng thì mới bắt đầu thực hiện quy tắc quản lý.
+   -   Biến cố quan trọng thường xảy ra sau cùng (còn gọi là biến cố phát động), với
+       biến cố phát động thì mũi tên vào được biểu diễn bằng mũi tên kép
+
+                 Hình 3. 22: Minh họa cách biểu diễn biến cố phát động
+
+   -   Trước khi thực hiện quy tắc quản lý có thể có điều kiện phát động và được biểu
+       diễn thành một biểu thức điều kiện. Biểu thức điều kiện gắn liền với nội dung
+       của các biến cố vào.
+   -   Kết quả ra của một quy tắc quản lý có thể có điều kiện ra và được gọi là điều
+       kiện ra của quy tắc quản lý. Điều kiện ra của quy tắc quản lý gắn liền với nội
+       dung của quy tắc quản lý.
+   -   Dữ liệu không là một biến cố vào hay ra của một quy tắc quản lý.
+   -   Bất kỳ một nghiệp vụ quản lý nào cũng phải có điểm dừng. Do vậy khi mô hình
+       có tính chất lặp thường phải có quy tắc quản lý nhắc nhở cho hệ thống.
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+        Hình 3. 23: Minh họa cách biểu diễn quy tắc quản lý nhắc nhở cho hệ thống
+
+   -   Khi một biến cố cùng trỏ vào hai quy tắc quản lý thì nó mang ý nghĩa là hoặc sẽ
+       thực hiện quy tắc quản lý này, hoặc sẽ thực hiện quy tắc quản lý kia, chứ nó
+       không mang ý nghĩa là dùng chung cho hai quy tắc quản lý cùng xảy ra một lúc.
+   -   Khi gặp một biến cố phức tạp ta có thể phân rã thành các biến cố ở dạng đơn
+       giản hơn.
+       c. Phương pháp xây dựng mô hình quan niệm xử lý tựa Merise
+   • Bước 1: Xây dựng các hệ thống con và lập sơ đồ thông lượng thông tin (giữa hệ
+       thống con hoặc giữa hệ thống con và môi trường bên ngoài).
+   • Bước 2: Lập sơ đồ liên hoàn các biến cố.
+   • Bước 3: Lập mô hình quan niệm xử lý cho từng quy trình.
+3.7.   BÀI TẬP, THẢO LUẬN
+   1. Vẽ mô hình tựa Merise cho bài 3 Chương 2.
+   2. Vẽ mô hình thực thể - mối quan hệ
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+Bài 1: Để quản lý thông tin vê một diễn đàn trên một Website, người ta tổ chức một
+CSDL nhằm quản lý các tập thực thể sau:
+       THANHVIEN: tập các thành viên tham gia diễn đàn, có các thuộc tính: MATV
+(mã thành viên, thuộc tính khóa) và TENTV (tên thành viên)
+       BAIVIET: tập các bài viêt, có các thuộc tính: MABV (mã bài viết, thuộc tính
+khóa), TIEUDE (tiêu đề bài viết) và NOIDUNG (nội dung bài viết)
+       CHUDE: tập các chủ đề của các bài viết, có các thuộc tính MACD (mã chủ đề,
+thuộc tính khóa) và TENCD (tên chủ đề)
+       Ngoài ra, hệ thống này còn hỗ trợ việc quản lý các mối quan hệ GOI, THUOC,
+và THAOLUAN với ngữ nghĩa như sau:
+                     (t, b) ϵ GOI: thành viên t có bài gởi bài viết b
+                      (b, c) ϵ THUOC: bài viết b thuộc chủ đề c
+               (b, b’) ϵ THAOLUAN: bài viết b thảo luận về bài viết b’
+Lưu ý rằng:
+   -   Mỗi một bài viết phải do đúng một và chỉ một thành viên gởi lên, còn mỗi một
+       thành viên có thể gởi nhiều bài viết.
+   -   Một bài viết khi được gởi lên diễn đàn chỉ thuộc một chủ đề nào đó, và cũng có
+       những chủ đề có thể không có bất kỳ bài viết nào.
+   -   Mỗi một bài viết có thể là một bài thảo luận cho một bài viết đã được gởi trước
+       đó, hoặc cũng có thể là không (tức là một bài viết được gởi lên để các thành viên
+       khác tham gia thảo luận). Hiển nhiên, có thể có những bài viết được gởi lên diễn
+       đàn những không có ai thảo luận
+Bài 2: Khoa CNTT cần tổ chức một CSDL hiện hành để quản lý các phòng thực hành
+máy tính. Cho biết các thông tin sau đầy về các tập thực thể:
+       PHONGMAY: Thông tin về mỗi phòng máy bao gồm: SOPHONG (số phòng)
+và NGUOIQL (tên người quản lý phòng máy)
+       MAYTINH: Các máy tính được đánh số, mỗi máy có một SOMAY duy nhất.
+Ngoài ra mỗi máy tính còn có các thông tin về cấu hình máy: CPU, RAM, HDD. Mỗi
+phòng máy phải có tối thiểu 20 máy và tối đa 50 máy
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       MONHOC: Để tiện cho việc bố trí thực hành, CSDL còn phải cho biết mỗi một
+phòng máy có khả năng đáp ứng thực hành cho những môn học nào. Mỗi môn học có
+thực hành ở phòng máy có các thông tin: MAMH (mã môn học), TENMH (tên môn
+học) và SODVHT (số đơn vị học trình). Hiển nhiên mỗi môn học có thể được thực hành
+ở các phòng máy khác nhau.
+Bài 3: Để hỗ trợ việc quản lý mua bán hàng hóa tại một cửa hàng, người ta xây dựng
+một CSDL nhằm giúp quản lý các mặt hàng (bao gồm các thông tin: mã hàng, tên hàng,
+đơn vị tính, số lượng hiện có, giá bán hiện thời), các phiếu nhập hàng (bao gồm các
+thông tin: số phiếu, ngày nhập, tên nhà cung cấp), và các hóa đơn xuất hàng (bao gồm
+các thông tin: số hóa đơn, ngày bán, tên người mua hàng). Ngoài ra, cần quản lý các
+thông tin khác như sau:
+   -   Mỗi phiếu nhập hàng nhập những mặt hàng nào với số lượng và đơn giá tương
+       ứng là bao nhiêu.
+   -   Mỗi hóa đơn xuất hàng xuất những mặt hàng nào với số lượng và đơn giá tương
+       ứng là bao nhiêu.
+Bài 4: Một trang web quản lý phòng mạch nha khoa cần quản lý các thành viên
+truy cập trang web. Thông tin các thành viên bao gồm username, password, họ
+tên, email, số điện thoại, năm sinh. Thành viên trang web bao gồm 3 loại bệnh
+nhân, nha sỹ và admin. Với bệnh nhân, ta cần lưu thêm CMND, địa chỉ, nghề nghiệp
+và nơi sinh. Với nha sỹ, ta cần lưu thêm chuyên môn, chức vị, học vị, nơi công tác
+chính. Với admin, ta cần lưu thêm cấp bậc của admin. Một bệnh nhân trước khi đến
+khám có thể hẹn lịch khám trước thông qua trang web hoặc do nha sỹ ghi phiếu hẹn.
+Thông tin phiếu hẹn bao gồm mã phiếu, ngày lập phiếu, ngày giờ hẹn, số thứ tự hẹn,
+nội dung hẹn, trạng thái, mã nha sỹ hẹn khám, mã bệnh nhân được hẹn và trạng thái thể
+hiện phiếu này do nha sỹ hẹn hay bệnh nhân hẹn.
+Bài 5: Một quỹ tín dụng cần tổ chức một cơ sở dữ liệu để quản lý hoạt động cho vay
+vốn đối với khách hàng. Cho biết một số thông tin liên quan đến hoạt động của quỹ này
+như sau:
+       Những người vay vốn được gọi là khách hàng. Mỗi một khách hàng được quản
+lý với các thông tin: mã khách hàng, tên khách hàng, địa chỉ liên hệ.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       Quỹ tín dụng có các hình thức vay vốn khác nhau như vay sản xuất, vay kinh
+doanh, vay chăn nuôi,… Mỗi một hình thức vay vốn được đánh một mã số duy nhất,
+được qui định thời gian vay tối đa (tính theo tháng) và lãi suất hàng tháng.
+       Khi khách hàng muốn vay vốn phải lập hồ sơ vay vốn. Ngoài mã hồ sơ, mỗi một
+hồ sơ vay vốn còn phải thể hiện được số tiền vay, ngày bắt đầu vay, vay theo hình thức
+nào và là hồ sơ của khách hàng nào.
+       Việc trả tiền vốn và lãi của các hồ sơ vay vốn được thực hiện theo từng tháng.
+Cứ đến kỳ hạn mỗi tháng, quỹ sẽ lập phiếu thanh toán cho các hồ sơ trong đó thể hiện
+được các thông tin sau: mã số phiếu, ngày thanh toán, số tiền vốn, số tiền lãi phải trả và
+phiếu thanh toán đó là của hồ sơ vay vốn nào.
+Bài 6: Một Trung tâm tin học cần tổ chức một cơ sở dữ liệu để quản lý việc ghi danh
+và nộp học phí của học viên. Cho biết một số thông tin liên quan như sau:
+       Mỗi một học viên được cấp một mã học viên duy nhất và được quản lý với các
+thông tin bao gồm họ tên, ngày sinh, nơi sinh và địa chỉ.
+       Mỗi một lớp học khi được mở sẽ được gán một mã lớp học. Ngoài ra, lớp học
+còn có các thông tin như tên lớp, ngày khai giảng, học phí, loại chứng chỉ được đào tạo.
+Khi một học viên đăng ký học một lớp học nào đó, trung tâm cần phải biết được ngày
+học viên đăng ký và mức giảm học phí áp dụng cho học viên. Hiển nhiên, một học viên
+có thể đăng ký học tại nhiều lớp khác nhau.
+       Việc nộp học phí cho mỗi đăng ký học tại một lớp của học viên là có thể nộp
+trong nhiều lần khác nhau. Mỗi khi học viên nộp học phí cho một lớp (mà học viên đã
+đăng ký học), trung tâm sẽ viết phiếu thu học phí, trong đó cho biết học viên nộp học
+phí cho lớp nào và số tiền nộp là bao nhiêu. Ngoài ra, mỗi một phiếu thu học phí được
+đánh một số phiếu duy nhất và phải cho biết ngày nộp học phí là ngày nào.
+Bài 7: Một công ty cần xây dựng hệ thống thông tin quản lý nhân sự, kết quả khảo sát
+cho thấy:
+       Công ty có nhiều phòng ban. Mỗi phòng ban có mã phòng, tên phòng. Mỗi phòng
+có một trưởng phòng. Không có chế độ một người kiêm nhiệm làm nhiều trưởng phòng,
+chưa quan tâm việc lưu thông tin lịch sử về những người đã từng làm trưởng phòng.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+         Các thông tin cần quản lý đối với một nhân viên: mã số nhân viên, họ tên, ngày
+sinh, ngày vào làm, thâm niên công tác, số điện thoại, địa chỉ.
+         Công ty cần quản lý các kỹ năng của mỗi nhân viên. Mỗi nhân viên khi vào làm
+việc ít nhất phải có một kỹ năng mà công ty cần. Để thuận tiện trong công việc quản lý,
+đơn vị đã lập danh mục các kỹ năng. Mỗi kỹ năng có: mã kỹ năng và tên kỹ năng. Để
+đánh giá mức độ thành thạo của mỗi kỹ năng mà một nhân viên có, phòng nhân sự đã
+chia mức độ thành thạo thành 10 bậc (từ 1 đến 10), số càng lớn mức độ thành thạo càng
+cao.
+         Mỗi nhân viên vào làm việc sẽ được phân công vào làm việc tại một phòng.
+Trong quá trình làm việc, nhân viên có thể được chuyển sang làm việc ở phòng khác.
+Mỗi khi chuyển phòng, nhân viên sẽ nhận được một quyết định chuyển phòng. Mỗi
+quyết định có số quyết định, ngày ký quyết định, mã số nhân viên, họ tên nhân viên, tên
+phòng ban mà nhân viên sẽ chuyển đến.
+Bài 8:
+a.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+b.</baihoc>
+<baitap bai="3" loai="goc" de="Bài 1: Để quản lý thông tin vê một diễn đàn trên một Website, người ta tổ chức một CSDL nhằm quản lý các tập thực thể sau: THANHVIEN: tập các thành viên tham gia diễn đàn, có các thuộc tính: MATV (mã thành viên, thuộc tính khóa) và TENTV (tên thành viên) BAIVIET: tập các bài viêt, có các thuộc tính: MABV (mã bài viết, thuộc tính khóa), TIEUDE (tiêu đề bài viết) và NOIDUNG (nội dung bài viết) CHUDE: tập các chủ đề của các bài viết, có các thuộc tính MACD (mã chủ đề, thuộc tính khóa) và TENCD (tên chủ đề) Ngoài ra, hệ thống này còn hỗ trợ việc quản lý các mối quan hệ GOI, THUOC, và THAOLUAN với ngữ nghĩa như sau: (t, b) ϵ GOI: thành viên t có bài gởi bài viết b (b, c) ϵ THUOC: bài viết b thuộc chủ đề c (b, b’) ϵ THAOLUAN: bài viết b thảo luận về bài viết b’ Lưu ý rằng: - Mỗi một bài viết phải do đúng một và chỉ một thành viên gởi lên, còn mỗi một thành viên có thể gởi nhiều bài viết. - Một" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BaiGiangPTTKHTTT.pdf, trang 63-87."/>
+<baitap bai="3" loai="goc" de="Bài 2: Khoa CNTT cần tổ chức một CSDL hiện hành để quản lý các phòng thực hành máy tính. Cho biết các thông tin sau đầy về các tập thực thể: PHONGMAY: Thông tin về mỗi phòng máy bao gồm: SOPHONG (số phòng) và NGUOIQL (tên người quản lý phòng máy) MAYTINH: Các máy tính được đánh số, mỗi máy có một SOMAY duy nhất. Ngoài ra mỗi máy tính còn có các thông tin về cấu hình máy: CPU, RAM, HDD. Mỗi phòng máy phải có tối thiểu 20 máy và tối đa 50 máy Bài giảng Phân tích và thiết kế Hệ thống thông tin MONHOC: Để tiện cho việc bố trí thực hành, CSDL còn phải cho biết mỗi một phòng máy có khả năng đáp ứng thực hành cho những môn học nào. Mỗi môn học có thực hành ở phòng máy có các thông tin: MAMH (mã môn học), TENMH (tên môn học) và SODVHT (số đơn vị học trình). Hiển nhiên mỗi môn học có thể được thực hành ở các phòng máy khác nhau." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BaiGiangPTTKHTTT.pdf, trang 63-87."/>
+<baitap bai="3" loai="goc" de="Bài 3: Để hỗ trợ việc quản lý mua bán hàng hóa tại một cửa hàng, người ta xây dựng một CSDL nhằm giúp quản lý các mặt hàng (bao gồm các thông tin: mã hàng, tên hàng, đơn vị tính, số lượng hiện có, giá bán hiện thời), các phiếu nhập hàng (bao gồm các thông tin: số phiếu, ngày nhập, tên nhà cung cấp), và các hóa đơn xuất hàng (bao gồm các thông tin: số hóa đơn, ngày bán, tên người mua hàng). Ngoài ra, cần quản lý các thông tin khác như sau: - Mỗi phiếu nhập hàng nhập những mặt hàng nào với số lượng và đơn giá tương ứng là bao nhiêu. - Mỗi hóa đơn xuất hàng xuất những mặt hàng nào với số lượng và đơn giá tương ứng là bao nhiêu." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BaiGiangPTTKHTTT.pdf, trang 63-87."/>
+<baitap bai="3" loai="goc" de="Bài 4: Một trang web quản lý phòng mạch nha khoa cần quản lý các thành viên truy cập trang web. Thông tin các thành viên bao gồm username, password, họ tên, email, số điện thoại, năm sinh. Thành viên trang web bao gồm 3 loại bệnh nhân, nha sỹ và admin. Với bệnh nhân, ta cần lưu thêm CMND, địa chỉ, nghề nghiệp và nơi sinh. Với nha sỹ, ta cần lưu thêm chuyên môn, chức vị, học vị, nơi công tác chính. Với admin, ta cần lưu thêm cấp bậc của admin. Một bệnh nhân trước khi đến khám có thể hẹn lịch khám trước thông qua trang web hoặc do nha sỹ ghi phiếu hẹn. Thông tin phiếu hẹn bao gồm mã phiếu, ngày lập phiếu, ngày giờ hẹn, số thứ tự hẹn, nội dung hẹn, trạng thái, mã nha sỹ hẹn khám, mã bệnh nhân được hẹn và trạng thái thể hiện phiếu này do nha sỹ hẹn hay bệnh nhân hẹn." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BaiGiangPTTKHTTT.pdf, trang 63-87."/>
+<baitap bai="3" loai="goc" de="Bài 5: Một quỹ tín dụng cần tổ chức một cơ sở dữ liệu để quản lý hoạt động cho vay vốn đối với khách hàng. Cho biết một số thông tin liên quan đến hoạt động của quỹ này như sau: Những người vay vốn được gọi là khách hàng. Mỗi một khách hàng được quản lý với các thông tin: mã khách hàng, tên khách hàng, địa chỉ liên hệ. Bài giảng Phân tích và thiết kế Hệ thống thông tin Quỹ tín dụng có các hình thức vay vốn khác nhau như vay sản xuất, vay kinh doanh, vay chăn nuôi,… Mỗi một hình thức vay vốn được đánh một mã số duy nhất, được qui định thời gian vay tối đa (tính theo tháng) và lãi suất hàng tháng. Khi khách hàng muốn vay vốn phải lập hồ sơ vay vốn. Ngoài mã hồ sơ, mỗi một hồ sơ vay vốn còn phải thể hiện được số tiền vay, ngày bắt đầu vay, vay theo hình thức nào và là hồ sơ của khách hàng nào. Việc trả tiền vốn và lãi của các hồ sơ vay vốn được thực hiện theo từng tháng. Cứ đến kỳ hạn mỗi t" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BaiGiangPTTKHTTT.pdf, trang 63-87."/>
+<baitap bai="3" loai="goc" de="Bài 6: Một Trung tâm tin học cần tổ chức một cơ sở dữ liệu để quản lý việc ghi danh và nộp học phí của học viên. Cho biết một số thông tin liên quan như sau: Mỗi một học viên được cấp một mã học viên duy nhất và được quản lý với các thông tin bao gồm họ tên, ngày sinh, nơi sinh và địa chỉ. Mỗi một lớp học khi được mở sẽ được gán một mã lớp học. Ngoài ra, lớp học còn có các thông tin như tên lớp, ngày khai giảng, học phí, loại chứng chỉ được đào tạo. Khi một học viên đăng ký học một lớp học nào đó, trung tâm cần phải biết được ngày học viên đăng ký và mức giảm học phí áp dụng cho học viên. Hiển nhiên, một học viên có thể đăng ký học tại nhiều lớp khác nhau. Việc nộp học phí cho mỗi đăng ký học tại một lớp của học viên là có thể nộp trong nhiều lần khác nhau. Mỗi khi học viên nộp học phí cho một lớp (mà học viên đã đăng ký học), trung tâm sẽ viết phiếu thu học phí, trong đó cho biết học vi" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BaiGiangPTTKHTTT.pdf, trang 63-87."/>
+<baitap bai="3" loai="goc" de="Bài 7: Một công ty cần xây dựng hệ thống thông tin quản lý nhân sự, kết quả khảo sát cho thấy: Công ty có nhiều phòng ban. Mỗi phòng ban có mã phòng, tên phòng. Mỗi phòng có một trưởng phòng. Không có chế độ một người kiêm nhiệm làm nhiều trưởng phòng, chưa quan tâm việc lưu thông tin lịch sử về những người đã từng làm trưởng phòng. Bài giảng Phân tích và thiết kế Hệ thống thông tin Các thông tin cần quản lý đối với một nhân viên: mã số nhân viên, họ tên, ngày sinh, ngày vào làm, thâm niên công tác, số điện thoại, địa chỉ. Công ty cần quản lý các kỹ năng của mỗi nhân viên. Mỗi nhân viên khi vào làm việc ít nhất phải có một kỹ năng mà công ty cần. Để thuận tiện trong công việc quản lý, đơn vị đã lập danh mục các kỹ năng. Mỗi kỹ năng có: mã kỹ năng và tên kỹ năng. Để đánh giá mức độ thành thạo của mỗi kỹ năng mà một nhân viên có, phòng nhân sự đã chia mức độ thành thạo thành 10 bậc (từ 1 đ" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BaiGiangPTTKHTTT.pdf, trang 63-87."/>
+<baitap bai="3" loai="goc" de="Bài 8: a. Bài giảng Phân tích và thiết kế Hệ thống thông tin b." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BaiGiangPTTKHTTT.pdf, trang 63-87."/>
+<baihoc stt="4" tieude="Chương 4. Mô hình tổ chức của hệ thống thông tin">Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+         Chương 4. MÔ HÌNH TỔ CHỨC CỦA HỆ THỐNG
+                                    THÔNG TIN
+
+Thời lượng: 11 tiết
+Kết thúc chương này, sinh viên có thể:
+   - Hiểu và xây dựng được mô hình tổ chức về dữ liệu
+   - Hiểu và xây dựng được mô hình tổ chức về xử lý
+
+4.1.   KHÁI NIỆM
+       Mô hình tổ chức của một hệ thống thông tin được thiết lập từ hai mô hình liên
+quan với nhau là mô hình tổ chức về dữ liệu và mô hình tổ chức về xử lý. Mô hình tổ
+chức về dữ liệu được hình thành do sự chuyển đổi các khái niệm trong mô hình quan
+niệm dữ liệu. Ở mức tổ chức thông tin được mô tả theo giải pháp cơ sở dữ liệu và thực
+chất chính là quan hệ logic của chúng, nên mức tổ chức còn được gọi là mức logic. Còn
+mô hình tổ chức vể xử lý sẽ trả lời các câu hỏi: Ai? Khi nào? Ở đau? Như thế nào?
+4.2.   MÔ HÌNH TỔ CHỨC VỀ DỮ LIỆU
+       Mô hình tổ chức dữ liệu của một hệ thống thông tin còn được gọi là mô hình dữ
+liệu logic. Hiện nay, dữ liệu được biểu diễn dưới nhiều mô hình khác nhau: mô hình
+phân cấp, mô hình mạng, mô hình quan hệ, mô hình hướng đối tượng. Tuy nhiên, phần
+lớn các hệ quản trị cơ sở dữ liệu thương mại hiện nay vẫn sử dụng các dữ liệu theo mô
+hình quan hệ, nên mô hình tổ chức dữ liệu được trình bày trong bài giảng này là mô
+hình quan hệ được chuyển đổi từ mô hình thực thể - mối quan hệ.
+4.2.1. Các khái niệm cơ bản
+       a. Quan hệ
+       Mô hình quan hệ được E. F. Codd phát triển vào đầu những năm 1970. Mô hình
+này được thiết lập trên cơ sở lý thuyết tập hợp nên nó rất dễ hiểu và được sử dụng rất
+rộng rãi trong việc tổ chức dữ liệu cho các hệ thống.
+       Các thành phần trong mô hình quan hệ gồm: Các quan hệ, các bộ, các thuộc tính;
+tương ứng với các thành phần trong mô hình thực thể - mối quan hệ (ER) là: Các thực
+thể, các thể hiện của thực thể, các thuộc tính.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+         Do đó, ta có: Mô hình ER =&gt; Mô hình quan hệ =&gt; Các bảng trong HQTCSDL.
+ Bảng 4. 1: So sánh tương ứng giữa mô hình ER, mô hình quan hệ và các bảng trong HQT
+                                            CSDL
+
+       Mô hình ER               Mô hình quan hệ           Các bảng trong HQT CSDL
+ Thực thể                    Quan hệ                     Bảng
+ Thể hiện của thực thể       Bộ                          Dòng hay bản ghi
+ Thuộc tính                  Thuộc tính                  Cột hay trường
+
+                Hình 4. 1: Ví dụ minh họa việc biểu diễn dữ liệu qua 3 mô hình
+
+Chú ý:
+   -     Các bộ trong một quan hệ không được trùng nhau.
+   -     Thuộc tính được xác định bởi tên, thứ tự của các thuộc tính trong quan hệ là
+         không quan trọng. Trong một quan hệ, tên các thuộc tính phải khác nhau (các
+         miền giá trị của các thuộc tính không nhất thiết khác nhau).
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       b. Khóa
+Khóa chính: khóa chính của một quan hệ (Primary Key – PK) là một hoặc một nhóm
+thuộc tính xác định duy nhất một bộ trong quan hệ. Khóa chính của quan hệ là định
+danh của thực thể tương ứng.
+       Ví dụ: SINH VIÊN (mã SV, họ tên, ngày sinh, quê quán, lớp), trong đó mã SV
+là khóa chính của quan hệ SINH VIÊN.
+       Khi chọn khóa chính cần phải xem xét các tiêu chuẩn sau: khóa chính phải xác
+định được duy nhất một bộ trong quan hệ, phải có số thuộc tính ít nhất, phải không thay
+đổi theo thời gian.
+Khóa ghép: khóa ghép là khóa có từ hai thuộc tính trở lên.
+Khóa ngoại: một khóa ngoại được sử dụng để thiết lập một mối quan hệ. Đó là thuộc
+tính mô tả của quan hệ này nhưng đồng thời lại là thuộc tính khóa trong quan hệ khác.
+Ví dụ: LỚP (tên lớp, khoa, phòng học)
+       SINH VIÊN (mã SV, họ tên, ngày sinh, quê quán, tên lớp), trong đó tên lớp là
+       khóa ngoại của quan hệ SINH VIÊN.
+Khóa giả: là thuộc tính do con người đặt ra để làm khóa chính. Thuộc tính này không
+mô tả đặc điểm của các đối tượng quan tâm mà chỉ có tác dụng để xác định duy nhất
+đối tượng đó. Ví dụ: mã SV, số hóa đơn,…Thông thường khi khóa chính có từ 3 thuộc
+tính trở lên người ta thường đặt ra một khóa giả làm khóa chính để tiện lợi hơn trong
+việc truy vấn dữ liệu.
+4.2.2. Các quy tắc chuyển đổi
+       Cho đến nay đã có nhiều HTTT, đặc biệt là các CSDL quan hệ, được thiết kế
+xuất phát từ mô hình ER. Theo cách này, người ta xem quá trình thiết kế một CSDL
+phải trải qua ba giai đoạn. Đầu tiên là giai đoạn thiết kế mô hình quan niệm, tiếp đến là
+giai đoạn thiết kế mô hình logic, và cuối cùng là giai đoạn thiết kế CSDL vật lý. Việc
+chuyển đổi một mô hình ER thành mô hình quan hệ là thuộc giai đoạn thiết kế mô hình
+logic từ mô hình quan niệm.
+       Khi chuyển đổi một mô hình ER thành mô hình quan hệ, chúng ta theo các quy
+tắc dưới đây.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+      a. Quy tắc 1: Chuyển đổi thực thể bình thường
+      Mỗi kiểu thực thể bình thường (không phải kiểu thực thể yếu) trong mô hình
+ER trở thành một quan hệ. Quan hệ đó bao gồm tất cả các thuộc tính đơn giản và thuộc
+tính phức hợp của thực thể. Thuộc tính định danh của thực thể là khóa chính của quan
+hệ.
+
+                          Hình 4. 2: Ví dụ minh họa quy tắc 1
+
+      b. Quy tắc 2: Chuyển đổi thực thể yếu
+      Cho mỗi thực thể yếu (Weak Entity) trong mô hình ER, tạo thành một quan hệ
+R, tất cả thuộc tính đơn giản của thực thể yếu trở thành thuộc tính của R. Thêm vào
+đó, thuộc tính định danh của thực thể chủ trở thành khóa ngoại của R.
+      Khoá chính của R là sự kết hợp giữa thuộc tính định danh của thực thể chủ và
+thuộc tính định danh của thực thể yếu.
+
+                          Hình 4. 3: Ví dụ minh họa quy tắc 2
+
+      c. Quy tắc 3: Chuyển đổi mối quan hệ 1-1
+      Đối với mối quan hệ 1-1 trong mô hình ER, ta xác định các quan hệ S và S’
+tương ứng với các tập thực thể E và E’ tham gia vào mối quan hệ R. Khi đó, tuỳ thuộc
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+vào sự tham gia của E và E’ đối với mối quan hệ R là toàn bộ hay cục bộ (chỉ số cực
+tiểu của bản số tại cung nối tương ứng trong sơ đồ ER là 1 hay 0) mà ta có các chọn lựa
+cách thực hiện khác nhau cho việc chuyển đổi. Xét cách chuyển đổi mối quan hệ 1-1
+như sau:
+Trường hợp 1: khi cả E và E’ tham gia toàn bộ vào mối quan hệ
+       Ta gộp các quan hệ tương ứng S và S’ thành một quan hệ T bao gồm đầy đủ các
+thuộc tính của S và S’ và tất cả các thuộc tính đơn trị của mối quan hệ R. Chọn khoá
+chính của T là khoá chính của S hoặc S’.
+
+                     Hình 4. 4: Ví dụ minh họa quy tắc 3 – trường hợp 1
+
+Trường hợp 2: chỉ có một tập thực thể tham gia toàn bộ vào mối quan hệ
+       Thực hiện việc gộp các quan hệ như trường hợp 1 nhưng phải chọn khoá chính
+của T là khoá chính của quan hệ tương ứng với tập thực thể tham gia toàn bộ vào mối
+quan hệ R. Ngược lại, nếu cả E và E’ chỉ tham gia cục bộ vào mối quan hệ R (chỉ số
+cực tiểu của các bản số tại các cung nối tương ứng đều là 0), thì ta không thể thực hiện
+việc chuyển đổi mối quan hệ 1-1 theo cách này, do khoá của một quan hệ không chấp
+nhận giá trị null.
+       Ngoài ra, ta cũng giả thiết rằng cách thực hiện này sẽ không được sử dụng trong
+mọi trường hợp, bởi vì bản chất của việc gộp hai tập thực thể thành một sẽ làm mất ý
+nghĩa và vai trò của các tập thực thể này trong mô hình ER.
+Trường hợp 3: khi cả E và E’ tham gia cục bộ vào mối quan hệ
+       Khi đó ta tạo thêm một quan hệ mới T nhằm biểu diễn mối quan hệ R. Các thuộc
+tính trong T bao gồm tất cả các thuộc tính đơn trị của mối quan hệ R, và các khoá ngoài
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+của T lần lượt tham chiếu đến các khoá chính của S và S’. Ngoài ra chọn khoá chính
+cho T là một trong các khoá ngoài này.
+
+                   Hình 4. 5: Ví dụ minh họa quy tắc 3 – trường hợp 3
+
+Trường hợp 4: Thành lập một khoá ngoại cho một quan hệ
+      Chọn một trong hai quan hệ này (nên ưu tiên chọn quan hệ có tập thực thể tương
+ứng tham gia toàn bộ vào mối quan hệ R, hay chỉ số cực tiểu của cung nối tương ứng là
+1), giả sử ta chọn S, từ đó bổ sung vào S tất cả các thuộc tính đơn trị của mối quan hệ
+R. Đồng thời bổ sung vào S khoá ngoài của S tham chiếu đến khoá chính của S’.
+      Lưu ý rằng nếu E và E’ đều tham gia toàn bộ vào mối quan hệ R, thì khoá ngoài
+F trên S đồng thời cũng là một khoá của s.
+
+      Một hạn chế của cách chuyển đổi này đó là: giá trị các thuộc tính •R và F của
+một số bộ trên S có thể phải nhận giá trị null trong trường hợp cả E và E’ đều không
+tham gia toàn bộ vào mối quan hệ R.
+      d. Quy tắc 4: Chuyển đổi mối quan hệ 1-N không có thuộc tính riêng
+      Cho mỗi mối quan hệ 1-n trong mô hình ER, chuyển khóa chính của quan hệ
+phía 1 sang làm khóa ngoại của quan hệ phía N.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+                          Hình 4. 6: Ví dụ minh họa quy tắc 4
+
+       e. Quy tắc 5: Chuyển đổi mối quan hệ M-N
+       Cho mỗi mối quan hệ M-N trong mô hình ER, sinh ra một quan hệ mới R, chuyển
+khóa chính của hai quan hệ phía M và N thành khóa ngoại của quan hệ R. Khóa chính
+của R là sự kết hợp của hai khóa ngoại.
+
+                          Hình 4. 7: Ví dụ minh họa quy tắc 5
+
+Lưu ý: Việc chuyển đổi mối quan hệ phản xạ được thực hiện tương tự như việc chuyển
+đổi mối quan hệ nhị nguyên 1-1, 1-N, M-N.
+       f. Quy tắc 6: Chuyển đổi thuộc tính đa trị
+       Nếu gặp thuộc tính đa trị
+   -   Chuyển thuộc tính đa trị thành quan hệ mới.
+   -   Thuộc tính định danh (hoặc 1 phần thuộc tính định danh) của thực thể chính
+       chuyển thành khóa ngoại của quan hệ mới.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+   -   Khóa chính của quan hệ mới là khóa chính của bản thân quan hệ + khóa ngoại
+       do thực thể chính chuyển sang.
+
+                          Hình 4. 8: Ví dụ minh họa quy tắc 6
+
+       g. Quy tắc 7: Chuyển đổi mối quan hệ đa nguyên, mối quan hệ nhị nguyên có
+thuộc tính riêng
+       Cho mỗi mối quan hệ đa nguyên hay mối quan hệ nhị nguyên có thuộc tính riêng,
+tạo ra quan hệ mới R, khóa chính của các quan hệ tham gia vào mối quan hệ được đưa
+làm khóa ngoại của quan hệ R và các khóa ngoại này đồng thời đóng vai trò là khóa
+chính của R.
+
+                          Hình 4. 9: Ví dụ minh họa quy tắc 7
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       h. Quy tắc 8: Chuyển đổi quan hệ giữa lớp cha/lớp con và chuyên biệt hóa
+hoặc tổng quát hóa
+       Chúng ta có thể sử dụng một trong hai cách sau:
+Cách 1:
+   -   Tạo quan hệ G cho lớp cha
+   -   Tạo các quan hệ Si tương ứng với mỗi lớp con, trong đó khóa chính của quan hệ
+       G được đưa làm khóa ngoại cho các quan hệ Si
+Cách 2:
+       Tạo quan hệ Si tương ứng với mỗi lớp con. Tập thuộc tính của Si bao gồm cả
+thuộc tính của lớp con và lớp cha, trong đó khóa chính của Si là thuộc tính khóa của lớp
+cha.
+4.3.   CHUẨN HOÁ VÀ KIỂM TRA LẠI MÔ HÌNH ER
+4.3.1. Các dạng chuẩn hóa
+       a. Phụ thuộc hàm
+       Định nghĩa: Cho tập U là tập các thuộc tính của một lược đồ quan hệ R, X và Y
+là các tập con của U. Ta nói rằng R thoả phụ thuộc hàm X • Y (đọc là: X xác định Y,
+hoặc Y phụ thuộc hàm vào X) nếu và chỉ nếu: với mọi r là thể hiện của R, với mọi t1, t2
+• r ta có: t1[X] = t2[X] kéo theo t1[Y]= t2[Y].
+       Ý tưởng của phụ thuộc hàm: mỗi phần tử của một lớp đối tượng nào đó sẽ được
+xác định thông qua một đại diện của một số lớp đối tượng khác.
+       Ví dụ 1:
+
+                     Hình 4.10: Mô hình ER ví dụ 1 của phụ thuộc hàm
+
+       Với quy tắc quản lý: "mỗi công nhân luôn thuộc về một xí nghiệp nào đó. Biết
+được một công nhân thì sẽ biết được xí nghiệp". Ta có các phụ thuộc hàm:
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+      MaCN • Hten                  MaXN • TenXN               Công nhân • Xí nghiệp
+      Ví dụ 2: Xét mối quan hệ 4 chiều trong HTTT quản lý thời khóa biểu
+
+                      Hình 4.11: Mô hình ER ví dụ 2 phụ thuộc hàm
+
+      Ta có các phụ thuộc hàm:
+
+      (LỚP HỌC, MÔN HỌC) • GIÁO VIÊN,                    (LỚP HỌC, MÔN HỌC) •
+PHÒNG HỌC
+      Nếu hai tập thực thể có quan hệ ISA với nhau, giả sử (E1 isa E2) thì ta luôn luôn
+có E1•E2
+
+      b. Các dạng chuẩn
+Dạng chuẩn 1 (1NF):
+       Lược đồ quan hệ R với tập phụ thuộc hàm F xác định trên R được gọi là ở dạng
+chuẩn 1 nếu mọi thuộc tính của nó là thuộc tính đơn (các thuộc tính không có nhu cầu
+phân rã trong các xử lý, không phải thuộc tính lặp hoặc thuộc tính phức hợp).
+Ví dụ: Lược đồ quan hệ NHANVIEN (MANV, HLOT, TEN, HSL) là ở dạng chuẩn 1
+vì các thuộc tính của nó là các thuộc tính đơn.
+Dạng chuẩn 2 (2NF):
+       Lược đồ quan hệ R với tập phụ thuộc hàm F xác định trên R được gọi là ở dạng
+chuẩn 2 nếu nó là dạng chuẩn 1 và mọi thuộc tính không khoá phải phụ thuộc hàm đầy
+đủ vào khoá chính.
+Dạng chuẩn 3 (3NF):
+       Phụ thuộc hàm bắc cầu: Cho lược đồ quan hệ R và tập phụ thuộc hàm F xác định
+trên R; X, Y •R, A•R. Nếu ta có: X • Y , Y ⌐ • X, Y •A và A•XY thì ta nói A
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+phụ thuộc hàm bắc cầu vào X. A được gọi là thuộc tính phụ thuộc bắc cầu, Y là các
+thuộc tính cầu.
+       Định nghĩa 1: Lược đồ quan hệ R với tập phụ thuộc hàm F xác định trên R được
+gọi là ở dạng chuẩn 3 nếu nó là dạng chuẩn 2 và không tồn tại thuộc tính không khoá
+phụ thuộc hàm bắc cầu vào khoá.
+       Định nghĩa 2: Lược đồ quan hệ R với tập phụ thuộc hàm F xác định trên R được
+gọi là ở dạng chuẩn 3 nếu mọi phụ thuộc hàm X•A, A•X đúng trong R thì X phải là
+siêu khóa hoặc A là thuộc tính khóa.
+4.3.2. Chuẩn hóa các lược đồ quan hệ
+       Chuẩn hóa là sự phân tách một lược đồ quan hệ có cấu trúc dữ liệu phức tạp
+thành các lược đồ quan hệ con ở một dang chuẩn quy ước nào đó, thường là dạng chuẩn
+3. Trong thực tế, ngay từ đầu trong khi thiết kế dữ liệu người phân tích thường gộp tất
+cả các thuộc tính để hình thành các lược đồ quan hệ theo ý chủ quan. Các lược đồ đó
+thường chưa được chuẩn hóa, thường mắc phải những khiếm khuyết.
+       a. Trường hợp quan hệ chưa là 1NF
+       Khi một lược đồ quan hệ không là 1NF thì nó có chứa thuộc tính lặp. Khi đó ta
+tách lược đồ quan hệ thành hai lược đồ quan hệ con:
+   -   Lược đồ quan hệ 1: gồm các thuộc tính lặp và khóa chính xác định chúng.
+   -   Lược đồ quan hệ 2: gồm các thuộc tính còn lại (đơn) và khóa chính.
+       b. Trường hợp lược đồ quan hệ chưa là 2NF
+       Khi một lược đồ quan hệ là 1NF nhưng không là 2NF thì trong lược đồ quan hệ
+sẽ tồn tại thuộc tính không khóa phụ thuộc không đầy đủ vào khóa chính. Khi đó ta tách
+lược đồ quan hệ thành hai lược đồ quan hệ con:
+   -   Lược đồ quan hệ 1: gồm các thuộc tính phụ thuộc không đầy đủ vào khóa chính
+       và phần khóa bị phụ thuộc.
+   -   Lược đồ quan hệ 2: gồm các thuộc tính còn lại và khóa chính.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+        c. Trường hợp lược đồ quan hệ chưa là 3NF
+        Khi một lược đồ quan hệ là 2NF nhưng không là 3NF thì sẽ tồn tại phụ thuộc
+hàm bắc cầu trong lược đồ quan hệ. Khi đó ta tách lược đồ quan hệ thành hai lược đồ
+quan hệ con:
+   -    Lược đồ quan hệ 1: gồm các thuộc tính phụ thuộc bắc cầu và thuộc tính cầu.
+   -    Lược đồ quan hệ 2: gồm các thuộc tính còn lại và thuộc tính cầu.
+
+                               Hình 4.12: Sơ đồ chuẩn hóa
+
+4.4.    RÀNG BUỘC TOÀN VẸN
+4.4.1. Ràng buộc thực thể
+        Là một ràng buộc trên khóa chính. Nó yêu cầu khóa chỉnh phải tối thiểu, xác
+định duy nhất và không null.
+4.4.2. Ràng buộc tham chiếu (ràng buộc khóa ngoại)
+        Liên quan đến tính toàn vẹn của mối quan hệ tức là liên quan đến tính toàn vẹn
+của khóa ngoại. Một ràng buộc tham chiếu yêu cầu một giá trị khóa ngoại trong một
+quan hệ cần phải tồn tại là một giá trị khóa chính trong một quan hệ khác hoặc là giá trị
+null.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+                     Hình 4.13: Ví dụ minh họa ràng buộc tham chiếu
+
+4.4.3. Các ràng buộc được định nghĩa bởi người dùng
+        Đây là các ràng buộc liên quan đến miền giá trị của dữ liệu thực tế.
+4.5.    MÔ HÌNH TỔ CHỨC VỀ XỬ LÝ
+4.5.1. Mục đích
+        Mô hình tổ chức về xử lý nhằm xác định rõ các công việc do ai làm, làm ở đâu,
+làm khi nào và làm theo phương thức nào? Ở mức này người phân tích sẽ đặt các công
+việc trong mô hình quan niệm về xử lý vào từng nơi làm việc cụ thể của môi trường
+thực.
+4.5.2. Các khái niệm
+        a. Nơi làm việc
+        Một hệ thống thông tin quản lý được chia thành nhiều bộ phận, mỗi bộ phận
+được gọi là một nơi làm việc. Nơi làm việc bao gồm: vị trí, con người, trang thiết bị tại
+nơi làm việc đó.
+        b. Phương thức xử lý
+        Là cách thức, phương tiện thực hiện công việc. Mỗi công việc có thể được thực
+hiện bởi một trong ba phương thức xử lý:
+   -    Xử lý thủ công: Công việc do con người trực tiếp thao tác trên đối tượng làm
+        việc. Xử lý này thường được thực hiện trong trường hợp các quyết định không
+        có giải thuật hoặc không đầy đủ thông tin, hoặc độ khó cao chưa có phương tiện
+        kỹ thuật tự động xử lý. Ví dụ, ghi số điện hàng tháng tại các hộ gia đình.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+     -   Xử lý tự động (xử lý theo lô): Kiểu xử lý bằng máy, do con người cung cấp thông
+         tin đầu vào để máy tự động thực hiện công việc. Đây là loại xử lý có giải thuật
+         và dữ liệu đầy đủ. Ví dụ, làm báo cáo tồn kho, làm hóa đơn xuất hàng,...
+     -   Xử lý tương tác người -máy: Là kiểu xử lý bằng máy nhưng trong quá trình xử
+         lý phải có những giai đoạn cung cấp thông tin của người sử dụng.
+         c. Biến cố ở mức tổ chức
+         Là biến cố của hệ thống nhưng được đặt ở nơi phát sinh ra nó hay là nơi nhận
+biết nó. Ở mức tổ chức, một biến cố còn phải quan tâm:
+     -   Thời gian phản ứng: Là thời gian tối đa được chờ đợi từ khi biến cố xuất hiện
+         cho đến khi công việc được kích hoạt.
+     -   Tần suất: Là tần số xuất hiện biến cố trong một đơn vị thời gian.
+     -   Chu kỳ: Là khoảng thời gian mà biến cố sẽ xuất hiện trở lại
+4.5.3. Bảng công việc
+         Ở mức tổ chức công việc phải được xác định rõ: nơi làm việc, phương thức làm
+việc, tần suất và chu kỳ của nó. Các đặt trưng này được thể hiên trong bảng công việc
+sau đây:
+                         Bảng 4. 2: Biểu mẫu minh họa cho bảng công việc
+
+                                         Bảng công việc
+ STT     Tên công việc           Nơi thực hiện     Phương thức      Tần suất   Chu kỳ
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+Ví dụ: Bảng công việc của bài toán "QL tuyển sinh"
+                                     Bảng công việc
+ STT   Tên công việc         Nơi thực hiện     Phương thức    Tần suất    Chu kỳ
+
+ 1     Thông báo TS          Ban Giám hiệu     Thủ công       1lần/năm    1 năm
+
+ 2     Nhận hồ sơ dự thi     Phòng Đào tạo     Thủ công       1lần/năm    1 năm
+
+ 3     Đánh SBD              Phòng Đào tạo     Tự động        1lần/năm    1 năm
+
+ 4     Lập danh sách TS      Phòng Đào tạo     Tự động        1lần/năm    1 năm
+
+ 5      In Giấy báo thi      Phòng Đào tạo     Tự động        1lần/năm    1 năm
+
+ 6     Gửi Giấy báo thi      Phòng Đào tạo     Thủ công       1lần/năm    1 năm
+
+ 7     Thi tuyển sinh        Phòng Đào tạo     Thủ công       1lần/năm    1 năm
+
+ 8     Làm phách             Phòng Đào tạo     Tự động        1lần/năm    1 năm
+
+ 9     Chấm thi              Giáo viên         Thủ công       1lần/năm    1 năm
+
+ 10    Nhập điểm             Phòng Đào tạo     Thủ công       1lần/năm    1 năm
+
+ 11    Ráp phách             Phòng Đào tạo     Tự động        1lần/năm    1 năm
+
+ 12    Thống kê điểm         Phòng Đào tạo     Tự động        1lần/năm    1 năm
+
+ 13    Lập DS xét tuyển      Phòng Đào tạo     Tự động        1lần/năm    1 năm
+
+ 14    Xét tuyển             Ban Giám hiệu     Thủ công       1lần/năm    1 năm
+
+ 15    In giấy báo kquả      Phòng Đào tạo     Tự động        1lần/năm    1 năm
+
+ 16    TB kquả               Phòng Đào tạo     Thủ công       1lần/năm    1 năm
+
+4.5.4. Mô hình tổ chức về xử lý
+       Mô hình liên hoàn các biến cố và các công việc của hệ thống. Các biến cố và các
+công việc này được đặt tại một vị trí làm việc cụ thể.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+                      Hình 4.14: Minh họa mô hình tổ chức về xử lý
+
+       Những biến cố nào không xuất phát từ một nơi làm việc nào đó không có trong
+danh sách các vị trí, ta đặt giữa hai đường phân cách.
+4.6.   BÀI TẬP, THẢO LUẬN
+   1. Chuyển các mô hình ER xây dưng được trong Chương 3 sang mô hình quan hệ.</baihoc>
+<baitap bai="4" loai="tuluyen" de="Trình bày nội dung chính của mục: 4.1. KHÁI NIỆM" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="4" loai="tuluyen" de="Trình bày nội dung chính của mục: 4.2. MÔ HÌNH TỔ CHỨC VỀ DỮ LIỆU" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="4" loai="tuluyen" de="Trình bày nội dung chính của mục: 4.2.1. Các khái niệm cơ bản" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="4" loai="tuluyen" de="Trình bày nội dung chính của mục: 4.2.2. Các quy tắc chuyển đổi" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="4" loai="tuluyen" de="Trình bày nội dung chính của mục: 4.3. CHUẨN HOÁ VÀ KIỂM TRA LẠI MÔ HÌNH ER" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="4" loai="tuluyen" de="Trình bày nội dung chính của mục: 4.3.1. Các dạng chuẩn hóa" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="4" loai="tuluyen" de="Trình bày nội dung chính của mục: 4.3.2. Chuẩn hóa các lược đồ quan hệ" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="4" loai="tuluyen" de="Trình bày nội dung chính của mục: 4.4. RÀNG BUỘC TOÀN VẸN" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baihoc stt="5" tieude="Chương 5. Mức vật lý của hệ thống thông tin">Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       Chương 5. MỨC VẬT LÝ CỦA HỆ THỐNG THÔNG TIN
+
+Thời lượng: 05 tiết
+Kết thúc chương này, sinh viên có thể:
+   - Hiểu và xây dựng được mô hình vật lý về dữ liệu
+   - Hiểu và xây dựng được mô hình vật lý về xử lý
+
+5.1.     MÔ HÌNH VẬT LÝ VỀ DỮ LIỆU
+5.1.1. Thiết kế cơ sở dữ liệu vật lý
+
+         Thiết kế cơ sở dữ liệu vật lý là bước cuối cùng của giai đoạn thiết kế dữ liệu.
+Quá trình thiết kế cơ sở dữ liệu vật lý là quá trình ánh xạ cấu trúc dữ liệu logic được
+xây dựng ở mô hình tổ chức dữ liệu vào mô hình bên trong hệ thống. Đa số các hệ thống
+thông tin hiện nay đều sử dụng một hệ quản trị cơ sở dữ liệu nào đó để tạo ra cơ sở dữ
+liệu cho hệ thống. Thiết kế cơ sở dữ liệu vật lý bao gồm các bước sau:
+
+   -     Thiết kế cơ sở dữ liệu: mô tả các file dữ liệu, file chỉ mục,... sẽ được truy cập
+         trong bộ nhớ máy tính như thế nào.
+   -     Thiết kế hệ thống và cấu trúc chương trình: Mô tả các chương trình và các mô
+         đun chương trình khác nhau tương ứng với sơ đồ luồng dữ liệu và những yêu cầu
+         đặt ra trong các bước phân tích trước.
+   -     Thiết kế chiến lược xử lý phân tán: Mô tả hệ thống xử lý dữ liệu như thế nào và
+         các xử lý cho người sử dụng trên mạng máy tính.
+   -     Thông thường, người ta sử dụng các thông tin sau để tạo cơ sở dữ liệu vật lý:
+   -     Các quan hệ đã chuẩn hoá
+   -     Định nghĩa các thuộc tính
+   -     Các mô tả cho biết ở đâu và khi nào dữ liệu được sử dụng (đọc, sửa chữa, xoá,...)
+   -     Các công nghệ được sử dụng để triển khai việc xây dựng cơ sở dữ liệu.
+
+       Mặc dù trong giai đoạn thiết kế dữ liệu chúng ta đã cố gắng chuẩn hóa các lược đồ
+quan hệ với hy vọng là các lược đồ đều ở dạng chuẩn 3, nhưng khi cài đặt cụ thể các
+file dữ liệu để tiện lợi chúng ta có thể bổ sung vào một số trường tính toán, hình thành
+một số trường phức hợp, đưa vào một số trường được phân rã từ một trường khác. Thậm
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+chí, có thể ghép hai lược đồ ở dạng chuẩn 3, phá vỡ ý nghĩa của chuẩn hóa, để tiện việc
+xử lý.
+
+   Hiện nay nhiều công cụ CASE độc lập hoặc được tích hợp trong một số hệ quản trị
+cơ sở dữ liệu để hỗ trợ cho quá trình thiết kế cơ sở dữ liệu. Trên cơ sở cấu trúc dữ liệu
+vật lý được cung cấp, các CASE sẽ tạo ra các hệ thống file cần thiết phục vụ cho hoạt
+động của hệ thống. Chẳng hạn, Designer của Oracle, SQL,...
+
+       Tập hợp tất cả các quan hệ được hình thành từ mô hình tổ chức dữ liệu, các file
+phục vụ cho hoạt động của hệ thống được gọi là mô hình vật lý về dữ liệu của hệ thống
+thông tin.
+5.1.2. Thiết kế các trường
+
+       Ở mức vật lý, một trường được đồng nhất với một thuộc tính trong mô hình tổ
+chức dữ liệu. Trường là đơn vị dữ liệu nhỏ nhất một phần mềm hệ thống nhận ra.
+
+   • Các yêu cầu về việc thiết kế các trường
+         -   Tiết kiệm không gian nhớ
+         -   Biểu diễn được mọi giá trị có thể
+         -   Cài đặt các ràng buộc toàn vẹn của dữ liệu
+         -   Đặt giá trị mặc định (Default) để giảm thiểu thời gian nhập dữ liệu
+   • Chọn kiểu dữ liệu và độ rộng của trường
+
+         Hầu hết các hệ quản trị cơ sở dữ liệu thương mại đều cung cấp cho người dùng
+các kiểu dữ liệu thông dụng như: text, number, logical, date, time,... Khi chọn kiểu dữ
+liệu và độ rộng trường nên chọn đúng kiểu và khai báo độ rộng vừa đủ, không nên làm
+phức tạp cấu trúc dữ liệu của hệ thống.
+5.1.3. Thiết kế các file
+
+         Một hệ thống thông tin hoạt động thường sử dụng sáu loại file dưới đây:
+
+   -     File dữ liệu (data file): File chứa các dữ liệu nghiệp vụ liên quan đến mô hình
+         logic dữ liệu và mô hình vật lý dữ liệu. Loại file này luôn tồn tại và có nội dung
+         thay đổi. Ví dụ, file chứa các thông tin về khách hàng, file chứa các thông tin về
+         sách trong thư viện,...
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+   -    File tham chiếu từ bảng (lookup table file): File chứa các dữ liệu được lấy từ
+        các bảng dữ liệu. Những file này thường sử dụng trong các trường hợp lấy dữ
+        liệu nhanh để kết xuất thông tin.
+
+   -    File giao dịch ( transaction file): File dữ liệu tạm thời phục vụ cho các hoạt động
+        hằng ngày của tổ chức. File này thường được thiết kế để phục vụ việc xử lý nhanh
+        các tình huống có thể xảy ra.
+
+   -    File làm việc (work file): File tạm thời để lưu kết quả trung gian, file này tự động
+        xoá đi khi không cần thiết.
+
+   -    File bảo vệ (protection file): File được thiết kế để lưu trữ các file khác nhau có
+        nguy cơ bị sai hỏng trong quá trình làm việc.
+
+   -    File lịch sử (history file): File chứa những dữ liệu cũ hiện không sử dụng, nhưng
+        có thể sử dụng để làm một việc gì đó khi cần thiết.
+5.1.4. Các hệ quản lý file
+        File là đơn vị lưu trữ của bộ nhớ ngoài dưới một hệ điều hành nào đó. Mọi thông
+tin lưu trên bộ nhớ ngoài đều được tổ chức thành từng file. Về bản chất thông tin, file
+có thể là văn bản, chương trình, dữ liệu,... nhưng dù thế nào chúng chỉ là dãy các bit dữ
+liệu.
+        Quản lý file là thực hiện các thao tác như lưu trữ, tìm kiếm, di chuyển, xóa, thiết
+lập thuộc tính cho file. Mặc dù các thao tác này được thực hiện thông qua hệ điều hành
+nhưng trên thực tế có nhiều phần mềm được sử dụng để quản lý các file dễ dàng và tiện
+lợi hơn. Chú ý rằng không có sự tương hợp giữa kích thuớc file và bộ nhớ trong nên khi
+đọc/ghi một file hệ điều hành sử dụng chiến lược bộ nhớ đệm để lưu hình ảnh của file
+hoặc một đoạn của file đó trong bộ nhớ này.
+5.1.5. Các cấu trúc dữ liệu và phương thức truy nhập
+        a. Tổ chức file tuần tự và truy nhập tuần tự
+        Các bản ghi trong file được sắp xếp liên tiếp nhau. Việc truy nhập đến một nơi
+nào đó trong file được thực hiện theo thể thức duyệt lần lược cho đến khi gặp bản ghi
+cần tìm. Cách này thường mất thời gian nhưng trong một số trường hợp là cách duy
+nhất để tìm kiếm thông tin.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+       b. Truy nhập ngẫu nhiên theo hàm băm
+       Trong trường hợp này các bản ghi được chia thành nhiều khối có độ dài như nhau
+và người ta xây dựng một hàm băm cho phép tính địa chỉ của khối dữ liệu chứa bản ghi
+theo khóa của bản ghi đó.
+       c. Truy nhập theo file chỉ mục
+       Các bản ghi các file có thể sắp xếp tùy ý. Một file chỉ mục được tạo ra cho phép
+xác định được vị trí của mỗi bản ghi cụ thể trong file gốc. Nhược điểm của phương pháp
+này là phải tốn không gian để lưu file chỉ mục.
+5.1.6. Xác định quy mô file và không gian lưu trữ cần thiết
+       Một ví dụ về thiết kế file dữ liệu
+       Trong HTTT “Quản lý kho hàng ” chúng ta đã có mô hình tổ chức dữ liệu của
+hệ thống là các quan hệ sau:
+NhaCC                 (Mã NCC, Tên NCC, Đchỉ NCC)
+Kho                   (Tên kho, Đchỉ kho)
+Khhàng                (Mã khách, Tên khách, Đchỉ khách)
+Phiếu nhập            (Số phiếu_N, Ngày nhập, Mã NCC)
+Phiếu xuất            (Sốphiếu_X, Ngày xuất, Mãkhách)
+Hàng                  (Mãhàng, Tênhàng, Đơnvị, Đơngiá, Tên kho)
+Gồm hàng_N            (Sốphiếu_N, Mãhàng, SL_nhập)
+Gồm hàng_X            (Sốphiếu_X, Mãhàng, SL_xuất)
+Chứa                  (Tồn kho, Tên kho, Mã hàng)
+       Dựa vào các khảo sát trước đây và các quan hệ trên hãy mô tả chúng dưới dạng
+các khai báo sau:
+NHA_CC
+
+   Fieldname         Data type       Field size        Format         Validation Rule
+
+ MA_NCC (K)         Text         2                Chữ hoa            Len()=2
+
+ TEN_NCC            Text         30               Chữ đầu viết hoa   Not null
+
+ ĐCHI_NCC           Text         50               Chữ đầu viết hoa
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+KHO
+
+   Fieldname       Data type        Field size             Format         Validation Rule
+
+ TENKHO (K)      Text           8                   Chữ hoa
+
+ DCHI_KHO        Text           25                  Chữ đầu viết hoa
+
+KHACHHANG
+
+   Fieldname        Data type        Field size            Format         Validation Rule
+
+ MAKHACH (K)      Text              3                Chữ hoa             Len()=3
+
+ TENKHACH         Text              30               Chữ đầu viết hoa    Not null
+
+ ĐCHI_KHACH       Text              50               Chữ đầu viết hoa
+
+PHIEUXUAT
+
+     Fieldname           Data type           Field size        Format      Validation Rule
+ SOPHIEU_X (K)          Text             8                Chữ số         Len()=8
+
+ MAKHACH (FK)           Text             3                Chữ hoa        Len()=3
+
+ NGAYXUAT               Date             8                dd-mm-yy
+
+PHIEUNHAP
+
+     Fieldname           Data type        Field size          Format      Validation Rule
+
+ SOPHIEU_N (K)          Text             8                Chữ số         Len()=8
+
+ MA_NCC (FK)            Text             2                Chữ hoa        Len()=2
+
+ NGAYNHAP               Date             8                dd-mm-yy
+
+HANG
+
+   Fieldname      Data type      Field size               Format         Validation Rule
+
+ MAHANG (K)      Text           4                  Chữ hoa+Chữ số       Len()=6
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+ TENHANG           Text           30                   Chữ đầu viết hoa   Not null
+
+ DONVI             Text           6                    Chữ đầu viết hoa
+
+ DONGIA            Num            7                    Số nguyên
+
+ TENKHO (FK)       Text           8                    Chữ hoa
+
+HANGNHAP
+
+       Fieldname      Data type           Field size          Format         Validation Rule
+
+ SOPHIEU_N (K)       Text             8                 Chữ số             Len()=8
+
+ MAHANG (K)          Text             4                 Chữ hoa+Chữ số     Len()=6
+
+ SL_NHAP             Num              4                 Số nguyên
+
+HANGXUAT
+
+       Fieldname      Data type        Field size             Format        Validation Rule
+
+ SOPHIEU_X (K)       Text             8                 Chữ số             Len()=8
+
+ MAHANG (K)          Text             4                 Chữ hoa+Chữ số     Len()=6
+
+ SL_XUAT             Num              4                 Số nguyên
+
+CHUA
+
+       Fieldname     Data type            Field size          Format       Validation Rule
+
+ TENKHO (K)         Text              8                  Chữ hoa
+
+ TONKHO             Num               6                  Số nguyên
+
+ MAHANG (K)         Text              4                  Chữ hoa+Chữ số    Len()=6
+
+5.2.     MÔ HÌNH VẬT LÝ VỀ XỬ LÝ
+5.2.1. Mục đích
+         Mô hình này trả lời cho câu hỏi cuối cùng là: các công việc hoạt động như thế
+nào? Từ mô hình tổ chức xử lý đã có, người phân tích sẽ tiến hành xem xét, biến các
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+chức năng, công việc thành các đơn vị chương trình. Ứng với mỗi đơn vị chương trình
+này người phân tích phải viết một đặc tả chi tiết để chuẩn bị cho việc lập trình.
+5.2.2. Mô đun xử lý
+
+       Mô đun xử lý là thể hiện các công việc có liên quan với nhau và được thực hiện
+liền mạch nhằm thực hiện một chức năng nào đó. Nói chung tiêu chuẩn để xác định một
+mô đun xử lý khá mờ, nó chỉ nêu lên phương hướng phân rã chức năng mà không xác
+định chính xác quy mô của các mô đun. Thông thường một mô đun xử lý thể hiện một
+công đoạn có bản chất là cập nhật hoặc tra cứu dữ liệu và thao tác trên một nhóm dữ
+liệu nhỏ.
+
+Ví dụ: Chức năng làm phiếu xuất kho sẽ bao gồm các mô đun sau:
+
+   -   Tra cứu danh sách các đại lý để kiểm tra khách hàng
+   -   Kiểm tra hàng tồn kho
+   -   Lấy yêu cầu để lập phiếu xuất và cập nhật tồn kho
+5.2.3. Phân rã mô đun
+       Để dễ dàng trong việc mã hoá, cài đặt chương trình và sửa chữa chương trình,
+người ta phân rã một mô đun thành nhiều mô đun con. Một mô đun con phân rã đến lúc
+không thể tách thêm được nữa được gọi là mô đun sơ cấp. Tuy nhiên, việc phân rã này
+phải bảo đảm mối liên hệ giữa mô đun lớn với các mô đun con. Trong thực tế thường
+xảy ra trường hợp phân rã mô đun nhỏ đến một mức nào đó có thể xuất hiện các mô
+đun chung, điều này sẽ giảm nhẹ công sức lập trình sau này. Phân rã mô đun cũng gợi
+ra giao diện chọn chức năng theo kiểu thực đơn trong chương trình tổng thể sau này.
+Để mô tả việc phân rã mô đun thành nhiều mô đun con, người ta dùng sơ đồ phân rã
+chức năng như sau:
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+                        Hình 5. 1: Ví dụ sơ đồ phân rã chức năng
+
+Các yếu tố để phân rã mô đun
+   -   Phân rã mô đun theo điểm công tác: điều này thể hiện ở chổ nhiều người hoặc
+       nhiều bộ phận có những công việc như nhau, như thế các chức năng có cùng một
+       nơi làm việc được gom thành một mô đun. Ví dụ, các thông tin về nâng bậc
+       lương, chuyển ngạch,... không những cần cho bộ phận tổ chức mà còn cho bộ
+       phận kế toán. do đó phải có một mô đun chung để cập nhật, tra cứu các thông tin
+       này.
+   -   Phân rã mô đun theo hướng chức năng: theo cách này các chức năng có cùng
+       chung một công việc được tổ chức riêng.
+   -   Phân rã mô đun theo thời gian: thời gian cũng có thể một yếu tố để phân rã mô
+       đun. Ví dụ, việc in báo cáo kết quả học tập của sinh viên được thực hiện vào cuối
+       năm học với hàng loạt các báo cáo khác như báo cáo khối lượng công tác của
+       giáo viên,...
+5.2.4. Sơ đồ tổng thể phân rã chức năng
+       Dựa trên kết quả phân rã mô đun, người phân tích phải lên một sơ đồ tổng thể
+các chức năng để hướng đến cấu trúc hoá chương trình. Hiện nay có một vài quan điểm
+về việc gộp các mô đun thành từng nhóm chức năng trong chương trình.
+       a. Gộp các mô đun theo hướng đối tượng
+       Gộp theo đối tượng là nhóm các chức năng theo dữ liệu hoặc theo tập thực thể.
+Ví dụ, ba tập thực thể chính trong hệ thống thông tin “Quản lý đào tạo” là sinh viên,
+giáo viên và môn học. Chúng ta có thể gộp các mô đun theo các tập thực thể như hình
+bên dưới.
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+             Hình 5. 2: Ví dụ minh họa gộp các mô đun theo hướng đổi tượng
+
+      b. Gộp các mô đun theo sự kiện
+      Gộp theo sự kiện là gộp theo hoạt động của hệ thống. Một sự kiện có thể gây ra
+một loạt các chức năng của hệ thống. Ví dụ, trong hệ thống thông tin “Quản lý kho
+hàng” có ba sự kiện chính là “Nhập hàng”, “Xuất hàng” và “Báo cáo”. Chúng ta có thể
+gộp theo sự kiện các mô đun nay theo sơ đò dưới đây.
+
+                 Hình 5. 3: Ví dụ minh họa gộp các mô đun theo sự kiện
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+      c. Gộp các mô đun theo sự tiện lợi
+      Gộp theo sự tiện lợi là gộp các mô đun theo tiêu chuẩn tiện dụng hoặc theo người
+sử dụng cụ thể hoặc theo mạch công việc. Ví dụ, trong hệ thống thông tin “Quản lý
+khách sạn” thường có các mạch công việc như sau: Tiếp nhận khách bao gồm các công
+việc: Cập nhật phòng, Giữ chổ, Check in. Dịch vụ bao gồm các công việc: cập nhật dịch
+vụ, ghi nhận dịch vụ, thanh toán. Thống kê bao gồm các công việc: Hệ số sử dụng phòng,
+Số lượng khách, Doanh thu. Chúng ta có thể tổ chức các mô đun theo mạch công việc
+như sau:
+
+            Hình 5. 4: Ví dụ minh họa gộp các chức năng theo mạch công việc
+
+5.2.5. Mô tả các mô đun
+      Sau khi phân rã các mô đun, người phân tích phải chuyển giao các kết quả phân
+tích thiết kế cho người lập trình đê chuẩn bị cài đặt. Các mô đun này phải được mô tả
+một cách chi tiết thông qua các biểu đồ được gọi là IPO Chart như sau:
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+                                   Hình 5. 5: IPO Chart
+
+5.3.   BÀI TẬP, THẢO LUẬN
+   1. Trình bày những công việc cần thực hiện khi thiết kế mô hình vật lý về dữ liệu.
+   2. Mục đích của mô hình vật lý về xử lý ? Trình bày sơ đồ tổng thể phân rã các chức năng.
+
+Bài giảng Phân tích và thiết kế Hệ thống thông tin
+
+                          TÀI LIỆU THAM KHẢO
+[1].   TS Nguyễn Hồng Phương (Chủ biên), ThS Huỳnh Minh Đức, Phân tích thiết kế
+    hệ thống thông tin. Phương pháp và ứng dụng, – Nhà xuất bản lao động xã hội,
+    2008.
+[2].   Dennis, Wixom, Roth, System Analysis and Design, Fifth Edition, John Wiley &amp;
+    Sons, Inc., United States of America, 2012.
+[3].   TS. Lê Văn Phùng, Kỹ thuật Phân tích và Thiết kế Hệ thống Thông tin hướng
+    cấu trúc, NXB Thông tin và Truyền thông, 2017
+[4].   PGS. TS Đồng Thị Bích Thủy, Bài giảng PTTKHTTT, Đại học KHTN TpHCM
+[5].   ThS Nguyễn Trần Minh Thư, Bài giảng PTTKHTTT, Đại học KHTN TpHCM
+[6].   Phạm Nguyễn Cương, Giáo trình PTTKHTTT, Đại học KHTN TpHCM, 2003.
+[7].   Các tài liệu về phân tích thiết kế hệ thống thông tin đăng trên trang Web
+    Tailieu.vn</baihoc>
+<baitap bai="5" loai="tuluyen" de="Trình bày nội dung chính của mục: 5.1. MÔ HÌNH VẬT LÝ VỀ DỮ LIỆU" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="5" loai="tuluyen" de="Trình bày nội dung chính của mục: 5.1.1. Thiết kế cơ sở dữ liệu vật lý" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="5" loai="tuluyen" de="Trình bày nội dung chính của mục: 5.1.2. Thiết kế các trường" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="5" loai="tuluyen" de="Trình bày nội dung chính của mục: 5.1.3. Thiết kế các file" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="5" loai="tuluyen" de="Trình bày nội dung chính của mục: 5.1.4. Các hệ quản lý file" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="5" loai="tuluyen" de="Trình bày nội dung chính của mục: 5.1.5. Các cấu trúc dữ liệu và phương thức truy nhập" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="5" loai="tuluyen" de="Trình bày nội dung chính của mục: 5.1.6. Xác định quy mô file và không gian lưu trữ cần thiết" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+<baitap bai="5" loai="tuluyen" de="Trình bày nội dung chính của mục: 5.2. MÔ HÌNH VẬT LÝ VỀ XỬ LÝ" dapan="Câu hỏi tự luyện: đọc lại mục tương ứng trong bài học rồi tự trình bày bằng lời của mình."/>
+</mon>

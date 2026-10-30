@@ -1,0 +1,1630 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mon id="qtcsdl" ten="Hệ quản trị CSDL" nhom="Cơ sở dữ liệu" drive="1bl19SCFkpbbI5p2as6E0JhUhQzuYKSPX" nguon="BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf">
+<mota>Chức năng của DBMS, chỉ mục, đồng thời.</mota>
+<baihoc stt="1" tieude="Chương 1. Tổng quan về hệ quản trị CSDL MySQL">Chương 1. TỔNG QUAN VỀ HỆ QUẢN TRỊ CSDL MYSQL
+                   (Số tiết: 02 lý thuyết + 02 thực hành — Tuần 1)
+
+Mục tiêu của chương 1 (kết quả đạt được):
+     Sau khi học xong chương này, sinh viên có khả năng:
+     - Trình bày được khái niệm CSDL, HQT CSDL và vai trò của HQT CSDL trong
+hệ thống thông tin (đáp ứng CLO1);
+     - Mô tả được mô hình Client/Server và kiến trúc tổng thể của MySQL Server (đáp
+ứng CLO1);
+     - Cài đặt, cấu hình được MySQL Server 8.x và MySQL Workbench; quản lý được
+dịch vụ MySQL;
+     - Tạo được kết nối đến máy chủ và tạo cơ sở dữ liệu đầu tiên.
+
+Năng lực số được hình thành (theo Thông tư 02/2025/TT-BGDĐT):
+     - Miền 1 - Khai thác dữ liệu và thông tin: tìm kiếm bản cài đặt, tài liệu chính thống
+từ dev.mysql.com, đánh giá độ tin cậy của nguồn tải;
+     - Miền 4 - An toàn: đặt mật khẩu quản trị mạnh, hiểu rủi ro khi để tài khoản root
+không mật khẩu;
+     - Miền 5 - Giải quyết vấn đề: tự xử lý các lỗi thường gặp khi cài đặt (xung đột
+cổng, thiếu quyền, dịch vụ không khởi động);
+     - Miền 6 - Ứng dụng AI: dùng AI hỗ trợ tra cứu, giải thích thông báo lỗi cài đặt và
+kiểm chứng lại bằng tài liệu chính thức.
+
+1.1. Khái niệm cơ sở dữ liệu và hệ quản trị CSDL
+
+1.1.1. Cơ sở dữ liệu
+     Cơ sở dữ liệu (CSDL - database) là tập hợp dữ liệu có cấu trúc, có liên quan với
+nhau, được lưu trữ một cách có tổ chức trên thiết bị nhớ nhằm phục vụ đồng thời nhiều
+người dùng, nhiều ứng dụng với các mục đích khác nhau. Khác với lưu trữ bằng tệp rời
+rạc, CSDL bảo đảm giảm trùng lặp dữ liệu, bảo đảm tính nhất quán, chia sẻ dữ liệu và
+kiểm soát truy cập. Trong mô hình dữ liệu quan hệ (relational model) - mô hình mà
+MySQL sử dụng - dữ liệu được tổ chức thành các bảng (table); mỗi bảng gồm các cột
+(column) mô tả thuộc tính và các dòng (row) chứa các bản ghi dữ liệu; các bảng liên kết
+với nhau qua khóa chính và khóa ngoại. Sinh viên đã học kỹ các nội dung này trong học
+phần tiên quyết Cơ sở dữ liệu, ở đây chỉ nhắc lại để sử dụng.
+
+1.1.2. Hệ quản trị cơ sở dữ liệu
+
+     Hệ quản trị CSDL (HQT CSDL - Database Management System, DBMS) là hệ
+phần mềm trung gian giữa người dùng/ứng dụng và CSDL, cung cấp các chức năng:
+định nghĩa dữ liệu (tạo CSDL, bảng, ràng buộc); cập nhật và truy vấn dữ liệu (thêm, sửa,
+xóa, tìm kiếm); kiểm soát truy cập (người dùng, quyền); bảo đảm an toàn (giao dịch, sao
+lưu, khôi phục); quản lý truy cập đồng thời cho nhiều người dùng. HQT CSDL sử dụng
+mô hình quan hệ được gọi là RDBMS (Relational DBMS). Các RDBMS phổ biến hiện
+nay: MySQL, MariaDB, PostgreSQL, Microsoft SQL Server, Oracle Database, SQLite.
+            Bảng 1.1. So sánh khái quát một số hệ quản trị CSDL quan hệ phổ biến
+    Tiêu chí            MySQL             SQL Server         PostgreSQL            Oracle
+                   GPL/Thương mại
+Giấy phép                              Thương mại          Mã nguồn mở       Thương mại
+                   (Oracle)
+Nền tảng           Đa nền tảng         Windows/Linux       Đa nền tảng       Đa nền tảng
+                                      Doanh nghiệp, hệ     Hệ thống cần
+Ứng dụng tiêu      Web (LAMP),                                            Ngân hàng, viễn
+                                      sinh thái            chuẩn SQL cao,
+biểu               thương mại điện tử                                     thông
+                                      Microsoft            GIS
+                   Miễn phí
+Chi phí                                Theo bản quyền      Miễn phí          Cao
+                   (Community)
+
+     MySQL ra đời năm 1995 (MySQL AB, Thụy Điển), hiện thuộc Oracle
+Corporation, là HQT CSDL mã nguồn mở phổ biến bậc nhất thế giới, hạt nhân của bộ
+công nghệ web LAMP (Linux - Apache - MySQL - PHP/Python). Phiên bản sử dụng
+trong bài giảng là MySQL 8.x với các tính năng nổi bật: từ điển dữ liệu giao dịch, role
+(vai trò), xác thực caching_sha2_password, CTE và window function, hỗ trợ đầy đủ
+Unicode utf8mb4.
+
+1.2. Mô hình Client/Server và kiến trúc MySQL
+
+1.2.1. Mô hình Client/Server
+     MySQL hoạt động theo mô hình Client/Server: chương trình máy chủ (MySQL
+Server - tiến trình mysqld) quản lý toàn bộ dữ liệu, lắng nghe yêu cầu trên cổng mặc
+định TCP 3306; các chương trình máy khách (client) như mysql dòng lệnh, MySQL
+Workbench, ứng dụng web kết nối đến máy chủ, gửi câu lệnh SQL và nhận kết quả.
+Quy trình một phiên làm việc: (1) client thiết lập kết nối tới server bằng tên máy chủ,
+cổng, tài khoản và mật khẩu; (2) server xác thực và kiểm tra quyền; (3) client gửi câu
+lệnh SQL; (4) server phân tích cú pháp, tối ưu và thực thi; (5) server trả kết quả về client.
+Nhờ mô hình này, một máy chủ MySQL có thể phục vụ đồng thời hàng nghìn kết nối từ
+nhiều máy khách khác nhau.
+                       Hình 1.1. Mô hình Client/Server của MySQL
+
+1.2.2. Kiến trúc MySQL Server
+     Kiến trúc MySQL Server gồm ba tầng chính: (1) tầng kết nối - quản lý kết nối, xác
+thực, phân quyền phiên làm việc; (2) tầng xử lý SQL - bộ phân tích cú pháp (parser), bộ
+tối ưu truy vấn (optimizer), bộ thực thi; (3) tầng lưu trữ - các động cơ lưu trữ (storage
+engine) có thể thay thế nhau, trong đó InnoDB là mặc định từ MySQL 5.5, hỗ trợ giao
+dịch ACID, khóa mức dòng và khóa ngoại; ngoài ra còn MyISAM (cũ, không giao dịch),
+MEMORY, ARCHIVE. Dữ liệu và nhật ký được ghi trong thư mục dữ liệu (datadir);
+các tham số vận hành đặt trong tệp cấu hình my.ini (Windows) hoặc my.cnf
+(Linux/macOS).
+
+                      Hình 1.2. Kiến trúc ba tầng của MySQL Server
+
+1.3. Cài đặt và cấu hình MySQL, Workbench
+
+1.3.1. Cài đặt trên Windows
+
+     Tải MySQL Installer từ trang chính thức https://dev.mysql.com/downloads/. Các
+bước chính: chọn kiểu cài Developer Default (gồm MySQL Server + Workbench); cấu
+hình Type and Networking giữ cổng 3306; chọn phương thức xác thực mặc định
+(caching_sha2_password); đặt mật khẩu cho tài khoản quản trị root (bắt buộc đặt mật
+khẩu mạnh - đây là yêu cầu an toàn tối thiểu); cấu hình chạy MySQL như một Windows
+Service khởi động cùng hệ thống. Kiểm tra sau cài đặt bằng cách mở MySQL Command
+Line Client, đăng nhập root và chạy lệnh:
+     SELECT VERSION();
+     SHOW DATABASES;
+
+1.3.2. Cài đặt trên Linux và macOS
+     Trên Ubuntu/Debian: sudo apt update &amp;&amp; sudo apt install mysql-server; sau đó
+chạy sudo mysql_secure_installation để đặt mật khẩu root, gỡ tài khoản nặc danh, gỡ
+CSDL test. Trên macOS: cài bằng gói .dmg chính thức hoặc Homebrew (brew install
+mysql). MySQL Workbench cài riêng từ trang tải của MySQL. Tệp cấu hình my.cnf
+thường ở /etc/mysql/; sau khi sửa cấu hình phải khởi động lại dịch vụ.
+
+1.3.3. Cấu hình bộ ký tự tiếng Việt
+     Để lưu trữ đúng tiếng Việt và biểu tượng Unicode, sử dụng bộ ký tự utf8mb4 với
+đối chiếu utf8mb4_unicode_ci (hoặc utf8mb4_0900_ai_ci mặc định của MySQL 8). Có
+thể đặt mặc định trong tệp cấu hình:
+     [mysqld]
+     character-set-server = utf8mb4
+     collation-server = utf8mb4_unicode_ci
+
+1.4. Quản lý dịch vụ, tạo kết nối và cơ sở dữ liệu đầu tiên
+
+1.4.1. Quản lý dịch vụ MySQL
+     MySQL Server chạy nền như một dịch vụ hệ điều hành. Trên Windows: quản lý
+qua Services.msc (dịch vụ MySQL80) hoặc dòng lệnh với quyền quản trị: net start
+MySQL80, net stop MySQL80. Trên Linux: sudo systemctl start|stop|restart|status
+mysql. Người quản trị cần biết khởi động lại dịch vụ sau khi thay đổi cấu hình và xem
+trạng thái, nhật ký lỗi (error log) khi dịch vụ không khởi động được.
+
+1.4.2. Tạo kết nối bằng MySQL Workbench
+     MySQL Workbench là công cụ đồ họa chính thức để làm việc với MySQL: soạn
+và chạy SQL, thiết kế lược đồ, quản trị người dùng, sao lưu. Tạo kết nối mới: Database
+&gt; Manage Connections &gt; New; nhập Connection Name, Hostname (127.0.0.1 hoặc
+localhost), Port 3306, Username; Test Connection và nhập mật khẩu. Sau khi kết nối,
+
+cửa sổ truy vấn cho phép gõ lệnh SQL và thực thi bằng biểu tượng tia chớp (hoặc
+Ctrl+Enter).
+
+1.4.3. Tạo cơ sở dữ liệu đầu tiên
+     Tạo CSDL đầu tiên và kiểm tra bằng các lệnh sau (chi tiết cú pháp trình bày ở
+Chương 2):
+     CREATE DATABASE QUANLYHOCSINH
+       CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+     SHOW DATABASES;
+     USE QUANLYHOCSINH;
+     SELECT DATABASE();
+     CSDL QUANLYHOCSINH sẽ được sử dụng làm ví dụ minh họa thống nhất trong
+toàn bộ bài giảng, gồm bốn bảng: LOP (lớp học), HOCSINH (học sinh), MONHOC
+(môn học) và DIEM (điểm trung bình môn theo học kỳ).
+
+Mở rộng vấn đề (đọc thêm - không bắt buộc thi)
+     MySQL trong hạ tầng hiện đại: ngoài cách cài đặt truyền thống, trong thực tế nghề
+nghiệp MySQL thường được triển khai (1) bằng container Docker - chỉ một lệnh docker
+run -e MYSQL_ROOT_PASSWORD=... -p 3306:3306 mysql:8.4 là có ngay một máy
+chủ sạch, rất tiện cho học tập và kiểm thử; (2) dưới dạng dịch vụ CSDL đám mây
+(DBaaS) như Amazon RDS, Azure Database for MySQL, Google Cloud SQL - nhà
+cung cấp lo phần cài đặt, vá lỗi, sao lưu, người quản trị tập trung vào dữ liệu và phân
+quyền. Cùng họ với MySQL còn có MariaDB (nhánh mã nguồn mở tách ra từ MySQL
+năm 2009, tương thích phần lớn cú pháp) và Percona Server (bản tăng cường cho môi
+trường doanh nghiệp). Hiểu bức tranh này giúp sinh viên định vị kiến thức của học phần:
+các kỹ năng SQL, phân quyền, sao lưu học trên MySQL Community đều chuyển giao
+trực tiếp sang các môi trường trên.
+
+1.5. Bài thực hành số 1: Cài đặt và làm quen môi trường (02 tiết)
+
+Mục tiêu: cài đặt hoàn chỉnh môi trường làm việc; tạo kết nối; tạo CSDL đầu tiên
+(CLO1).
+Nội dung thực hiện:
+        + Bài 1. Tải và cài đặt MySQL Server 8.x cùng MySQL Workbench trên máy
+     cá nhân; đặt mật khẩu root mạnh (tối thiểu 8 ký tự gồm chữ hoa, chữ thường, chữ
+     số, ký tự đặc biệt); ghi lại các lựa chọn cấu hình.
+        + Bài 2. Thực hành quản lý dịch vụ: dừng, khởi động lại dịch vụ MySQL; xác
+     định vị trí tệp cấu hình và thư mục dữ liệu bằng lệnh SHOW VARIABLES LIKE
+     'datadir';
+
+        + Bài 3. Tạo kết nối trong Workbench; chạy SELECT VERSION(), SHOW
+     DATABASES; chụp màn hình kết quả.
+        + Bài 4. Tạo CSDL QUANLYHOCSINH với utf8mb4; kiểm tra bằng SHOW
+     CREATE DATABASE QUANLYHOCSINH;
+        + Bài 5 (nâng cao). Đăng nhập bằng mysql dòng lệnh: mysql -u root -p; thực
+     hiện lại Bài 3-4 bằng dòng lệnh.
+Phần ứng dụng AI (NLS Miền 6 - theo quy trình 4 bước Hỏi - Kiểm - Dùng - Khai
+báo):
+        + Bài 6. Chẩn đoán sự cố bằng AI: chọn một lỗi thực tế gặp trong quá trình cài
+     đặt/kết nối (nếu không gặp lỗi, dùng lỗi giả lập: cố tình nhập sai mật khẩu root để
+     nhận lỗi ERROR 1045, hoặc dừng dịch vụ rồi kết nối để nhận lỗi ERROR 2003).
+     Viết prompt theo mẫu của học phần: nêu hệ điều hành, phiên bản MySQL, thao
+     tác đã làm và dán nguyên văn thông báo lỗi; đối chiếu lời giải thích của AI với
+     thực tế khắc phục được; ghi vào báo cáo: prompt đã dùng, tóm tắt trả lời của AI,
+     kết luận đúng/sai ở điểm nào.
+        + Bài 7. Kiểm chứng thông tin AI cung cấp: nhờ AI giải thích ý nghĩa ba biến
+     hệ thống port, datadir, character_set_server; sau đó tự tra ba biến này trong
+     MySQL 8.4 Reference Manual [4] và lập bảng đối chiếu hai cột (AI giải thích / tài
+     liệu chính thức), chỉ ra điểm AI nói thiếu, thừa hoặc sai (nếu có).
+     Sản phẩm nộp: tệp báo cáo ngắn (ảnh chụp màn hình từng bước kèm chú thích;
+riêng Bài 6-7 trình bày theo yêu cầu trên, cuối báo cáo có mục Khai báo sử dụng AI)
+nộp lên hệ thống lớp học theo đúng quy định đặt tên tệp: MSSV_HoTen_TH1.
+
+Tổng kết chương 1
+     Chương 1 đã trình bày các khái niệm nền tảng: CSDL, HQT CSDL và vị trí của
+MySQL trong nhóm RDBMS phổ biến; mô hình Client/Server với tiến trình mysqld
+lắng nghe trên cổng 3306 và kiến trúc ba tầng của MySQL Server với động cơ lưu trữ
+mặc định InnoDB; cách cài đặt, cấu hình MySQL 8.x và Workbench trên các nền tảng,
+cấu hình utf8mb4 cho tiếng Việt; cách quản lý dịch vụ, tạo kết nối và tạo CSDL đầu
+tiên. Đây là môi trường làm việc cho toàn bộ các chương tiếp theo.
+
+Câu hỏi ôn tập và bài tập chương 1
+     - 1. Phân biệt CSDL và HQT CSDL. Nêu các chức năng chính của một HQT
+CSDL.
+     - 2. Trình bày quy trình một phiên làm việc theo mô hình Client/Server của
+MySQL.
+
+     - 3. Kiến trúc MySQL Server gồm những tầng nào? Vai trò của động cơ lưu trữ
+InnoDB?
+     - 4. Vì sao phải dùng bộ ký tự utf8mb4 khi lưu dữ liệu tiếng Việt?
+     - 5. Nêu các cách khởi động/dừng dịch vụ MySQL trên Windows và Linux.
+
+Nhiệm vụ tự học (5 giờ)
+     - Đọc tài liệu [3] chương Installing MySQL; tra cứu mục Tutorial trong MySQL
+8.4 Reference Manual [4].
+     - Tìm hiểu thêm: sự khác nhau giữa MySQL và MariaDB; các bản phân phối
+MySQL (Community, Enterprise).
+
+Tài liệu học tập chương 1: [1] Chương 1; [3] Part I; [4] mục Installing and
+Upgrading MySQL.</baihoc>
+<baitap bai="1" loai="goc" de="+ Bài 1. Tải và cài đặt MySQL Server 8.x cùng MySQL Workbench trên máy cá nhân; đặt mật khẩu root mạnh (tối thiểu 8 ký tự gồm chữ hoa, chữ thường, chữ số, ký tự đặc biệt); ghi lại các lựa chọn cấu hình." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 7-13."/>
+<baitap bai="1" loai="goc" de="+ Bài 2. Thực hành quản lý dịch vụ: dừng, khởi động lại dịch vụ MySQL; xác định vị trí tệp cấu hình và thư mục dữ liệu bằng lệnh SHOW VARIABLES LIKE 'datadir';" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 7-13."/>
+<baitap bai="1" loai="goc" de="+ Bài 3. Tạo kết nối trong Workbench; chạy SELECT VERSION(), SHOW DATABASES; chụp màn hình kết quả." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 7-13."/>
+<baitap bai="1" loai="goc" de="+ Bài 4. Tạo CSDL QUANLYHOCSINH với utf8mb4; kiểm tra bằng SHOW CREATE DATABASE QUANLYHOCSINH; + Bài 5 (nâng cao). Đăng nhập bằng mysql dòng lệnh: mysql -u root -p; thực hiện lại Bài 3-4 bằng dòng lệnh. Phần ứng dụng AI (NLS Miền 6 - theo quy trình 4 bước Hỏi - Kiểm - Dùng - Khai báo):" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 7-13."/>
+<baitap bai="1" loai="goc" de="+ Bài 6. Chẩn đoán sự cố bằng AI: chọn một lỗi thực tế gặp trong quá trình cài đặt/kết nối (nếu không gặp lỗi, dùng lỗi giả lập: cố tình nhập sai mật khẩu root để nhận lỗi ERROR 1045, hoặc dừng dịch vụ rồi kết nối để nhận lỗi ERROR 2003). Viết prompt theo mẫu của học phần: nêu hệ điều hành, phiên bản MySQL, thao tác đã làm và dán nguyên văn thông báo lỗi; đối chiếu lời giải thích của AI với thực tế khắc phục được; ghi vào báo cáo: prompt đã dùng, tóm tắt trả lời của AI, kết luận đúng/sai ở điểm nào." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 7-13."/>
+<baitap bai="1" loai="goc" de="+ Bài 7. Kiểm chứng thông tin AI cung cấp: nhờ AI giải thích ý nghĩa ba biến hệ thống port, datadir, character_set_server; sau đó tự tra ba biến này trong MySQL 8.4 Reference Manual [4] và lập bảng đối chiếu hai cột (AI giải thích / tài liệu chính thức), chỉ ra điểm AI nói thiếu, thừa hoặc sai (nếu có). Sản phẩm nộp: tệp báo cáo ngắn (ảnh chụp màn hình từng bước kèm chú thích; riêng Bài 6-7 trình bày theo yêu cầu trên, cuối báo cáo có mục Khai báo sử dụng AI) nộp lên hệ thống lớp học theo đúng quy định đặt tên tệp: MSSV_HoTen_TH1. Tổng kết chương 1" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 7-13."/>
+<baitap bai="1" loai="goc" de="- 1. Phân biệt CSDL và HQT CSDL. Nêu các chức năng chính của một HQT CSDL." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 7-13."/>
+<baitap bai="1" loai="goc" de="- 2. Trình bày quy trình một phiên làm việc theo mô hình Client/Server của MySQL." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 7-13."/>
+<baitap bai="1" loai="goc" de="- 3. Kiến trúc MySQL Server gồm những tầng nào? Vai trò của động cơ lưu trữ InnoDB?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 7-13."/>
+<baitap bai="1" loai="goc" de="- 4. Vì sao phải dùng bộ ký tự utf8mb4 khi lưu dữ liệu tiếng Việt?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 7-13."/>
+<baitap bai="1" loai="goc" de="- 5. Nêu các cách khởi động/dừng dịch vụ MySQL trên Windows và Linux. Nhiệm vụ tự học (5 giờ) - Đọc tài liệu [3] chương Installing MySQL; tra cứu mục Tutorial trong MySQL 8.4 Reference Manual [4]. - Tìm hiểu thêm: sự khác nhau giữa MySQL và MariaDB; các bản phân phối MySQL (Community, Enterprise). Tài liệu học tập chương 1: [1] Chương 1; [3] Part I; [4] mục Installing and Upgrading MySQL." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 7-13."/>
+<baihoc stt="2" tieude="Chương 2. Ngôn ngữ SQL trong MySQL">Chương 2. NGÔN NGỮ SQL TRONG MYSQL
+                (Số tiết: 08 lý thuyết + 08 thực hành — Tuần 2, 3, 4, 5)
+
+Mục tiêu của chương 2 (kết quả đạt được):
+     Sau khi học xong chương này, sinh viên có khả năng:
+     - Trình bày được cấu trúc câu lệnh SQL, các nhóm lệnh và hệ thống kiểu dữ liệu
+của MySQL (đáp ứng CLO2);
+     - Sử dụng được các lệnh định nghĩa dữ liệu (DDL) để tạo lập, sửa đổi, xóa cơ sở
+dữ liệu và bảng (đáp ứng CLO2);
+     - Sử dụng được các lệnh thao tác dữ liệu (DML): INSERT, UPDATE, DELETE
+một cách an toàn (đáp ứng CLO2);
+     - Viết được câu lệnh truy vấn SELECT với đầy đủ các mệnh đề lọc, sắp xếp, gom
+nhóm, kết nối bảng, truy vấn con và vận dụng hệ thống hàm của MySQL (đáp ứng
+CLO2).
+
+Năng lực số được hình thành (theo Thông tư 02/2025/TT-BGDĐT):
+     - Miền 1 - Khai thác dữ liệu và thông tin: dùng truy vấn để tìm kiếm, lọc, sắp xếp
+và tổng hợp dữ liệu - kỹ năng cốt lõi của khai thác dữ liệu số;
+     - Miền 3 - Sáng tạo nội dung số: viết mã lệnh SQL (năng lực lập trình);
+     - Miền 5 - Giải quyết vấn đề: chuyển yêu cầu thông tin bằng ngôn ngữ tự nhiên
+thành câu truy vấn; đọc hiểu và tự sửa lỗi từ thông báo của MySQL;
+     - Miền 6 - Ứng dụng AI: sử dụng AI để giải thích, gợi ý tối ưu truy vấn một cách
+có kiểm chứng; không dùng AI làm thay bài nộp.
+
+2.1. Cấu trúc câu lệnh SQL, kiểu dữ liệu trong MySQL
+
+2.1.1. Giới thiệu SQL và các nhóm lệnh
+     SQL (Structured Query Language) là ngôn ngữ chuẩn ANSI/ISO để định nghĩa,
+thao tác và kiểm soát dữ liệu trong các HQT CSDL quan hệ. SQL là ngôn ngữ khai báo:
+người dùng mô tả kết quả cần lấy, HQT CSDL tự quyết định cách thực thi. Các nhóm
+lệnh SQL:
+     - DDL (Data Definition Language) - định nghĩa dữ liệu: CREATE, ALTER,
+DROP, TRUNCATE (mục 2.2);
+     - DML (Data Manipulation Language) - thao tác dữ liệu: INSERT, UPDATE,
+DELETE (mục 2.3) và truy vấn SELECT (mục 2.4);
+     - DCL (Data Control Language) - điều khiển truy cập: GRANT, REVOKE (trình
+bày ở Chương 4);
+
+     - TCL (Transaction Control Language) - điều khiển giao dịch: START
+TRANSACTION, COMMIT, ROLLBACK.
+
+2.1.2. Quy tắc viết lệnh SQL trong MySQL
+     - Mỗi câu lệnh kết thúc bằng dấu chấm phẩy (;); có thể viết trên nhiều dòng;
+     - Từ khóa SQL không phân biệt chữ hoa/thường (SELECT = select); theo quy ước,
+từ khóa viết HOA, tên bảng/cột viết theo tên đã đặt. Trên Linux, tên bảng phân biệt hoa
+thường nên cần viết nhất quán;
+     - Định danh (tên CSDL, bảng, cột) nên chỉ gồm chữ cái không dấu, chữ số và dấu
+gạch dưới, không bắt đầu bằng chữ số; nếu trùng từ khóa phải bao trong dấu huyền `tên`;
+     - Hằng chuỗi và ngày đặt trong nháy đơn: 'Quảng Ngãi', '2026-09-05' (định dạng
+ngày chuẩn YYYY-MM-DD); hằng số viết trực tiếp: 8.5;
+     - Chú thích: -- hoặc # chú thích một dòng, /* ... */ chú thích nhiều dòng.
+
+2.1.3. Kiểu dữ liệu trong MySQL
+                  Bảng 2.1. Các kiểu dữ liệu thường dùng trong MySQL
+    Nhóm                    Kiểu                              Mô tả, ví dụ
+                 TINYINT, SMALLINT, INT,       Số nguyên các kích cỡ; INT chiếm 4 byte;
+Số nguyên
+                 BIGINT                        thêm UNSIGNED nếu không âm
+                 DECIMAL(p,s), FLOAT,          DECIMAL chính xác, dùng cho điểm số,
+Số thực
+                 DOUBLE                        tiền tệ: DECIMAL(4,2)
+                 CHAR(n), VARCHAR(n),          CHAR độ dài cố định; VARCHAR độ dài
+Chuỗi
+                 TEXT                          thay đổi: VARCHAR(50)
+                 DATE, TIME, DATETIME,         DATE: '2026-09-05'; DATETIME: '2026-
+Ngày giờ
+                 TIMESTAMP, YEAR               09-05 07:30:00'
+                 ENUM, SET, JSON, BLOB,        ENUM('Nam','Nữ'); BOOLEAN thực chất
+Khác
+                 BOOLEAN                       là TINYINT(1)
+
+     Nguyên tắc chọn kiểu: đúng bản chất dữ liệu (điểm số dùng DECIMAL, không
+dùng FLOAT để tránh sai số), đủ nhỏ để tiết kiệm và đủ lớn để không tràn; các cột dùng
+làm khóa nên có kiểu ngắn gọn.
+
+2.1.4. Toán tử
+     Toán tử số học: +, -, *, /, DIV (chia nguyên), % hoặc MOD (chia dư). Toán tử so
+sánh: =, &lt;&gt; hoặc !=, &gt;, &gt;=, &lt;, &lt;=, BETWEEN ... AND ..., IN (...), LIKE (so khớp mẫu
+với % thay chuỗi bất kỳ, _ thay một ký tự), IS NULL / IS NOT NULL. Toán tử logic:
+
+AND, OR, NOT, XOR. Lưu ý: so sánh với NULL phải dùng IS NULL, không dùng dấu
+bằng.
+
+2.2. Các lệnh định nghĩa dữ liệu
+
+2.2.1. Tạo, chọn, sửa và xóa cơ sở dữ liệu
+        CREATE DATABASE [IF NOT EXISTS] tên_csdl
+          [CHARACTER SET bộ_ký_tự] [COLLATE quy_tắc_so_sánh];
+
+        -- Ví dụ 2.1
+        CREATE DATABASE IF NOT EXISTS QUANLYHOCSINH
+          CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+        SHOW DATABASES;                      -- liệt kê các CSDL
+        USE QUANLYHOCSINH;                   -- chọn CSDL làm việc
+        SELECT DATABASE();                   -- xem CSDL hiện hành
+        ALTER DATABASE QUANLYHOCSINH CHARACTER SET utf8mb4;
+        DROP DATABASE IF EXISTS QLHS_TEST;   -- xóa CSDL
+        Tùy chọn IF NOT EXISTS/IF EXISTS giúp kịch bản chạy lại nhiều lần không báo
+lỗi. Cảnh báo: DROP DATABASE xóa vĩnh viễn toàn bộ bảng và dữ liệu bên trong,
+không có thao tác hoàn tác; trên hệ thống thật chỉ thực hiện sau khi đã sao lưu (Chương
+4) và với tài khoản được phân quyền phù hợp.
+
+2.2.2. Tạo bảng
+        Từ mục này trở đi, toàn bộ ví dụ và bài thực hành sử dụng CSDL minh họa
+QUANLYHOCSINH gồm bốn bảng theo lược đồ quan hệ ở Hình 2.1 (các khóa ngoại
+sẽ được khai báo chính thức ở Chương 3):
+
+             Hình 2.1. Lược đồ quan hệ của CSDL minh họa QUANLYHOCSINH
+     CREATE TABLE [IF NOT EXISTS] tên_bảng (
+       tên_cột kiểu_dữ_liệu [NOT NULL] [DEFAULT giá_trị]
+     [AUTO_INCREMENT], ...
+       [, PRIMARY KEY (danh_sách_cột)]
+     ) [ENGINE=InnoDB] [DEFAULT CHARSET=utf8mb4];
+
+     -- Ví dụ 2.2: bảng LOP
+     CREATE TABLE LOP (
+       MaLop VARCHAR(10) PRIMARY KEY,
+       TenLop VARCHAR(50) NOT NULL,
+       GVCN   VARCHAR(50),
+       SiSo   INT           DEFAULT 0
+     ) ENGINE=InnoDB;
+     Động cơ lưu trữ InnoDB là mặc định của MySQL 8.x, hỗ trợ giao dịch và khóa
+ngoại nên luôn được dùng trong học phần. Cột số nguyên có thể khai báo
+AUTO_INCREMENT để MySQL tự sinh giá trị tăng dần cho khóa chính. Hệ thống
+ràng buộc toàn vẹn đầy đủ (khóa ngoại, UNIQUE, CHECK, hành vi tham chiếu) được
+trình bày chi tiết ở mục 3.1 của Chương 3.
+
+2.2.3. Xem và sửa đổi cấu trúc bảng
+     SHOW TABLES;               DESCRIBE HOCSINH;
+     SHOW CREATE TABLE HOCSINH;
+     -- thêm cột
+     ALTER TABLE HOCSINH ADD COLUMN Email VARCHAR(100);
+     -- đổi kiểu
+     ALTER TABLE HOCSINH MODIFY COLUMN DiaChi VARCHAR(200);
+     -- đổi tên cột
+     ALTER TABLE HOCSINH CHANGE COLUMN Email EmailLH VARCHAR(100);
+     -- xóa cột
+     ALTER TABLE HOCSINH DROP COLUMN EmailLH;
+     -- đổi tên bảng
+     RENAME TABLE HOCSINH TO HOC_SINH;
+
+2.2.4. Xóa và làm rỗng bảng
+     DROP TABLE IF EXISTS DIEM;   -- xóa cấu trúc và dữ liệu
+     TRUNCATE TABLE DIEM;       -- xóa toàn bộ dữ liệu, giữ cấu trúc
+     Thứ tự xóa bảng phải ngược với quan hệ tham chiếu: bảng con (chứa khóa ngoại)
+xóa trước, bảng cha xóa sau; nếu không MySQL báo lỗi vì vi phạm toàn vẹn tham chiếu.
+Phân biệt DROP (xóa cả cấu trúc) và TRUNCATE (chỉ xóa dữ liệu, đặt lại bộ đếm
+AUTO_INCREMENT, không khôi phục được).
+
+2.3. Các lệnh thao tác dữ liệu
+     Các ví dụ từ đây dùng CSDL QUANLYHOCSINH gồm bốn bảng: LOP(MaLop,
+TenLop, GVCN, SiSo), HOCSINH(MaHS, HoTen, NgaySinh, GioiTinh, DiaChi,
+
+MaLop), MONHOC(MaMH, TenMH, SoTiet), DIEM(MaHS, MaMH, HocKy,
+DiemTB) - khóa chính của DIEM là khóa ghép (MaHS, MaMH, HocKy).
+
+2.3.1. Câu lệnh INSERT
+     INSERT INTO tên_bảng (cột1, cột2, ...) VALUES (giá_trị1,
+     giá_trị2, ...);
+
+     -- Ví dụ 2.3: thêm một học sinh
+     INSERT INTO HOCSINH (MaHS, HoTen, NgaySinh, GioiTinh, DiaChi,
+     MaLop)
+     VALUES ('HS0451', 'Trần Thị Mai', '2010-04-12', 'Nữ', 'Quảng
+     Ngãi', '10A1');
+
+     -- Ví dụ 2.4: thêm nhiều dòng cùng lúc
+     INSERT INTO MONHOC (MaMH, TenMH, SoTiet) VALUES
+     ('TIN', 'Tin học', 70), ('TOAN', 'Toán', 140), ('VAN', 'Ngữ
+     văn', 105);
+     Lưu ý: thứ tự giá trị phải khớp thứ tự cột liệt kê; cột không liệt kê nhận giá trị mặc
+định hoặc NULL; giá trị vi phạm ràng buộc (khóa chính trùng, khóa ngoại không tồn
+tại) sẽ bị từ chối - đây chính là cơ chế HQT CSDL bảo vệ tính toàn vẹn dữ liệu. Biến
+thể INSERT ... SELECT cho phép chép dữ liệu từ truy vấn vào bảng.
+
+2.3.2. Câu lệnh UPDATE
+     UPDATE tên_bảng SET cột1 = giá_trị1 [, cột2 = giá_trị2 ...]
+     [WHERE điều_kiện];
+
+     -- Ví dụ 2.5: cập nhật địa chỉ một học sinh
+     UPDATE HOCSINH SET DiaChi = 'TP. Quảng Ngãi' WHERE MaHS =
+     'HS0451';
+
+     -- Ví dụ 2.6: cộng 0.5 điểm khuyến khích môn Tin HK1 (không vượt
+     quá 10)
+     UPDATE DIEM SET DiemTB = LEAST(DiemTB + 0.5, 10)
+     WHERE MaMH = 'TIN' AND HocKy = 1;
+     Cảnh báo quan trọng: UPDATE (và DELETE) không có WHERE sẽ tác động lên
+toàn bộ bảng. Thói quen an toàn: viết SELECT với cùng điều kiện WHERE để xem
+trước các dòng bị ảnh hưởng, hoặc thao tác trong giao dịch (START TRANSACTION
+... ROLLBACK/COMMIT). MySQL Workbench mặc định bật safe update mode để
+ngăn UPDATE/DELETE thiếu điều kiện trên khóa.
+
+2.3.3. Câu lệnh DELETE
+     DELETE FROM tên_bảng [WHERE điều_kiện];
+
+     -- Ví dụ 2.7: xóa các điểm chưa nhập (NULL)
+     DELETE FROM DIEM WHERE DiemTB IS NULL;
+
+     Phân biệt DELETE và TRUNCATE: DELETE là lệnh DML, xóa theo điều kiện,
+ghi nhật ký từng dòng và có thể ROLLBACK trong giao dịch; TRUNCATE là lệnh
+DDL, xóa nhanh toàn bộ và không khôi phục được.
+
+2.4. Câu lệnh truy vấn dữ liệu
+
+2.4.1. Cú pháp tổng quát của SELECT
+     SELECT [DISTINCT] danh_sách_cột | *
+     FROM   tên_bảng
+     [WHERE điều_kiện]
+     [GROUP BY danh_sách_cột]
+     [HAVING điều_kiện_nhóm]
+     [ORDER BY cột [ASC|DESC], ...]
+     [LIMIT [vị_trí,] số_dòng];
+     Ví dụ 2.8 - chọn cột, đặt bí danh và lọc với WHERE, LIKE, BETWEEN, IN:
+     SELECT MaHS, HoTen AS 'Họ và tên', NgaySinh FROM HOCSINH;
+     -- Học sinh nữ của lớp 10A1
+     SELECT * FROM HOCSINH WHERE GioiTinh = 'Nữ' AND MaLop = '10A1';
+     -- Học sinh có họ Nguyễn
+     SELECT * FROM HOCSINH WHERE HoTen LIKE 'Nguyễn%';
+     -- Điểm trung bình từ 8.0 đến 10
+     SELECT * FROM DIEM WHERE DiemTB BETWEEN 8.0 AND 10;
+     -- Học sinh thuộc một trong các lớp
+     SELECT * FROM HOCSINH WHERE MaLop IN ('10A1','10A2');
+     Ví dụ 2.9 - sắp xếp và giới hạn kết quả:
+     SELECT MaHS, DiemTB FROM DIEM
+     WHERE MaMH = 'TIN' AND HocKy = 1
+     ORDER BY DiemTB DESC
+     LIMIT 5;   -- 5 học sinh điểm Tin cao nhất học kỳ 1
+
+2.4.2. Gom nhóm và hàm tổng hợp
+     Các hàm tổng hợp: COUNT(*) đếm số dòng; COUNT(cột) đếm giá trị khác
+NULL; SUM, AVG, MAX, MIN. Hàm tổng hợp thường dùng kèm GROUP BY;
+HAVING dùng để lọc trên kết quả sau khi gom nhóm. Phân biệt: WHERE lọc từng dòng
+trước khi gom nhóm, HAVING lọc nhóm và được phép chứa hàm tổng hợp.
+     -- Ví dụ 2.10: các lớp có từ 30 học sinh trở lên
+     SELECT MaLop, COUNT(*) AS SoHS
+     FROM HOCSINH
+     GROUP BY MaLop
+     HAVING COUNT(*) &gt;= 30;
+
+2.4.3. Truy vấn nhiều bảng (JOIN)
+     -- Ví dụ 2.11: điểm Tin HK1 kèm họ tên và tên lớp
+     SELECT hs.MaHS, hs.HoTen, l.TenLop, d.DiemTB
+     FROM HOCSINH hs
+     JOIN LOP l ON hs.MaLop = l.MaLop
+     JOIN DIEM d ON hs.MaHS = d.MaHS
+
+        WHERE d.MaMH = 'TIN' AND d.HocKy = 1;
+        INNER JOIN chỉ lấy các dòng khớp ở cả hai bảng; LEFT JOIN lấy tất cả dòng của
+bảng bên trái kể cả không khớp (các cột bên phải nhận NULL) - thường dùng để tìm dữ
+liệu “chưa có”, ví dụ học sinh chưa có điểm; RIGHT JOIN ngược lại; CROSS JOIN là
+tích Đề-các. Hình 2.2 minh họa trực quan sự khác nhau giữa hai phép kết nối hay dùng
+nhất:
+
+                      Hình 2.2. Phân biệt INNER JOIN và LEFT JOIN
+
+2.4.4. Truy vấn con (subquery)
+        -- Ví dụ 2.12: học sinh có điểm Tin HK1 cao hơn trung bình chung
+        SELECT MaHS, DiemTB FROM DIEM
+        WHERE MaMH = 'TIN' AND HocKy = 1
+          AND DiemTB &gt; (SELECT AVG(DiemTB) FROM DIEM
+                        WHERE MaMH = 'TIN' AND HocKy = 1);
+
+        -- Ví dụ 2.13: học sinh chưa có điểm môn Tin HK1
+        SELECT * FROM HOCSINH
+        WHERE MaHS NOT IN (SELECT MaHS FROM DIEM
+                           WHERE MaMH = 'TIN' AND HocKy = 1);
+        Truy vấn con có thể đặt trong WHERE (trả về một giá trị hoặc danh sách), trong
+FROM (bảng dẫn xuất, phải đặt bí danh) hoặc trong SELECT. Toán tử EXISTS/NOT
+EXISTS kiểm tra sự tồn tại của dòng trong truy vấn con tương quan.
+
+2.4.5. Các hàm thường dùng trong truy vấn
+        -- Hàm chuỗi
+        SELECT CONCAT(HoTen, ' - ', MaLop), UPPER(HoTen),
+               CHAR_LENGTH(HoTen), SUBSTRING(HoTen, 1, 10),
+               TRIM(HoTen), REPLACE(DiaChi, 'TP.', 'Thành phố')
+        FROM HOCSINH;
+        -- Hàm số: ROUND, CEILING, FLOOR, ABS, TRUNCATE, MOD
+        SELECT ROUND(AVG(DiemTB), 2) FROM DIEM;
+        -- Hàm ngày giờ
+        SELECT NOW(), CURDATE(),
+               YEAR(NgaySinh) AS NamSinh,
+
+            TIMESTAMPDIFF(YEAR, NgaySinh, CURDATE()) AS Tuoi,
+            DATE_FORMAT(NgaySinh, '%d/%m/%Y')        AS NgaySinhVN
+     FROM HOCSINH;
+     Biểu thức điều kiện và xử lý NULL - ví dụ 2.14:
+     SELECT MaHS, DiemTB,
+       CASE
+         WHEN DiemTB &gt;= 8.5 THEN 'Giỏi'
+         WHEN DiemTB &gt;= 7.0 THEN 'Khá'
+         WHEN DiemTB &gt;= 5.5 THEN 'Trung bình'
+         ELSE 'Yếu'
+       END AS XepLoai,
+       IF(DiemTB &gt;= 5, 'Đạt', 'Chưa đạt') AS KetQua,
+       IFNULL(DiemTB, 0) AS Diem
+     FROM DIEM WHERE MaMH = 'TIN' AND HocKy = 1;
+
+Mở rộng vấn đề
+     Ba công cụ truy vấn hiện đại của MySQL 8.x rất đáng tìm hiểu thêm vì xuất hiện
+thường xuyên trong công việc thực tế:
+     - Biểu thức bảng chung (CTE - mệnh đề WITH): đặt tên cho một truy vấn trung
+gian để câu lệnh dài trở nên dễ đọc, thay cho truy vấn con lồng sâu. Ví dụ tính điểm
+trung bình HK1 của từng học sinh rồi lọc ra em có trung bình &gt;= 8.0:
+     WITH tb AS (
+       SELECT MaHS, ROUND(AVG(DiemTB),2) AS TB
+       FROM DIEM WHERE HocKy = 1 GROUP BY MaHS
+     )
+     SELECT h.HoTen, tb.TB FROM tb JOIN HOCSINH h ON h.MaHS = tb.MaHS
+     WHERE tb.TB &gt;= 8.0 ORDER BY tb.TB DESC;
+     - Hàm cửa sổ (window function): tính toán trên “cửa sổ” các dòng liên quan mà
+không gộp dòng như GROUP BY; tiêu biểu là xếp hạng RANK() OVER (PARTITION
+BY MaLop ORDER BY TB DESC) - xếp hạng học sinh trong từng lớp chỉ bằng một
+câu lệnh, điều mà truy vấn con tương quan làm rất vất vả.
+     - Lệnh EXPLAIN: đặt EXPLAIN trước một câu SELECT để xem kế hoạch thực
+thi (đọc bao nhiêu dòng, có dùng chỉ mục không). Đây là công cụ chuẩn để so sánh hai
+cách viết truy vấn nhanh hay chậm một cách khách quan, thay vì cảm tính - sẽ dùng
+trong bài thực hành số 3.
+
+2.5. Thực hành
+
+BÀI THỰC HÀNH SỐ 2: LỆNH ĐỊNH NGHĨA VÀ THAO TÁC DỮ LIỆU (04 tiết
+- Tuần 4)
+     - Mục tiêu: tạo lập CSDL, bảng bằng DDL; nhập và chỉnh sửa dữ liệu bằng DML
+an toàn (CLO2).
+
+     - Chuẩn bị: giảng viên cung cấp lược đồ QUANLYHOCSINH; sinh viên tự viết
+toàn bộ kịch bản.
+
+Phần A. Định nghĩa dữ liệu (60 phút)
+        + A1. Tạo CSDL QUANLYHOCSINH với utf8mb4; tạo bốn bảng LOP,
+     HOCSINH, MONHOC, DIEM đúng kiểu dữ liệu và khóa chính (khóa ngoại sẽ bổ
+     sung ở Chương 3).
+        + A2. Dùng ALTER TABLE: thêm cột Email cho HOCSINH; đổi kiểu DiaChi
+     thành VARCHAR(200); tạo bảng nháp GHICHU rồi xóa bằng DROP TABLE.
+
+Phần B. Thao tác dữ liệu (75 phút)
+        + B1. INSERT: nhập 6 lớp, 8 môn học; nhập tối thiểu 10 học sinh trong đó có
+     3 học sinh do em tự đặt dữ liệu; nhập điểm học kỳ 1 cho các học sinh ở 3 môn.
+        + B2. Thử INSERT một học sinh trùng MaHS; ghi lại và giải thích thông báo
+     lỗi.
+        + B3. UPDATE: đổi giáo viên chủ nhiệm lớp 10A2; cộng 0.25 điểm môn Văn
+     HK1 cho lớp 10A1 (dùng LEAST); trước mỗi UPDATE viết SELECT xem trước
+     các dòng bị ảnh hưởng.
+        + B4. DELETE các dòng điểm NULL; phân biệt kết quả với TRUNCATE trên
+     một bảng nháp.
+
+Phần C. Vận dụng (45 phút)
+        + C1. Viết kịch bản chạy-lại-được: mở đầu bằng DROP DATABASE IF
+     EXISTS rồi tạo lại toàn bộ và nạp dữ liệu; chạy hai lần liên tiếp để kiểm chứng
+     không lỗi.
+        + C2. (NLS Miền 6 - AI sinh dữ liệu có thẩm định) Viết prompt theo mẫu học
+     phần, dán kèm lệnh CREATE TABLE HOCSINH, yêu cầu AI sinh 20 dòng
+     INSERT dữ liệu học sinh Việt Nam hợp lý. Trước khi chạy, thẩm định theo bảng
+     kiểm: (1) họ tên - giới tính có khớp nhau không; (2) ngày sinh có nằm trong độ
+     tuổi THPT không; (3) MaLop có tồn tại trong bảng LOP không; (4) MaHS có trùng
+     dữ liệu đã nhập ở B1 không; (5) tiếng Việt có đúng chính tả, đủ dấu không. Sửa
+     các dòng sai rồi mới chạy; ghi lại số lỗi AI mắc theo từng tiêu chí.
+        + C3. (NLS Miền 6 - dịch yêu cầu thành SQL) Chọn 3 yêu cầu bất kỳ trong bài
+     về nhà (câu 6 phần ôn tập), nhờ AI viết SQL; tự viết phiên bản của mình TRƯỚC
+     khi xem đáp án AI; chạy cả hai, so sánh kết quả và phong cách viết; phân loại điểm
+     khác biệt: AI sai / AI đúng nhưng khác cách / AI tốt hơn - vì sao.
+
+BÀI THỰC HÀNH SỐ 3: TRUY VẤN DỮ LIỆU (04 tiết - Tuần 5)
+     - Mục tiêu: viết thành thạo truy vấn SELECT từ cơ bản đến kết nối nhiều bảng,
+truy vấn con (CLO2).
+     - Chuẩn bị: nạp tệp QUANLYHOCSINH.sql do giảng viên cung cấp (~200 học
+sinh, 6 lớp, 8 môn) bằng: mysql -u root -p &lt; QUANLYHOCSINH.sql hoặc Open SQL
+Script trong Workbench.
+
+Phần A. Truy vấn một bảng (60 phút)
+       + A1. Liệt kê MaHS, HoTen, NgaySinh của học sinh lớp 10A1, sắp xếp theo
+     tên.
+       + A2. Liệt kê học sinh nữ sinh năm 2010 trở về sau; học sinh có tên bắt đầu
+     bằng 'H' hoặc địa chỉ chứa 'Quảng Ngãi'.
+       + A3. Hiển thị 10 dòng điểm Toán HK1 cao nhất; danh sách học sinh kèm cột
+     Tuổi tính bằng TIMESTAMPDIFF.
+
+Phần B. Gom nhóm và kết nối (75 phút)
+       + B1. Thống kê số học sinh nam/nữ của từng lớp (GROUP BY hai cột).
+       + B2. Tính điểm trung bình từng môn của mỗi lớp trong HK1, chỉ hiển thị nhóm
+     có trung bình &gt;= 6.5 (JOIN + HAVING).
+       + B3. Danh sách điểm Tin HK1 kèm họ tên, tên lớp (JOIN ba bảng); dùng CASE
+     xếp loại và đếm số lượng theo từng loại.
+
+Phần C. Truy vấn con và vận dụng (45 phút)
+       + C1. Tìm học sinh chưa có điểm môn Tin HK1 (hai cách: NOT IN và LEFT
+     JOIN ... IS NULL); so sánh kết quả.
+       + C2. Với mỗi lớp, tìm học sinh có điểm trung bình môn Toán cao nhất (truy
+     vấn con tương quan).
+       + C3. (NLS Miền 6 - so sánh phương án bằng chứng cứ) Nhờ AI đề xuất một
+     cách viết khác cho câu B2 (ví dụ dùng truy vấn con hoặc CTE thay cho JOIN);
+     chạy thử để xác nhận hai cách cho cùng kết quả; đặt EXPLAIN trước cả hai câu,
+     chụp lại và nhận xét: cách nào đọc ít dòng hơn, MySQL xử lý khác nhau ở điểm
+     nào.
+       + C4. (NLS Miền 6 - AI như trợ giảng) Dán câu truy vấn con tương quan C2
+     (không kèm lời giải thích) cho AI và yêu cầu giải thích cơ chế chạy từng bước; đối
+     chiếu với cách hiểu của em ở mục 2.4; viết lại lời giải thích bằng ngôn ngữ của
+     mình trong 3-4 câu (không sao chép nguyên văn AI).
+
+     Yêu cầu nộp bài (cả hai bài thực hành): tệp .sql chứa toàn bộ câu lệnh có chú thích
+tên bài (-- A1, -- B2...) kèm ảnh chụp kết quả; đặt tên tệp MSSV_HoTen_TH2/TH3;
+nộp cuối buổi. Nội dung hai bài thực hành này thuộc phạm vi kiểm tra vấn đáp (HS1)
+và bài thi thực hành cuối kỳ.
+
+Tổng kết chương 2
+     Chương 2 đã trang bị trọn vẹn ngôn ngữ SQL trên MySQL: cấu trúc câu lệnh, quy
+tắc viết và hệ thống kiểu dữ liệu; nhóm lệnh định nghĩa dữ liệu CREATE - ALTER -
+DROP - TRUNCATE cho CSDL và bảng; nhóm lệnh thao tác dữ liệu INSERT -
+UPDATE - DELETE cùng nguyên tắc an toàn khi cập nhật; câu lệnh truy vấn SELECT
+với các mệnh đề WHERE, GROUP BY, HAVING, ORDER BY, LIMIT, phép kết nối
+JOIN, truy vấn con và hệ thống hàm xử lý chuỗi, số, ngày giờ, tổng hợp, điều kiện. Đây
+là nền tảng ngôn ngữ cho toàn bộ các chương sau: các đối tượng view, function,
+procedure, trigger ở Chương 3 đều được xây dựng từ các câu lệnh SQL của chương này.
+
+Câu hỏi ôn tập, bài tập chương 2
+     - 1. Phân biệt các nhóm lệnh DDL, DML, DCL, TCL; mỗi nhóm cho 2 ví dụ.
+     - 2. Phân biệt WHERE và HAVING; DELETE, TRUNCATE và DROP;
+COUNT(*) và COUNT(cột); INNER JOIN và LEFT JOIN.
+     - 3. Vì sao điều kiện DiemTB = NULL không trả về dòng nào? Viết lại cho đúng.
+     - 4. Viết truy vấn: (a) học sinh sinh trong tháng 9; (b) 3 lớp có số học sinh thực tế
+đông nhất; (c) điểm trung bình cả năm (trung bình 2 học kỳ) môn Tin của từng học sinh.
+     - 5. Cho câu lệnh UPDATE DIEM SET DiemTB = 10; Hãy chỉ ra hậu quả và trình
+bày 2 biện pháp phòng tránh.
+     - 6. Bài tập về nhà (nộp tuần 6): tự đặt 10 yêu cầu thông tin bằng tiếng Việt trên
+CSDL QUANLYHOCSINH rồi viết truy vấn tương ứng, trong đó ít nhất 3 câu dùng
+GROUP BY, 2 câu dùng JOIN, 1 câu dùng truy vấn con, 1 câu dùng CASE.
+
+Nhiệm vụ tự học chương 2 (20 giờ)
+     Tự nghiên cứu: các phép kết nối RIGHT/CROSS JOIN; toán tử UNION; INSERT
+... SELECT; giao dịch START TRANSACTION - COMMIT - ROLLBACK; đọc phần
+SQL Statements và Functions and Operators trong MySQL Reference Manual [4]; hoàn
+thành phần C của hai bài thực hành nếu chưa xong tại lớp.
+
+Tài liệu học tập chương 2: [1] Chương 2; [3] các chương về SQL và truy vấn; [4]
+mục SQL Statements.</baihoc>
+<baitap bai="2" loai="goc" de="- 1. Phân biệt các nhóm lệnh DDL, DML, DCL, TCL; mỗi nhóm cho 2 ví dụ." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 14-24."/>
+<baitap bai="2" loai="goc" de="- 2. Phân biệt WHERE và HAVING; DELETE, TRUNCATE và DROP; COUNT(*) và COUNT(cột); INNER JOIN và LEFT JOIN." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 14-24."/>
+<baitap bai="2" loai="goc" de="- 3. Vì sao điều kiện DiemTB = NULL không trả về dòng nào? Viết lại cho đúng." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 14-24."/>
+<baitap bai="2" loai="goc" de="- 4. Viết truy vấn: (a) học sinh sinh trong tháng 9; (b) 3 lớp có số học sinh thực tế đông nhất; (c) điểm trung bình cả năm (trung bình 2 học kỳ) môn Tin của từng học sinh." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 14-24."/>
+<baitap bai="2" loai="goc" de="- 5. Cho câu lệnh UPDATE DIEM SET DiemTB = 10; Hãy chỉ ra hậu quả và trình bày 2 biện pháp phòng tránh." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 14-24."/>
+<baitap bai="2" loai="goc" de="- 6. Bài tập về nhà (nộp tuần 6): tự đặt 10 yêu cầu thông tin bằng tiếng Việt trên CSDL QUANLYHOCSINH rồi viết truy vấn tương ứng, trong đó ít nhất 3 câu dùng GROUP BY, 2 câu dùng JOIN, 1 câu dùng truy vấn con, 1 câu dùng CASE. Nhiệm vụ tự học chương 2 (20 giờ) Tự nghiên cứu: các phép kết nối RIGHT/CROSS JOIN; toán tử UNION; INSERT ... SELECT; giao dịch START TRANSACTION - COMMIT - ROLLBACK; đọc phần SQL Statements và Functions and Operators trong MySQL Reference Manual [4]; hoàn thành phần C của hai bài thực hành nếu chưa xong tại lớp. Tài liệu học tập chương 2: [1] Chương 2; [3] các chương về SQL và truy vấn; [4] mục SQL Statements." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 14-24."/>
+<baihoc stt="3" tieude="Chương 3. Quản lý đối tượng trong CSDL">Chương 3. QUẢN LÝ ĐỐI TƯỢNG TRONG CSDL
+               (Số tiết: 08 lý thuyết + 12 thực hành — Tuần 6, 7, 8, 9, 10)
+
+Mục tiêu của chương 3 (kết quả đạt được):
+     Sau khi học xong chương này, sinh viên có khả năng:
+     - Thiết lập được đầy đủ các ràng buộc toàn vẹn trên bảng: khóa chính, khóa ngoại,
+NOT NULL, UNIQUE, DEFAULT, CHECK và lựa chọn đúng hành vi tham chiếu (đáp
+ứng CLO3);
+     - Tạo lập, sử dụng và quản lý được khung nhìn (view) để đóng gói truy vấn và che
+giấu dữ liệu (đáp ứng CLO3);
+     - Viết được hàm (stored function) và thủ tục lưu trữ (stored procedure) với tham
+số, biến, cấu trúc điều khiển (đáp ứng CLO3);
+     - Tạo được trigger tự động kiểm soát và ghi vết thay đổi dữ liệu; đánh giá được khi
+nào nên và không nên dùng trigger (đáp ứng CLO3).
+
+Năng lực số được hình thành (theo Thông tư 02/2025/TT-BGDĐT):
+     - Miền 3 - Sáng tạo nội dung số: lập trình phía máy chủ CSDL (function, procedure,
+trigger) - mức năng lực lập trình cao hơn viết truy vấn đơn lẻ;
+     - Miền 4 - An toàn: dùng view để che giấu cột nhạy cảm; dùng ràng buộc và trigger
+để bảo vệ tính toàn vẹn của dữ liệu;
+     - Miền 1, 5: tổ chức và kiểm soát chất lượng dữ liệu; phân rã bài toán nghiệp vụ
+thành các đối tượng CSDL phù hợp;
+     - Miền 6 - Ứng dụng AI: dùng AI hỗ trợ dò lỗi cú pháp thân thủ tục/trigger và kiểm
+chứng bằng thực thi thật.
+
+3.1. Bảng và các ràng buộc toàn vẹn
+
+3.1.1. Các loại ràng buộc
+     Ràng buộc (constraint) là quy tắc mà HQT CSDL tự động kiểm tra với mọi thao
+tác thêm, sửa, xóa nhằm bảo đảm tính toàn vẹn dữ liệu. Đây là tuyến phòng thủ đầu tiên
+và tin cậy nhất: dù ứng dụng có lỗi, dữ liệu sai vẫn bị máy chủ từ chối.
+                      Bảng 3.1. Các ràng buộc dữ liệu trong MySQL
+   Ràng buộc                    Ý nghĩa                           Ví dụ khai báo
+PRIMARY            Định danh duy nhất, không NULL,
+                                                        PRIMARY KEY (MaHS)
+KEY                mỗi bảng một khóa chính
+                   Giá trị phải tồn tại ở khóa chính bảng FOREIGN KEY (MaLop)
+FOREIGN KEY
+                   cha (toàn vẹn tham chiếu)              REFERENCES LOP(MaLop)
+
+   Ràng buộc                    Ý nghĩa                           Ví dụ khai báo
+                                                        HoTen VARCHAR(50) NOT
+NOT NULL          Không cho phép giá trị rỗng
+                                                        NULL
+UNIQUE            Không cho phép trùng giá trị          Email VARCHAR(100) UNIQUE
+DEFAULT           Giá trị mặc định khi không cung cấp   SiSo INT DEFAULT 0
+                  Điều kiện phải thỏa với mọi dòng      CHECK (DiemTB BETWEEN 0
+CHECK
+                  (MySQL &gt;= 8.0.16)                     AND 10)
+
+3.1.2. Khai báo khóa chính và khóa ngoại
+     -- Ví dụ 3.1: bảng DIEM với khóa chính ghép và hai khóa ngoại
+     CREATE TABLE DIEM (
+       MaHS    VARCHAR(10),
+       MaMH    VARCHAR(10),
+       HocKy TINYINT        CHECK (HocKy IN (1,2)),
+       DiemTB DECIMAL(4,2) CHECK (DiemTB BETWEEN 0 AND 10),
+       PRIMARY KEY (MaHS, MaMH, HocKy),
+       CONSTRAINT fk_diem_hs FOREIGN KEY (MaHS) REFERENCES
+     HOCSINH(MaHS)
+            ON DELETE CASCADE ON UPDATE CASCADE,
+       CONSTRAINT fk_diem_mh FOREIGN KEY (MaMH) REFERENCES
+     MONHOC(MaMH)
+            ON DELETE RESTRICT ON UPDATE CASCADE
+     ) ENGINE=InnoDB;
+
+3.1.3. Hành vi tham chiếu ON DELETE / ON UPDATE
+     - RESTRICT / NO ACTION (mặc định): từ chối xóa/sửa bản ghi cha đang được
+tham chiếu;
+     - CASCADE: xóa/sửa bản ghi cha thì tự động xóa/sửa các bản ghi con tương ứng
+(xóa học sinh thì xóa luôn điểm của học sinh đó);
+     - SET NULL: đặt khóa ngoại ở bản ghi con thành NULL (cột khóa ngoại phải cho
+phép NULL).
+     Lựa chọn hành vi là quyết định nghiệp vụ: điểm gắn chặt với học sinh nên
+CASCADE hợp lý; nhưng môn học đang có điểm thì không được xóa (RESTRICT) để
+tránh mất dữ liệu lịch sử. Người quản trị dữ liệu phải cân nhắc cẩn thận - thể hiện ý thức
+trách nhiệm với dữ liệu (CO6 của đề cương).
+
+3.1.4. Thêm, xóa ràng buộc trên bảng đã có
+     ALTER TABLE HOCSINH
+       ADD CONSTRAINT fk_hs_lop FOREIGN KEY (MaLop) REFERENCES
+     LOP(MaLop);
+     ALTER TABLE HOCSINH DROP FOREIGN KEY fk_hs_lop;
+     ALTER TABLE DIEM ADD CONSTRAINT chk_diem CHECK (DiemTB &gt;= 0);
+
+     SET FOREIGN_KEY_CHECKS = 0;            -- tạm tắt kiểm tra khi nạp dữ liệu
+     lớn
+     SET FOREIGN_KEY_CHECKS = 1;            -- bật lại ngay sau khi nạp xong
+
+3.2. View
+
+3.2.1. Khái niệm và lợi ích của view
+     View (khung nhìn) là một bảng ảo được định nghĩa bằng một câu truy vấn
+SELECT; view không lưu dữ liệu riêng mà mỗi lần được truy vấn, MySQL thực thi lại
+câu SELECT định nghĩa nó trên dữ liệu hiện hành của các bảng gốc. Lợi ích: (1) đơn
+giản hóa - đóng gói truy vấn phức tạp (JOIN nhiều bảng, tính toán) thành một tên gọi,
+người dùng cuối chỉ cần SELECT từ view; (2) bảo mật - chỉ đưa ra các cột, dòng cần
+thiết, che giấu cột nhạy cảm; kết hợp phân quyền (Chương 4) có thể cho người dùng
+quyền trên view mà không có quyền trên bảng gốc; (3) độc lập lôgic - khi cấu trúc bảng
+thay đổi, chỉ cần sửa định nghĩa view, ứng dụng dùng view không phải sửa.
+
+     Hình 3.1. View là “cửa sổ” nhìn vào dữ liệu của bảng gốc, không lưu dữ liệu riêng
+
+3.2.2. Tạo, sử dụng, sửa và xóa view
+     CREATE [OR REPLACE] VIEW tên_view [(danh_sách_cột)] AS
+     câu_SELECT
+       [WITH CHECK OPTION];
+
+     -- Ví dụ 3.2: bảng điểm Tin HK1 đầy đủ thông tin
+     CREATE OR REPLACE VIEW v_DiemTin_HK1 AS
+     SELECT hs.MaHS, hs.HoTen, l.TenLop, d.DiemTB,
+            CASE WHEN d.DiemTB &gt;= 8.5 THEN 'Giỏi'
+                 WHEN d.DiemTB &gt;= 7.0 THEN 'Khá'
+                 WHEN d.DiemTB &gt;= 5.5 THEN 'Trung bình'
+                 ELSE 'Yếu' END AS XepLoai
+     FROM HOCSINH hs
+     JOIN LOP l ON hs.MaLop = l.MaLop
+     JOIN DIEM d ON hs.MaHS = d.MaHS
+     WHERE d.MaMH = 'TIN' AND d.HocKy = 1;
+
+     -- Sử dụng như một bảng
+     SELECT * FROM v_DiemTin_HK1 WHERE XepLoai = 'Giỏi' ORDER BY
+     DiemTB DESC;
+
+     SHOW FULL TABLES WHERE Table_type = 'VIEW';              -- liệt kê view
+     SHOW CREATE VIEW v_DiemTin_HK1;                          -- xem định nghĩa
+     ALTER VIEW v_DiemTin_HK1 AS SELECT ...;                  -- sửa định nghĩa
+     DROP VIEW IF EXISTS v_DiemTin_HK1;                       -- xóa view
+
+3.2.3. Cập nhật dữ liệu qua view
+     Một view là khả cập nhật (updatable) khi mỗi dòng của view ánh xạ 1-1 tới một
+dòng của đúng một bảng gốc: không chứa DISTINCT, GROUP BY, hàm tổng hợp,
+UNION... Khi đó INSERT/UPDATE/DELETE trên view tác động thẳng vào bảng gốc.
+Mệnh đề WITH CHECK OPTION buộc mọi dòng thêm/sửa qua view phải thỏa điều
+kiện WHERE của view - ngăn việc “đẩy” dữ liệu ra ngoài phạm vi nhìn thấy. Ví dụ 3.3:
+view chỉ gồm học sinh lớp 10A1 có WITH CHECK OPTION sẽ từ chối UPDATE đổi
+MaLop thành '10A2' qua view đó.
+
+3.3. Function và Procedure
+
+3.3.1. Khái quát về chương trình lưu trữ
+     Stored routine (chương trình lưu trữ) là khối lệnh SQL được đặt tên, biên dịch và
+lưu ngay trong CSDL, gồm hai loại: stored function (hàm) trả về một giá trị và được gọi
+trong biểu thức/câu SELECT; stored procedure (thủ tục) thực hiện một chuỗi công việc,
+gọi bằng lệnh CALL, nhận tham số IN (vào), OUT (ra), INOUT và có thể trả về nhiều
+tập kết quả. Lợi ích: tái sử dụng lôgic nghiệp vụ, giảm truyền dữ liệu giữa ứng dụng và
+máy chủ, kiểm soát quyền thực thi tập trung. Vì thân chương trình chứa nhiều câu lệnh
+kết thúc bằng dấu chấm phẩy, khi tạo phải tạm đổi ký hiệu kết thúc lệnh bằng
+DELIMITER.
+
+3.3.2. Biến, cấu trúc điều khiển
+     DECLARE tên_biến kiểu [DEFAULT giá_trị];              -- khai báo biến cục
+     bộ
+     SET biến = biểu_thức;                                   -- gán
+     SELECT cột INTO biến FROM ... ;                         -- gán từ truy vấn
+
+     IF điều_kiện THEN ... ELSEIF ... THEN ... ELSE ... END IF;
+     CASE ... WHEN ... THEN ... ELSE ... END CASE;
+     WHILE điều_kiện DO ... END WHILE;
+     REPEAT ... UNTIL điều_kiện END REPEAT;
+
+3.3.3. Stored function
+     -- Ví dụ 3.4: hàm xếp loại theo điểm
+
+     DELIMITER $$
+     CREATE FUNCTION fn_XepLoai(diem DECIMAL(4,2))
+     RETURNS VARCHAR(20)
+     DETERMINISTIC
+     BEGIN
+       DECLARE kq VARCHAR(20);
+       IF diem &gt;= 8.5 THEN SET kq = 'Giỏi';
+       ELSEIF diem &gt;= 7.0 THEN SET kq = 'Khá';
+       ELSEIF diem &gt;= 5.5 THEN SET kq = 'Trung bình';
+       ELSE SET kq = 'Yếu';
+       END IF;
+       RETURN kq;
+     END$$
+     DELIMITER ;
+
+     -- Gọi hàm trong truy vấn
+     SELECT MaHS, DiemTB, fn_XepLoai(DiemTB) AS XepLoai
+     FROM DIEM WHERE MaMH = 'TIN' AND HocKy = 1;
+     Hàm phải khai báo một trong các đặc tính DETERMINISTIC (cùng đầu vào luôn
+cho cùng kết quả), READS SQL DATA hoặc NO SQL để MySQL kiểm soát khi bật
+binary log. Hàm chỉ trả về một giá trị và không được trả về tập kết quả.
+
+3.3.4. Stored procedure
+     -- Ví dụ 3.5: thủ tục thống kê điểm một lớp, trả sĩ số qua tham
+     số OUT
+     DELIMITER $$
+     CREATE PROCEDURE sp_ThongKeLop(IN p_MaLop VARCHAR(10),
+                                    IN p_HocKy TINYINT,
+                                    OUT p_SoHS INT)
+     BEGIN
+       SELECT COUNT(*) INTO p_SoHS FROM HOCSINH WHERE MaLop =
+     p_MaLop;
+
+       SELECT d.MaMH, mh.TenMH,
+              ROUND(AVG(d.DiemTB),2) AS DiemTB,
+              MAX(d.DiemTB) AS CaoNhat, MIN(d.DiemTB) AS ThapNhat
+       FROM DIEM d
+       JOIN HOCSINH hs ON d.MaHS = hs.MaHS
+       JOIN MONHOC mh ON d.MaMH = mh.MaMH
+       WHERE hs.MaLop = p_MaLop AND d.HocKy = p_HocKy
+       GROUP BY d.MaMH, mh.TenMH;
+     END$$
+     DELIMITER ;
+
+     CALL sp_ThongKeLop('10A1', 1, @soHS);
+     SELECT @soHS;
+
+     Ví dụ 3.6 - thủ tục nhập điểm an toàn: kiểm tra điểm hợp lệ trước khi ghi, nếu bản
+ghi đã tồn tại thì cập nhật, chưa có thì thêm mới (có thể dùng INSERT ... ON
+DUPLICATE KEY UPDATE); nếu dữ liệu sai thì phát tín hiệu lỗi bằng SIGNAL:
+     DELIMITER $$
+     CREATE PROCEDURE sp_NhapDiem(IN p_MaHS VARCHAR(10), IN p_MaMH
+     VARCHAR(10),
+                                  IN p_HocKy TINYINT, IN p_Diem
+     DECIMAL(4,2))
+     BEGIN
+       IF p_Diem &lt; 0 OR p_Diem &gt; 10 THEN
+         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = N'Điểm phải trong
+     đoạn [0,10]';
+       END IF;
+       INSERT INTO DIEM(MaHS, MaMH, HocKy, DiemTB)
+       VALUES (p_MaHS, p_MaMH, p_HocKy, p_Diem)
+       ON DUPLICATE KEY UPDATE DiemTB = p_Diem;
+     END$$
+     DELIMITER ;
+
+3.3.5. Quản lý các chương trình lưu trữ
+     SHOW FUNCTION STATUS WHERE Db = 'quanlyhocsinh';
+     SHOW PROCEDURE STATUS WHERE Db = 'quanlyhocsinh';
+     SHOW CREATE PROCEDURE sp_ThongKeLop;
+     DROP FUNCTION IF EXISTS fn_XepLoai;
+     DROP PROCEDURE IF EXISTS sp_ThongKeLop;
+
+3.4. Trigger
+
+3.4.1. Khái niệm trigger
+     Trigger (bẫy sự kiện) là chương trình lưu trữ gắn với một bảng, tự động thực thi
+khi xảy ra sự kiện INSERT, UPDATE hoặc DELETE trên bảng đó, ở thời điểm
+BEFORE (trước) hoặc AFTER (sau) khi dòng dữ liệu được ghi. Trong thân trigger, hai
+bản ghi ảo NEW và OLD cho phép truy cập giá trị mới/cũ của dòng đang xử lý: INSERT
+chỉ có NEW; DELETE chỉ có OLD; UPDATE có cả hai. Ứng dụng tiêu biểu: kiểm
+tra/chuẩn hóa dữ liệu trước khi ghi (BEFORE), ghi vết thay đổi và cập nhật dữ liệu dẫn
+xuất (AFTER).
+
+   Hình 3.2. Thời điểm kích hoạt BEFORE/AFTER trigger và hai bản ghi ảo NEW, OLD
+
+3.4.2. Tạo và kiểm chứng trigger
+     CREATE TRIGGER tên_trigger {BEFORE|AFTER} {INSERT|UPDATE|DELETE}
+     ON tên_bảng FOR EACH ROW thân_trigger;
+
+     -- Ví dụ 3.7: chuẩn hóa và kiểm tra dữ liệu trước khi thêm học
+     sinh
+     DELIMITER $$
+     CREATE TRIGGER trg_HS_BeforeInsert
+     BEFORE INSERT ON HOCSINH FOR EACH ROW
+     BEGIN
+       SET NEW.HoTen = TRIM(NEW.HoTen);
+       IF NEW.NgaySinh &gt; CURDATE() THEN
+         SIGNAL SQLSTATE '45000'
+           SET MESSAGE_TEXT = N'Ngày sinh không được ở tương lai';
+       END IF;
+     END$$
+     DELIMITER ;
+     Ví dụ 3.8 - ghi vết mọi lần sửa điểm vào bảng nhật ký (phục vụ kiểm tra, đối chiếu
+- một yêu cầu quan trọng của quản trị dữ liệu giáo dục):
+     CREATE TABLE DIEM_LOG (
+        Id      INT AUTO_INCREMENT PRIMARY KEY,
+        MaHS    VARCHAR(10), MaMH VARCHAR(10), HocKy TINYINT,
+        DiemCu DECIMAL(4,2), DiemMoi DECIMAL(4,2),
+        NguoiSua VARCHAR(100), ThoiDiem DATETIME DEFAULT
+     CURRENT_TIMESTAMP
+     );
+
+     DELIMITER $$
+     CREATE TRIGGER trg_Diem_AfterUpdate
+     AFTER UPDATE ON DIEM FOR EACH ROW
+     BEGIN
+       IF NEW.DiemTB &lt;&gt; OLD.DiemTB THEN
+         INSERT INTO DIEM_LOG(MaHS, MaMH, HocKy, DiemCu, DiemMoi,
+     NguoiSua)
+         VALUES (OLD.MaHS, OLD.MaMH, OLD.HocKy, OLD.DiemTB,
+     NEW.DiemTB,
+
+                    CURRENT_USER());
+       END IF;
+     END$$
+     DELIMITER ;
+
+     SHOW TRIGGERS;                        -- liệt kê trigger
+     DROP TRIGGER IF EXISTS trg_HS_BeforeInsert;
+
+3.4.3. Lưu ý khi sử dụng trigger
+     Trigger chạy ngầm nên lạm dụng sẽ làm hệ thống khó hiểu, khó gỡ lỗi và chậm
+khi cập nhật hàng loạt; quy tắc thực hành tốt: chỉ dùng trigger cho kiểm soát toàn vẹn
+phức tạp    và   ghi vết, giữ      thân   trigger   ngắn,   đặt   tên   theo quy ước
+trg_Bảng_ThờiĐiểmSựKiện, và luôn kiểm chứng bằng các ca thử cả hợp lệ lẫn không
+hợp lệ. MySQL không cho trigger cập nhật chính bảng đang kích hoạt nó theo cách gây
+đệ quy.
+
+Mở rộng vấn đề (đọc thêm - không bắt buộc thi)
+     - Chỉ mục (INDEX): khi bảng có hàng trăm nghìn dòng, truy vấn theo cột không
+có chỉ mục buộc MySQL quét toàn bộ bảng. Lệnh CREATE INDEX idx_HS_HoTen
+ON HOCSINH(HoTen); tạo cấu trúc tra cứu giúp WHERE/JOIN/ORDER BY trên cột
+đó nhanh hơn nhiều lần; đổi lại thao tác ghi chậm đi một chút và tốn dung lượng. Khóa
+chính và khóa ngoại (InnoDB) đã tự động có chỉ mục. Có thể tự kiểm chứng bằng
+EXPLAIN trước và sau khi tạo chỉ mục.
+     - Giao dịch (TRANSACTION) và tính chất ACID: nhóm nhiều câu lệnh thành một
+khối “được ăn cả, ngã về không”. Thủ tục sp_ChuyenLop ở bài thực hành số 5 là ví dụ
+điển hình: chuyển lớp phải đồng thời cập nhật MaLop của học sinh và sĩ số của hai lớp
+- nếu chỉ thành công một nửa thì dữ liệu mâu thuẫn. Cú pháp: START TRANSACTION;
+... COMMIT; (hoặc ROLLBACK; khi có lỗi). InnoDB bảo đảm bốn tính chất ACID:
+nguyên tử, nhất quán, cô lập, bền vững.
+     - Sự kiện định thời (EVENT): “trigger theo thời gian” - tự động chạy câu lệnh theo
+lịch ngay trong MySQL, ví dụ CREATE EVENT ev_TongKet ON SCHEDULE
+EVERY 1 DAY DO CALL sp_ThongKe(); cần bật event_scheduler = ON. Trong thực
+tế, EVENT thường dùng cho các tác vụ tổng hợp số liệu ban đêm.
+
+3.5. Thực hành
+
+BÀI THỰC HÀNH SỐ 4: RÀNG BUỘC TOÀN VẸN VÀ VIEW (04 tiết - Tuần 8)
+     - Mục tiêu: hoàn thiện lược đồ với đầy đủ ràng buộc; tạo và khai thác view (CLO3).
+
+      + A1. Bổ sung vào QUANLYHOCSINH: khóa ngoại HOCSINH→LOP,
+    DIEM→HOCSINH (CASCADE), DIEM→MONHOC (RESTRICT); CHECK
+    cho DiemTB, HocKy; UNIQUE cho Email.
+      + A2. Kiểm chứng từng ràng buộc bằng ca thử gây lỗi: thêm học sinh với MaLop
+    không tồn tại; nhập điểm 11; xóa môn học đang có điểm; xóa một học sinh và quan
+    sát CASCADE trên DIEM. Ghi lại từng thông báo lỗi và giải thích.
+      + B1. Tạo view v_DSHocSinh (họ tên, tên lớp, tuổi - che cột địa chỉ); view
+    v_DiemTin_HK1 như ví dụ 3.2; view v_ThongKeLop (mỗi lớp: sĩ số thực tế, điểm
+    trung bình từng môn HK1).
+      + B2. Tạo view v_HS_10A1 với WITH CHECK OPTION; thử UPDATE đổi
+    MaLop qua view và giải thích kết quả; nhận xét view nào ở B1 là khả cập nhật, vì
+    sao.
+      + C1. (NLS Miền 6 - AI sinh ca kiểm thử) Dán toàn bộ lược đồ đã có ràng buộc
+    cho    AI,   yêu   cầu:    “Hãy    liệt    kê   các   ca   kiểm    thử   (câu    lệnh
+    INSERT/UPDATE/DELETE) để chứng minh từng ràng buộc hoạt động, gồm cả
+    ca hợp lệ và ca vi phạm.” So sánh danh sách AI đưa ra với các ca em đã làm ở A2;
+    chỉ ra ít nhất một ca AI bỏ sót hoặc một ca vô nghĩa; chạy bổ sung 2 ca hay nhất
+    của AI và ghi kết quả.
+
+BÀI THỰC HÀNH SỐ 5: FUNCTION VÀ PROCEDURE (04 tiết - Tuần 9)
+    - Mục tiêu: viết được hàm và thủ tục có tham số, rẽ nhánh, kiểm soát lỗi (CLO3).
+      + A1. Viết hàm fn_XepLoai (ví dụ 3.4) và hàm fn_TuoiHS(p_MaHS) trả về tuổi
+    của học sinh; dùng cả hai hàm trong một câu SELECT.
+      + A2. Viết hàm fn_DiemTBNam(p_MaHS, p_MaMH) trả về trung bình cộng
+    điểm hai học kỳ; xử lý trường hợp thiếu điểm một học kỳ (trả về NULL).
+      + B1. Viết thủ tục sp_ThongKeLop (ví dụ 3.5) và gọi thử với 2 lớp khác nhau.
+      + B2. Viết thủ tục sp_NhapDiem (ví dụ 3.6); kiểm chứng ba tình huống: thêm
+    mới, cập nhật đè, điểm không hợp lệ (SIGNAL).
+      + B3. Viết thủ tục sp_ChuyenLop(p_MaHS, p_MaLopMoi) có kiểm tra lớp mới
+    tồn tại và cập nhật sĩ số hai lớp trong một giao dịch.
+      + C1. (NLS Miền 6 - AI rà soát mã) Dán thủ tục sp_ChuyenLop của em cho AI
+    với yêu cầu: “Hãy rà soát thủ tục này theo các tiêu chí: (1) xử lý trường hợp học
+    sinh/lớp không tồn tại; (2) an toàn giao dịch; (3) tên biến, chú thích; (4) trường hợp
+    biên như chuyển vào chính lớp đang học.” Với mỗi góp ý của AI, ghi rõ: tiếp thu
+    (kèm mã đã sửa) hay bác bỏ (kèm lý do). Nộp cả hai phiên bản trước - sau.
+
+BÀI THỰC HÀNH SỐ 6: TRIGGER VÀ TỔNG HỢP (04 tiết - Tuần 10)
+     - Mục tiêu: tạo trigger kiểm soát và ghi vết; ôn tập tổng hợp Chương 2-3; kiểm tra
+vấn đáp (HS1).
+        + A1. Tạo trigger trg_HS_BeforeInsert (ví dụ 3.7) và ca thử với ngày sinh tương
+     lai.
+        + A2. Tạo bảng DIEM_LOG và trigger trg_Diem_AfterUpdate (ví dụ 3.8); sửa
+     vài điểm rồi truy vấn nhật ký.
+        + A3. Tạo trigger tự động cập nhật SiSo của LOP khi thêm/xóa học sinh
+     (AFTER INSERT và AFTER DELETE trên HOCSINH); kiểm chứng.
+        + A4. (NLS Miền 6 - hoàn thiện mã AI sinh) Yêu cầu AI sinh trigger “không
+     cho sửa điểm chênh lệch quá 2.0 so với điểm cũ” nhưng CHỈ cung cấp cho AI mô
+     tả bằng lời, không đưa lược đồ. Nhận mã về, đọc và chỉ ra các điểm chưa khớp hệ
+     thống thật (sai tên bảng/cột, thiếu xét NULL, sai thời điểm BEFORE/AFTER...);
+     sửa cho chạy đúng, kiểm chứng bằng 3 ca thử. Rút ra nhận xét: vì sao prompt thiếu
+     ngữ cảnh dẫn đến mã sai - liên hệ Bước 1 của quy trình 4 bước.
+        + B1. Bài tổng hợp: đóng gói toàn bộ đối tượng đã tạo (ràng buộc, 3 view, 3
+     hàm, 3 thủ tục, 3 trigger) vào một kịch bản duy nhất chạy-lại-được trên máy sạch.
+        + B2. Kiểm tra vấn đáp (HS1, Rubric 1): từng sinh viên trả lời 3 câu hỏi của
+     giảng viên về (1) kiến trúc/khái niệm MySQL, (2) đọc hiểu - nhận diện cú pháp
+     một đoạn SQL, (3) an toàn và đạo đức dữ liệu; thời gian khoảng 5 phút/sinh viên,
+     tiến hành song song trong giờ thực hành.
+     Yêu    cầu   nộp    bài:   tệp   .sql    có   chú   thích   từng   bài,   đặt   tên
+MSSV_HoTen_TH4/TH5/TH6, nộp cuối mỗi buổi. Toàn bộ nội dung mục 3.5 thuộc
+phạm vi bài thi thực hành cuối kỳ (Rubric 3 có riêng tiêu chí về
+view/function/procedure/trigger, trọng số 30%).
+
+Tổng kết chương 3
+     Chương 3 đã trình bày bốn nhóm đối tượng cốt lõi trong quản lý CSDL MySQL:
+hệ thống ràng buộc toàn vẹn (khóa chính, khóa ngoại với ba hành vi tham chiếu, NOT
+NULL, UNIQUE, DEFAULT, CHECK) - tuyến phòng thủ bảo vệ chất lượng dữ liệu;
+view - bảng ảo giúp đơn giản hóa truy vấn, che giấu dữ liệu và tạo lớp độc lập lôgic;
+stored function và stored procedure - đóng gói lôgic nghiệp vụ ngay trong CSDL với
+tham số, biến, cấu trúc điều khiển và cơ chế báo lỗi SIGNAL; trigger - tự động kiểm
+soát và ghi vết thay đổi dữ liệu qua hai bản ghi ảo NEW/OLD. Đây là những công cụ để
+
+chuyển từ “viết truy vấn” sang “xây dựng hệ thống CSDL” và là khối kiến thức có trọng
+số lớn nhất trong bài thi thực hành cuối kỳ cũng như dự án ở Chương 5.
+
+Câu hỏi ôn tập, bài tập chương 3
+     - 1. Trình bày các loại ràng buộc trong MySQL; phân biệt ba hành vi tham chiếu
+RESTRICT, CASCADE, SET NULL và cho ví dụ nghiệp vụ phù hợp với từng hành vi.
+     - 2. View có lưu dữ liệu không? Khi nào một view khả cập nhật? WITH CHECK
+OPTION dùng để làm gì?
+     - 3. Phân biệt stored function và stored procedure về: giá trị trả về, cách gọi, tham
+số, khả năng trả về tập kết quả. Vì sao phải dùng DELIMITER khi tạo?
+     - 4. Phân biệt BEFORE và AFTER trigger; ý nghĩa của NEW và OLD trong từng
+sự kiện INSERT/UPDATE/DELETE.
+     - 5. Viết: (a) view danh sách học sinh kèm số môn đã có điểm; (b) hàm đếm số học
+sinh của một lớp; (c) thủ tục xóa an toàn một học sinh (kiểm tra tồn tại trước khi xóa);
+(d) trigger không cho xóa điểm của học kỳ đã khóa sổ (giả sử có bảng HOCKY_KHOA).
+
+Nhiệm vụ tự học chương 3 (25 giờ)
+     Tự nghiên cứu: con trỏ (CURSOR) và HANDLER trong thủ tục; trigger BEFORE
+DELETE; sự kiện định thời (EVENT); index và ảnh hưởng tới tốc độ truy vấn (CREATE
+INDEX); đọc mục Stored Objects trong MySQL Reference Manual [4]; hoàn thiện kịch
+bản tổng hợp B1 của bài thực hành số 6.
+
+Tài liệu học tập chương 3: [1] Chương 3; [3] các chương về ràng buộc và stored
+programs; [4] mục Stored Objects.</baihoc>
+<baitap bai="3" loai="goc" de="- 1. Trình bày các loại ràng buộc trong MySQL; phân biệt ba hành vi tham chiếu RESTRICT, CASCADE, SET NULL và cho ví dụ nghiệp vụ phù hợp với từng hành vi." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 25-35."/>
+<baitap bai="3" loai="goc" de="- 2. View có lưu dữ liệu không? Khi nào một view khả cập nhật? WITH CHECK OPTION dùng để làm gì?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 25-35."/>
+<baitap bai="3" loai="goc" de="- 3. Phân biệt stored function và stored procedure về: giá trị trả về, cách gọi, tham số, khả năng trả về tập kết quả. Vì sao phải dùng DELIMITER khi tạo?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 25-35."/>
+<baitap bai="3" loai="goc" de="- 4. Phân biệt BEFORE và AFTER trigger; ý nghĩa của NEW và OLD trong từng sự kiện INSERT/UPDATE/DELETE." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 25-35."/>
+<baitap bai="3" loai="goc" de="- 5. Viết: (a) view danh sách học sinh kèm số môn đã có điểm; (b) hàm đếm số học sinh của một lớp; (c) thủ tục xóa an toàn một học sinh (kiểm tra tồn tại trước khi xóa); (d) trigger không cho xóa điểm của học kỳ đã khóa sổ (giả sử có bảng HOCKY_KHOA). Nhiệm vụ tự học chương 3 (25 giờ) Tự nghiên cứu: con trỏ (CURSOR) và HANDLER trong thủ tục; trigger BEFORE DELETE; sự kiện định thời (EVENT); index và ảnh hưởng tới tốc độ truy vấn (CREATE INDEX); đọc mục Stored Objects trong MySQL Reference Manual [4]; hoàn thiện kịch bản tổng hợp B1 của bài thực hành số 6. Tài liệu học tập chương 3: [1] Chương 3; [3] các chương về ràng buộc và stored programs; [4] mục Stored Objects." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 25-35."/>
+<baihoc stt="4" tieude="Chương 4. Quản lý người dùng, sao lưu dữ liệu">Chương 4. QUẢN LÝ NGƯỜI DÙNG, SAO LƯU DỮ LIỆU
+                   (Số tiết: 04 lý thuyết + 04 thực hành — Tuần 11, 12)
+
+Mục tiêu của chương 4 (kết quả đạt được):
+        Sau khi học xong chương này, sinh viên có khả năng:
+        - Tạo, sửa, khóa và xóa được tài khoản người dùng MySQL; thiết lập chính sách
+mật khẩu (đáp ứng CLO4);
+        - Cấp phát, thu hồi quyền truy cập ở các cấp độ và tổ chức phân quyền bằng role
+(đáp ứng CLO4);
+        - Trình bày và áp dụng được các biện pháp bảo mật: đặc quyền tối thiểu, mã hóa
+kết nối, mã hóa dữ liệu (đáp ứng CLO4);
+        - Thực hiện được sao lưu bằng mysqldump, lập lịch sao lưu tự động và khôi phục
+dữ liệu, kể cả khôi phục theo thời điểm với binary log (đáp ứng CLO4).
+
+Năng lực số được hình thành (theo Thông tư 02/2025/TT-BGDĐT):
+        - Miền 4 - An toàn: năng lực trung tâm của chương - bảo vệ dữ liệu cá nhân và
+quyền riêng tư (dữ liệu học sinh), quản lý danh tính và quyền truy cập, phòng ngừa mất
+dữ liệu;
+        - Miền 1 - Khai thác dữ liệu: quản lý vòng đời dữ liệu (lưu trữ, dự phòng, phục
+hồi);
+        - Miền 5 - Giải quyết vấn đề: xử lý sự cố từ chối truy cập (lỗi 1044, 1045, 1142);
+lập kế hoạch dự phòng, phục hồi hệ thống sau sự cố, tự động hóa bằng lập lịch;
+        - Miền 6 - Ứng dụng AI: rà soát khuyến nghị phân quyền và kịch bản sao lưu do
+AI đề xuất theo nguyên tắc đặc quyền tối thiểu; nhận diện rủi ro an toàn trong mã do AI
+sinh (bài thực hành số 7, phần C).
+
+4.1. Tạo và quản lý người dùng trong MySQL
+
+4.1.1. Tài khoản người dùng
+        Mỗi tài khoản MySQL được định danh bởi cặp 'tên_người_dùng'@'máy_kết_nối'
+(user@host). Phần host xác định người dùng được phép kết nối từ đâu: 'localhost' - chỉ
+từ chính máy chủ; '192.168.1.%' - từ mạng nội bộ 192.168.1.x; '%' - từ mọi nơi (chỉ dùng
+khi thật sự cần và phải kèm biện pháp bảo vệ khác). Như vậy 'gv'@'localhost' và 'gv'@'%'
+là hai tài khoản khác nhau. Thông tin tài khoản lưu trong bảng hệ thống mysql.user;
+MySQL 8 dùng phương thức xác thực mặc định caching_sha2_password.
+
+4.1.2. Tạo, sửa, khóa và xóa người dùng
+        CREATE USER 'giaovu'@'localhost' IDENTIFIED BY 'Gv@2026#pdu';
+        CREATE USER 'gvcn'@'192.168.1.%' IDENTIFIED BY 'Cn@2026#pdu';
+
+     -- Đổi mật khẩu, yêu cầu đổi khi đăng nhập lần đầu, đặt hạn dùng
+     ALTER USER 'giaovu'@'localhost' IDENTIFIED BY 'MatKhauMoi@1';
+     ALTER USER 'gvcn'@'192.168.1.%' PASSWORD EXPIRE;
+     ALTER USER 'giaovu'@'localhost' PASSWORD EXPIRE INTERVAL 90 DAY;
+
+     -- Khóa / mở khóa, đổi tên, xóa tài khoản
+     ALTER USER 'gvcn'@'192.168.1.%' ACCOUNT LOCK;
+     ALTER USER 'gvcn'@'192.168.1.%' ACCOUNT UNLOCK;
+     RENAME USER 'giaovu'@'localhost' TO 'phonggiaovu'@'localhost';
+     DROP USER IF EXISTS 'user_cu'@'localhost';
+
+     SELECT user, host, account_locked FROM mysql.user;               -- liệt kê
+     Chính sách mật khẩu: thành phần validate_password cho phép quy định độ dài tối
+thiểu,   bắt   buộc   chữ   hoa/thường/số/ký    tự   đặc    biệt   (biến   hệ   thống
+validate_password.policy). Trên hệ thống thật cần bật thành phần này; tuyệt đối không
+dùng tài khoản root cho ứng dụng hay công việc hằng ngày.
+
+4.2. Phân quyền truy cập và thu hồi quyền
+
+4.2.1. Hệ thống đặc quyền và các cấp độ
+     Đặc quyền (privilege) là quyền thực hiện một loại thao tác. Các đặc quyền thường
+dùng: SELECT, INSERT, UPDATE, DELETE (dữ liệu); CREATE, ALTER, DROP,
+INDEX, CREATE VIEW, CREATE ROUTINE, TRIGGER (cấu trúc và đối tượng);
+EXECUTE (gọi thủ tục/hàm); CREATE USER, GRANT OPTION, RELOAD,
+PROCESS, SHUTDOWN (quản trị); ALL PRIVILEGES (tất cả). Phạm vi cấp quyền từ
+rộng đến hẹp: toàn cục (*.*), một CSDL (QUANLYHOCSINH.*), một bảng
+(QUANLYHOCSINH.DIEM), thậm chí từng cột. Hình 4.1 tóm tắt các phạm vi này
+cùng cơ chế role (mục 4.2.3):
+
+4.2.2. Lệnh GRANT và REVOKE
+     GRANT danh_sách_quyền ON phạm_vi TO 'user'@'host' [WITH GRANT
+     OPTION];
+     REVOKE danh_sách_quyền ON phạm_vi FROM 'user'@'host';
+
+     -- Ví dụ 4.1: giáo vụ được toàn quyền dữ liệu trên QUANLYHOCSINH
+     GRANT SELECT, INSERT, UPDATE, DELETE ON QUANLYHOCSINH.*
+     TO 'phonggiaovu'@'localhost';
+
+     -- Ví dụ 4.2: GVCN chỉ được xem, và chỉ sửa cột điểm
+     GRANT SELECT ON QUANLYHOCSINH.* TO 'gvcn'@'192.168.1.%';
+     GRANT UPDATE (DiemTB) ON QUANLYHOCSINH.DIEM TO
+     'gvcn'@'192.168.1.%';
+
+     -- Ví dụ 4.3: thu hồi quyền xóa
+     REVOKE DELETE ON QUANLYHOCSINH.* FROM 'phonggiaovu'@'localhost';
+
+     SHOW GRANTS FOR 'gvcn'@'192.168.1.%';  -- xem quyền
+     FLUSH PRIVILEGES; -- nạp lại bảng quyền (khi sửa trực tiếp bảng
+     hệ thống)
+     WITH GRANT OPTION cho phép người được cấp tiếp tục cấp quyền đó cho
+người khác - chỉ trao cho quản trị viên. Quyền cấp mức cột (ví dụ 4.2) rất hữu ích: giáo
+viên chủ nhiệm sửa được điểm nhưng không sửa được mã học sinh, mã môn. Kết hợp
+với view (mục 3.2): cấp quyền SELECT trên view thay vì trên bảng gốc để giới hạn cả
+dòng lẫn cột người dùng nhìn thấy.
+
+4.2.3. Vai trò (Role) trong MySQL 8
+     CREATE ROLE 'r_giaovien', 'r_quantri';
+     GRANT SELECT ON QUANLYHOCSINH.* TO 'r_giaovien';
+     GRANT ALL PRIVILEGES ON QUANLYHOCSINH.* TO 'r_quantri';
+
+     GRANT 'r_giaovien' TO 'gvcn'@'192.168.1.%';
+     SET DEFAULT ROLE ALL TO 'gvcn'@'192.168.1.%';
+     -- Người dùng kích hoạt: SET ROLE 'r_giaovien';
+     REVOKE 'r_giaovien' FROM 'gvcn'@'192.168.1.%';
+     DROP ROLE 'r_giaovien';
+     Vai trò là “tập quyền có tên”: gán quyền cho vai trò một lần rồi gán vai trò cho
+nhiều người dùng, giúp quản trị hệ thống đông người dùng nhất quán và ít sai sót - tương
+tự cơ chế nhóm quyền trong các hệ thống thông tin doanh nghiệp.
+
+4.3. Mã hóa, sao lưu, khôi phục và bảo mật dữ liệu
+
+4.3.1. Nguyên tắc bảo mật và mã hóa
+     - Nguyên tắc đặc quyền tối thiểu (least privilege): mỗi tài khoản chỉ có đúng quyền
+cần cho công việc; ứng dụng web chỉ cần SELECT/INSERT/UPDATE/DELETE, không
+bao giờ cần DROP;
+     - Tách bạch tài khoản theo vai trò công việc; không dùng chung tài khoản; giới
+hạn host kết nối; đóng cổng 3306 với Internet khi không cần (tường lửa);
+     - Mã hóa kết nối bằng TLS/SSL cho kênh truyền client - server, có thể bắt buộc
+từng tài khoản bằng mệnh đề REQUIRE SSL trong CREATE/ALTER USER;
+     - Mã hóa dữ liệu lưu trữ: mã hóa mức cột bằng AES_ENCRYPT/AES_DECRYPT
+cho trường nhạy cảm; băm một chiều mật khẩu ứng dụng bằng SHA2 (không bao giờ
+lưu mật khẩu dạng rõ);
+     - Phòng chống SQL Injection ở tầng ứng dụng: dùng truy vấn tham số hóa
+(prepared statement), không ghép chuỗi SQL từ dữ liệu người dùng nhập;
+
+     - Trách nhiệm pháp lý và đạo đức: dữ liệu học sinh là dữ liệu cá nhân, phải được
+thu thập, sử dụng đúng mục đích và bảo vệ theo quy định về bảo vệ dữ liệu cá nhân;
+người quản trị không lạm dụng quyền truy cập để xem, tiết lộ dữ liệu (CO6).
+     -- Mã hóa cột số điện thoại phụ huynh
+     INSERT INTO HOCSINH_LIENHE (MaHS, SDT_MaHoa)
+     VALUES ('HS001', AES_ENCRYPT('0905123456', @khoa_bi_mat));
+     SELECT MaHS, CAST(AES_DECRYPT(SDT_MaHoa, @khoa_bi_mat) AS CHAR)
+     FROM HOCSINH_LIENHE;
+     -- Băm mật khẩu (một chiều, không giải mã được)
+     SELECT SHA2('MatKhau@1', 256);
+
+4.3.2. Sao lưu dữ liệu bằng mysqldump
+     Dữ liệu có thể mất do hỏng thiết bị, lỗi phần mềm, thao tác nhầm (DELETE/DROP
+không chủ ý - rủi ro thường gặp nhất), tấn công mã độc hoặc thiên tai. Sao lưu (backup)
+là bản sao dữ liệu để khôi phục khi sự cố xảy ra. Hai chỉ tiêu khi thiết kế phương án:
+RPO (chấp nhận mất dữ liệu tối đa bao lâu) và RTO (thời gian tối đa để khôi phục xong).
+Phân loại: sao lưu logic (xuất thành kịch bản SQL - mysqldump) và sao lưu vật lý (chép
+tệp datadir); sao lưu đầy đủ (full) và gia tăng (incremental - dựa trên binary log); sao lưu
+nóng (dịch vụ vẫn chạy) và nguội.
+     -- Sao lưu một CSDL (nhất quán với InnoDB, kèm routine và
+     trigger)
+     mysqldump -u root -p --single-transaction --routines --triggers
+     \
+       QUANLYHOCSINH &gt; qlhs_full.sql
+
+     -- Sao lưu một bảng; chỉ cấu trúc; toàn bộ server; bản nén
+     mysqldump -u root -p QUANLYHOCSINH DIEM &gt; diem.sql
+     mysqldump -u root -p --no-data QUANLYHOCSINH &gt; qlhs_cautruc.sql
+     mysqldump -u root -p --all-databases &gt; alldb.sql
+     mysqldump -u root -p QUANLYHOCSINH | gzip &gt; qlhs.sql.gz
+     Tệp kết quả của mysqldump là kịch bản SQL gồm các lệnh CREATE TABLE và
+INSERT - chính là dạng tệp QUANLYHOCSINH.sql sinh viên đã dùng ở Chương 2.
+Lịch trình sao lưu mẫu cho CSDL quản lý học sinh: full hằng tuần (Chủ nhật 23h00),
+gia tăng hằng ngày bằng binary log, giữ 4 bản tuần gần nhất, một bản chép ra thiết bị/địa
+điểm khác. Tự động hóa bằng Task Scheduler (Windows) hoặc cron (Linux):
+     # crontab -e : sao lưu đầy đủ 23h00 Chủ nhật hằng tuần
+     0 23 * * 0 mysqldump -u backup -p'***' --single-transaction \
+       QUANLYHOCSINH | gzip &gt; /backup/qlhs_$(date +\%F).sql.gz
+
+4.3.3. Khôi phục dữ liệu
+     -- Cách 1: từ dòng lệnh hệ điều hành
+     mysql -u root -p QUANLYHOCSINH &lt; qlhs_full.sql
+
+     -- Cách 2: trong phiên mysql
+
+     mysql&gt; CREATE DATABASE QLHS_KHOIPHUC;
+     mysql&gt; USE QLHS_KHOIPHUC;
+     mysql&gt; SOURCE /backup/qlhs_full.sql;
+
+     -- Giải nén rồi khôi phục
+     gunzip &lt; qlhs.sql.gz | mysql -u root -p QUANLYHOCSINH
+     Nên khôi phục thử vào một CSDL tên khác (QLHS_KHOIPHUC) để kiểm tra bản
+sao lưu còn tốt, tránh ghi đè nhầm dữ liệu hiện hành; sau khi khôi phục cần kiểm đếm
+số bảng, số dòng, đối chiếu mẫu dữ liệu. Khôi phục theo thời điểm (point-in-time
+recovery) với binary log: khôi phục bản full gần nhất rồi áp dụng nhật ký đến ngay trước
+thời điểm sự cố:
+     SHOW BINARY LOGS;   -- liệt kê tệp nhật ký nhị phân
+     -- Áp dụng nhật ký đến trước 09:15 (thời điểm lỡ tay DELETE)
+     mysqlbinlog --stop-datetime="2026-11-20 09:14:59" \
+       /var/lib/mysql/binlog.000042 | mysql -u root -p
+     Hình 4.2 minh họa quy trình khôi phục theo thời điểm ứng với tình huống 09h15
+có người lỡ xóa dữ liệu:
+
+      Hình 4.2. Khôi phục theo thời điểm: bản full + binary log dừng ngay trước sự cố
+
+4.3.4. Giảm thiểu nguy cơ mất dữ liệu
+     - Quy tắc 3-2-1: ít nhất 3 bản dữ liệu, trên 2 loại phương tiện, trong đó 1 bản ở địa
+điểm khác (hoặc đám mây);
+     - Kiểm thử khôi phục định kỳ: bản sao lưu chưa từng khôi phục thử là bản sao lưu
+chưa đáng tin; lập biên bản diễn tập;
+     - Giám sát tác vụ sao lưu tự động, cảnh báo khi thất bại; bảo vệ chính bản sao lưu
+(phân quyền, mã hóa tệp - dữ liệu cá nhân trong bản sao lưu phải được bảo vệ như dữ
+liệu gốc);
+     - Nhân bản (replication) chủ - tớ: server tớ áp dụng binary log của server chủ gần
+thời gian thực, tăng khả năng chịu lỗi và chia tải đọc (giới thiệu khái quát, sinh viên tự
+tìm hiểu thêm).
+
+Mở rộng vấn đề
+     - Nhân bản dữ liệu (replication): kiến trúc một máy chủ nguồn (source) ghi binary
+log, một hoặc nhiều máy chủ bản sao (replica) đọc và áp dụng lại các thay đổi gần như
+tức thời. Lợi ích: phân tải truy vấn đọc sang replica, có sẵn bản dữ liệu thứ hai khi máy
+nguồn hỏng, và có thể sao lưu trên replica để không ảnh hưởng hệ thống chính. MySQL
+8.x định danh giao dịch bằng GTID giúp chuyển đổi nguồn - bản sao an toàn hơn.
+Replication là bước phát triển tự nhiên của kiến thức binary log đã học ở mục 4.3.
+     - Nhật ký kiểm toán (audit): với dữ liệu nhạy cảm như điểm số, ngoài phân quyền
+còn cần trả lời “ai đã xem/sửa gì, khi nào”. Ba lớp giải pháp: bật general log (ghi mọi
+câu lệnh - chỉ dùng khi điều tra vì rất tốn tài nguyên); tự xây trigger ghi vết như
+DIEM_LOG ở Chương 3; hoặc dùng plugin audit chuyên dụng ở bản
+Enterprise/Percona.
+     - Mối đe dọa hiện đại - mã độc tống tiền (ransomware): kẻ tấn công mã hóa cả dữ
+liệu lẫn các bản sao lưu nối mạng. Đây là lý do quy tắc 3-2-1 yêu cầu một bản sao lưu
+ngoại tuyến (offline/immutable); nhiều đơn vị nâng lên 3-2-1-1-0: thêm 1 bản bất biến
+và 0 lỗi khi kiểm thử khôi phục định kỳ. Bài học quản trị: bản sao lưu chưa từng khôi
+phục thử thì chưa được tính là bản sao lưu.
+
+4.4. Thực hành
+
+BÀI THỰC HÀNH SỐ 7: PHÂN QUYỀN, SAO LƯU VÀ KHÔI PHỤC (04 tiết -
+Tuần 12)
+     - Mục tiêu: xây dựng hệ thống tài khoản - phân quyền theo kịch bản thực tế; thực
+hiện trọn vẹn chu trình sao lưu - sự cố - khôi phục (CLO4).
+
+Phần A. Người dùng và phân quyền (105 phút)
+        + A1. Kịch bản: hệ thống có 3 nhóm người dùng - quản trị (toàn quyền trên
+     QUANLYHOCSINH), giáo vụ (thêm/sửa/xóa dữ liệu, không được thay đổi cấu
+     trúc), giáo viên chủ nhiệm (chỉ xem, và chỉ sửa cột DiemTB). Tạo 3 role tương
+     ứng và 3 tài khoản người dùng gán vào role.
+        + A2. Kiểm chứng bằng đăng nhập thật từng tài khoản: thao tác được phép phải
+     thành công, thao tác vượt quyền phải bị từ chối; chụp lại thông báo lỗi 1142 và
+     giải thích.
+        + A3. Tạo view v_DiemLop_GVCN chỉ gồm điểm của lớp 10A1 và cấp cho tài
+     khoản GVCN quyền SELECT trên view (không cấp trên bảng DIEM); kiểm chứng
+     GVCN không xem được điểm lớp khác.
+
+       + A4. Thu hồi quyền UPDATE của GVCN; khóa tài khoản giáo vụ rồi mở lại;
+     đặt PASSWORD EXPIRE và quan sát yêu cầu đổi mật khẩu khi đăng nhập.
+
+Phần B. Sao lưu và khôi phục (75 phút)
+       + B1. Sao lưu đầy đủ QUANLYHOCSINH bằng mysqldump với --single-
+     transaction --routines --triggers; mở tệp .sql, nhận diện phần cấu trúc, dữ liệu,
+     routine, trigger.
+       + B2. Giả lập sự cố 1: DROP TABLE DIEM. Khôi phục bảng DIEM từ bản sao
+     lưu riêng bảng; kiểm đếm số dòng trước - sau.
+       + B3. Giả lập sự cố 2: DROP DATABASE QUANLYHOCSINH. Khôi phục
+     toàn bộ từ bản full vào QLHS_KHOIPHUC, kiểm tra số bảng, view, thủ tục,
+     trigger; ghi lại thời gian khôi phục (RTO thực tế); lập biên bản diễn tập ngắn.
+       + B4 (nâng cao). Lập lịch sao lưu tự động hằng ngày bằng Task Scheduler/cron;
+     kiểm tra tệp sinh ra.
+
+Phần C. Ứng dụng AI (20 phút tại lớp, hoàn thiện ở nhà - NLS Miền 6)
+       + C1. (Rà soát khuyến nghị phân quyền của AI) Đưa cho AI mô tả nghiệp vụ
+     ba nhóm người dùng ở A1 (không đưa lời giải) và yêu cầu đề xuất các lệnh
+     CREATE ROLE/GRANT. Đối chiếu với phương án của em theo nguyên tắc đặc
+     quyền tối thiểu: gạch chân mọi quyền AI cấp THỪA (ví dụ GRANT ALL, cấp
+     DROP cho giáo vụ, cấp trên *.* thay vì QUANLYHOCSINH.*) và quyền cấp
+     THIẾU; kết luận có dùng được ngay khuyến nghị của AI cho hệ thống thật không,
+     vì sao.
+       + C2. (Kiểm chứng kịch bản sao lưu do AI soạn) Nhờ AI viết lệnh/kịch bản sao
+     lưu tự động hằng ngày lúc 23h00, nén và tự xóa bản cũ quá 14 ngày. Giải thích ý
+     nghĩa TỪNG tham số trong kịch bản nhận được (tra Reference Manual với tham
+     số lạ); chỉ ra rủi ro nếu có (ví dụ mật khẩu viết trần trong lệnh - vi phạm an toàn;
+     thiếu --single-transaction gây khóa bảng); chạy thử phiên bản đã sửa.
+     Yêu cầu nộp bài: tệp .sql các lệnh phần A + tệp bản sao lưu + biên bản diễn tập
+phần B + phiếu đối chiếu phần C; đặt tên MSSV_HoTen_TH7; nộp cuối buổi. Nội dung
+chương này chiếm trọng số đáng kể trong báo cáo dự án (tiêu chí quản trị, phân quyền,
+sao lưu và bảo mật - 20% theo Rubric 2).
+
+Tổng kết chương 4
+     Chương 4 đã trang bị nhóm kỹ năng quản trị an toàn dữ liệu: hệ thống tài khoản
+user@host với vòng đời tạo - sửa - khóa - xóa và chính sách mật khẩu; hệ thống đặc
+quyền nhiều cấp độ với GRANT/REVOKE và cơ chế role của MySQL 8; các nguyên
+
+tắc bảo mật (đặc quyền tối thiểu, mã hóa kết nối TLS, mã hóa cột AES, băm SHA2,
+phòng chống SQL Injection) cùng trách nhiệm đạo đức với dữ liệu cá nhân; quy trình
+sao lưu bằng mysqldump với lịch tự động, khôi phục thông thường và khôi phục theo
+thời điểm bằng binary log, quy tắc 3-2-1 và kiểm thử khôi phục định kỳ. Đây là các nội
+dung bảo đảm cho một hệ CSDL vận hành an toàn trong thực tế và là yêu cầu bắt buộc
+của dự án ở Chương 5.
+
+Câu hỏi ôn tập, bài tập chương 4
+     - 1. Giải thích ý nghĩa phần host trong định danh tài khoản; 'gv'@'localhost' và
+'gv'@'%' khác nhau thế nào?
+     - 2. Trình bày các cấp độ cấp quyền; khi nào nên cấp quyền mức cột? Vì sao nên
+dùng role khi hệ thống đông người dùng?
+     - 3. Phát biểu nguyên tắc đặc quyền tối thiểu và vận dụng cho ba nhóm người dùng
+của bài thực hành số 7.
+     - 4. Phân biệt sao lưu logic - vật lý, full - incremental, nóng - nguội; RPO và RTO
+là gì?
+     - 5. Trình bày quy trình khôi phục theo thời điểm khi 09h15 có người lỡ chạy
+DELETE toàn bảng, biết bản full gần nhất lúc 23h00 hôm trước và binary log đang bật.
+     - 6. Vì sao phải bảo vệ cả tệp sao lưu? Nêu quy tắc 3-2-1 và cách áp dụng cho
+CSDL điểm của một trường học.
+
+Nhiệm vụ tự học chương 4 (13 giờ)
+     Tự nghiên cứu: xuất/nhập dữ liệu bằng MySQL Shell (util.dumpSchemas,
+util.loadDump); mã hóa trong suốt tablespace InnoDB; replication chủ - tớ; đọc mục
+Security và Backup and Recovery trong MySQL Reference Manual [4].
+
+Tài liệu học tập chương 4: [1] Chương 4; [3] các chương về users và backup; [4]
+mục Security, Backup and Recovery.</baihoc>
+<baitap bai="4" loai="goc" de="- 1. Giải thích ý nghĩa phần host trong định danh tài khoản; 'gv'@'localhost' và 'gv'@'%' khác nhau thế nào?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 36-43."/>
+<baitap bai="4" loai="goc" de="- 2. Trình bày các cấp độ cấp quyền; khi nào nên cấp quyền mức cột? Vì sao nên dùng role khi hệ thống đông người dùng?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 36-43."/>
+<baitap bai="4" loai="goc" de="- 3. Phát biểu nguyên tắc đặc quyền tối thiểu và vận dụng cho ba nhóm người dùng của bài thực hành số 7." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 36-43."/>
+<baitap bai="4" loai="goc" de="- 4. Phân biệt sao lưu logic - vật lý, full - incremental, nóng - nguội; RPO và RTO là gì?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 36-43."/>
+<baitap bai="4" loai="goc" de="- 5. Trình bày quy trình khôi phục theo thời điểm khi 09h15 có người lỡ chạy DELETE toàn bảng, biết bản full gần nhất lúc 23h00 hôm trước và binary log đang bật." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 36-43."/>
+<baitap bai="4" loai="goc" de="- 6. Vì sao phải bảo vệ cả tệp sao lưu? Nêu quy tắc 3-2-1 và cách áp dụng cho CSDL điểm của một trường học. Nhiệm vụ tự học chương 4 (13 giờ) Tự nghiên cứu: xuất/nhập dữ liệu bằng MySQL Shell (util.dumpSchemas, util.loadDump); mã hóa trong suốt tablespace InnoDB; replication chủ - tớ; đọc mục Security và Backup and Recovery trong MySQL Reference Manual [4]. Tài liệu học tập chương 4: [1] Chương 4; [3] các chương về users và backup; [4] mục Security, Backup and Recovery." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 36-43."/>
+<baihoc stt="5" tieude="Chương 5. Triển khai dự án">Chương 5. TRIỂN KHAI DỰ ÁN
+          (Số tiết: 08 lý thuyết/hướng dẫn + 04 thực hành — Tuần 13, 14, 15)
+
+Mục tiêu của chương 5 (kết quả đạt được):
+     Sau khi học xong chương này, sinh viên có khả năng:
+     - Vận dụng tổng hợp kiến thức các chương 1-4 để xây dựng hoàn chỉnh một CSDL
+cho bài toán thực tế: thiết kế, cài đặt bảng - ràng buộc, truy vấn, view, function,
+procedure, trigger, phân quyền, sao lưu (đáp ứng CLO2, CLO3, CLO4);
+     - Vận dụng công cụ số để làm việc nhóm hiệu quả: lập kế hoạch, phân công, chia
+sẻ và quản lý phiên bản sản phẩm (đáp ứng CLO5);
+     - Trình bày, bảo vệ sản phẩm và viết báo cáo kỹ thuật có minh chứng đầy đủ, đúng
+quy cách (đáp ứng CLO5);
+     - Thể hiện thái độ cẩn thận, hợp tác, tuân thủ quy trình và đạo đức dữ liệu (CO6).
+
+Năng lực số được hình thành (theo Thông tư 02/2025/TT-BGDĐT):
+     - Miền 2 - Giao tiếp và hợp tác trong môi trường số: làm việc nhóm qua công cụ
+chia sẻ (Google Drive/GitHub/nhóm học tập), quản lý phiên bản tài liệu và mã lệnh;
+     - Miền 3 - Sáng tạo nội dung số: tạo sản phẩm số hoàn chỉnh (kịch bản SQL, sơ
+đồ, báo cáo, trình chiếu);
+     - Miền 1, 4, 5: khảo sát - thu thập yêu cầu; bảo vệ dữ liệu trong sản phẩm; giải
+quyết trọn vẹn một bài toán bằng công nghệ số;
+     - Miền 6 - Ứng dụng AI: được phép dùng AI hỗ trợ (sinh dữ liệu mẫu, rà lỗi, gợi ý
+truy vấn) với điều kiện khai báo minh bạch trong báo cáo và tự chịu trách nhiệm kiểm
+chứng tính đúng đắn.
+
+5.1. Yêu cầu và hướng dẫn triển khai dự án nhóm
+
+5.1.1. Yêu cầu chung của dự án
+     Dự án là bài đánh giá HS2 (Báo cáo dự án nhóm) theo mục 8.3 của đề cương chi
+tiết, thực hiện theo nhóm 3-4 sinh viên, chấm theo Rubric 2 với năm tiêu chí: phân tích
+yêu cầu và thiết kế CSDL (20%); cài đặt CSDL và sử dụng SQL (25%); quản trị, phân
+quyền, sao lưu và bảo mật (20%); báo cáo, minh chứng và trình bày sản phẩm (20%);
+làm việc nhóm, thái độ và đạo đức dữ liệu (15%). Mỗi nhóm chọn một bài toán quản lý
+thực tế và xây dựng CSDL hoàn chỉnh trên MySQL với các sản phẩm bắt buộc:
+        + (1) Đặc tả yêu cầu: mô tả bài toán, biểu mẫu và quy trình nghiệp vụ thực tế
+     đã khảo sát;
+
+        + (2) Thiết kế: mô hình ER và lược đồ quan hệ (vận dụng kiến thức học phần
+     tiên quyết Cơ sở dữ liệu), tối thiểu 5-6 bảng, có ít nhất một quan hệ nhiều - nhiều,
+     đầy đủ khóa và ràng buộc; sơ đồ vẽ bằng công cụ (MySQL Workbench/draw.io);
+        + (3) Kịch bản cài đặt chạy-lại-được: tạo CSDL, bảng, ràng buộc; dữ liệu mẫu
+     tối thiểu 20-50 dòng/bảng chính;
+        + (4) Bộ 15-20 truy vấn nghiệp vụ có ý nghĩa (tra cứu, thống kê nhóm, kết nối
+     nhiều bảng, truy vấn con, CASE);
+        + (5) Tối thiểu 2 view, 2 function/procedure và 1 trigger phục vụ nghiệp vụ thật
+     của đề tài;
+        + (6) Phân quyền cho tối thiểu 3 nhóm người dùng bằng role, có kiểm chứng
+     bằng đăng nhập thật;
+        + (7) Phương án và minh chứng sao lưu - khôi phục (mysqldump, lịch tự động,
+     biên bản diễn tập);
+        + (8) Báo cáo tổng kết và trình chiếu bảo vệ.
+
+5.1.2. Các đề tài gợi ý
+     Nhóm chọn một trong các đề tài sau hoặc tự đề xuất (được giảng viên duyệt trong
+tuần 13): quản lý điểm sinh viên một khoa; quản lý thư viện trường; quản lý nhà sách/cửa
+hàng bán lẻ; quản lý khách sạn mini; quản lý phòng khám; quản lý quán cà phê; quản lý
+cho thuê xe; quản lý nhân sự - chấm công; quản lý kho vật tư; quản lý giải bóng đá
+phong trào.
+
+5.1.3. Các giai đoạn triển khai và tổ chức nhóm
+              Bảng 5.1. Các giai đoạn triển khai dự án và sản phẩm từng giai đoạn
+   Giai đoạn              Công việc chính               Sản phẩm          Kiến thức áp dụng
+                   Thu thập biểu mẫu, phỏng vấn,
+1. Khảo sát                                         Đặc tả yêu cầu        Miền 1 NLS
+                   xác định yêu cầu
+                   Mô hình ER, lược đồ quan hệ,                           HP Cơ sở dữ liệu;
+2. Thiết kế                                         Sơ đồ, lược đồ
+                   khóa, ràng buộc                                        mục 3.1
+                   Tạo CSDL, bảng, ràng buộc;
+3. Cài đặt                                          Kịch bản .sql         Chương 2, 3
+                   nhập dữ liệu mẫu
+                   Bộ truy vấn; view, function,     Tệp truy vấn, đối
+4. Khai thác                                                              Chương 2, 3
+                   procedure, trigger               tượng
+                   Tài khoản, role, phân quyền;
+5. Quản trị                                         Kịch bản, biên bản    Chương 4
+                   sao lưu, diễn tập khôi phục
+                   Viết báo cáo, trình chiếu, bảo
+6. Tổng kết                                         Báo cáo, slide        Miền 2, 3 NLS
+                   vệ
+
+       Hình 5.1 thể hiện tiến trình sáu giai đoạn trên trục thời gian ba tuần cuối học phần
+cùng ba mốc kiểm soát:
+
+          Hình 5.1. Tiến trình triển khai dự án theo tuần 13-15 và các mốc kiểm soát
+
+       Tổ chức nhóm: bầu trưởng nhóm; phân công theo giai đoạn nhưng mọi thành viên
+phải nắm toàn bộ sản phẩm (khi bảo vệ, giảng viên hỏi bất kỳ thành viên nào về bất kỳ
+phần nào). Nhóm lập không gian làm việc chung: thư mục chia sẻ hoặc kho mã chứa
+các tệp .sql có ghi chú phiên bản; nhật ký công việc ghi rõ ai làm gì, khi nào - nộp kèm
+báo cáo làm căn cứ đánh giá đóng góp cá nhân (tiêu chí làm việc nhóm 15% của Rubric
+2). Liêm chính học thuật: sản phẩm sao chép giữa các nhóm hoặc do AI làm thay toàn
+bộ sẽ không được chấm; nội dung có AI hỗ trợ phải khai báo trong mục riêng của báo
+cáo.
+Quy định sử dụng AI trong dự án (áp dụng quy trình 4 bước Hỏi - Kiểm - Dùng -
+Khai báo):
+         + Được khuyến khích: dùng AI để gợi ý câu hỏi khảo sát nghiệp vụ; sinh dữ
+       liệu mẫu (phải thẩm định như bài thực hành số 2); sinh ca kiểm thử cho ràng buộc,
+       trigger; rà soát mã .sql và soát lỗi chính tả, hành văn của báo cáo; giải thích thông
+       báo lỗi.
+         + Không được phép: dùng AI tạo ra toàn bộ thiết kế ER/lược đồ hoặc toàn bộ
+       bộ truy vấn rồi nộp; đưa dữ liệu cá nhân thật thu thập khi khảo sát (họ tên, số điện
+       thoại, điểm số thật...) vào công cụ AI - vi phạm nguyên tắc đạo đức dữ liệu ở mục
+       4.3 và bị trừ điểm tiêu chí 5 của Rubric 2.
+         + Khai báo: báo cáo có mục “Khai báo sử dụng AI” dạng bảng gồm bốn cột:
+       nội dung nhờ AI hỗ trợ - công cụ - cách nhóm kiểm chứng - mức tiếp thu (dùng
+       nguyên/sửa lại/bác bỏ). Khi bảo vệ, giảng viên có thể yêu cầu bất kỳ thành viên
+
+     nào giải thích lại phần có AI hỗ trợ; không giải thích được xem như không nắm
+     sản phẩm.
+       + Nguyên tắc đánh giá: điểm không phụ thuộc việc nhóm có dùng AI hay không,
+     mà ở chất lượng sản phẩm và khả năng làm chủ - kiểm chứng của nhóm; khai báo
+     trung thực không bị trừ điểm, che giấu bị xử lý như hành vi thiếu trung thực học
+     thuật.
+
+5.1.4. Hoạt động tuần 13 (04 tiết hướng dẫn)
+       + Giảng viên phổ biến yêu cầu, rubric, danh sách đề tài; các nhóm đăng ký đề
+     tài và thành viên;
+       + Mỗi nhóm phác thảo ý tưởng: bài toán, phạm vi, người dùng của hệ thống, dự
+     kiến các bảng chính; trình bày nhanh 5 phút để giảng viên và các nhóm góp ý;
+       + Chốt đề cương dự án cuối tuần 13 - mốc kiểm soát đầu tiên.
+
+5.2. Triển khai dự án thực tế
+
+5.2.1. Hoạt động tuần 14 (04 tiết tư vấn kỹ thuật - phản biện đề tài)
+       + Các nhóm trình thiết kế: mô hình ER, lược đồ quan hệ với bảng, khóa, mối
+     quan hệ, ràng buộc và các chức năng chính; giảng viên duyệt từng nhóm (kiểm tra
+     khóa, quan hệ nhiều - nhiều, hành vi tham chiếu);
+       + Phản biện chéo: mỗi nhóm đọc và nhận xét thiết kế của một nhóm khác theo
+     phiếu (đủ bảng chưa, ràng buộc hợp lý chưa, truy vấn nghiệp vụ nào sẽ khó thực
+     hiện) - rèn năng lực thảo luận, phản biện và đánh giá sản phẩm;
+       + Giảng viên tổng hợp lỗi chung (thiếu khóa, sai kiểu dữ liệu, quan hệ sai bản
+     số, quên ràng buộc) và hướng dẫn quy cách báo cáo, kỹ năng trình bày - bảo vệ;
+       + Sau tuần 14, các nhóm hoàn thiện cài đặt và toàn bộ sản phẩm kỹ thuật ngoài
+     giờ lên lớp (thuộc 75 giờ tự học); giảng viên hỗ trợ qua kênh trao đổi của lớp.
+
+5.2.2. Danh mục kiểm tra trước khi báo cáo
+       + Kịch bản .sql chạy lại được từ đầu trên máy sạch (từ CREATE DATABASE
+     đến hết) không lỗi;
+       + Mọi bảng có khóa chính; mọi quan hệ có khóa ngoại và hành vi tham chiếu
+     hợp lý; có CHECK cho các miền giá trị;
+       + Bộ truy vấn đủ số lượng, mỗi truy vấn có phát biểu yêu cầu bằng tiếng Việt
+     và ảnh kết quả;
+       + View, function/procedure, trigger chạy được và gắn với nghiệp vụ thật; có ca
+     thử kiểm chứng;
+
+        + Có tối thiểu 3 role kiểm chứng được; có bản sao lưu và biên bản diễn tập khôi
+     phục;
+        + Báo cáo đúng quy cách; nhật ký nhóm và khai báo sử dụng AI (nếu có) đầy
+     đủ; nộp đúng hạn.
+
+5.3. Báo cáo và đánh giá dự án
+
+5.3.1. Cấu trúc báo cáo
+     Báo cáo 15-25 trang, trình bày theo quy định hình thức của Nhà trường, gồm: (1)
+Giới thiệu bài toán, phạm vi; (2) Khảo sát và đặc tả yêu cầu; (3) Thiết kế: mô hình ER,
+lược đồ quan hệ, giải thích ràng buộc; (4) Cài đặt: bảng, ràng buộc, dữ liệu mẫu; (5) Bộ
+truy vấn nghiệp vụ (yêu cầu - lệnh - kết quả); (6) View, function, procedure, trigger
+(mục đích - mã lệnh - ca thử); (7) Phân quyền; (8) Sao lưu - khôi phục; (9) Phân công
+và nhật ký nhóm; khai báo sử dụng AI (nếu có); (10) Kết luận, hạn chế, hướng phát
+triển; Tài liệu tham khảo trích dẫn đúng quy cách.
+
+5.3.2. Báo cáo và bảo vệ (tuần 15 - 04 tiết thực hành)
+     Mỗi nhóm trình bày 12-15 phút: trình chiếu tổng quan và thao tác trực tiếp trên
+MySQL - chạy 3-5 truy vấn tiêu biểu, gọi thủ tục, kích hoạt trigger bằng một ca thử,
+minh họa phân quyền bằng hai phiên đăng nhập, minh họa khôi phục từ bản sao lưu; sau
+đó trả lời câu hỏi phản biện 5-10 phút của giảng viên và các nhóm khác. Điểm HS2
+chấm theo Rubric 2 của ĐCCT, có điều chỉnh theo đóng góp cá nhân căn cứ nhật ký
+nhóm và phần trả lời khi bảo vệ.
+
+5.3.3. Định hướng ôn tập thi thực hành cuối kỳ
+     Bài thi cuối kỳ là bài thi thực hành trên máy, chấm theo Rubric 3 với bốn tiêu chí:
+tạo CSDL, bảng và ràng buộc (30%); thao tác dữ liệu và truy vấn SQL (30%); tạo và sử
+dụng view/function/procedure/trigger (30%); tác phong thực hành và quản lý tệp bài
+làm (10%). Trọng số CLO trong bài thi: CLO2 - 60%, CLO3 - 30%, CLO5 - 10%. Sinh
+viên ôn tập bằng cách tự thực hiện lại trọn vẹn các bài thực hành số 2 đến số 6 trên một
+đề tài khác (ví dụ quản lý thư viện) trong giới hạn 90 phút, chú ý kỹ năng nộp bài: tệp
+.sql có chú thích, đặt tên đúng quy định.
+
+Tổng kết chương 5
+     Chương 5 tổng hợp toàn bộ kiến thức, kỹ năng của học phần vào một dự án trọn
+vẹn theo sáu giai đoạn: khảo sát - thiết kế - cài đặt - khai thác - quản trị - tổng kết. Qua
+dự án, sinh viên không chỉ củng cố năng lực chuyên môn về MySQL (từ SQL, ràng
+buộc, view, function, procedure, trigger đến phân quyền và sao lưu) mà còn rèn luyện
+
+kỹ năng làm việc nhóm trên môi trường số, viết báo cáo kỹ thuật có minh chứng, trình
+bày - bảo vệ sản phẩm và ý thức trách nhiệm, đạo đức với dữ liệu - đúng như mục tiêu
+CO5, CO6 và chuẩn đầu ra CLO5 của học phần.
+
+Câu hỏi định hướng ôn tập cuối học phần
+     - 1. Tự kiểm tra theo Rubric 3: với một bài toán quản lý bất kỳ, em có thể độc lập
+tạo CSDL - bảng - ràng buộc, viết truy vấn, tạo view/function/procedure/trigger trong
+90 phút và nộp tệp đúng quy cách không?
+     - 2. Rà soát lại các thông báo lỗi đã gặp trong 7 bài thực hành: mỗi lỗi thuộc nhóm
+nào (cú pháp, ràng buộc, phân quyền) và cách khắc phục?
+
+                            TÀI LIỆU THAM KHẢO
+Tiếng Việt
+[1]. Bộ Giáo dục và Đào tạo (2025), Thông tư số 02/2025/TT-BGDĐT ngày 24/01/2025
+quy định Khung năng lực số cho người học, Hà Nội.
+Tiếng Anh
+[2]. Vinicius M. Grippa, Sergey Kuzmichev (2021), Learning MySQL: Get a Handle on
+Your Data, 2nd Edition, O'Reilly Media, Sebastopol.
+Tài liệu trên Internet
+[3].     Oracle      Corporation,      MySQL          8.4     Reference   Manual,
+https://dev.mysql.com/doc/refman/8.4/en/, trích dẫn 7/2026.</baihoc>
+<baitap bai="5" loai="goc" de="- 1. Tự kiểm tra theo Rubric 3: với một bài toán quản lý bất kỳ, em có thể độc lập tạo CSDL - bảng - ràng buộc, viết truy vấn, tạo view/function/procedure/trigger trong 90 phút và nộp tệp đúng quy cách không?" dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 44-50."/>
+<baitap bai="5" loai="goc" de="- 2. Rà soát lại các thông báo lỗi đã gặp trong 7 bài thực hành: mỗi lỗi thuộc nhóm nào (cú pháp, ràng buộc, phân quyền) và cách khắc phục? TÀI LIỆU THAM KHẢO Tiếng Việt [1]. Bộ Giáo dục và Đào tạo (2025), Thông tư số 02/2025/TT-BGDĐT ngày 24/01/2025 quy định Khung năng lực số cho người học, Hà Nội. Tiếng Anh [2]. Vinicius M. Grippa, Sergey Kuzmichev (2021), Learning MySQL: Get a Handle on Your Data, 2nd Edition, O'Reilly Media, Sebastopol. Tài liệu trên Internet [3]. Oracle Corporation, MySQL 8.4 Reference Manual, https://dev.mysql.com/doc/refman/8.4/en/, trích dẫn 7/2026." dapan="Đây là bài tập có sẵn trong bài giảng gốc. Tự làm rồi đối chiếu với kiến thức của chương này; lời giải mẫu (nếu có) nằm trong file BG_HeQuanTriCSDL-SPTin_3TC_Bao.pdf, trang 44-50."/>
+</mon>
